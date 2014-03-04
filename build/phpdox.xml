@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<phpdox xmlns="http://phpdox.de/config" silent="true">
+    <project name="atas" source="." workdir="./build/api/xml">
+
+        <collector publiconly="true">
+            <include mask="./*.php" />
+            <exclude mask="./vendor/**" />
+        </collector>
+
+        <generator output="./build/api/docs">
+            <build engine="html" enabled="true" output="html">
+                <file extension="html" />
+            </build>
+            <build engine="todo" enabled="false" output="todo">
+                <file name="todolist.txt" encoding="utf-8" />
+            </build>
+        </generator>
+
+    </project>
+</phpdox>

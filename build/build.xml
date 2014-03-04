@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="opg-core-back-end" default="build">
+
+    <target name="build" depends="clean,prepare,lint,phpunit,phpmd-ci,phpcs-ci,phpcpd,phpcb,phpdocs"/>
+
+    <target name="clean">
+        <delete dir="${basedir}/output"/>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${basedir}/output"/>
+        
+        <!-- For Jenkins build output -->
+        <mkdir dir="${basedir}/output/api"/>
+        <mkdir dir="${basedir}/output/code-browser"/>
+        <mkdir dir="${basedir}/output/coverage"/>
+        <mkdir dir="${basedir}/output/logs"/>
+        <mkdir dir="${basedir}/output/phpmd"/>
+        <mkdir dir="${basedir}/output/phpcpd"/>
+        <mkdir dir="${basedir}/output/phpdcd"/>
+        <mkdir dir="${basedir}/output/phpcs"/>
+        <mkdir dir="${basedir}/output/phpdocs"/>
+        <mkdir dir="${basedir}/output/phpdocs/log"/>
+        <mkdir dir="${basedir}/output/phploc"/>
+        <mkdir dir="${basedir}/output/pdepend"/>
+    </target>
+
+    <target name="lint">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}/../src">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+            <fileset dir="${basedir}/../tests">
+                <include name="**/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="phpunit">
+        <exec executable="phpunit" failonerror="true">
+            <arg line="--configuration '${basedir}/../tests/phpunit.xml'
+               --log-junit '${basedir}/output/logs/junit.xml'
+               --coverage-clover '${basedir}/output/coverage/clover.xml'
+               --coverage-html '${basedir}/output/coverage/'" />
+        </exec>
+    </target>
+
+    <target name="pdepend">
+        <exec executable="pdepend" failonerror="false">
+            <arg line="--jdepend-xml='${basedir}/output/pdepend/jdepend.xml'
+              --jdepend-chart='${basedir}/output/pdepend/dependencies.svg'
+              --overview-pyramid='${basedir}/output/pdepend/overview-pyramid.svg'
+              --ignore='./vendor'
+              '${basedir}/../src/'" />
+        </exec>
+    </target>
+ 
+     <target name="phploc">
+        <exec executable="phploc" failonerror="false">
+            <arg line="--log-csv '${basedir}/output/phploc/phploc.csv'
+              '${basedir}/../src/'" />
+        </exec>
+    </target>
+    
+    <target name="phpmd">
+        <exec executable="phpmd" failonerror="false">
+            <arg line="'${basedir}/../src/Application'
+              text
+              --reportfile 
+              '${basedir}/output/phpmd/phpmd-report.txt'
+              '${basedir}/phpmd.xml'" />
+        </exec>
+    </target>
+    
+    <target name="phpmd-ci">
+        <exec executable="phpmd" failonerror="false" output="/dev/null">
+            <arg line="'${basedir}/../src/Application'
+            '${basedir}/../src/Opg'
+              xml
+              '${basedir}/phpmd.xml'
+              --reportfile
+              '${basedir}/output/phpmd/phpmd-ci-report.xml'" />
+        </exec>
+    </target> 
+    
+    <target name="phpdcd">
+        <exec executable="phpdcd" failonerror="false">
+            <arg line="'${basedir}/../src/'
+            --reportfile
+            '${basedir}/output/phpdcd/phpdcd.txt'" />
+        </exec>
+    </target>
+    
+    <target name="phpcs">
+        <exec executable="phpcs" failonerror="false">
+            <arg line="--standard='${basedir}/phpcs.xml'
+            --report=full
+            --report-file='${basedir}/output/phpcs/checkstyle.txt'
+              '${basedir}/../src/'" />
+        </exec>
+    </target>
+    
+    <target name="phpcs-ci">
+        <exec executable="phpcs" failonerror="false" output="/dev/null">
+            <arg line="--report=checkstyle
+              --report-file='${basedir}/output/phpcs/checkstyle.xml'
+              --standard='${basedir}/phpcs.xml'
+              '${basedir}/../src/'" />
+        </exec>
+    </target>   
+    
+    <target name="phpcpd">
+        <exec executable="phpcpd" failonerror="false">
+            <arg line="--log-pmd '${basedir}/output/phpcpd/php-cpd.xml'
+              '${basedir}/../src/'" />
+        </exec>
+    </target>
+
+    <target name="phpcb">
+        <exec executable="phpcb" failonerror="false">
+            <arg line="
+                 --output '${basedir}/output/code-browser'
+                 --source '${basedir}/../src'" />
+        </exec>
+    </target>
+    
+    <target name="phpdocs">
+        <exec executable="${basedir}/../vendor/bin/phpdoc.php" failonerror="false">
+            <arg line="--log '${basedir}/output/logs/phpdocs.log'
+                 -t '${basedir}/output/phpdocs'
+                 -d '${basedir}/../src'" />
+        </exec>
+    </target>
+    
+    
+</project>
