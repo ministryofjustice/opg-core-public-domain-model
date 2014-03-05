@@ -1,82 +1,185 @@
 <?php
 namespace Opg\Core\Model\Entity\User;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\Traits\ExchangeArray;
+use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Zend\InputFilter\InputFilter;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
+use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
-use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
-use Opg\Core\Model\Entity\CaseItem\CaseItemCollection;
+use Zend\InputFilter\InputFilter;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name = "users")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ */
 class User implements EntityInterface, \IteratorAggregate
 {
-
     use ToArray {
         toArray as traitToArray;
     }
+    use ExchangeArray;
     use IteratorAggregate;
     use InputFilterTrait;
 
     /**
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @var integer
+     * @Type("integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type = "string")
      * @var string
+     * @Type("string")
      */
-    private $id;
+    protected $email;
 
     /**
+     * @ORM\Column(type = "string")
      * @var string
+     * @Type("string");
      */
-    private $username;
+    protected $firstname;
 
     /**
+     * @ORM\Column(type = "string")
      * @var string
+     * @Type("string")
      */
-    private $email;
+    protected $surname;
 
     /**
-     * @var string
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
+     * @ORM\JoinTable(name="user_pas",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
+     * )
+     *
+     * @var ArrayCollection
+     * @Type("Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      */
-    private $firstname;
+    protected $powerOfAttorneys;
 
     /**
-     * @var string
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
+     * @ORM\JoinTable(name="user_deputyships",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
+     * )
+     *
+     * @var ArrayCollection
+     * @Type("Opg\Core\Model\Entity\Deputyship\Deputyship")
      */
-    private $surname;
+    protected $deputyships;
 
     /**
-     * @var string
-     */
-    private $realname;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $token;
-
-    /**
-     * @var CaseItemCollection
-     */
-    private $caseItemCollection;
-
-    /**
-     * @var bool
-     */
-    private $locked;
-
-    /**
-     * @var bool
-     */
-    private $suspended;
-
-    /**
+     * @ORM\Column(type = "json_array")
      * @var array
+     * @Accessor(getter="getNormalisedRoles",setter="setFromNormalisedRoles")
+     * @todo change the way this is persisted to a 0 index array
      */
-    private $roles = [];
+    protected $roles = [];
+
+
+    // The fields below are NOT persisted.
+
+    /**
+     * @var string
+     * @Exclude
+     * @Type("string")
+     */
+    protected $password;
+
+    /**
+     * @var string
+     * @Exclude
+     * @Type("string")
+     */
+    protected $token;
+
+    /**
+     * @var boolean
+     * @Type("boolean")
+     */
+    protected $locked;
+
+    /**
+     * @param boolean $locked
+     * @return User
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = (bool)$locked;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Alias for getLocked
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return $this->getLocked();
+    }
+
+    /**
+     * @param mixed $suspended
+     * @return User
+     */
+    public function setSuspended($suspended)
+    {
+        $this->suspended = (bool)$suspended;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSuspended()
+    {
+        return $this->suspended;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuspended()
+    {
+        return $this->getSuspended();
+    }
+
+    /**
+     * @ORM\Column(type = "boolean", options={"default":0})
+     * @var boolean
+     * @Type("boolean")
+     */
+    protected $suspended;
+
+    public function __construct()
+    {
+        $this->deputyships      = new ArrayCollection();
+        $this->powerOfAttorneys = new ArrayCollection();
+        $this->setLocked(false);
+        $this->setSuspended(false);
+    }
 
     /**
      * @return string $email
@@ -88,6 +191,8 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $email
+     *
+     * @return User
      */
     public function setEmail($email)
     {
@@ -154,14 +259,6 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return string $realname
-     */
-    public function getRealname()
-    {
-        return $this->realname;
-    }
-
-    /**
      * @return \Zend\InputFilter\InputFilterInterface
      */
     public function getInputFilter()
@@ -170,28 +267,7 @@ class User implements EntityInterface, \IteratorAggregate
             $inputFilter = new InputFilter();
             $factory     = new InputFactory();
 
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'username',
-                        'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 128,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
+
             $inputFilter->add(
                 $factory->createInput(
                     array(
@@ -302,137 +378,6 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return string $username
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * @return CaseItemCollection
-     */
-    public function getCaseItemCollection()
-    {
-        return $this->caseItemCollection;
-    }
-
-    /**
-     * @param CaseItemCollection $caseItemCollection
-     * @return User
-     */
-    public function setCaseItemCollection(CaseItemCollection $caseItemCollection)
-    {
-        $this->caseItemCollection = $caseItemCollection;
-
-        return $this;
-    }
-
-    /**
-     * @param string $realname
-     * @return User
-     */
-    public function setRealname($realname)
-    {
-        $this->realname = $realname;
-
-        return $this;
-    }
-
-    /**
-     * @param array $data
-     * @return EntityInterface
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['username'])) {
-            $this->setUsername($data['username']);
-        }
-
-        if (!empty($data['email'])) {
-            $this->setEmail($data['email']);
-        }
-
-        if (!empty($data['realname'])) {
-            $this->setRealname($data['realname']);
-        }
-
-        if (!empty($data['firstname'])) {
-            $this->setFirstname($data['firstname']);
-        }
-
-        if (!empty($data['surname'])) {
-            $this->setSurname($data['surname']);
-        }
-
-        if (!empty($data['password'])) {
-            $this->setPassword($data['password']);
-        }
-
-        if (!empty($data['locked'])) {
-            if ('false' === $data['locked']) {
-                $this->setLocked(false);
-            } else {
-                $this->setLocked($data['locked']);
-            }
-        }
-
-        if (!empty($data['suspended'])) {
-            if ('false' === $data['suspended']) {
-                $this->setSuspended(false);
-            } else {
-                $this->setSuspended($data['suspended']);
-            }
-        }
-
-        // Expects roles to be a list of role names
-        if (!empty($data['roles']) && is_array($data['roles'])) {
-            $this->clearRoles();
-
-            foreach ($data['roles'] as $role) {
-                $this->addRole($role);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        $data = get_object_vars($this);
-
-        if (!empty($data['caseItemCollection'])) {
-            $data['caseItemCollection'] = $data['caseItemCollection']->getArrayCopy();
-        }
-
-        if (!empty($data['roles'])) {
-            $data['roles'] = array_keys($data['roles']);
-        }
-
-        unset($data['inputFilter']);
-
-        return $data;
-    }
-
-    /**
      * @return string
      */
     public function getPassword()
@@ -473,15 +418,12 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
+     * @param bool $exposeClassname
      * @return array
      */
-    public function toArray()
+    public function toArray($exposeClassname = false)
     {
-        $baseArray = $this->traitToArray();
-
-        if (!empty($baseArray['caseItemCollection'])) {
-            $baseArray['caseItemCollection'] = $baseArray['caseItemCollection']->toArray();
-        }
+        $baseArray = $this->traitToArray($exposeClassname);
 
         if (!empty($baseArray['roles'])) {
             $baseArray['roles'] = array_keys($baseArray['roles']);
@@ -497,8 +439,22 @@ class User implements EntityInterface, \IteratorAggregate
     public function addRole($roleName)
     {
         $role               = (string)$roleName;
-        $this->roles[$role] = null;
+        $this->roles[$role] = $roleName;
 
+        return $this;
+    }
+
+    /**
+     * @param array $roles
+     * @return User $this
+     */
+    public function setRoles(array $roles)
+    {
+        $this->clearRoles();
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
         return $this;
     }
 
@@ -547,37 +503,82 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param bool $bool
-     * @return User $this
+     * @return array
      */
-    public function setLocked($bool) {
-        $this->locked = (bool) $bool;
+    public function getNormalisedRoles()
+    {
+        return array_values($this->roles);
+    }
+
+    /**
+     * @param array $roles
+     * @return User
+     */
+    public function setFromNormalisedRoles(array $roles) {
+        $this->clearRoles();
+
+        foreach($roles as $role) {
+            $this->addRole($role);
+        }
 
         return $this;
     }
 
     /**
-     * @return bool
+     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem
+     * @return $this
      */
-    public function isLocked() {
-        return $this->locked;
+    public function addCase(CaseItem $case)
+    {
+        if ($case instanceof PowerOfAttorney) {
+            $this->powerOfAttorneys->add($case);
+        }
+        else {
+            $this->deputyships->add($case);
+        }
+        return $this;
     }
 
     /**
-     * @param bool $bool
-     * @return User $this
+     * @param ArrayCollection $cases
+     * @return $this
      */
-    public function setSuspended($bool) {
-        $this->suspended = (bool) $bool;
+    public function setPowerOfAttorneys(ArrayCollection $cases)
+    {
+        foreach ($cases as $case) {
+            $this->addCase($case);
+        }
 
         return $this;
     }
 
     /**
-     * @return bool
+     * @return ArrayCollection
      */
-    public function isSuspended() {
-        return $this->suspended;
+    public function getPowerOfAttorneys()
+    {
+        return $this->powerOfAttorneys;
     }
+
+    /**
+     * @param ArrayCollection $cases
+     * @return $this
+     */
+    public function setDeputyships(ArrayCollection $cases)
+    {
+        foreach ($cases as $case) {
+            $this->addCase($case);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDeputyships()
+    {
+        return $this->deputyships;
+    }
+
 }
 

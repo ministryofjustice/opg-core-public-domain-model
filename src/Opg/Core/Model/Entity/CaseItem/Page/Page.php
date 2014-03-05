@@ -1,55 +1,78 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Page;
 
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
+use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\Traits\ExchangeArray;
+use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseItem\Document\Document;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name = "document_pages")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * Class Page
  * @package Opg\Core\Model\Entity\CaseItem\Page
  */
 class Page implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
+    use ToArray;
+    use ExchangeArray;
 
     /**
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var string
      */
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", inversedBy = "pages")
+     * @var
+     */
+    private $document;
+
+    /**
+     * @ORM\Column(type = "integer")
      * @var int
      */
     private $pageNumber;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     private $thumbnail;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     private $main;
-    
+
     /**
+     * @ORM\Column(type = "text", nullable = true)
      * @var string
      */
     private $text;
 
-    /**
-     * Instead of using the ToArray trait, we have a custom one
-     * which adds a metadata structure
-     * 
-     * @return array
-     */
-    public function toArray()
+    public function setDocument(Document $document)
     {
-        $data = get_object_vars($this);
-        unset($data['inputFilter']);
-        
-        return $data;
+        if ($this->document !== null) {
+            throw new \LogicException("Document can only be set once.");
+        }
+
+        $this->document = $document;
+    }
+
+    public function getDocument()
+    {
+        return $this->document;
     }
 
     // Fulfil IteratorAggregate interface requirements
@@ -58,34 +81,6 @@ class Page implements EntityInterface, \IteratorAggregate
         return new \RecursiveArrayIterator($this->toArray());
     }
 
-    /**
-     * @param array $data
-     *
-     * @return EntityInterface|void
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['pageNumber'])) {
-            $this->setPageNumber($data['pageNumber']);
-        }
-
-        if (!empty($data['thumbnail'])) {
-            $this->setThumbnail($data['thumbnail']);
-        }
-
-        if (!empty($data['main'])) {
-            $this->setMain($data['main']);
-        }
-        
-        if (!empty($data['text'])) {
-            $this->setText($data['text']);
-        }
-    }
-    
     /**
      * @return InputFilter|InputFilterInterface
      */
@@ -108,7 +103,7 @@ class Page implements EntityInterface, \IteratorAggregate
      */
     public function setId($id)
     {
-        $this->id = (string) $id;
+        $this->id = (string)$id;
 
         return $this;
     }
@@ -128,7 +123,7 @@ class Page implements EntityInterface, \IteratorAggregate
      */
     public function setMain($main)
     {
-        $this->main = (string) $main;
+        $this->main = (string)$main;
 
         return $this;
     }
@@ -148,7 +143,7 @@ class Page implements EntityInterface, \IteratorAggregate
      */
     public function setPageNumber($pageNumber)
     {
-        $this->pageNumber = (int) $pageNumber;
+        $this->pageNumber = (int)$pageNumber;
 
         return $this;
     }
@@ -168,7 +163,7 @@ class Page implements EntityInterface, \IteratorAggregate
      */
     public function setThumbnail($thumbnail)
     {
-        $this->thumbnail = (string) $thumbnail;
+        $this->thumbnail = (string)$thumbnail;
 
         return $this;
     }
@@ -180,7 +175,7 @@ class Page implements EntityInterface, \IteratorAggregate
     {
         return $this->thumbnail;
     }
-    
+
     /**
      * @param string $text
      * @return Page
@@ -188,11 +183,12 @@ class Page implements EntityInterface, \IteratorAggregate
     public function setText($text)
     {
         $this->text = $text;
+
         return $this;
     }
-    
-	/**
-     * @return $text
+
+    /**
+     * @return string
      */
     public function getText()
     {

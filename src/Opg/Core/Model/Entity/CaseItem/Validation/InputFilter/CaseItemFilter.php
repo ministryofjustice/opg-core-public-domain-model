@@ -1,11 +1,16 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Validation\InputFilter;
 
-use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseItemCollection;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseItems;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 
-class CaseItemCollectionFilter extends InputFilter
+/**
+ * Class CaseItemFilter
+ *
+ * @package Opg\Core\Model\Entity\CaseItem\Validation\InputFilter
+ */
+class CaseItemFilter extends InputFilter
 {
     /**
      * @var \Zend\InputFilter\Factory
@@ -29,11 +34,11 @@ class CaseItemCollectionFilter extends InputFilter
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'caseItemCollection',
+                    'name'       => 'caseItems',
                     'required'   => false,
                     'validators' => array(
                         // @TODO does not seem to validate
-                        new CaseItemCollection()
+                        new CaseItems()
                     )
                 )
             )

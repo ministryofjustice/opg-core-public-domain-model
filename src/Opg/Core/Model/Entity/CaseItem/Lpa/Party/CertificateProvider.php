@@ -1,32 +1,40 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Core\Model\Entity\CaseItem\Traits\Party;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Person;
+use Zend\InputFilter\InputFilterInterface;
+use Opg\Common\Exception\UnusedException;
+use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
  *
  * @package Opg Domain Model
  * @author Chris Moreton <chris@netsensia.com>
  *
  */
-class CertificateProvider implements PartyInterface
+class CertificateProvider extends BasePerson implements PartyInterface, EntityInterface
 {
-    use Party;
-    use Person;
-    use ToArray;
-    
+    use ToArray {
+        toArray as toTraitArray;
+    }
+    use ExchangeArray;
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $certificateProviderStatementType;
-    
+    protected $certificateProviderStatementType;
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $statement;
-    
+    protected $statement;
+
     /**
      * @return string $certificateProviderStatementType
      */
@@ -62,5 +70,29 @@ class CertificateProvider implements PartyInterface
     {
         $this->statement = $statement;
         return $this;
+    }
+
+    /**
+     * @return void|InputFilterInterface
+     * @throws \Opg\Common\Exception\UnusedException
+     */
+    public function getInputFilter()
+    {
+        throw new UnusedException();
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new UnusedException();
+    }
+
+    /**
+     * @param bool $exposeClassName
+     *
+     * @return array
+     */
+    public function toArray($exposeClassName = TRUE)
+    {
+        return $this->toTraitArray($exposeClassName);
     }
 }

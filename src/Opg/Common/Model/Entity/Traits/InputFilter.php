@@ -14,6 +14,7 @@ trait InputFilter
 
     /**
      * @var InputFilter|InputFilterInterface
+     * @Exclude
      */
     protected $inputFilter;
 
@@ -78,7 +79,7 @@ trait InputFilter
      */
     public function addExternalError($property, $errorName, $errorMessage)
     {
-        $fullClassName = get_class();
+        $fullClassName = get_class($this);
 
         if (!property_exists($fullClassName, $property)) {
             throw new \InvalidArgumentException('Invalid Property: ' . $property . ' does not exist in class ' . $fullClassName);

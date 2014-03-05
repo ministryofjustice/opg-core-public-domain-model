@@ -1,12 +1,22 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Task;
 
+use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\User\User;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
+use \Zend\InputFilter\InputFilter;
+use \Zend\InputFilter\Factory as InputFactory;
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
+use Zend\Validator\IsInstanceOf;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name = "tasks")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @package Opg Core
  * @author Chris Moreton
@@ -16,37 +26,57 @@ class Task implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
+    use ToArray;
 
     /**
-     * @var string $id
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @var int $id
+     * @Type("integer")
      */
-    private $id;
+    protected $id;
 
     /**
+     * @Serializer\MaxDepth(2)
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
+     * @Type("Opg\Core\Model\Entity\User\User")
      */
-    private $assignedUser;
+    protected $assignedUser;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
-    private $status;
+    protected $status;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
-    private $priority;
-    
-    /**
-     * @var string
-     */
-    private $dueDate;
+    protected $priority;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Type("string")
+     */
+    protected $dueDate;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string name
+     * @Type("string")
      */
-    private $name;
-    
+    protected $name;
+
+    /**
+     * Non persistable entity, used for validation of create;
+     * @var CaseItem case
+     */
+    protected $case;
+
     public function __construct()
     {
         $now = new \DateTime();
@@ -57,7 +87,7 @@ class Task implements EntityInterface, \IteratorAggregate
     {
         return new \RecursiveArrayIterator($this->toArray());
     }
-    
+
     /**
      * @return string $priority
      */
@@ -91,7 +121,7 @@ class Task implements EntityInterface, \IteratorAggregate
         $this->dueDate = $dueDate;
         return $this;
     }
-    
+
     /**
      * @param string $priority
      * @return Task
@@ -113,7 +143,7 @@ class Task implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return string $id
+     * @return int $id
      */
     public function getId()
     {
@@ -137,7 +167,7 @@ class Task implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @return Task
      */
     public function setId($id)
@@ -150,7 +180,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @param User $assignedUser
      * @return Task
      */
-    public function setAssignedUser(User $assignedUser)
+    public function setAssignedUser(User $assignedUser = null)
     {
         $this->assignedUser = $assignedUser;
         return $this;
@@ -179,41 +209,14 @@ class Task implements EntityInterface, \IteratorAggregate
                 $factory->createInput(
                     array(
                         'name'       => 'id',
-                        'required'   => true,
+                        'required'   => false,
                         'filters'    => array(
                             array('name' => 'StripTags'),
                             array('name' => 'StringTrim'),
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 5,
-                                    'max'      => 36,
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'assignedUser',
-                        'required'   => false,
-                        'validators' => array(
-                            array(
-                                'name'    => 'Callback',
-                                'options' => array(
-                                    'callback' => function($value) {
-                                            if (!empty($value['username'])) {
-                                                return true;
-                                            }
-                                            return false;
-                                        }
-                                )
+                                'name'    => 'Digits',
                             )
                         )
                     )
@@ -283,16 +286,30 @@ class Task implements EntityInterface, \IteratorAggregate
                                 'name'   => 'Callback',
                                 'options' => array(
                                     'messages' => array(
-                                        \Zend\Validator\Callback::INVALID_VALUE => 'The due date cannot be in the past',
+                                     \Zend\Validator\Callback::INVALID_VALUE => 'The due date cannot be in the past',
                                     ),
                                     'callback' => function($value, $context = array()) {
 
                                         $dueDate = \DateTime::createFromFormat('Y-m-d', $value);
                                         $now = new \DateTime();
 
-                                        return $now <= $dueDate;
-                                    }
-                                )
+                                            return $now <= $dueDate;
+                                        }
+                                   )
+                            )
+                        )
+                    )
+                )
+            );
+
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'case',
+                        'required'   => true,
+                        'validators' => array(
+                            array(
+                                'name'    => 'NotEmpty',
                             )
                         )
                     )
@@ -303,16 +320,6 @@ class Task implements EntityInterface, \IteratorAggregate
         }
 
         return $this->inputFilter;
-    }
-
-    public function toArray() {
-        $data = get_object_vars($this);
-
-        if (!empty($data['assignedUser'])) {
-            $data['assignedUser'] = $data['assignedUser']->toArray();
-        }
-
-        return $data;
     }
 
     public function exchangeArray(array $data) {
@@ -340,10 +347,22 @@ class Task implements EntityInterface, \IteratorAggregate
             $this->setCreatedTime($data['createdTime']);
         }
 
-        if (!empty($data['username'])) {
+        if (!empty($data['assignedUser'])) {
             $user = new User();
-            $user->setUsername($data['username']);
+            $user = $user->exchangeArray($data['assignedUser']);
             $this->setAssignedUser($user);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param CaseItem $case
+     * @return Task
+     */
+    public function setCase(CaseItem $case)
+    {
+        $this->case = $case;
+        return $this;
     }
 }

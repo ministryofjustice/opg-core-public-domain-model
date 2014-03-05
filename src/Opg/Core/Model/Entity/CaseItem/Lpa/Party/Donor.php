@@ -1,55 +1,36 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
+use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputfilterTrait;
 use Zend\InputFilter\InputFilter;
-use Opg\Core\Model\Entity\CaseItem\Traits\Party;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Person;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
+ * @ORM\Entity
  *
  * @package Opg Core
  * @author Chris Moreton <chris@netsensia.com>
  *
  */
-class Donor implements PartyInterface, EntityInterface, \IteratorAggregate
+class Donor extends BasePerson implements PartyInterface, EntityInterface, \IteratorAggregate
 {
     use InputfilterTrait;
-    use Party;
-    use Person;
-    use ToArray;
-
-    public function toArray()
-    {
-        $data = get_object_vars($this);
-        unset($data['inputFilter']);
-
-        if (!empty($data['caseCollection'])) {
-            $data['caseCollection'] = $data['caseCollection']->toArray();
-        }
-
-        return $data;
+    use ToArray {
+        toArray as traitToArray;
     }
-    
+    use ExchangeArray;
+
     // Fulfil IteratorAggregate interface requirements
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return EntityInterface|void
-     */
-    public function exchangeArray(array $data)
-    {
-        $donor = new Donor;
-
-        return $donor;
     }
 
     /**
@@ -65,19 +46,14 @@ class Donor implements PartyInterface, EntityInterface, \IteratorAggregate
                 $factory->createInput(
                     array(
                         'name'       => 'id',
-                        'required'   => true,
+                        'required'   => false,
                         'filters'    => array(
                             array('name' => 'StripTags'),
                             array('name' => 'StringTrim'),
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 5,
-                                    'max'      => 24,
-                                ),
+                                'name'    => 'Digits',
                             )
                         )
                     )
@@ -89,52 +65,61 @@ class Donor implements PartyInterface, EntityInterface, \IteratorAggregate
 
         return $this->inputFilter;
     }
-    
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $previousNames;
-    
+    protected $previousNames;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $cannotSignForm;
-    
+    protected $cannotSignForm;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $applyingForFeeRemission;
-    
+    protected $applyingForFeeRemission;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $receivingBenefits;
-    
+    protected $receivingBenefits;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $receivedDamageAward;
-    
+    protected $receivedDamageAward;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $hasLowIncome;
-    
+    protected $hasLowIncome;
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $signatureDate;
-    
+    protected $signatureDate;
+
     /**
+     * @ORM\Column(type = "boolean")
      * @var boolean
      */
-    private $hasPreviousLpa;
-    
+    protected $hasPreviousLpa;
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $notesForPreviousLpa;
-    
+    protected $notesForPreviousLpa;
+
     /**
      * @return string $previousNames
      */
@@ -295,5 +280,14 @@ class Donor implements PartyInterface, EntityInterface, \IteratorAggregate
     {
         $this->notesForPreviousLpa = $notesForPreviousLpa;
         return $this;
+    }
+
+    /**
+     * @param bool $exposeClassname
+     *
+     * @return array
+     */
+    public function toArray($exposeClassname = TRUE) {
+        return $this->traitToArray($exposeClassname);
     }
 }

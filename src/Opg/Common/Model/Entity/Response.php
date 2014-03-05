@@ -13,9 +13,7 @@ class Response implements \IteratorAggregate
 {
 
     use IteratorAggregateTrait;
-    use ToArray {
-        toArray as traitToArray;
-    }
+    use ToArray;
 
     /**
      * @var EntityInterface
@@ -23,12 +21,26 @@ class Response implements \IteratorAggregate
     private $data;
 
     /**
-     * @param EntityInterface $data
+     * @param $data
      * @return Response
      */
-    public function setData(EntityInterface $data)
+    public function setData($data)
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return Response
+     */
+    public function setJsonData($data)
+    {
+        $this->setData(
+            json_decode($data)
+        );
 
         return $this;
     }
@@ -41,13 +53,15 @@ class Response implements \IteratorAggregate
         return $this->data;
     }
 
-    public function toArray() {
-        $baseArray = $this->traitToArray();
+    /**
+     * @param array $data
+     * @return Response
+     */
+    public function exchangeArray(array $data)
+    {
+        empty($data['data'])?: $this->setData($data['data']);
 
-        if (!empty($this->data)) {
-            $baseArray['data'] = $baseArray['data']->toArray();
-        }
-
-        return $baseArray;
+        return $this;
     }
+
 }

@@ -6,18 +6,22 @@
 
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait Company
 {
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $companyName;
-    
+    protected $companyName;
+
     /**
+     * @ORM\Column(type = "string")
      * @var string
      */
-    private $companyNumber;
-    
+    protected $companyNumber;
+
     /**
      * @return string $companyName
      */
@@ -28,7 +32,7 @@ trait Company
 
     /**
      * @param string $companyName
-     * @return PartyInterface
+     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
      */
     public function setCompanyName($companyName)
     {
@@ -46,7 +50,7 @@ trait Company
 
     /**
      * @param string $companyNumber
-     * @return PartyInterface
+     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
      */
     public function setCompanyNumber($companyNumber)
     {

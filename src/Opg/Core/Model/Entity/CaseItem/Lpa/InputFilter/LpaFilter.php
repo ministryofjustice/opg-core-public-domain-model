@@ -1,65 +1,40 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter;
 
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\HowAttorneysAct;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\PaymentMethod;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\ApplicantCollection;
+use Opg\Core\Model\Entity\PowerOfAttorney\Validator\Applicants;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
 
 class LpaFilter extends InputFilter
 {
     /**
-     * @var Zend\InputFilter\Factory
+     * @var \Zend\InputFilter\Factory
      */
     private $inputFactory;
 
     public function __construct()
     {
         $this->inputFactory = new InputFactory();
-        
+
         $this->setValidators();
     }
-    
+
     private function setValidators()
     {
-        $this->setCaseIdValidator();
         $this->setStatusValidator();
         $this->setDonorValidator();
         $this->setCorrespondentValidator();
-        $this->setApplicantCollectionValidator();
-        $this->setAttorneyCollectionValidator();
-        $this->setCertificateProviderCollectionValidator();
-        $this->setNotifiedPersonCollectionValidator();
+        $this->setApplicantsValidator();
+        $this->setAttorneysValidator();
+        $this->setCertificateProvidersValidator();
+        $this->setNotifiedPersonsValidator();
         $this->setPaymentMethodValidator();
         $this->setHowAttorneysActValidator();
         $this->setHowReplacementAttorneysActValidator();
-    }
-    
-    private function setCaseIdValidator()
-    {
-        $this->add(
-            $this->inputFactory->createInput(
-                array(
-                    'name'       => 'caseId',
-                    'required'   => true,
-                    'filters'    => array(
-                        array('name' => 'StripTags'),
-                        array('name' => 'StringTrim'),
-                    ),
-                    'validators' => array(
-                        array(
-                            'name'    => 'StringLength',
-                            'options' => array(
-                                'encoding' => 'UTF-8',
-                                'min'      => 5,
-                                'max'      => 24,
-                            ),
-                        )
-                    )
-                )
-            )
-        );
+        $this->setCaseTypeValidator();
+        $this->setCaseSubtypeValidator();
     }
 
     private function setStatusValidator()
@@ -73,6 +48,33 @@ class LpaFilter extends InputFilter
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
                     ),
+                    //'Perfect', 'Imperfect', 'Registered'
+                    'validators' => array(
+                        array(
+                            'name'    => 'InArray',
+                            'options' => array(
+                                'encoding' => 'UTF-8',
+                                'haystack' => array('Perfect', 'Imperfect', 'Registered'),
+                                'strict'   => \Zend\Validator\InArray::COMPARE_STRICT
+                            ),
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    private function setCaseTypeValidator()
+    {
+        $this->add(
+            $this->inputFactory->createInput(
+                array(
+                    'name'       => 'caseType',
+                    'required'   => true,
+                    'filters'    => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
                     'validators' => array(
                         array(
                             'name'    => 'StringLength',
@@ -87,7 +89,33 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
+
+    private function setCaseSubtypeValidator()
+    {
+        $this->add(
+            $this->inputFactory->createInput(
+                array(
+                    'name'       => 'caseSubtype',
+                    'required'   => true,
+                    'filters'    => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                    'validators' => array(
+                        array(
+                            'name'    => 'StringLength',
+                            'options' => array(
+                                'encoding' => 'UTF-8',
+                                'min'      => 2,
+                                'max'      => 24,
+                            ),
+                        )
+                    )
+                )
+            )
+        );
+    }
+
     private function setDonorValidator()
     {
         $this->add(
@@ -97,24 +125,21 @@ class LpaFilter extends InputFilter
                     'required'   => true,
                     'validators' => array(
                         array(
-                            'name'    => 'IsInstanceOf',
-                            'options' => array(
-                                'className' => 'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor',
-                            ),
+                            'name'    => 'NotEmpty'
                         )
                     )
                 )
             )
         );
     }
-    
+
     private function setCorrespondentValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
                 array(
                     'name'       => 'correspondent',
-                    'required'   => true,
+                    'required'   => false,
                     'validators' => array(
                         array(
                             'name'    => 'IsInstanceOf',
@@ -127,47 +152,41 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
-    private function setApplicantCollectionValidator()
+
+    /**
+     * @todo re-implement validator, test this logic works
+     * @return boolean
+     */
+    private function setApplicantsValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'applicantCollection',
-                    'required'   => true,
+                    'name'       => 'applicants',
+                    'required'   => false,
                     'validators' => array(
-                        new \Zend\Validator\Callback(
-                            array(
-                                'callback' => function ($value) {
-                                    
-                                    $applicantCollection =
-                                        new \Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantCollection();
-                                    $applicantCollection->exchangeArray($value);
-                                                                        
-                                    $isValid = $applicantCollection->isValid();
-
-                                    return $isValid;
-                                }
-                            )
-                        )
+                        new Applicants()
                     )
                 )
             )
         );
     }
-    
-    private function setAttorneyCollectionValidator()
+
+    /**
+     * @return boolean
+     */
+    private function setAttorneysValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'attorneyCollection',
-                    'required'   => true,
+                    'name'       => 'attorneys',
+                    'required'   => false,
                     'validators' => array(
                         array(
                             'name'    => 'IsInstanceOf',
                             'options' => array(
-                                'className' => 'Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyCollection',
+                                'className' => 'Doctrine\Common\Collections\ArrayCollection',
                             ),
                         ),
                     ),
@@ -175,19 +194,23 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
-    private function setCertificateProviderCollectionValidator()
+
+
+    /**
+     * @return boolean
+     */
+    private function setCertificateProvidersValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'certificateProviderCollection',
-                    'required'   => true,
+                    'name'       => 'certificateProviders',
+                    'required'   => false,
                     'validators' => array(
                         array(
                             'name'    => 'IsInstanceOf',
                             'options' => array(
-                                'className' => 'Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProviderCollection',
+                                'className' => 'Doctrine\Common\Collections\ArrayCollection',
                             ),
                         )
                     )
@@ -195,19 +218,22 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
-    private function setNotifiedPersonCollectionValidator()
+
+    /**
+     * @return boolean
+     */
+    private function setNotifiedPersonsValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'notifiedPersonCollection',
-                    'required'   => true,
+                    'name'       => 'notifiedPersons',
+                    'required'   => false,
                     'validators' => array(
                         array(
                             'name'    => 'IsInstanceOf',
                             'options' => array(
-                                'className' => 'Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPersonCollection',
+                                'className' => 'Doctrine\Common\Collections\ArrayCollection',
                             ),
                         )
                     )
@@ -222,7 +248,7 @@ class LpaFilter extends InputFilter
             $this->inputFactory->createInput(
                 array(
                     'name'       => 'paymentMethod',
-                    'required'   => true,
+                    'required'   => false,
                     'filters'    => array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
@@ -234,7 +260,7 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
+
     private function setHowAttorneysActValidator()
     {
         $this->add(
@@ -253,7 +279,7 @@ class LpaFilter extends InputFilter
             )
         );
     }
-    
+
     private function setHowReplacementAttorneysActValidator()
     {
         $this->add(

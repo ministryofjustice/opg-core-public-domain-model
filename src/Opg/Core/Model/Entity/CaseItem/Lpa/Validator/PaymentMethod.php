@@ -1,9 +1,13 @@
 <?php
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Validator;
 
 use Zend\Validator\InArray;
 
+/**
+ * Class PaymentMethod
+ *
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Validator
+ */
 class PaymentMethod extends InArray
 {
     public function __construct()

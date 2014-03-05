@@ -10,9 +10,10 @@ use Zend\InputFilter\InputFilterAwareInterface;
 interface EntityInterface extends InputFilterAwareInterface
 {
     /**
+     * @param bool exposeClassname
      * @return array
      */
-    public function toArray();
+    public function toArray($exposeClassname = FALSE);
 
     /**
      * @param array $data

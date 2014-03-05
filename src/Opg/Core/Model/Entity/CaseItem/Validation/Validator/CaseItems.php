@@ -4,10 +4,11 @@ namespace Opg\Core\Model\Entity\CaseItem\Validation\Validator;
 use Zend\Validator\AbstractValidator;
 
 /**
- * Class CaseItemCollection
+ * Class CaseItems
  * @package Opg\Core\Model\Entity\CaseItem\Validation\Validator
+ * @todo Figure out where to put this, currently is validating in CaseItem.php
  */
-class CaseItemCollection extends AbstractValidator
+class CaseItems extends AbstractValidator
 {
     const NO_CASEITEMS_FOUND       = 'noCaseItemsFound';
 
@@ -21,18 +22,18 @@ class CaseItemCollection extends AbstractValidator
 
 
     /**
-     * @param mixed $caseItemCollection
+     * @param mixed $caseItems
      *
      * @return bool
      */
     public function isValid(
-        $caseItemCollection
+        $caseItems
     ) {
-        $this->setValue($caseItemCollection);
+        $this->setValue($caseItems);
 
-        $caseItemCollectionCount = count($caseItemCollection);
+        $caseItemCount = count($caseItems);
 
-        if ($caseItemCollectionCount == 0) {
+        if ($caseItemCount == 0) {
             $this->error(self::NO_CASEITEMS_FOUND);
             return false;
         }

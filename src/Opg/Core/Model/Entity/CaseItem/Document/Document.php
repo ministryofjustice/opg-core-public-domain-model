@@ -1,88 +1,114 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Document;
 
-use Opg\Core\Model\Entity\CaseItem\Page\PageCollection;
+use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\EntityInterface;
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name = "documents")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document
  */
 class Document implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
-    use \Opg\Common\Model\Entity\Traits\ToArray;
-    
-    /**
-     * @var string
-     */
-    private $id;
-    
-    /**
-     * @var string
-     */
-    private $filename;
-    
-    /**
-     * @var string
-     */
-    private $type;
+
+    use \Opg\Common\Model\Entity\Traits\ToArray {
+        toArray as traitToArray;
+    }
 
     /**
-     * @var string
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @var integer
      */
-    private $subtype;
+    protected $id;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
-    private $title;
+    protected $filename;
 
     /**
-     * @var PageCollection
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
      */
-    private $pages;
-    
-    public function toArray()
+    protected $type;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $subtype;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @ORM\OneToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Page\Page", mappedBy = "document", indexBy = "pageNumber", cascade={"persist"})
+     * @ORM\OrderBy({"pageNumber" = "ASC"})
+     *
+     * @var ArrayCollection
+     */
+    protected $pages;
+
+    public function __construct()
     {
-        $data = get_object_vars($this);
+        $this->pages = new ArrayCollection();
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \Opg\Common\Model\Entity\EntityInterface::toArray()
+     */
+    public function toArray($exposeClassname = FALSE)
+    {
+        $data = $this->traitToArray($exposeClassname);
 
         $numberOfPages = 0;
-        
-        $pages = array();
-        if (!empty($this->pages)) {
-            foreach($this->getPageCollection()->getData() as $page) {
-                $pages[] = $page->toArray();
-                $numberOfPages ++;
-            }
-            $data['pages'] = $pages;
+
+        if ( ! $this->pages->isEmpty()) {
+            $data['pages'] = $this->getPages()->toArray();
+            $numberOfPages = count($data['pages']);
         }
 
-        unset($data['inputFilter']);
-    
         $data['metadata'] = [];
-        
+
         $data['metadata']['filename'] = $data['filename'];
         unset($data['filename']);
-        
+
         $data['metadata']['documentType'] = $data['type'];
         $data['metadata']['numberOfPages'] = $numberOfPages;
-        
+
         return $data;
     }
-    
-    // Fulfil IteratorAggregate interface requirements
+
+    /**
+     * Fulfil IteratorAggregate interface requirements
+     *
+     * @return \RecursiveArrayIterator|\Traversable
+     */
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
     }
-    
+
     /**
      * @param array $data
      *
-     * @return EntityInterface|void
+     * @return Document
      */
     public function exchangeArray(array $data)
     {
@@ -101,15 +127,26 @@ class Document implements EntityInterface, \IteratorAggregate
         if (!empty($data['title'])) {
             $this->setTitle($data['title']);
         }
-        
+
         if (!empty($data['metadata'])) {
             $metadata = $data['metadata'];
             if (!empty($data['metadata']['filename'])) {
                 $this->setFilename($metadata['filename']);
             }
         }
+
+        if (!empty($data['pages'])) {
+            $currentPage = new Page();
+            $pages = new ArrayCollection();
+            foreach($data['pages'] as $page) {
+                $pages->add((is_array($page)) ? $currentPage->exchangeArray($page) : $page);
+            }
+            $this->pages = $pages;
+        }
+
+        return $this;
     }
-    
+
     /**
      * @return InputFilter|InputFilterInterface
      */
@@ -118,7 +155,7 @@ class Document implements EntityInterface, \IteratorAggregate
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
             $factory     = new InputFactory();
-    
+
             $inputFilter->add(
                 $factory->createInput(
                     array(
@@ -130,21 +167,16 @@ class Document implements EntityInterface, \IteratorAggregate
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 5,
-                                    'max'      => 48,
-                                ),
+                                'name'    => 'Digits'
                             )
                         )
                     )
                 )
             );
-    
+
             $this->inputFilter = $inputFilter;
         }
-    
+
         return $this->inputFilter;
     }
 
@@ -169,23 +201,39 @@ class Document implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\CaseItem\Page\PageCollection $pages
-     *
+     * @param ArrayCollection $pages
      * @return Document
      */
-    public function setPageCollection(PageCollection $pages)
+    public function setPages(ArrayCollection $pages)
     {
-        $this->pages = $pages;
+        foreach($pages as $page) {
+            $this->addPage($page);
+        }
 
         return $this;
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\CaseItem\Page\PageCollection
+     * @return ArrayCollection
      */
-    public function getPageCollection()
+    public function getPages()
     {
         return $this->pages;
+    }
+
+    /**
+     * @param Page $page
+     * @return Document
+     */
+    public function addPage(Page $page)
+    {
+        $nextPageNumber = count($this->pages) + 1;
+        $page->setPageNumber($nextPageNumber);
+        $page->setDocument($this);
+
+        $this->pages->set($nextPageNumber, $page);
+
+        return $this;
     }
 
     /**
@@ -247,17 +295,19 @@ class Document implements EntityInterface, \IteratorAggregate
     {
         return $this->type;
     }
-    
+
 	/**
-     * @return the $filename
+     * @return string $filename
      */
     public function getFilename()
     {
         return $this->filename;
     }
 
-	/**
+    /**
      * @param string $filename
+     *
+     * @return Document
      */
     public function setFilename($filename)
     {
