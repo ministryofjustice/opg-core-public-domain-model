@@ -1,5 +1,5 @@
 {
-	"name" : "ministryofjustice/opg-core-domain-model",
+	"name" : "ministryofjustice/opg-core-public-domain-model",
 	"description" : "Domain model for the OPG Core project",
 	"type" : "library",
 	"authors" : [{
