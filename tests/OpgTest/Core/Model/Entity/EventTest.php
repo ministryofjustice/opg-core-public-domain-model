@@ -141,4 +141,43 @@ class EventTest extends \PHPUnit_Framework_TestCase
     {
         $this->event->getInputFilter();
     }
+
+    public function testGetEmptyChangeSet()
+    {
+        $this->assertFalse($this->event->hasChangeset());
+
+        try {
+            $this->event->getChangeset();
+        }
+        catch(\Exception $e) {
+            $this->assertInstanceOf('\LogicException', $e);
+        }
+    }
+
+    public function testCreateWithParams()
+    {
+        $owningEntityId = 1;
+        $owningEntityClass = __CLASS__;
+        $changeSet = array('id'=>'2');
+
+        $this->event = new Event($owningEntityId, $owningEntityClass, $changeSet);
+
+        $this->assertTrue($this->event->hasChangeset());
+
+        $this->assertEquals($owningEntityId, $this->event->getOwningEntityId());
+        $this->assertEquals($owningEntityClass, $this->event->getOwningEntityClass());
+
+        $this->assertTrue(is_array($this->event->getChangeset()));
+        $this->assertEquals($changeSet, $this->event->getChangeset());
+    }
+
+    public function testGetEntity()
+    {
+        $this->assertEmpty($this->event->getEntity());
+    }
+    public function testGetSourceEntityClass()
+    {
+        $this->assertEmpty($this->event->getSourceEntityClass());
+    }
+
 }
