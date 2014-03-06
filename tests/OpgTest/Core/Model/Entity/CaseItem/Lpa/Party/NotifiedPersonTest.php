@@ -30,23 +30,6 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testgetSetInputFilter()
-    {
-        try {
-            $this->notifiedPerson->setInputFilter(new InputFilter());
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof UnusedException);
-        }
-
-        try {
-            $this->notifiedPerson->getInputFilter();
-        }
-        catch(\Exception $e){
-            $this->assertTrue($e instanceof UnusedException);
-        }
-    }
-
     public function testToArrayExchangeArray()
     {
         $this->notifiedPerson

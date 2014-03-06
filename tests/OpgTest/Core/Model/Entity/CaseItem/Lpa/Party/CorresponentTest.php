@@ -29,23 +29,6 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->correspondent instanceof EntityInterface);
     }
 
-    public function testgetSetInputFilter()
-    {
-        try {
-            $this->correspondent->setInputFilter(new InputFilter());
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof UnusedException);
-        }
-
-        try {
-            $this->correspondent->getInputFilter();
-        }
-        catch(\Exception $e){
-            $this->assertTrue($e instanceof UnusedException);
-        }
-    }
-
     public function testToArrayExchangeArray()
     {
         $this->correspondent->setId('1');

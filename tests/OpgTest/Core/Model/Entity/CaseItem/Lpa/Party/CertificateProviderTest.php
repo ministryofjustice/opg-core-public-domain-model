@@ -42,23 +42,6 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testgetSetInputFilter()
-    {
-        try {
-            $this->certificateProvider->setInputFilter(new InputFilter());
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof UnusedException);
-        }
-
-        try {
-            $this->certificateProvider->getInputFilter();
-        }
-        catch(\Exception $e){
-            $this->assertTrue($e instanceof UnusedException);
-        }
-    }
-
     public function testToArrayExchangeArray()
     {
         $this->certificateProvider

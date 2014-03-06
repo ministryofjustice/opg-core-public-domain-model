@@ -59,23 +59,6 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->attorney->isReplacementAttorney());
     }
 
-    public function testgetSetInputFilter()
-    {
-        try {
-            $this->attorney->setInputFilter(new InputFilter());
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof UnusedException);
-        }
-
-        try {
-            $this->attorney->getInputFilter();
-        }
-        catch(\Exception $e){
-            $this->assertTrue($e instanceof UnusedException);
-        }
-    }
-
     public function testToArrayExchangeArray()
     {
         $this->attorney
