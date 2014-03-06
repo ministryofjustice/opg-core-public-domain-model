@@ -2,6 +2,7 @@
 namespace OpgTest\Core\Model\Entity\Address;
 
 use Opg\Core\Model\Entity\Address\Address;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 
 /**
  * Address test case.
@@ -29,12 +30,15 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->address = new Address();
 
         $this->testData = array(
+            'id'           => null,
             'country'      => 'TestCountry',
             'town'         => 'TestTown',
             'county'       => 'TestCounty',
             'addressLines' => [1, 2, 3],
             'postcode'     => 'SW3 4HG',
-            'errorMessages'=> array()
+            'errorMessages'=> array(),
+            'person'       => null,
+            'type'         => 'Primary'
         );
     }
 
@@ -45,7 +49,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     {
         $inputFilter = $this->address->getInputFilter();
 
-        $this->assertInstanceOf('Zend\InputFilter\InputFilter', $inputFilter); 
+        $this->assertInstanceOf('Zend\InputFilter\InputFilter', $inputFilter);
     }
 
     /**
@@ -66,6 +70,17 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->address->setAddressLines($addressLines);
+
+        $this->assertEquals(
+            $addressLines,
+            $this->address->getAddressLines()
+        );
+
+        $this->address->clearAddressLines();
+
+        foreach ($addressLines as $addressLine) {
+            $this->address->setAddressLine($addressLine);
+        }
 
         $this->assertEquals(
             $addressLines,
@@ -162,11 +177,11 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetArrayCopy()
+    public function testToArray()
     {
         $this->address->exchangeArray($this->testData);
 
-        $returnArray = $this->address->getArrayCopy();
+        $returnArray = $this->address->toArray();
 
         unset($returnArray['inputFilter']);
 
@@ -186,5 +201,16 @@ class AddressTest extends \PHPUnit_Framework_TestCase
             array('errors' => array()),
             $this->address->getErrorMessages()
         );
+    }
+
+    public function testSetGetUser()
+    {
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->address->setPerson($donor);
+        $this->assertEquals($donor, $this->address->getPerson());
     }
 }
