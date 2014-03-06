@@ -1,7 +1,9 @@
 <?php
 namespace OpgTest\Core\Model\Entity\CaseItem\Document;
 
-use Opg\Core\Model\Entity\CaseItem\Page\PageCollection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 
@@ -17,9 +19,9 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         'type'          => 'doctype',
         'subtype'       => 'docsubtype',
         'title'         => 'doc title',
-        'pages'         => null,
+        'pages'         => array(),
         'errorMessages' => array(),
-        'metadata' => array( 
+        'metadata' => array(
             'filename' => 'filename',
             'documentType' => 'doctype',
             'numberOfPages' => 0
@@ -51,7 +53,17 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 
     public function testExchangeAndToArray()
     {
-        $this->document->exchangeArray($this->data);
+        $pageCollection = new ArrayCollection();
+
+        for($i=0; $i<10; $i++) {
+            $page = new Page();
+            $page->setId($i+1)->setPageNumber($i+1);
+            $pageCollection->add($page);
+        }
+
+        $this->data['pages'] = $pageCollection->toArray();
+        $this->data['metadata']['numberOfPages'] = count($this->data['pages']);
+        $this->document = $this->document->exchangeArray($this->data);
 
         $this->assertEquals($this->data, $this->document->toArray());
     }
@@ -84,12 +96,35 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->data['title'], $this->document->getTitle());
     }
 
+    public function testAddGetPageCollection()
+    {
+        $page = new Page();
+        $this->document->addPage($page);
+        $pages = $this->document->getPages()->toArray();
+        $this->assertEquals($pages[1], $page);
+
+        $pageCollection = $this->document->getPages();
+        $pageCollection->add($page);
+
+
+        $this->assertEquals($pageCollection, $this->document->getPages());
+    }
+
     public function testSetGetPageCollection()
     {
-        $pageCollection = new PageCollection();
+        $pageCollection = new ArrayCollection();
+        $pageCollection->add(new Page);
+        $pageCollection->add(new Page);
 
-        $this->document->setPageCollection($pageCollection);
+        $this->document->setPages($pageCollection);
 
-        $this->assertEquals($pageCollection, $this->document->getPageCollection());
+        $this->assertEquals(count($pageCollection), count($this->document->getPages()));
+    }
+
+    public function testSetGetFileName()
+    {
+        $filename = 'TestFile';
+        $this->document->setFilename($filename);
+        $this->assertEquals($filename, $this->document->getFilename());
     }
 }
