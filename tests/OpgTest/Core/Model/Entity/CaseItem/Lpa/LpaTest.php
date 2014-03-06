@@ -1,12 +1,15 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Lpa;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
-use Opg\Core\Model\Entity\CaseItem\Party\PartyCollection;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantCollection;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
+use Opg\Core\Model\Entity\CaseItem\Page\Page;
 
 /**
  * Lpa test case.
@@ -19,13 +22,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
      */
     private $lpa;
 
-    /**
-     * Prepares the environment before running a test.
-     */
     protected function setUp()
     {
         parent::setUp();
-                
+
         $this->lpa = new Lpa();
     }
 
@@ -35,7 +35,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->lpa = null;
-        
+
         parent::tearDown();
     }
 
@@ -46,15 +46,15 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    public function testGetsetCaseId()
+    public function testGetSetId()
     {
-        $caseId = '1234567/123';
-        
-        $this->lpa->setCaseId($caseId);
-        
+        $Id = '1234567123';
+
+        $this->lpa->setId($Id);
+
         $this->assertEquals(
-            $caseId,
-            $this->lpa->getCaseId()
+            $Id,
+            $this->lpa->getId()
         );
     }
 
@@ -69,19 +69,19 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             $this->lpa->getTitle()
         );
     }
-    
+
     public function testGetSetDonor()
     {
         $donor = new Donor();
         $donor->setId(123);
         $this->lpa->setDonor($donor);
-        
+
         $this->assertInstanceOf(
             'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor',
             $this->lpa->getDonor()
         );
     }
-    
+
     public function testThrowsExceptionWhenTryingToPassBadObjectToSetDonor()
     {
         $donor = new Attorney();
@@ -89,30 +89,30 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Exception');
         $this->lpa->setDonor($donor);
     }
-    
+
     public function testGetSetCorrespondent()
     {
         $correspondent = new Correspondent();
         $correspondent->setId(123);
         $this->lpa->setCorrespondent($correspondent);
-    
+
         $this->assertInstanceOf(
             'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent',
             $this->lpa->getCorrespondent()
         );
     }
-    
+
     public function testGetSetApplicantCollection()
     {
-        $applicantCollection = new ApplicantCollection();
-        $this->lpa->setApplicantCollection($applicantCollection);
-    
+        $applicantCollection = new ArrayCollection();
+        $this->lpa->setApplicants($applicantCollection);
+
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantCollection',
-            $this->lpa->getApplicantCollection()
+            'Doctrine\Common\Collections\ArrayCollection',
+            $this->lpa->getApplicants()
         );
     }
-    
+
     public function testThrowsExceptionWhenTryingToPassBadObjectToSetCorrespondent()
     {
         $correspondent = new Attorney();
@@ -120,82 +120,82 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Exception');
         $this->lpa->setCorrespondent($correspondent);
     }
-    
+
     public function testGetSetAttorneyCollection()
     {
-        $attorneyCollection = new PartyCollection();
-        $this->lpa->setAttorneyCollection($attorneyCollection);
-    
+        $attorneyCollection = new ArrayCollection();
+        $this->lpa->setAttorneys($attorneyCollection);
+
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Party\PartyCollection',
-            $this->lpa->getAttorneyCollection()
+            'Doctrine\Common\Collections\ArrayCollection',
+            $this->lpa->getAttorneys()
         );
     }
-    
+
     public function testGetSetNotifiedPersonCollection()
     {
-        $notifiedPersonCollection = new PartyCollection();
-        $this->lpa->setNotifiedPersonCollection($notifiedPersonCollection);
-    
+        $notifiedPersonCollection = new ArrayCollection();
+        $this->lpa->setNotifiedPersons($notifiedPersonCollection);
+
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Party\PartyCollection',
-            $this->lpa->getNotifiedPersonCollection()
+            'Doctrine\Common\Collections\ArrayCollection',
+            $this->lpa->getNotifiedPersons()
         );
     }
-    
+
     public function testGetSetCertificateProviderCollection()
     {
-        $certificateProviderCollection = new PartyCollection();
-        $this->lpa->setCertificateProviderCollection($certificateProviderCollection);
-    
+        $certificateProviderCollection = new ArrayCollection();
+        $this->lpa->setCertificateProviders($certificateProviderCollection);
+
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Party\PartyCollection',
-            $this->lpa->getCertificateProviderCollection()
+            'Doctrine\Common\Collections\ArrayCollection',
+            $this->lpa->getCertificateProviders()
         );
     }
-    
+
     public function testGetSetPaymentMethod()
     {
         $expected = 'CARD';
-    
+
         $this->lpa->setPaymentMethod($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getPaymentMethod()
         );
     }
-    
+
     public function testGetSetCardPaymentContact()
     {
         $expected = 'Mrs Henrietta Miggins';
-    
+
         $this->lpa->setCardPaymentContact($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getCardPaymentContact()
         );
     }
-        
+
     public function testGetSetBacsPaymentInstructions()
     {
         $expected = 'These are the instructions you wanted';
-    
+
         $this->lpa->setBacsPaymentInstructions($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getBacsPaymentInstructions()
         );
     }
-    
+
     public function testGetSetRegistrationDueDate()
     {
         $expected = '2014-09-25';
-    
+
         $this->lpa->setRegistrationDueDate($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getRegistrationDueDate()
@@ -205,81 +205,81 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     public function testGetSetHowAttorneysAct()
     {
         $expected = 'Jointly and Severally';
-    
+
         $this->lpa->setHowAttorneysAct($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getHowAttorneysAct()
         );
     }
-    
+
     public function testGetSetHowReplacementAttorneysAct()
     {
         $expected = 'Jointly';
-    
+
         $this->lpa->setHowReplacementAttorneysAct($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getHowReplacementAttorneysAct()
         );
     }
-    
+
     public function testGetSetAttorneyActDecisions()
     {
         $expected = 'These are some attorney decision instructions';
-    
+
         $this->lpa->setAttorneyActDecisions($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getAttorneyActDecisions()
         );
     }
-    
+
     public function testGetSetReplacementAttorneyActDecisions()
     {
         $expected = 'These are some replacement attorney decision instructions';
-    
+
         $this->lpa->setReplacementAttorneyActDecisions($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getReplacementAttorneyActDecisions()
         );
     }
-    
+
     public function testGetSetReplacementOrder()
     {
         $expected = 'This is how the replacements should replace the mains';
-    
+
         $this->lpa->setReplacementOrder($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getReplacementOrder()
         );
     }
-    
+
     public function testGetSetRestrictions()
     {
         $expected = "You can't do that";
-    
+
         $this->lpa->setRestrictions($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getRestrictions()
         );
     }
-    
+
     public function testGetSetGuidance()
     {
         $expected = "Please do this if possible";
-    
+
         $this->lpa->setGuidance($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getGuidance()
@@ -289,45 +289,45 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     public function testGetSetCharges()
     {
         $expected = "Please pay all my attorneys 100 pounds a month";
-    
+
         $this->lpa->setCharges($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getCharges()
         );
     }
-    
+
     public function testGetSetAdditionalInfo()
     {
         $expected = "Here's something you might need to know";
-    
+
         $this->lpa->setAdditionalInfo($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getAdditionalInfo()
         );
     }
-    
+
     public function testGetSetPaymentId()
     {
         $expected = '123456/ABC';
-    
+
         $this->lpa->setPaymentId($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getPaymentId()
         );
     }
-    
+
     public function testGetSetPaymentAmount()
     {
         $expected = '130GBP';
-    
+
         $this->lpa->setPaymentAmount($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getPaymentAmount()
@@ -337,118 +337,179 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     public function testGetSetPaymentDate()
     {
         $expected = '2014-07-27';
-    
+
         $this->lpa->setPaymentDate($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->lpa->getPaymentDate()
         );
     }
-    
+
     public function testDonorValidation()
     {
         $this->assertFalse($this->lpa->isValid(['donor']));
-    
+
         $this->lpa->setDonor(new Donor());
         $this->assertTrue($this->lpa->isValid(['donor']));
     }
-    
-    public function testPaymentMethodValidation()
-    {
-        $this->assertFalse($this->lpa->isValid(['paymentMethod']));
-        
-        $this->lpa->setPaymentMethod('Cash in hand');
-        $this->assertFalse($this->lpa->isValid(['paymentMethod']));
-        
-        $this->lpa->setPaymentMethod('CARD');
-        $this->assertTrue($this->lpa->isValid(['paymentMethod']));
-        
-        $this->lpa->setPaymentMethod('CHEQUE');
-        $this->assertTrue($this->lpa->isValid(['paymentMethod']));
-        
-        $this->lpa->setPaymentMethod('BACS');
-        $this->assertTrue($this->lpa->isValid(['paymentMethod']));
-    }
-    
+
     public function testHowAttorneysActValidation()
     {
         $this->assertTrue($this->lpa->isValid(['howAttorneysAct']));
-    
+
         $this->lpa->setHowAttorneysAct('HOWEVER_THEY_LIKE');
         $this->assertFalse($this->lpa->isValid(['howAttorneysAct']));
-           
+
         $this->lpa->setHowAttorneysAct('JOINTLY');
         $this->assertTrue($this->lpa->isValid(['howAttorneysAct']));
-    
+
         $this->lpa->setHowAttorneysAct('SEVERALLY');
         $this->assertTrue($this->lpa->isValid(['howAttorneysAct']));
-    
+
         $this->lpa->setHowAttorneysAct('JOINTLY_AND_SEVERALLY');
         $this->assertTrue($this->lpa->isValid(['howAttorneysAct']));
     }
-    
+
     public function testHowReplacementAttorneysActValidation()
     {
         $this->assertTrue($this->lpa->isValid(['howReplacementAttorneysAct']));
-    
+
         $this->lpa->setHowReplacementAttorneysAct('HOWEVER_THEY_LIKE');
         $this->assertFalse($this->lpa->isValid(['howReplacementAttorneysAct']));
-    
+
         $this->lpa->setHowReplacementAttorneysAct('JOINTLY');
         $this->assertTrue($this->lpa->isValid(['howReplacementAttorneysAct']));
-    
+
         $this->lpa->setHowReplacementAttorneysAct('SEVERALLY');
         $this->assertTrue($this->lpa->isValid(['howReplacementAttorneysAct']));
-    
+
         $this->lpa->setHowReplacementAttorneysAct('JOINTLY_AND_SEVERALLY');
         $this->assertTrue($this->lpa->isValid(['howReplacementAttorneysAct']));
     }
-    
+
     public function testValidationTraversalDownToValidApplicantCollection()
     {
-        $applicants = new ApplicantCollection();
-        $applicants->addApplicant(new Donor());
-        
-        $this->lpa->setApplicantCollection($applicants);
-        
-        $this->assertTrue($this->lpa->isValid(['applicantCollection']));
+        $applicants = new ArrayCollection();
+        $applicants->add(new Donor());
+
+        $this->lpa->setApplicants($applicants);
+
+        $this->assertTrue($this->lpa->isValid(['applicants']));
     }
-    
+
     public function testValidationTraversalDownToInvalidApplicantCollection()
     {
-        $applicants = new ApplicantCollection();
-        $applicants->addApplicant(new Donor());
-        $applicants->addApplicant(new Attorney());
-    
-        $this->lpa->setApplicantCollection($applicants);
-    
-        $this->assertFalse($this->lpa->isValid(['applicantCollection']));
-        
+        $applicants = new ArrayCollection();
+        $applicants->add(new Donor());
+        $applicants->add(new Attorney());
 
+        $this->lpa->setApplicants(  $applicants);
+
+        $this->assertFalse($this->lpa->isValid(['applicants']));
     }
-    
+
+    public function testValidationInvalidPartyType()
+    {
+        $applicants = new ArrayCollection();
+        $applicants->add(new Donor());
+        $applicants->add(new Attorney());
+        $applicants->add(new Correspondent());
+
+        $this->lpa->setApplicants(  $applicants);
+
+        $this->assertFalse($this->lpa->isValid(['applicants']));
+    }
+
     public function testGetInputFilter()
     {
         $inputFilter = $this->lpa->getInputFilter();
-        
+
         $this->assertInstanceOf(
             'Zend\InputFilter\InputFilterInterface',
             $inputFilter
         );
     }
-    
+
     public function testExchangeArray()
     {
         $data = array(
-            'caseId' => '12345ABC/123'
+            'id' => '12345123'
         );
-    
+
         $this->lpa->exchangeArray($data);
-    
+
         $this->assertEquals(
-            $data['caseId'],
-            $this->lpa->getCaseId()
+            $data['id'],
+            $this->lpa->getId()
+        );
+    }
+
+    /**
+     * @group array-recursive
+     */
+    public function testArrayRecursive()
+    {
+        $lpa = new Lpa();
+        $lpa->setDonor(new Donor());
+        $lpa->addApplicant(new Attorney());
+        $lpa->addAttorney(new Attorney());
+        $lpa->addCertificateProvider(new CertificateProvider());
+        $lpa->addNotifiedPerson(new NotifiedPerson());
+        $lpa->addDocument($doc = new Document());
+        $doc->addPage(new Page());
+
+        $this->assertEquals(
+            array (
+                'donor' => array (
+                ),
+                'correspondent' => NULL,
+                'applicants' => array (
+                ),
+                'attorneys' => array (
+                ),
+                'notifiedPersons' => array (
+                ),
+                'certificateProviders' => array (
+                ),
+                'paymentMethod' => NULL,
+                'cardPaymentContact' => NULL,
+                'bacsPaymentInstructions' => NULL,
+                'registrationDueDate' => NULL,
+                'howAttorneysAct' => NULL,
+                'howReplacementAttorneysAct' => NULL,
+                'attorneyActDecisions' => NULL,
+                'replacementAttorneyActDecisions' => NULL,
+                'replacementOrder' => NULL,
+                'restrictions' => NULL,
+                'guidance' => NULL,
+                'charges' => NULL,
+                'additionalInfo' => NULL,
+                'paymentId' => NULL,
+                'paymentAmount' => NULL,
+                'paymentDate' => NULL,
+                'id' => NULL,
+                'title' => NULL,
+                'caseType' => NULL,
+                'caseSubtype' => NULL,
+                'dueDate' => NULL,
+                'status' => NULL,
+                'assignedUser' => NULL,
+                'tasks' => array (
+                ),
+                'notes' => array (
+                ),
+                'documents' => array (
+                ),
+                'caseItems' => array (
+                ),
+                'uId' => NULL,
+                'inputFilter' => NULL,
+                'errorMessages' => array (
+                ),
+                'taskStatus'    => array(),
+            ),
+            $lpa->toArrayRecursive()
         );
     }
 }
