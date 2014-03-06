@@ -2,8 +2,6 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
-use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\InputFilter as InputfilterTrait;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\Factory as InputFactory;
@@ -16,22 +14,14 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Entity
  *
  * @package Opg Core
- * @author Chris Moreton <chris@netsensia.com>
  *
  */
-class Donor extends BasePerson implements PartyInterface, EntityInterface, \IteratorAggregate
+class Donor extends BasePerson implements PartyInterface
 {
-    use InputfilterTrait;
     use ToArray {
         toArray as traitToArray;
     }
     use ExchangeArray;
-
-    // Fulfil IteratorAggregate interface requirements
-    public function getIterator()
-    {
-        return new \RecursiveArrayIterator($this->toArray());
-    }
 
     /**
      * @return InputFilter|InputFilterInterface
@@ -39,13 +29,13 @@ class Donor extends BasePerson implements PartyInterface, EntityInterface, \Iter
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
+            $inputFilter = parent::getInputFilter();
             $factory     = new InputFactory();
 
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'id',
+                        'name'       => 'firstname',
                         'required'   => false,
                         'filters'    => array(
                             array('name' => 'StripTags'),
@@ -53,7 +43,12 @@ class Donor extends BasePerson implements PartyInterface, EntityInterface, \Iter
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'Digits',
+                                'name'    => 'StringLength',
+                                'options' => array(
+                                    'encoding' => 'UTF-8',
+                                    'min'      => 3,
+                                    'max'      => 24,
+                                ),
                             )
                         )
                     )

@@ -4,7 +4,9 @@ namespace Opg\Core\Model\Entity\Person;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
@@ -15,6 +17,8 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * @ORM\Entity
@@ -31,19 +35,21 @@ use JMS\Serializer\Annotation\MaxDepth;
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
  */
-abstract class Person implements HasUidInterface
+abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggregate
 {
     use UniqueIdentifier;
+    use InputFilterTrait;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var string
+     * @var integer
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $email;
 
@@ -73,42 +79,49 @@ abstract class Person implements HasUidInterface
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $dob;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $title;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $surname;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
+     * @Type("Opg\Core\Model\Entity\Address\Address")
      */
     protected $addresses;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\PhoneNumber\PhoneNumber
+     * @Type("Opg\Core\Model\Entity\PhoneNumber\PhoneNumber")
      */
     protected $phoneNumbers;
 
@@ -289,7 +302,7 @@ abstract class Person implements HasUidInterface
 
     /**
      *
-     * @param string $surname
+     * @param string $surnameInputFactory
      * @return PartyInterface
      */
     public function setSurname ($surname)
@@ -308,10 +321,16 @@ abstract class Person implements HasUidInterface
     public function addCase (CaseItemInterface $case)
     {
         if ($case instanceof PowerOfAttorney) {
+            if(is_null($this->powerOfAttorneys)) {
+                $this->powerOfAttorneys = new ArrayCollection();
+            }
             if(!$this->powerOfAttorneys->contains($case)) {
                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
+            if(is_null($this->powerOfAttorneys)) {
+                $this->deputyships = new ArrayCollection();
+            }
             if(!$this->deputyships->contains($case)) {
                 $this->deputyships->add($case);
             }
@@ -326,6 +345,9 @@ abstract class Person implements HasUidInterface
      */
     public function getPowerOfAttorneys ()
     {
+        if(is_null($this->powerOfAttorneys)) {
+            $this->powerOfAttorneys = new ArrayCollection();
+        }
         return $this->powerOfAttorneys;
     }
 
@@ -348,6 +370,9 @@ abstract class Person implements HasUidInterface
      */
     public function getDeputyships ()
     {
+        if(is_null($this->deputyships)) {
+            $this->deputyships = new ArrayCollection();
+        }
         return $this->deputyships;
     }
 
@@ -387,6 +412,73 @@ abstract class Person implements HasUidInterface
     {
         $this->phoneNumbers = new ArrayCollection();
         return $this;
+    }
+
+    /**
+     * @param InputFilterInterface $inputFilter
+     * @return void|\Zend\InputFilter\InputFilterAwareInterface
+     */
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+
+    }
+
+    /**
+     * @return \Zend\InputFilter\InputFilter|InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new \Zend\InputFilter\InputFilter();
+            $factory     = new InputFactory();
+
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'surname',
+                        'required'   => true,
+                        'filters'    => array(
+                            array('name' => 'StripTags'),
+                            array('name' => 'StringTrim'),
+                        ),
+                        'validators' => array(
+                            array(
+                                'name'    => 'StringLength',
+                                'options' => array(
+                                    'encoding' => 'UTF-8',
+                                    'min'      => 5,
+                                    'max'      => 24,
+                                ),
+                            )
+                        )
+                    )
+                )
+            );
+
+            $this->inputFilter = $inputFilter;
+        }
+        return $this->inputFilter;
+    }
+
+    // Fulfil IteratorAggregate interface requirements
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
+    }
+
+    /**
+     * Method to validate a person in the input filter, where required
+     * This is a bitwise or comparison, if either condition is true, it returns true
+     * @return bool
+     *
+     */
+    public function hasAttachedCase() {
+        return
+            (bool) (
+                ($this->getPowerOfAttorneys()->count() > 0)
+                |
+                ($this->getDeputyships()->count() > 0)
+            );
     }
 }
 
