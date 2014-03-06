@@ -26,8 +26,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         'priority'      => 'high',
         'dueDate'       => '2010-01-01',
         'createdTime'   => '2000-01-01T00:00:00',
-        'inputFilter'   => null,
-        'errorMessages' => array()
+        'errorMessages' => array(),
+        'case'          => null
     );
 
     /**
@@ -36,7 +36,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-                
+
         $this->task = new Task();
     }
 
@@ -46,7 +46,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->task = null;
-        
+
         parent::tearDown();
     }
 
@@ -73,10 +73,14 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $inputFilter = $this->task->getInputFilter();
 
         $this->assertInstanceOf('Zend\InputFilter\InputFilter', $inputFilter);
+
     }
 
     public function testExchangeArray()
     {
+        $user = new User();
+        $user->setFirstname('Test User');
+        $this->data['assignedUser'] = $user->toArray();
         $this->task->exchangeArray($this->data);
 
         $this->assertEquals($this->data, $this->task->toArray());
@@ -85,86 +89,86 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetSetId()
     {
         $id = 'Test ID';
-    
+
         $this->task->setId($id);
-    
+
         $this->assertEquals(
             $id,
             $this->task->getId()
         );
     }
-    
+
     public function testGetSetPriority()
     {
         $priority = 'High';
-    
+
         $this->task->setPriority($priority);
-    
+
         $this->assertEquals(
             $priority,
             $this->task->getPriority()
         );
     }
-    
+
     public function testGetSetStatus()
     {
         $status = 'Complete';
-    
+
         $this->task->setStatus($status);
-    
+
         $this->assertEquals(
             $status,
             $this->task->getStatus()
         );
     }
-    
+
     public function testGetSetDueDate()
     {
         $expected = '2014-06-23';
-    
+
         $this->task->setDueDate($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->task->getDueDate()
         );
     }
-    
+
     public function testGetSetName()
     {
         $taskname = 'Test Name';
-        
+
         $this->task->setName($taskname);
-        
+
         $this->assertEquals(
             $taskname,
             $this->task->getName()
         );
     }
-    
+
     public function testGetSetCreatedTime()
     {
         $expected = '2013-11-22T04:03:02';
-        
+
         $this->task->setCreatedTime($expected);
-    
+
         $this->assertEquals(
             $expected,
             $this->task->getCreatedTime()
         );
     }
-    
+
     public function testSetGetAssignedUser()
     {
         $name = 'Testuser';
         $user = new User();
-        $user->setRealname($name);
-    
+        $user->setSurname($name);
+
         $this->task->setAssignedUser($user);
-    
+
         $this->assertEquals(
             $name,
-            $this->task->getAssignedUser()->getRealname()
+            $this->task->getAssignedUser()->getSurname()
         );
     }
 }
