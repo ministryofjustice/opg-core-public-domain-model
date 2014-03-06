@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/ministryofjustice/opg-core-public-domain-model.png)](https://travis-ci.org/ministryofjustice/opg-core-public-domain-model)
+[![Total Downloads](https://poser.pugx.org/ministryofjustice/opg-core-public-domain-model/downloads.png)](https://packagist.org/packages/ministryofjustice/opg-core-public-domain-model)
+
 OPG Core Domain Model
 =====================
 
