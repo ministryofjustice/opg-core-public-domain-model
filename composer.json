@@ -21,11 +21,6 @@
 		"mockery/mockery" : "0.8.0",
 		"phpdocumentor/phpdocumentor" : "2.*"
 	},
-	"config": {
-	    	"github-oauth": {
-	      		"github.com": "1f611e660bef4c34fe4e6edde0a61ee9c3c606ea"
-	    	}
-  	},
 	"autoload" : {
 		"psr-0" : {
 			"Opg" : "src/"
