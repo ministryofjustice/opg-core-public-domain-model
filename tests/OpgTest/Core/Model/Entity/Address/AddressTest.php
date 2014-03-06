@@ -7,7 +7,8 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 /**
  * Address test case.
  */
-class AddressTest extends \PHPUnit_Framework_TestCase
+class
+AddressTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -212,5 +213,38 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
         $this->address->setPerson($donor);
         $this->assertEquals($donor, $this->address->getPerson());
+    }
+
+    public function testOverwriteUserThrowsException()
+    {
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->address->setPerson($donor);
+        $this->assertEquals($donor, $this->address->getPerson());
+
+        try {
+            $this->address->setPerson($donor);
+        }
+        catch(\Exception $e) {
+            $this->assertInstanceOf('\LogicException', $e);
+        }
+    }
+
+    public function testGetSetType()
+    {
+        $addressType = 'postal';
+
+        $this->address->setType($addressType);
+        $this->assertEquals($addressType, $this->address->getType());
+    }
+
+    public function testGetSetId()
+    {
+        $id = 1;
+        $this->address->setId($id);
+        $this->assertEquals($id, $this->address->getId());
     }
 }
