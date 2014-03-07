@@ -14,9 +14,11 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
+use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
@@ -418,6 +420,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         return $this;
     }
 
+    /**
+     * @return InputFilter|CaseItemFilter|\Zend\InputFilter\InputFilterInterface
+     */
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
@@ -427,11 +432,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         return $this->inputFilter;
     }
 
+    /**
+     * @return array
+     */
     public function getTaskStatus()
     {
         return $this->taskStatus;
     }
 
+    /**
+     * @param array $taskStatus
+     * @return CaseItem
+     */
     public function setTaskStatus(array $taskStatus)
     {
         foreach($taskStatus as $item) {
@@ -439,4 +451,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
         return $this;
     }
+
+    /**
+     * @param Person $person
+     * @return CaseItem
+     */
+   abstract public function addPerson(Person $person);
+
 }
