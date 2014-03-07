@@ -315,22 +315,27 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
      *
      * @param \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
      * @throws Exception
-     * @internal param $CaseItemInterface
      * @return Person
      */
     public function addCase (CaseItemInterface $case)
     {
         if ($case instanceof PowerOfAttorney) {
+            // @codeCoverageIgnoreStart
+            // requires PersonFactory to test
             if(is_null($this->powerOfAttorneys)) {
                 $this->powerOfAttorneys = new ArrayCollection();
             }
+            // @codeCoverageIgnoreEnd
             if(!$this->powerOfAttorneys->contains($case)) {
                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
+            // @codeCoverageIgnoreStart
+            // requires PersonFactory to test
             if(is_null($this->powerOfAttorneys)) {
                 $this->deputyships = new ArrayCollection();
             }
+            // @codeCoverageIgnoreEnd
             if(!$this->deputyships->contains($case)) {
                 $this->deputyships->add($case);
             }
@@ -345,9 +350,12 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
      */
     public function getPowerOfAttorneys ()
     {
+        // @codeCoverageIgnoreStart
+        // requires PersonFactory to test
         if(is_null($this->powerOfAttorneys)) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
+        // @codeCoverageIgnoreEnd
         return $this->powerOfAttorneys;
     }
 
@@ -370,9 +378,12 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
      */
     public function getDeputyships ()
     {
+        // @codeCoverageIgnoreStart
+        // requires PersonFactory to test
         if(is_null($this->deputyships)) {
             $this->deputyships = new ArrayCollection();
         }
+        // @codeCoverageIgnoreEnd
         return $this->deputyships;
     }
 
@@ -416,11 +427,12 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
 
     /**
      * @param InputFilterInterface $inputFilter
-     * @return void|\Zend\InputFilter\InputFilterAwareInterface
+     * @return return Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
-
+        $this->inputFilter = $inputFilter;
+        return $this;
     }
 
     /**
