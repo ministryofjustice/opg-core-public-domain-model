@@ -17,7 +17,7 @@ A Composer/Packagist library of the model classes for the OPG Core project.
 ## Dependencies
 
 ```
-> php composer.phar intall
+> php composer.phar install
 ```
 
 ## Tests
@@ -26,5 +26,11 @@ A Composer/Packagist library of the model classes for the OPG Core project.
 > vendor/bin/phpunit -c tests/phpunit.xml
 ```
 
+## Resources
 
+* Github https://github.com/ministryofjustice/opg-core-public-domain-model
+* Travis CI https://travis-ci.org/ministryofjustice/opg-core-public-domain-model
+* Packagist https://packagist.org/packages/ministryofjustice/opg-core-public-domain-model
+* Coveralls
+*
 
