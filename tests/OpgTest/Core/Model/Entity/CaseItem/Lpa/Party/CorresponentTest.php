@@ -2,6 +2,7 @@
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
 use Opg\Common\Exception\UnusedException;
 use Zend\InputFilter\InputFilter;
@@ -41,5 +42,18 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($correspondentCopy), $correspondentArray['className']);
         $this->assertEquals($this->correspondent, $correspondentCopy);
         $this->assertEquals($correspondentArray, $correspondentCopy->toArray());
+    }
+
+    public function testIsValid()
+    {
+        $this->assertFalse($this->correspondent->isValid());
+
+        $errors = $this->correspondent->getErrorMessages();
+        $this->assertArrayHasKey('surname',$errors['errors']);
+        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
+
+        $this->correspondent->addCase(new Lpa());
+        $this->correspondent->setSurname('Test-Surname');
+        $this->assertTrue($this->correspondent->isValid());
     }
 }
