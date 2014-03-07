@@ -22,6 +22,12 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Common\Model\Entity\EntityInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class ElasticSynchronizationListener
+ * @package Opg\Core\Listener
+ * @codeCoverageIgnore
+ * These are covered by tests in the backend and will be moved over
+ */
 class ElasticSynchronizationListener implements EventSubscriber
 {
     private $client;
@@ -78,7 +84,7 @@ class ElasticSynchronizationListener implements EventSubscriber
                 $this->client->delete($params);
             }
             catch(\Exception $e) {}
-            
+
             $this->client->create(
                 array_merge(
                     array(

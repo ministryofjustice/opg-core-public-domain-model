@@ -25,6 +25,8 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 
 /**
  * Logs events for entities which implement EventDataProvider.
+ * @codeCoverageIgnore
+ * These are covered by tests in the backend and will be moved over
  */
 class EventLoggingListener implements EventSubscriber
 {

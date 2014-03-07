@@ -10,6 +10,12 @@ use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Doctrine\ORM\Tools\ToolEvents;
 use Opg\Common\Model\Entity\HasUidInterface;
 
+/**
+ * Class UidSettingListener
+ * @package Opg\Core\Listener
+ * @codeCoverageIgnore
+ * These are covered by tests in the backend and will be moved over
+ */
 class UidSettingListener implements EventSubscriber
 {
     public function getSubscribedEvents()
