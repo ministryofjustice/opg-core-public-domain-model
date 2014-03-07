@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/ministryofjustice/opg-core-public-domain-model.png)](https://travis-ci.org/ministryofjustice/opg-core-public-domain-model)
 [![Total Downloads](https://poser.pugx.org/ministryofjustice/opg-core-public-domain-model/downloads.png)](https://packagist.org/packages/ministryofjustice/opg-core-public-domain-model)
 [![Coverage Status](https://coveralls.io/repos/ministryofjustice/opg-core-public-domain-model/badge.png)](https://coveralls.io/r/ministryofjustice/opg-core-public-domain-model)
+[![Dependency Status](https://www.versioneye.com/user/projects/5319795dec1375cd3900099b/badge.png)](https://www.versioneye.com/user/projects/5319795dec1375cd3900099b)
 
 # OPG Core Domain Model
 
@@ -32,6 +33,6 @@ A Composer/Packagist library of the model classes for the OPG Core project.
 * Github https://github.com/ministryofjustice/opg-core-public-domain-model
 * Travis CI https://travis-ci.org/ministryofjustice/opg-core-public-domain-model
 * Packagist https://packagist.org/packages/ministryofjustice/opg-core-public-domain-model
-* Coveralls
-*
+* Coveralls https://coveralls.io/r/ministryofjustice/opg-core-public-domain-model
+* Vision Eye https://www.versioneye.com/user/projects/5319795dec1375cd3900099b
 
