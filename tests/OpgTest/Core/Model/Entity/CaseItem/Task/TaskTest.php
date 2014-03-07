@@ -1,6 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Task;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\User\User;
 
@@ -134,6 +135,17 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCreateInvalidDueDate()
+    {
+        $expected       = '2013-09-24';
+        $expectedError  = "The due date cannot be in the past";
+
+        $this->task->setDueDate($expected);
+        $this->assertFalse($this->task->isValid(array('dueDate')));
+        $errors = $this->task->getErrorMessages();
+        $this->assertEquals($expectedError, $errors['errors']['dueDate']['callbackValue']);
+    }
+
     public function testGetSetName()
     {
         $taskname = 'Test Name';
@@ -170,5 +182,47 @@ class TaskTest extends \PHPUnit_Framework_TestCase
             $name,
             $this->task->getAssignedUser()->getSurname()
         );
+    }
+
+    public function testValidations()
+    {
+        $expectedErrors = array(
+            'errors' => array(
+                'name' => array(
+                    'isEmpty' => "Value is required and can't be empty"
+                ),
+                'status' => array(
+                        'isEmpty' => "Value is required and can't be empty"
+                ),
+                'dueDate' => array(
+                    'isEmpty' => "Value is required and can't be empty"
+                ),
+                'case' => array(
+                    'isEmpty' => "Value is required and can't be empty"
+                )
+            )
+        );
+
+        $this->assertFalse($this->task->isValid());
+        $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
+
+        unset($expectedErrors['errors']['name']);
+        $this->task->setName('Test Task');
+        $this->assertFalse($this->task->isValid());
+        $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
+
+        unset($expectedErrors['errors']['status']);
+        $this->task->setStatus('Not Started');
+        $this->assertFalse($this->task->isValid());
+        $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
+
+        unset($expectedErrors['errors']['dueDate']);
+        $this->task->setDueDate('2014-06-23');
+        $this->assertFalse($this->task->isValid());
+        $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
+
+        unset($expectedErrors['errors']['case']);
+        $this->task->setCase(new Lpa());
+        $this->assertTrue($this->task->isValid());
     }
 }
