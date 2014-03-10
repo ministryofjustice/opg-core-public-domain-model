@@ -1,15 +1,12 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Note;
 
-use Opg\Common\Exception\UnusedException;
-
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\Exclude;
+use \Zend\InputFilter\InputFilter;
+use \Zend\InputFilter\Factory as InputFactory;
 
 /**
  * @ORM\Entity
@@ -23,8 +20,8 @@ use JMS\Serializer\Annotation\Exclude;
 class Note implements EntityInterface
 {
     use \Opg\Common\Model\Entity\Traits\Time;
+    use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
-    use InputFilter;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -270,6 +267,74 @@ class Note implements EntityInterface
      */
     public function getInputFilter()
     {
-        throw new UnusedException();
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory     = new InputFactory();
+            
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'title',
+                        'required'   => true,
+                        'filters'    => array(
+                            array('name' => 'StripTags'),
+                            array('name' => 'StringTrim'),
+                        ),
+                        'validators' => array(
+                            array(
+                                'name'    => 'StringLength',
+                                'options' => array(
+                                    'encoding' => 'UTF-8',
+                                    'min'      => 1,
+                                    'max'      => 1000,
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+            
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'type',
+                        'required'   => true,
+                        'filters'    => array(
+                            array('name' => 'StripTags'),
+                            array('name' => 'StringTrim'),
+                        ),
+                        'validators' => array(
+                            array(
+                                'name'    => 'InArray',
+                                'options' => array(
+                                    'haystack' => array(
+                                        'Application processing',
+                                        'Appointment of new attorney',
+                                        'Call',
+                                        'Cancellation',
+                                        'Confirmation',
+                                        'Change of address',
+                                        'Court amendment',
+                                        'Disclaimer',
+                                        'Document capture',
+                                        'Email',
+                                        'Investigation',
+                                        'Imperfect application',
+                                        'Letter',
+                                        'LPA application received',
+                                        'Objections',
+                                        'Office copy',
+                                        'Registration',
+                                        'Rejected application',
+                                        'Revocation'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+            
+        }
     }
 }

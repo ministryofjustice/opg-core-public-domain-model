@@ -9,9 +9,7 @@ use \Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\Exclude;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Zend\Validator\IsInstanceOf;
 
 /**
  * @ORM\Entity
