@@ -7,6 +7,8 @@ use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity
@@ -17,10 +19,11 @@ use \Zend\InputFilter\Factory as InputFactory;
  * @author  Chris Moreton <chris@netsensia.com>
  *
  */
-class Note implements EntityInterface
+class Note implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
+    use \Opg\Common\Model\Entity\Traits\IteratorAggregate;
     use ToArray;
 
     /**
@@ -42,7 +45,8 @@ class Note implements EntityInterface
     private $sourceTable;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
+     * @ORM\Column(type = "string", nullable = false)
+     * @Type("string")
      * @var string $type
      */
     private $type;
@@ -66,7 +70,8 @@ class Note implements EntityInterface
     private $description;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
+     * @ORM\Column(type = "string", nullable = false)
+     * @Type("string")
      * @var string name
      */
     private $name;
@@ -274,7 +279,7 @@ class Note implements EntityInterface
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'title',
+                        'name'       => 'name',
                         'required'   => true,
                         'filters'    => array(
                             array('name' => 'StripTags'),
@@ -335,6 +340,9 @@ class Note implements EntityInterface
                 )
             );
             
+            $this->inputFilter = $inputFilter;
         }
+
+        return $this->inputFilter;
     }
 }
