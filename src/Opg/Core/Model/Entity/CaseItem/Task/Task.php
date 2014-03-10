@@ -72,7 +72,7 @@ class Task implements EntityInterface, \IteratorAggregate
     protected $name;
 
     /**
-     * Non persistable entity, used for validation of create;
+     * Non persistable entity, used for validation of create
      * @var CaseItem case
      */
     protected $case;

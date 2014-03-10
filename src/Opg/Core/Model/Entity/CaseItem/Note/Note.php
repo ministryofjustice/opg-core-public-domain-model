@@ -75,6 +75,12 @@ class Note implements EntityInterface, \IteratorAggregate
      * @var string name
      */
     private $name;
+    
+    /**
+     * Non persistable entity, used for validation of create
+     * @var CaseItem case
+     */
+    protected $case;
 
     /**
      * @return Note $type
