@@ -1678,20 +1678,20 @@
         },
         {
             "name": "phpdocumentor/reflection",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/Reflection.git",
-                "reference": "7fa71b389e718ea5c33fa0cf0eb45280a4513b7d"
+                "reference": "ec0eeb2a3a1433c80fcf44271c478169ae6255dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/Reflection/zipball/7fa71b389e718ea5c33fa0cf0eb45280a4513b7d",
-                "reference": "7fa71b389e718ea5c33fa0cf0eb45280a4513b7d",
+                "url": "https://api.github.com/repos/phpDocumentor/Reflection/zipball/ec0eeb2a3a1433c80fcf44271c478169ae6255dd",
+                "reference": "ec0eeb2a3a1433c80fcf44271c478169ae6255dd",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": ">=0.9",
+                "nikic/php-parser": "0.9.4",
                 "php": ">=5.3.3",
                 "phpdocumentor/reflection-docblock": "2.*@dev",
                 "psr/log": "~1.0"
@@ -1723,7 +1723,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2014-02-16 15:05:27"
+            "time": "2014-03-08 09:30:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
