@@ -277,4 +277,23 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($caseItemMock->isValid());
     }
+
+    public function testGetSetTaskStatus()
+    {
+        $seedStatus = array(
+            array('status' => 'Open', 'counter' => 1),
+            array('status' => 'Pending', 'counter' => 3),
+            array('status' => 'Closed', 'counter' =>5)
+        );
+
+        $statuses = array(
+            'Open' => 1,
+            'Pending' => 3,
+            'Closed'  => 5
+        );
+
+        $caseItemMock = $this->getMockedClass();
+        $caseItemMock->setTaskStatus($seedStatus);
+        $this->assertEquals($statuses, $caseItemMock->getTaskStatus());
+    }
 }

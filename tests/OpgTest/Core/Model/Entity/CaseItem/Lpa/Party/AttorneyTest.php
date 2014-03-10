@@ -4,6 +4,7 @@ namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Opg\Common\Exception\UnusedException;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 
@@ -75,5 +76,18 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($attorney2), $attorneyArray['className']);
         $this->assertEquals($this->attorney, $attorney2);
         $this->assertEquals($attorneyArray, $attorney2->toArray());
+    }
+
+    public function testIsValid()
+    {
+        $this->assertFalse($this->attorney->isValid());
+
+        $errors = $this->attorney->getErrorMessages();
+        $this->assertArrayHasKey('surname',$errors['errors']);
+        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
+
+        $this->attorney->addCase(new Lpa());
+        $this->attorney->setSurname('Test-Surname');
+        $this->assertTrue($this->attorney->isValid());
     }
 }

@@ -3,6 +3,7 @@ namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 
@@ -58,5 +59,18 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($certificateProvider2), $certificateProvider['className']);
         $this->assertEquals($this->certificateProvider, $certificateProvider2);
         $this->assertEquals($certificateProvider, $certificateProvider2->toArray());
+    }
+
+    public function testIsValid()
+    {
+        $this->assertFalse($this->certificateProvider->isValid());
+
+        $errors = $this->certificateProvider->getErrorMessages();
+        $this->assertArrayHasKey('surname',$errors['errors']);
+        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
+
+        $this->certificateProvider->addCase(new Lpa());
+        $this->certificateProvider->setSurname('Test-Surname');
+        $this->assertTrue($this->certificateProvider->isValid());
     }
 }

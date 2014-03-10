@@ -2,6 +2,7 @@
 namespace OpgTest\Core\Model\CaseItem\Lpa;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
@@ -511,5 +512,44 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             ),
             $lpa->toArrayRecursive()
         );
+    }
+
+    public function testAddPerson()
+    {
+        $donor = new Donor();
+        $donor->setId('1');
+        $this->lpa->addPerson($donor);
+        $this->assertEquals($donor,$this->lpa->getDonor());
+
+        $attorney = new Attorney();
+        $attorney->setId('1');
+        $this->lpa->addPerson($attorney);
+        $this->assertEquals($attorney,$this->lpa->getAttorneys()[0]);
+
+        $certificateProvider = new CertificateProvider();
+        $certificateProvider->setId('1');
+        $this->lpa->addPerson($certificateProvider);
+        $this->assertEquals($certificateProvider,$this->lpa->getCertificateProviders()[0]);
+
+        $notifiedPerson = new NotifiedPerson();
+        $notifiedPerson->setId('1');
+        $this->lpa->addPerson($notifiedPerson);
+        $this->assertEquals($notifiedPerson,$this->lpa->getNotifiedPersons()[0]);
+
+        $correspondent = new Correspondent();
+        $correspondent->setId('1');
+        $this->lpa->addPerson($correspondent);
+        $this->assertEquals($correspondent,$this->lpa->getCorrespondent());
+
+        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $person->setId('1');
+
+        try {
+            $this->lpa->addPerson($person);
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \LogicException);
+            $this->assertFalse($e instanceof UnusedException);
+        }
     }
 }

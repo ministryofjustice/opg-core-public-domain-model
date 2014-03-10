@@ -2,11 +2,13 @@
 
 namespace OpgTest\Core\Model\Entity\Person;
 
+use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\Deputyship\DeputyshipCollection;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Person\Person;
 use \Exception;
+use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 
 /**
  * Person test case.
@@ -149,5 +151,71 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedUID, $this->person->getUid());
     }
+
+    public function testAddressFunctions()
+    {
+        $this->person->clearAddresses();
+        $this->assertEmpty($this->person->getAddresses()->toArray());
+
+        $homeAddress = new Address();
+        $homeAddress
+            ->setId(1)
+            ->setAddressLines(array('My Address', 'My Street'))
+            ->setTown('My Town')
+            ->setPostcode('My Postcode')
+            ->setType('home');
+
+        $workAddress = new Address();
+        $workAddress
+            ->setId(2)
+            ->setAddressLines(array('My Work Address', 'My Street'))
+            ->setTown('My Town')
+            ->setPostcode('My Postcode')
+            ->setType('work');
+
+        $this->person->addAddress($homeAddress);
+        $this->person->addAddress($workAddress);
+
+        $addressCollection = $this->person->getAddresses();
+        $this->assertTrue($addressCollection->contains($homeAddress));
+        $this->assertTrue($addressCollection->contains($workAddress));
+
+        $this->person->setAddresses($addressCollection);
+        $this->assertEquals($addressCollection, $this->person->getAddresses());
+    }
+
+    public function testPhoneNumberFunctions()
+    {
+        $this->person->clearPhoneNumbers();
+        $this->assertEmpty($this->person->getPhoneNumbers()->toArray());
+
+        $homePhone = new PhoneNumber();
+        $homePhone
+            ->setType('home')
+            ->setPhoneNumber('12345678900');
+
+        $workPhone = new PhoneNumber();
+        $workPhone
+            ->setType('work')
+            ->setPhoneNumber('12345678912');
+
+        $this->person->addPhoneNumber($homePhone);
+        $this->person->addPhoneNumber($workPhone);
+
+        $phoneCollection = $this->person->getPhoneNumbers();
+        $this->assertTrue($phoneCollection->contains($homePhone));
+        $this->assertTrue($phoneCollection->contains($workPhone));
+
+        $this->person->setPhoneNumbers($phoneCollection);
+        $this->assertEquals($phoneCollection, $this->person->getPhoneNumbers());
+    }
+
+    public function testGetSetInputFilter()
+    {
+        $inputFilter = $this->person->getInputFilter();
+        $this->person->setInputFilter($inputFilter);
+        $this->assertEquals($inputFilter, $this->person->getInputFilter());
+    }
+
   }
 

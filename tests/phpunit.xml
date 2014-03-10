@@ -9,6 +9,11 @@
     <testsuite name="OPG Core Domain Model">
         <directory>.</directory>
     </testsuite>
+
+    <logging>
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+    </logging>
+
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./../src/</directory>

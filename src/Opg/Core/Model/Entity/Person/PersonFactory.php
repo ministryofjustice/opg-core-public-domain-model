@@ -3,6 +3,12 @@ namespace Opg\Core\Model\Entity\Person;
 
 use JMS\Serializer\Serializer;
 
+/**
+ * Class PersonFactory
+ * @package Opg\Core\Model\Entity\Person
+ * @codeCoverageIgnore
+ * serializer to be mocked out
+ */
 class PersonFactory
 {
     public static function create(array $data, Serializer $serializer)

@@ -6,6 +6,7 @@ namespace OpgTest\Common\Model\Entity\CaseItem\LayDeputy;
 
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 
 class LayDeputyTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,6 +43,17 @@ class LayDeputyTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->layDeputy->getInputFilter();
+        } catch (\Exception $e) {
+            $this->assertTrue($e instanceof \LogicException);
+            $this->assertFalse($e instanceof UnusedException);
+        }
+    }
+
+    public function testAddPerson()
+    {
+
+        try {
+            $this->layDeputy->addPerson(new Donor());
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof \LogicException);
             $this->assertFalse($e instanceof UnusedException);

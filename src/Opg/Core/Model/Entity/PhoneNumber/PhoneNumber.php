@@ -106,7 +106,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      */
     public function setPerson(Person $person)
     {
-        if (!$this->person === null) {
+        if ($this->person !== null) {
             throw new \LogicException('This phone number is already linked to a person');
         }
         $this->person = $person;

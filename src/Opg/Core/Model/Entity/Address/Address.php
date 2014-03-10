@@ -280,7 +280,7 @@ class Address implements EntityInterface, \IteratorAggregate
      */
     public function setPerson(Person $person)
     {
-        if(!$this->person === null) {
+        if($this->person !== null) {
             throw new \LogicException('This address is already linked to a person');
         }
         $this->person = $person;

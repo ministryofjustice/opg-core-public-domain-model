@@ -40,6 +40,24 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($donor, $this->phoneNumber->getPerson());
     }
 
+    public function testOverwritePersonThrowsException()
+    {
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->phoneNumber->setPerson($donor);
+        $this->assertEquals($donor, $this->phoneNumber->getPerson());
+
+        try {
+            $this->phoneNumber->setPerson($donor);
+        }
+        catch(\Exception $e) {
+            $this->assertInstanceOf('\LogicException', $e);
+        }
+    }
+
     public function testGetSetPhoneNumber()
     {
         $phoneNumber = 123456789;
@@ -59,5 +77,16 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->phoneNumber->getDefault());
         $this->phoneNumber->setDefault(true);
         $this->assertTrue($this->phoneNumber->getDefault());
+    }
+
+    public function testValidation() {
+        $phoneNumber = 123456789;
+        $this->phoneNumber->setPhoneNumber($phoneNumber);
+        $this->assertTrue($this->phoneNumber->isValid());
+
+        $phoneNumber = null;
+        $this->phoneNumber->setPhoneNumber($phoneNumber);
+        $this->assertFalse($this->phoneNumber->isValid());
+
     }
 }

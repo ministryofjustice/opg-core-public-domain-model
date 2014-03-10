@@ -2,6 +2,7 @@
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Common\Exception\UnusedException;
@@ -46,5 +47,18 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($notifiedPerson2), $notifiedPerson['className']);
         $this->assertEquals($this->notifiedPerson, $notifiedPerson2);
         $this->assertEquals($notifiedPerson, $notifiedPerson2->toArray());
+    }
+
+    public function testIsValid()
+    {
+        $this->assertFalse($this->notifiedPerson->isValid());
+
+        $errors = $this->notifiedPerson->getErrorMessages();
+        $this->assertArrayHasKey('surname',$errors['errors']);
+        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
+
+        $this->notifiedPerson->addCase(new Lpa());
+        $this->notifiedPerson->setSurname('Test-Surname');
+        $this->assertTrue($this->notifiedPerson->isValid());
     }
 }

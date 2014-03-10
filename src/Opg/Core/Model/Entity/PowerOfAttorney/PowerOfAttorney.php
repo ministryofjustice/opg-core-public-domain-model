@@ -592,7 +592,9 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addApplicant(Person $applicant)
     {
-        $this->applicants->add($applicant);
+        if (!$this->applicants->contains($applicant)) {
+            $this->applicants->add($applicant);
+        }
 
         return $this;
     }
@@ -636,7 +638,9 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addAttorney (Attorney $attorney)
     {
-        $this->attorneys->add($attorney);
+        if (!$this->attorneys->contains($attorney)) {
+            $this->attorneys->add($attorney);
+        }
         return $this;
     }
 
@@ -665,7 +669,9 @@ abstract class PowerOfAttorney extends CaseItem
      * @return PowerOfAttorney
      */
     public function addNotifiedPerson(NotifiedPerson $notifiedPerson) {
-        $this->notifiedPersons->add($notifiedPerson);
+        if (!$this->notifiedPersons->contains($notifiedPerson)) {
+            $this->notifiedPersons->add($notifiedPerson);
+        }
         return $this;
     }
 
@@ -695,7 +701,9 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addCertificateProvider(CertificateProvider $certificateProvider)
     {
-        $this->certificateProviders->add($certificateProvider);
+        if (!$this->certificateProviders->contains($certificateProvider)) {
+            $this->certificateProviders->add($certificateProvider);
+        }
         return $this;
     }
 

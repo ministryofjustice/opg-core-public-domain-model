@@ -357,4 +357,48 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->user->setLocked(true)->getLocked());
         $this->assertFalse($this->user->setLocked(false)->getLocked());
     }
+
+    public function testSetGetNormalisedRoles()
+    {
+        $roles = array('guest', 'user', 'junior-admin');
+        $this->user->setFromNormalisedRoles($roles);
+
+        $this->assertEquals($roles, $this->user->getNormalisedRoles());
+
+        $this->user->setRoles($this->user->getRoles());
+
+        $this->assertEquals($roles, $this->user->getNormalisedRoles());
+    }
+
+    public function testSetGetPowerOfAttorneys()
+    {
+        $poaCollection = new ArrayCollection();
+
+        for ($count = 1; $count <= 5; $count++ ) {
+            $poa = new Lpa();
+            $poa->setId($count);
+            $poaCollection->add($poa);
+        }
+
+        $this->user->setPowerOfAttorneys($poaCollection);
+
+        $this->assertEquals($poaCollection, $this->user->getPowerOfAttorneys());
+
+    }
+
+    public function testSetGetDeputyShips()
+    {
+        $deputyCollection = new ArrayCollection();
+
+        for ($count = 1; $count <= 5; $count++ ) {
+            $dep = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Deputyship\Deputyship');
+            $dep->setId($count);
+            $deputyCollection->add($dep);
+        }
+
+        $this->user->setDeputyships($deputyCollection);
+
+        $this->assertEquals($deputyCollection, $this->user->getDeputyships());
+
+    }
 }

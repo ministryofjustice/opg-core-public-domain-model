@@ -258,7 +258,12 @@ class Task implements EntityInterface, \IteratorAggregate
                                 'name'    => 'InArray',
                                 'options' => array(
                                     'haystack' => array(
-                                        'Completed'
+                                        'Incomplete',
+                                        'Not Started',
+                                        'In Progress',
+                                        'Completed',
+                                        'Pending Input',
+                                        'Deferred'
                                     )
                                 )
                             )
