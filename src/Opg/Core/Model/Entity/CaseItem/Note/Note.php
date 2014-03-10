@@ -9,6 +9,7 @@ use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use Opg\Core\Model\Entity\Person\Person;
 
 /**
  * @ORM\Entity
@@ -81,6 +82,12 @@ class Note implements EntityInterface, \IteratorAggregate
      * @var CaseItem case
      */
     protected $case;
+    
+    /**
+     * Non persistable entity, used for validation of create
+     * @var Person person
+     */
+    protected $person;
 
     /**
      * @return Note $type
