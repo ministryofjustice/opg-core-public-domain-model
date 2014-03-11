@@ -3,13 +3,14 @@ namespace Opg\Core\Model\Entity\CaseItem\Note;
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
+use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
-use Opg\Core\Model\Entity\Person\Person;
 
 /**
  * @ORM\Entity
@@ -252,6 +253,38 @@ class Note implements EntityInterface, \IteratorAggregate
     public function getSourceTable()
     {
         return $this->sourceTable;
+    }
+
+    /**
+     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
+     */
+    public function setCase($case)
+    {
+        $this->case = $case;
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\CaseItem\CaseItem
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
+     * @param \Opg\Core\Model\Entity\Person\Person $person
+     */
+    public function setPerson($person)
+    {
+        $this->person = $person;
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\Person\Person
+     */
+    public function getPerson()
+    {
+        return $this->person;
     }
 
     /**
