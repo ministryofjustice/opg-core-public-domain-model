@@ -92,6 +92,16 @@ abstract class PowerOfAttorney extends CaseItem
     protected $certificateProviders;
 
     /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\JoinTable(name="powerofattorney_notes",
+     *     joinColumns={@ORM\JoinColumn(name="powerofattorney_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
+     * )
+     * @var ArrayCollection
+     */
+    protected $notes;
+
+    /**
      * use InputFilter;
      * use ToArray {
      * toArray as traitToArray;
