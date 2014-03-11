@@ -1,7 +1,13 @@
 <?php
 namespace OpgTest\Core\Model\Entity\CaseItem;
 
-use Doctrine\Common\Collections\ArrayCollection;use Opg\Core\Model\Entity\CaseItem\Document\Document;use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;use Opg\Core\Model\Entity\CaseItem\Note\Note;use Opg\Core\Model\Entity\CaseItem\Task\Task;use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;use Opg\Core\Model\Entity\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Core\Model\Entity\CaseItem\Document\Document;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\Note\Note;
+use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
+use Opg\Core\Model\Entity\User\User;
 
 /**
  * ToArray test case.
@@ -200,7 +206,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
             $currentNote->setId($i);
             $notes->add($currentNote);
         }
-        $caseItemMock->setNotes($notes);
+        $caseItemMock->addNotes($notes);
 
         $documents = new ArrayCollection();
         for ($i = 0; $i < 10; ++$i) {
