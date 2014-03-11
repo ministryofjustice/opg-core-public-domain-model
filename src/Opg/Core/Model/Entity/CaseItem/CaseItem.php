@@ -78,24 +78,28 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\MaxDepth(1)
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
      * @var User
+     * @Type("Opg\Core\Model\Entity\User\User")
      */
     protected $assignedUser;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Task\Task>")
      */
     protected $tasks;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note")
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      */
     protected $notes;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document")
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
      */
     protected $documents;
 
