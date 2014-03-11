@@ -43,6 +43,7 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
+     * @Type("integer")
      */
     protected $id;
 
@@ -121,7 +122,7 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\PhoneNumber\PhoneNumber>")
      */
     protected $phoneNumbers;
 

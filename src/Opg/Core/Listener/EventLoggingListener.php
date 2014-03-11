@@ -184,7 +184,7 @@ class EventLoggingListener implements EventSubscriber
             return $personObject;
         }
 
-        throw new \LogicException('Could not find the person this entity was attached to');
+        throw new \LogicException('Could not find the person this entity was attached to ' . $attributeName);
     }
 
     private function findOwningEntityForTask(EntityManager $em, Task $task)

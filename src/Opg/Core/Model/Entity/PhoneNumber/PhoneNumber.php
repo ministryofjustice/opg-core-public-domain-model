@@ -34,7 +34,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers", cascade={"all"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
      * @Type("Opg\Core\Model\Entity\Person\Person")
