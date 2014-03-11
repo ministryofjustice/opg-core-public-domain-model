@@ -36,7 +36,13 @@ trait HasNotes {
      * @return $this
      */
     public function addNote(NoteEntity $note) {
-        $this->notes->add($note);
+        if (is_null($this->notes)) {
+            $this->notes = new ArrayCollection();
+        }
+
+        if(!$this->notes->contains($note)) {
+            $this->notes->add($note);
+        }
 
         return $this;
     }
