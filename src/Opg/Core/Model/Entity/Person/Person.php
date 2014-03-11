@@ -120,8 +120,8 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
-     * @var \Opg\Core\Model\Entity\PhoneNumber\PhoneNumber
-     * @Type("Opg\Core\Model\Entity\PhoneNumber\PhoneNumber")
+     * @var ArrayCollection
+     * @Type("ArrayCollection")
      */
     protected $phoneNumbers;
 

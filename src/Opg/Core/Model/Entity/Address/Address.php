@@ -44,6 +44,7 @@ class Address implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "json_array", name="address_lines")
      * @var array
+     * @Type("array")
      */
     protected $addressLines = [];
 
