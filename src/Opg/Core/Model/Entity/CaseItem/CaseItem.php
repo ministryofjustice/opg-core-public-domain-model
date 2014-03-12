@@ -9,8 +9,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
+use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -26,9 +28,10 @@ use JMS\Serializer\Annotation\Type;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface
+abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface
 {
     use ToArray;
+    use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
 
@@ -218,15 +221,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return ArrayCollection
      */
-    public function getNotes()
-    {
-        return $this->notes;
-    }
-
-    /**
-     *
-     * @return ArrayCollection
-     */
     public function getDocuments()
     {
         return $this->documents;
@@ -239,15 +233,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function addTask(Task $task)
     {
         $this->tasks->add($task);
-    }
-
-    /**
-     * @param Note $note
-     * @return $this
-     */
-    public function addNote(Note $note)
-    {
-        $this->notes->add($note);
     }
 
     /**
@@ -269,19 +254,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         foreach ($tasks as $task) {
             $this->addTask($task);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ArrayCollection $notes
-     * @return CaseItem
-     */
-    public function setNotes(ArrayCollection $notes)
-    {
-        foreach ($notes as $note) {
-            $this->addNote($note);
         }
 
         return $this;

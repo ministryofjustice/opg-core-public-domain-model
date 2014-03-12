@@ -5,12 +5,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
+use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -35,8 +38,9 @@ use Zend\InputFilter\Factory as InputFactory;
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
  */
-abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggregate
+abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate
 {
+    use HasNotesTrait;
     use UniqueIdentifier;
     use InputFilterTrait;
 
@@ -76,6 +80,16 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
      * @var ArrayCollection
      */
     protected $deputyships;
+
+    /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\JoinTable(name="person_notes",
+     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
+     * )
+     * @var ArrayCollection
+     */
+    protected $notes;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -126,6 +140,15 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
      */
     protected $phoneNumbers;
 
+    public function __construct()
+    {
+        $this->deputyships      = new ArrayCollection();
+        $this->powerOfAttorneys = new ArrayCollection();
+        $this->addresses        = new ArrayCollection();
+        $this->phoneNumbers     = new ArrayCollection();
+        $this->notes            = new ArrayCollection();
+    }
+
     /**
      * @param \Opg\Core\Model\Entity\Address\Address $address
      * @return Person
@@ -162,14 +185,6 @@ abstract class Person implements HasUidInterface, EntityInterface, \IteratorAggr
     public function getAddresses()
     {
         return $this->addresses;
-    }
-
-    public function __construct()
-    {
-        $this->deputyships      = new ArrayCollection();
-        $this->powerOfAttorneys = new ArrayCollection();
-        $this->addresses        = new ArrayCollection();
-        $this->phoneNumbers     = new ArrayCollection();
     }
 
     /**

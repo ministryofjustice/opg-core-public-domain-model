@@ -20,5 +20,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Deputyship extends CaseItem
 {
+    /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\JoinTable(name="deputyship_notes",
+     *     joinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
+     * )
+     * @var ArrayCollection
+     */
+    protected $notes;
 }
 
