@@ -34,14 +34,14 @@ class Lpa extends PowerOfAttorney
      * @var \DateTime
      * @Type("datetime")
      */
-    protected $lpaSignatureDate;
+    protected $lpaDonorSignatureDate;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
      */
-    protected $lpaSignatoryFullName;
+    protected $lpaDonorSignatoryFullName;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
@@ -56,6 +56,20 @@ class Lpa extends PowerOfAttorney
      * @Type("string")
      */
     protected $previousLpaInfo;
+
+    /**
+     * @ORM\Column(type = "datetime")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaDonorDeclarationSignatureDate;
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Type("string")
+     */
+    protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
      * @param int $signedBy
@@ -79,36 +93,72 @@ class Lpa extends PowerOfAttorney
      * @param \DateTime $signatureDate
      * @return $this
      */
-    public function setSignatureDate(\DateTime $signatureDate)
+    public function setDonorSignatureDate(\DateTime $signatureDate)
     {
-        $this->lpaSignatureDate = $signatureDate;
+        $this->lpaDonorSignatureDate = $signatureDate;
         return $this;
     }
 
     /**
      * @return \DateTime
      */
-    public function getSignatureDate()
+    public function getDonorSignatureDate()
     {
-        return $this->lpaSignatureDate;
+        return $this->lpaDonorSignatureDate;
     }
 
     /**
      * @param  string $fullName
      * @return Lpa
      */
-    public function setLpaSignatoryFullName($fullName)
+    public function setDonorLpaSignatoryFullName($fullName)
     {
-        $this->lpaSignatoryFullName = $fullName;
+        $this->lpaDonorSignatoryFullName = $fullName;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getLpaSignatoryFullName()
+    public function getDonorLpaSignatoryFullName()
     {
-        return $this->lpaSignatoryFullName;
+        return $this->lpaDonorSignatoryFullName;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return $this
+     */
+    public function setDonorDeclarationSignatureDate(\DateTime $signatureDate)
+    {
+        $this->lpaDonorDeclarationSignatureDate = $signatureDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDonorDeclarationSignatureDate()
+    {
+        return $this->lpaDonorDeclarationSignatureDate;
+    }
+
+    /**
+     * @param  string $fullName
+     * @return Lpa
+     */
+    public function setDonorDeclarationLpaSignatoryFullName($fullName)
+    {
+        $this->lpaDonorDeclarationSignatoryFullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDonorDeclarationLpaSignatoryFullName()
+    {
+        return $this->lpaDonorDeclarationSignatoryFullName;
     }
 
     /**
