@@ -32,14 +32,17 @@ class EventLoggingListener implements EventSubscriber
 {
     private $persistedEntities = array();
 
+    private $config = array();
+
     /**
      * @var UserIdentityProvider
      */
     private $userIdentityProvider;
 
-    public function __construct(UserIdentityProvider $identityProvider)
+    public function __construct(UserIdentityProvider $identityProvider, array $config)
     {
         $this->userIdentityProvider = $identityProvider;
+        $this->config = $config;
     }
 
     /**
@@ -60,7 +63,9 @@ class EventLoggingListener implements EventSubscriber
 
     public function postLoad(LifecycleEventArgs $event)
     {
-        $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'READ');
+        if (in_array('READ', $this->config['events'])) {
+            $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'READ');
+        }
     }
 
     public function postPersist(LifecycleEventArgs $event)
@@ -70,23 +75,29 @@ class EventLoggingListener implements EventSubscriber
 
     public function postFlush(PostFlushEventArgs $event)
     {
-        $em = $event->getEntityManager();
-        foreach ($this->persistedEntities as $entity) {
-            $this->recordEvent($em, $entity, 'INS');
-        }
+        if (in_array('INS', $this->config['events'])) {
+            $em = $event->getEntityManager();
+            foreach ($this->persistedEntities as $entity) {
+                $this->recordEvent($em, $entity, 'INS');
+            }
 
-        $this->persistedEntities = array();
+            $this->persistedEntities = array();
+        }
     }
 
     public function preUpdate(PreUpdateEventArgs $event)
     {
-        $changeset = $this->prepareChangeset($event->getEntityManager(), $event->getEntityChangeSet());
-        $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'UPD', $changeset);
+        if (in_array('UPD', $this->config['events'])) {
+            $changeset = $this->prepareChangeset($event->getEntityManager(), $event->getEntityChangeSet());
+            $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'UPD', $changeset);
+        }
     }
 
     public function preRemove(LifecycleEventArgs $event)
     {
-        $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'DEL');
+        if (in_array('DEL', $this->config['events'])) {
+            $this->recordEvent($event->getEntityManager(), $event->getEntity(), 'DEL');
+        }
     }
 
     private function prepareChangeset(EntityManager $em, array $changeset)
