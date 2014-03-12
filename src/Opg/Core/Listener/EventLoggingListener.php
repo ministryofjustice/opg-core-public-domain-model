@@ -39,7 +39,7 @@ class EventLoggingListener implements EventSubscriber
      */
     private $userIdentityProvider;
 
-    public function __construct(UserIdentityProvider $identityProvider, array $config)
+    public function __construct(UserIdentityProvider $identityProvider, array $config = array('READ', 'INS', 'UPD', 'DEL'))
     {
         $this->userIdentityProvider = $identityProvider;
         $this->config = $config;
