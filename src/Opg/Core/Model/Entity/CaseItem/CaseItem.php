@@ -232,6 +232,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function addTask(Task $task)
     {
+        if (is_null($this->tasks)) {
+            $this->tasks = new ArrayCollection();
+        }
         $this->tasks->add($task);
     }
 
@@ -241,6 +244,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function addDocument(Document $document)
     {
+        if (is_null($this->documents)) {
+            $this->documents = new ArrayCollection();
+        }
         $this->documents->add($document);
 
         return $this;
