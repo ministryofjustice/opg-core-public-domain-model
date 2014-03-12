@@ -90,18 +90,18 @@ abstract class PowerOfAttorney extends CaseItem
     protected $notifiedPersons;
 
     /**
-     * @ORM\Column(type = "boolean")
+     * @ORM\Column(type = "boolean",options={"default"=0})
      * @var bool
      * @Type("boolean")
      */
     protected $usesNotifiedPersons = false;
 
     /**
-     * @ORM\Column(type = "integer",options={"default":1})
+     * @ORM\Column(type = "integer",options={"default"=1})
      * @var integer
      * @Type("integer")
      */
-    protected $notifiedPersonPermissionBy;
+    protected $notifiedPersonPermissionBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider")
