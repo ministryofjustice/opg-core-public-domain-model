@@ -28,6 +28,16 @@ use JMS\Serializer\Annotation\Type;
  */
 abstract class PowerOfAttorney extends CaseItem
 {
+    /**
+     * Constant for the I portion of I/We questions
+     */
+    const PERMISSION_GIVEN_SINGULAR = 0x01;
+
+    /**
+     * Constant for the We portion of I/We questions
+     */
+    const PERMISSION_GIVEN_PLURAL   = 0x02;
+
     use ToArray {
         toArray as traitToArray;
     }
@@ -78,6 +88,20 @@ abstract class PowerOfAttorney extends CaseItem
      * @var ArrayCollection
      */
     protected $notifiedPersons;
+
+    /**
+     * @ORM\Column(type = "boolean")
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $usesNotifiedPersons = false;
+
+    /**
+     * @ORM\Column(type = "integer",options={"default":1})
+     * @var integer
+     * @Type("integer")
+     */
+    protected $notifiedPersonPermissionBy;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider")
@@ -734,6 +758,51 @@ abstract class PowerOfAttorney extends CaseItem
     public function toArray ($exposeClassname = TRUE)
     {
         return $this->traitToArray($exposeClassname);
+    }
+
+    /**
+     * @param $usesNotifiedPersons
+     * @return PowerOfAttorney
+     */
+    public function setUsesNotifiedPersons($usesNotifiedPersons)
+    {
+        $this->usesNotifiedPersons = (bool)$usesNotifiedPersons;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUsesNotifiedPersons()
+    {
+        return $this->usesNotifiedPersons;
+    }
+
+    /**
+     * Alias for getUsesNotifiedPersons
+     * @return bool
+     */
+    public function hasNotifiedPersons()
+    {
+        return $this->getUsesNotifiedPersons();
+    }
+
+    /**
+     * @param int $permissionBy
+     * @return PowerOfAttorney
+     */
+    public function setNotifiedPersonPermissionBy($permissionBy = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->notifiedPersonPermissionBy = $permissionBy;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNotifiedPersonPermissionBy()
+    {
+        return $this->notifiedPersonPermissionBy;
     }
 }
 
