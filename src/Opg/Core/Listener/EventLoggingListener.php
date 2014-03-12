@@ -32,17 +32,24 @@ class EventLoggingListener implements EventSubscriber
 {
     private $persistedEntities = array();
 
-    private $config = array();
+    private $config = array(
+        'events' => array(
+            'READ', 'INS', 'UPD', 'DEL'
+        )
+    );
 
     /**
      * @var UserIdentityProvider
      */
     private $userIdentityProvider;
 
-    public function __construct(UserIdentityProvider $identityProvider, array $config = array('READ', 'INS', 'UPD', 'DEL'))
+    public function __construct(UserIdentityProvider $identityProvider, array $config = null)
     {
         $this->userIdentityProvider = $identityProvider;
-        $this->config = $config;
+        
+        if (!is_null($config)) {
+            $this->config = $config;
+        }
     }
 
     /**
