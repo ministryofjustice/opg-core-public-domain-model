@@ -509,7 +509,23 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'errorMessages' => array (
                 ),
                 'taskStatus'    => array(),
+                'lpaAccuracyAscertainedBy' => 1,
+                'lpaDonorSignatureDate' => null,
+                'lpaDonorSignatoryFullName' => null,
+                'donorHasPreviousLpas' => false,
+                'previousLpaInfo' => null,
+                'lpaDonorDeclarationSignatureDate' => null,
+                'lpaDonorDeclarationSignatoryFullName' => null,
+                'usesNotifiedPersons' => false,
+                'notifiedPersonPermissionBy' => 1,
+                'attorneyPartyDeclaration' => 1,
+                'attorneyApplicationAssertion' => 1,
+                'attorneyMentalActPermission' => 1,
+                'attorneyDeclarationSignatureDate' => null,
+                'attorneyDeclarationSignatoryFullName' => null,
+                'correspondentComplianceAssertion' => 1,
             ),
+
             $lpa->toArrayRecursive()
         );
     }
@@ -551,5 +567,51 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof \LogicException);
             $this->assertFalse($e instanceof UnusedException);
         }
+    }
+
+    public function testGetSetDonorDeclarations()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDonorFullName = 'Mr Test Donor';
+
+        $this->lpa->setDonorDeclarationSignatureDate($expectedDate);
+        $this->lpa->setDonorDeclarationLpaSignatoryFullName($expectedDonorFullName);
+
+        $this->assertEquals($expectedDate, $this->lpa->getDonorDeclarationSignatureDate());
+        $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorDeclarationLpaSignatoryFullName());
+    }
+
+    public function testGetSetDonorSignature()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDonorFullName = 'Mr Test Donor';
+
+        $this->lpa->setDonorSignatureDate($expectedDate);
+        $this->lpa->setDonorLpaSignatoryFullName($expectedDonorFullName);
+
+        $this->assertEquals($expectedDate, $this->lpa->getDonorSignatureDate());
+        $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorLpaSignatoryFullName());
+    }
+
+    public function testGetSetPreviousLpa()
+    {
+        $expectedPreviousLpas = true;
+        $expectedLpaInfo =  "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
+
+        $this->assertFalse($this->lpa->hasPreviousLpas());
+
+        $this->lpa->setDonorHasPreviousLpas($expectedPreviousLpas);
+        $this->lpa->setPreviousLpaInfo($expectedLpaInfo);
+
+        $this->assertTrue($this->lpa->hasPreviousLpas());
+        $this->assertEquals($expectedLpaInfo, $this->lpa->getPreviousLpaInfo());
+    }
+
+    public function testGetSetAccuracyAscertainedBy()
+    {
+        $this->assertEquals(Lpa::PERMISSION_GIVEN_SINGULAR, $this->lpa->getAccuracyAscertainedBy());
+
+        $this->lpa->setAccuracyAscertainedBy(LPA::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(Lpa::PERMISSION_GIVEN_PLURAL, $this->lpa->getAccuracyAscertainedBy());
     }
 }

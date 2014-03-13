@@ -73,4 +73,55 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEmpty($this->poa->getInputFilter()->getMessages());
         $this->assertEquals(1, count($this->poa->getInputFilter()->getMessages()['caseItems']));
     }
+
+    public function testGetSetNotifiedPersonDeclarations()
+    {
+        $expectedHasNotifiedPersons = true;
+
+        $this->assertFalse($this->poa->hasNotifiedPersons());
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getNotifiedPersonPermissionBy());
+
+        $this->poa->setUsesNotifiedPersons($expectedHasNotifiedPersons);
+        $this->assertTrue($this->poa->hasNotifiedPersons());
+
+        $this->poa->setNotifiedPersonPermissionBy(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getNotifiedPersonPermissionBy());
+    }
+
+    public function testGetSetAttorneyPartyDeclarations()
+    {
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyPartyDeclaration());
+        $this->poa->setAttorneyPartyDeclaration(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyPartyDeclaration());
+    }
+
+    public function testGetSetCorrespondentCompliance()
+    {
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getCorrespondentComplianceAssertion());
+        $this->poa->setCorrespondentComplianceAssertion(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getCorrespondentComplianceAssertion());
+    }
+
+    public function testGetSetAttorneyApplicationDeclarations()
+    {
+        $expectedDate = new \DateTime();
+        $expectedSignatory = 'Mr Test Signatory';
+
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyApplicationAssertion());
+        $this->poa->setAttorneyApplicationAssertion(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyApplicationAssertion());
+
+        $this->poa->setAttorneyDeclarationSignatoryFullName($expectedSignatory);
+        $this->poa->setAttorneyDeclarationSignatureDate($expectedDate);
+
+        $this->assertEquals($expectedDate, $this->poa->getAttorneyDeclarationSignatureDate());
+        $this->assertEquals($expectedSignatory, $this->poa->getAttorneyDeclarationSignatoryFullName());
+    }
+
+    public function testGetSetMentalHealthDeclarations()
+    {
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyMentalActPermission());
+        $this->poa->setAttorneyMentalActPermission(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
+        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyMentalActPermission());
+    }
 }

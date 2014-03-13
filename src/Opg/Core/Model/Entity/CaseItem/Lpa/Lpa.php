@@ -10,6 +10,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -20,6 +21,188 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Lpa extends PowerOfAttorney
 {
+
+    /**
+     * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
+     * @var integer
+     * @Type("integer")
+     */
+    protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type = "datetime")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaDonorSignatureDate;
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Type("string")
+     */
+    protected $lpaDonorSignatoryFullName;
+
+    /**
+     * @ORM\Column(type = "boolean",options={"default":0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $donorHasPreviousLpas = false;
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Type("string")
+     */
+    protected $previousLpaInfo;
+
+    /**
+     * @ORM\Column(type = "datetime")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaDonorDeclarationSignatureDate;
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Type("string")
+     */
+    protected $lpaDonorDeclarationSignatoryFullName;
+
+    /**
+     * @param int $signedBy
+     * @return Lpa
+     */
+    public function setAccuracyAscertainedBy($signedBy = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->lpaAccuracyAscertainedBy = $signedBy;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccuracyAscertainedBy()
+    {
+        return $this->lpaAccuracyAscertainedBy;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return $this
+     */
+    public function setDonorSignatureDate(\DateTime $signatureDate)
+    {
+        $this->lpaDonorSignatureDate = $signatureDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDonorSignatureDate()
+    {
+        return $this->lpaDonorSignatureDate;
+    }
+
+    /**
+     * @param  string $fullName
+     * @return Lpa
+     */
+    public function setDonorLpaSignatoryFullName($fullName)
+    {
+        $this->lpaDonorSignatoryFullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDonorLpaSignatoryFullName()
+    {
+        return $this->lpaDonorSignatoryFullName;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return $this
+     */
+    public function setDonorDeclarationSignatureDate(\DateTime $signatureDate)
+    {
+        $this->lpaDonorDeclarationSignatureDate = $signatureDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDonorDeclarationSignatureDate()
+    {
+        return $this->lpaDonorDeclarationSignatureDate;
+    }
+
+    /**
+     * @param  string $fullName
+     * @return Lpa
+     */
+    public function setDonorDeclarationLpaSignatoryFullName($fullName)
+    {
+        $this->lpaDonorDeclarationSignatoryFullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDonorDeclarationLpaSignatoryFullName()
+    {
+        return $this->lpaDonorDeclarationSignatoryFullName;
+    }
+
+    /**
+     * @param   bool $previousLpas
+     * @return  Lpa
+     */
+    public function setDonorHasPreviousLpas($previousLpas)
+    {
+        $this->donorHasPreviousLpas = (bool)$previousLpas;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDonorHasPreviousLpas()
+    {
+        return $this->donorHasPreviousLpas;
+    }
+
+    /**
+     * Alias for Lpa::getDonorHasPreviousLpas
+     * @return bool
+     */
+    public function hasPreviousLpas()
+    {
+        return $this->getDonorHasPreviousLpas();
+    }
+
+    /**
+     * @param   string $lpaInfo
+     * @return  Lpa
+     */
+    public function setPreviousLpaInfo($lpaInfo)
+    {
+        $this->previousLpaInfo = $lpaInfo;
+        return $this;
+    }
+
+    public function getPreviousLpaInfo()
+    {
+        return $this->previousLpaInfo;
+    }
+
     /**
      * @return InputFilter|InputFilterInterface
      */
