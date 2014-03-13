@@ -14,7 +14,7 @@ trait Time {
     /**
      * @ORM\Column(type = "string")
      * @var string createdTime
-     * @Type("string");
+     * @Type("string")
      */
     private $createdTime;
 
