@@ -260,7 +260,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var int
      * @Type("integer")
      */
-    protected $attorneyMentalActProvision = self::PERMISSION_GIVEN_SINGULAR;
+    protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -281,7 +281,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var int
      * @Type("integer")
      */
-    protected $applicantComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
+    protected $correspondentComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
 
     public function __construct ()
     {
@@ -846,5 +846,115 @@ abstract class PowerOfAttorney extends CaseItem
     {
         return $this->notifiedPersonPermissionBy;
     }
+
+    /**
+     * @param int $attorneyApplicationAssertion
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyApplicationAssertion($attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->attorneyApplicationAssertion = $attorneyApplicationAssertion;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAttorneyApplicationAssertion()
+    {
+        return $this->attorneyApplicationAssertion;
+    }
+
+    /**
+     * @param string $attorneyDeclarationSignatoryFullName
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyDeclarationSignatoryFullName($attorneyDeclarationSignatoryFullName)
+    {
+        $this->attorneyDeclarationSignatoryFullName = $attorneyDeclarationSignatoryFullName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttorneyDeclarationSignatoryFullName()
+    {
+        return $this->attorneyDeclarationSignatoryFullName;
+    }
+
+    /**
+     * @param \DateTime $attorneyDeclarationSignatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyDeclarationSignatureDate(\DateTime $attorneyDeclarationSignatureDate)
+    {
+        $this->attorneyDeclarationSignatureDate = $attorneyDeclarationSignatureDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAttorneyDeclarationSignatureDate()
+    {
+        return $this->attorneyDeclarationSignatureDate;
+    }
+
+    /**
+     * @param int $attorneyMentalActPermission
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyMentalActPermission($attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->attorneyMentalActPermission = $attorneyMentalActPermission;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAttorneyMentalActPermission()
+    {
+        return $this->attorneyMentalActPermission;
+    }
+
+    /**
+     * @param int $attorneyPartyDeclaration
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyPartyDeclaration($attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->attorneyPartyDeclaration = $attorneyPartyDeclaration;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAttorneyPartyDeclaration()
+    {
+        return $this->attorneyPartyDeclaration;
+    }
+
+    /**
+     * @param int $correspondentComplianceAssertion
+     * @return PowerOfAttorney
+     */
+    public function setCorrespondentComplianceAssertion($correspondentComplianceAssertion = self::PERMISSION_GIVEN_SINGULAR)
+    {
+        $this->correspondentComplianceAssertion = $correspondentComplianceAssertion;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCorrespondentComplianceAssertion()
+    {
+        return $this->correspondentComplianceAssertion;
+    }
+
+
 }
 
