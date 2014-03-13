@@ -241,6 +241,48 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $paymentDate;
 
+    /**
+     * @ORM\Column(type="integer",options={"default":1})
+     * @var int
+     * @Type("integer")
+     */
+    protected $attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type="integer",options={"default":1})
+     * @var int
+     * @Type("integer")
+     */
+    protected $attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type="integer",options={"default":1})
+     * @var int
+     * @Type("integer")
+     */
+    protected $attorneyMentalActProvision = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $attorneyDeclarationSignatureDate;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
+     */
+    protected $attorneyDeclarationSignatoryFullName;
+
+    /**
+     * @ORM\Column(type="integer",options={"default":1})
+     * @var int
+     * @Type("integer")
+     */
+    protected $applicantComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
+
     public function __construct ()
     {
         parent::__construct();
