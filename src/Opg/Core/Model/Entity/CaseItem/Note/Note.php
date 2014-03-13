@@ -80,7 +80,7 @@ class Note implements EntityInterface, \IteratorAggregate
     
     /**
      * Non persistable entity, used for validation of create
-     * @var CaseItem case
+     * @var CaseItem
      */
     protected $case;
     
