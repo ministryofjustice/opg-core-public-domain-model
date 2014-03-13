@@ -86,7 +86,7 @@ class Lpa extends PowerOfAttorney
      */
     public function getAccuracyAscertainedBy()
     {
-        return $this->lpaSignedBy;
+        return $this->lpaAccuracyAscertainedBy;
     }
 
     /**
