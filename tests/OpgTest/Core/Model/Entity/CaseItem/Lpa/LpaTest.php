@@ -509,7 +509,23 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'errorMessages' => array (
                 ),
                 'taskStatus'    => array(),
+                'lpaAccuracyAscertainedBy' => 1,
+                'lpaDonorSignatureDate' => null,
+                'lpaDonorSignatoryFullName' => null,
+                'donorHasPreviousLpas' => false,
+                'previousLpaInfo' => null,
+                'lpaDonorDeclarationSignatureDate' => null,
+                'lpaDonorDeclarationSignatoryFullName' => null,
+                'usesNotifiedPersons' => false,
+                'notifiedPersonPermissionBy' => 1,
+                'attorneyPartyDeclaration' => 1,
+                'attorneyApplicationAssertion' => 1,
+                'attorneyMentalActPermission' => 1,
+                'attorneyDeclarationSignatureDate' => null,
+                'attorneyDeclarationSignatoryFullName' => null,
+                'correspondentComplianceAssertion' => 1,
             ),
+
             $lpa->toArrayRecursive()
         );
     }
