@@ -212,14 +212,4 @@ class NoteTest extends \PHPUnit_Framework_TestCase
             $this->note->getCreatedByUser()->getFirstName()
         );
     }
-
-    public function testGetInputFilter()
-    {
-        try {
-            $this->assertTrue($this->note->getInputFilter() instanceof InputFilterAwareInterface);
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof UnusedException);
-        }
-    }
 }
