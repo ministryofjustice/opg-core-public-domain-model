@@ -77,13 +77,13 @@ class Note implements EntityInterface, \IteratorAggregate
      * @var string name
      */
     private $name;
-    
+
     /**
-     * Non persistable entity, used for validation of create
-     * @var CaseItem
+     * Don't persist this
+     * @var CaseItem $case
      */
     protected $case;
-    
+
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
@@ -321,7 +321,7 @@ class Note implements EntityInterface, \IteratorAggregate
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
             $factory     = new InputFactory();
-            
+
             $inputFilter->add(
                 $factory->createInput(
                     array(
@@ -344,7 +344,7 @@ class Note implements EntityInterface, \IteratorAggregate
                     )
                 )
             );
-            
+
             $inputFilter->add(
                 $factory->createInput(
                     array(
@@ -385,7 +385,7 @@ class Note implements EntityInterface, \IteratorAggregate
                     )
                 )
             );
-            
+
             $this->inputFilter = $inputFilter;
         }
 
