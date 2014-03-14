@@ -5,6 +5,7 @@ use Opg\Common\Exception\UnusedException;
 
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\User\User;
+use Zend\InputFilter\InputFilterAwareInterface;
 
 /**
  * Note test case.
@@ -91,7 +92,7 @@ class NoteTest extends \PHPUnit_Framework_TestCase
             $this->note->getSourceTable()
         );
     }
-    
+
 
     public function testGetSetStatus()
     {
@@ -215,7 +216,7 @@ class NoteTest extends \PHPUnit_Framework_TestCase
     public function testGetInputFilter()
     {
         try {
-            $this->note->getInputFilter();
+            $this->assertTrue($this->note->getInputFilter() instanceof InputFilterAwareInterface);
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof UnusedException);
