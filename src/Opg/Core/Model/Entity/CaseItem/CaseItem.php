@@ -93,13 +93,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $tasks;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note")
-     * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
-     */
-    protected $notes;
-
-    /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document")
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
