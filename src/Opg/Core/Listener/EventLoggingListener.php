@@ -46,7 +46,7 @@ class EventLoggingListener implements EventSubscriber
     public function __construct(UserIdentityProvider $identityProvider, array $config = null)
     {
         $this->userIdentityProvider = $identityProvider;
-        
+
         if (!is_null($config)) {
             $this->config = $config;
         }
@@ -212,7 +212,22 @@ class EventLoggingListener implements EventSubscriber
 
     private function findOwningEntityForNote(EntityManager $em, Note $note)
     {
-        return $this->getCaseByAssociationMembership($em, $note, 'notes');
+        $return = null;
+
+        try {
+            $return =  $this->getCaseByAssociationMembership($em, $note, 'notes');
+        } catch(\LogicException $e){}
+
+        try {
+            $return =  $this->getAssociatedPerson($em, $note, 'notes');
+        }
+        catch(\LogicException $e){}
+
+        if (is_null($return)) {
+            throw new \LogicException(sprintf('Could not find parent entity for class "%s".', ClassUtils::getClass($note)));
+        }
+
+        return $return;
     }
 
     private function findOwningEntityForDocument(EntityManager $em, Document $document)
