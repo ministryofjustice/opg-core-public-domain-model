@@ -129,7 +129,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
-     * @Type("Opg\Core\Model\Entity\Address\Address")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Address\Address>")
      */
     protected $addresses;
 

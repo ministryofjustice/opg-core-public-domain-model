@@ -36,7 +36,7 @@ class Donor extends BasePerson implements PartyInterface
                 $factory->createInput(
                     array(
                         'name'       => 'firstname',
-                        'required'   => false,
+                        'required'   => true,
                         'filters'    => array(
                             array('name' => 'StripTags'),
                             array('name' => 'StringTrim'),
