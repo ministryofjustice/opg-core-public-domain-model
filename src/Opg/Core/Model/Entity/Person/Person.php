@@ -66,7 +66,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      *
      * @var ArrayCollection
-     * @MaxDepth(3)
+     * @MaxDepth(5)
      */
     protected $powerOfAttorneys;
 
@@ -76,7 +76,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
      * )
-     * @MaxDepth(3)
+     * @MaxDepth(5)
      * @var ArrayCollection
      */
     protected $deputyships;
