@@ -36,6 +36,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use UniqueIdentifier;
     use InputFilter;
 
+    const APPLICATION_TYPE_CLASSIC = 0;
+    const APPLICATION_TYPE_ONLINE  = 1;
+
     /**
      * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var number autoincrementID
@@ -43,6 +46,19 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type = "integer", nullable=true)
+     * @var number
+     * @Type("integer")
+     */
+    protected $oldCaseId;
+
+    /**
+     * @ORM\Column(type = "integer", nullable=true)
+     * @var number
+     * @Type("integer")
+     */
+    protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
@@ -449,6 +465,41 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @param Person $person
      * @return CaseItem
      */
-   abstract public function addPerson(Person $person);
+    abstract public function addPerson(Person $person);
 
+    /**
+     * @return number
+     */
+    public function getOldCaseId()
+    {
+        return $this->oldCaseId;
+    }
+
+    /**
+     * @param $oldCaseId
+     * @return CaseItem
+     */
+    public function setOldCaseId($oldCaseId)
+    {
+        $this->oldCaseId = $oldCaseId;
+        return $this;
+    }
+
+    /**
+     * @return number
+     */
+    public function getApplicationType()
+    {
+        return $this->applicationType;
+    }
+
+    /**
+     * @param int $applicationType
+     * @return CaseItem
+     */
+    public function setApplicationType($applicationType = self::APPLICATION_TYPE_CLASSIC)
+    {
+        $this->applicationType = $applicationType;
+        return $this;
+    }
 }
