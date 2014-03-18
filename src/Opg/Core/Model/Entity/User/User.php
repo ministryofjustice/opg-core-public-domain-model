@@ -67,6 +67,7 @@ class User implements EntityInterface, \IteratorAggregate
      *
      * @var ArrayCollection
      * @Type("Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
+     * @Exclude
      */
     protected $powerOfAttorneys;
 
@@ -79,6 +80,7 @@ class User implements EntityInterface, \IteratorAggregate
      *
      * @var ArrayCollection
      * @Type("Opg\Core\Model\Entity\Deputyship\Deputyship")
+     * @Exclude
      */
     protected $deputyships;
 
