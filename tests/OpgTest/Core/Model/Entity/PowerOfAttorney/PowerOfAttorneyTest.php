@@ -166,4 +166,41 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->poa->setFeeRemissionAppliedFor();
         $this->assertFalse($this->poa->getFeeRemissionAppliedFor());
     }
+
+    public function testGetSetCaseAttorneyJointly()
+    {
+        $this->assertFalse($this->poa->getCaseAttorneyJointly());
+        $this->poa->setCaseAttorneyJointly(true);
+        $this->assertTrue($this->poa->getCaseAttorneyJointly());
+        $this->poa->setCaseAttorneyJointly();
+        $this->assertFalse($this->poa->getCaseAttorneyJointly());
+    }
+
+    public function testGetSetCaseAttorneyJointlyAndJointlyAndSeverally()
+    {
+        $this->assertFalse($this->poa->getCaseAttorneyJointlyAndJointlyAndSeverally());
+        $this->poa->setCaseAttorneyJointlyAndJointlyAndSeverally(true);
+        $this->assertTrue($this->poa->getCaseAttorneyJointlyAndJointlyAndSeverally());
+        $this->poa->setCaseAttorneyJointlyAndJointlyAndSeverally();
+        $this->assertFalse($this->poa->getCaseAttorneyJointlyAndJointlyAndSeverally());
+    }
+
+    public function testGetSetCaseAttorneyJointlyAndSeverally()
+    {
+        $this->assertFalse($this->poa->getCaseAttorneyJointlyAndSeverally());
+        $this->poa->setCaseAttorneyJointlyAndSeverally(true);
+        $this->assertTrue($this->poa->getCaseAttorneyJointlyAndSeverally());
+        $this->poa->setCaseAttorneyJointlyAndSeverally();
+        $this->assertFalse($this->poa->getCaseAttorneyJointlyAndSeverally());
+    }
+
+    public function testGetSetCaseAttorneySingular()
+    {
+        $this->assertFalse($this->poa->getCaseAttorneySingular());
+        $this->poa->setCaseAttorneySingular(true);
+        $this->assertTrue($this->poa->getCaseAttorneySingular());
+        $this->poa->setCaseAttorneySingular();
+        $this->assertFalse($this->poa->getCaseAttorneySingular());
+    }
+
 }

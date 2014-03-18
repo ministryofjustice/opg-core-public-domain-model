@@ -144,6 +144,34 @@ abstract class PowerOfAttorney extends CaseItem
     protected $feeRemissionAppliedFor = false;
 
     /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $caseAttorneySingular = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $caseAttorneyJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $caseAttorneyJointly = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
+
+    /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
      * @Type("string")
@@ -983,6 +1011,78 @@ abstract class PowerOfAttorney extends CaseItem
     public function getPaymentByDebitCreditCard()
     {
         return $this->paymentByDebitCreditCard;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointly($caseAttorney = false)
+    {
+        $this->caseAttorneyJointly = $caseAttorney;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointly()
+    {
+        return $this->caseAttorneyJointly;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndJointlyAndSeverally = $caseAttorney;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndSeverally = $caseAttorney;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneySingular($caseAttorney = false)
+    {
+        $this->caseAttorneySingular = $caseAttorney;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneySingular()
+    {
+        return $this->caseAttorneySingular;
     }
 
 
