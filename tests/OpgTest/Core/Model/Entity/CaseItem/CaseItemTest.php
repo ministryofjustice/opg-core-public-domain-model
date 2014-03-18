@@ -322,4 +322,24 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock->setOldCaseId($expectedId);
         $this->assertEquals($expectedId, $caseItemMock->getOldCaseId());
     }
+
+    public function testGetSetRegistrationDate()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertNull($caseItemMock->getRegistrationDate());
+        $caseItemMock->setRegistrationDate($expectedDate);
+        $this->assertEquals($expectedDate, $caseItemMock->getRegistrationDate());
+    }
+
+    public function testGetSetClosedDate()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertNull($caseItemMock->getClosedDate());
+        $caseItemMock->setClosedDate($expectedDate);
+        $this->assertEquals($expectedDate, $caseItemMock->getClosedDate());
+    }
 }

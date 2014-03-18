@@ -88,6 +88,20 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $dueDate;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $registrationDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $closedDate;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
@@ -502,4 +516,42 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->applicationType = $applicationType;
         return $this;
     }
+
+    /**
+     * @param \DateTime $closedDate
+     * @return CaseItem
+     */
+    public function setClosedDate(\DateTime $closedDate)
+    {
+        $this->closedDate = $closedDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getClosedDate()
+    {
+        return $this->closedDate;
+    }
+
+    /**
+     * @param \DateTime $registrationDate
+     * @return CaseItem
+     */
+    public function setRegistrationDate(\DateTime $registrationDate = null)
+    {
+        $this->registrationDate =
+            (null === $registrationDate) ? new \DateTime() : $registrationDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+
 }
