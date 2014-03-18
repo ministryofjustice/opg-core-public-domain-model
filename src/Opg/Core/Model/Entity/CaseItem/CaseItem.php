@@ -24,6 +24,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\MappedSuperclass
@@ -112,12 +113,14 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @var ArrayCollection
      * @todo Move this out of the CaseItem, need to be used in validation, but needs to exist somewhere else
+     * @ReadOnly
      */
     protected $caseItems;
 
     /**
      * @var array
      * This is used to getTaskStatus counts, we do not persist it though
+     * @ReadOnly
      */
     protected $taskStatus = [];
 

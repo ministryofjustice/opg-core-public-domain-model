@@ -1,6 +1,6 @@
 <?php
 namespace Opg\Common\Model\Entity\Traits;
-
+use JMS\Serializer\Annotation\Type;
 
 trait UniqueIdentifier {
 
@@ -9,6 +9,7 @@ trait UniqueIdentifier {
      *
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
+     * @Type("integer")
      */
     protected $uId;
 

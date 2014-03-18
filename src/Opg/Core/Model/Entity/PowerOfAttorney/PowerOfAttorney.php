@@ -110,125 +110,121 @@ abstract class PowerOfAttorney extends CaseItem
      * inverseJoinColumns={@ORM\JoinColumn(name="certificate_provider_id",
      * referencedColumnName="id")}
      * )
-     *
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider>")
      * @var ArrayCollection
      */
     protected $certificateProviders;
 
 
     /**
-     * use InputFilter;
-     * use ToArray {
-     * toArray as traitToArray;
-     * }
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $paymentMethod;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $cardPaymentContact;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $bacsPaymentInstructions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $registrationDueDate;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $howAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $howReplacementAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $attorneyActDecisions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $replacementAttorneyActDecisions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $replacementOrder;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $restrictions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $guidance;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $charges;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $additionalInfo;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $paymentId;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $paymentAmount;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
-     *
      * @var string
+     * @Type("string")
      */
     protected $paymentDate;
 
