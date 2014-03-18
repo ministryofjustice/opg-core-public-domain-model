@@ -67,6 +67,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @var ArrayCollection
      * @MaxDepth(5)
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney>")
      */
     protected $powerOfAttorneys;
 
@@ -78,6 +79,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @MaxDepth(5)
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Deputyship\Deputyship>")
      */
     protected $deputyships;
 
@@ -88,6 +90,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Note\Note>")
      */
     protected $notes;
 
