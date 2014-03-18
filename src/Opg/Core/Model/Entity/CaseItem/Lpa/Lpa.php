@@ -72,6 +72,20 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaCreatedDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaReceiptDate;
+
+    /**
      * @param int $signedBy
      * @return Lpa
      */
@@ -237,5 +251,44 @@ class Lpa extends PowerOfAttorney
         }
         return $this;
     }
+
+    /**
+     * @param \DateTime $lpaCreatedDate
+     * @return Lpa
+     */
+    public function setLpaCreatedDate(\DateTime $lpaCreatedDate = null)
+    {
+        $this->lpaCreatedDate =
+            (null === $lpaCreatedDate) ? new \DateTime() : $lpaCreatedDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaCreatedDate()
+    {
+        return $this->lpaCreatedDate;
+    }
+
+    /**
+     * @param \DateTime $lpaReceiptDate
+     * @return Lpa
+     */
+    public function setLpaReceiptDate(\DateTime $lpaReceiptDate)
+    {
+        $this->lpaReceiptDate = $lpaReceiptDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaReceiptDate()
+    {
+        return $this->lpaReceiptDate;
+    }
+
+
 
 }
