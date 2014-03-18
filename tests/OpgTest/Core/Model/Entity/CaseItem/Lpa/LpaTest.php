@@ -155,18 +155,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetPaymentMethod()
-    {
-        $expected = 'CARD';
-
-        $this->lpa->setPaymentMethod($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getPaymentMethod()
-        );
-    }
-
     public function testGetSetCardPaymentContact()
     {
         $expected = 'Mrs Henrietta Miggins';
@@ -176,18 +164,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $expected,
             $this->lpa->getCardPaymentContact()
-        );
-    }
-
-    public function testGetSetBacsPaymentInstructions()
-    {
-        $expected = 'These are the instructions you wanted';
-
-        $this->lpa->setBacsPaymentInstructions($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getBacsPaymentInstructions()
         );
     }
 
@@ -473,9 +449,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 ),
                 'certificateProviders' => array (
                 ),
-                'paymentMethod' => NULL,
                 'cardPaymentContact' => NULL,
-                'bacsPaymentInstructions' => NULL,
                 'registrationDueDate' => NULL,
                 'howAttorneysAct' => NULL,
                 'howReplacementAttorneysAct' => NULL,
@@ -524,7 +498,18 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'attorneyDeclarationSignatureDate' => null,
                 'attorneyDeclarationSignatoryFullName' => null,
                 'correspondentComplianceAssertion' => 1,
+                'certificateProviders' => array (),
+                'paymentByDebitCreditCard' => false,
+                'paymentByCheque' => false,
+                'feeExemptionAppliedFor' => false,
+                'feeRemissionAppliedFor' => false,
+                'caseAttorneySingular' => false,
+                'caseAttorneyJointlyAndSeverally' => false,
+                'caseAttorneyJointly' => false,
+                'caseAttorneyJointlyAndJointlyAndSeverally' => false,
+
             ),
+
 
             $lpa->toArrayRecursive()
         );
