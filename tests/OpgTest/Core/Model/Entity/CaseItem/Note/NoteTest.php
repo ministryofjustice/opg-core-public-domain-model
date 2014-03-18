@@ -3,6 +3,8 @@ namespace OpgTest\Core\Model\CaseItem\Note;
 
 use Opg\Common\Exception\UnusedException;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\User\User;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -211,5 +213,42 @@ class NoteTest extends \PHPUnit_Framework_TestCase
             $expectedUserFirstName,
             $this->note->getCreatedByUser()->getFirstName()
         );
+    }
+
+    public function testSetGetCase()
+    {
+        $expectedCase = new Lpa();
+        $expectedCase->setId(1)->setTitle('Test Case');
+
+        $this->note->setCase($expectedCase);
+
+        $this->assertEquals($expectedCase, $this->note->getCase());
+    }
+
+    public function testGetSetPerson()
+    {
+        $expectedDonor = new Donor();
+        $expectedDonor->setId(1)->setFirstname('Test')->setSurname('Donor');
+
+        $this->note->setPerson($expectedDonor);
+
+        $this->assertEquals($expectedDonor, $this->note->getPerson());
+    }
+
+    public function testValidation()
+    {
+        $noteName = 'New Note: ' . uniqid();
+        $noteType = 'Confirmation';
+
+        $this->assertFalse($this->note->isValid());
+
+        $this->note->setName($noteName);
+        $this->assertFalse($this->note->isValid());
+
+        $this->note->setType($noteType);
+        $this->assertTrue($this->note->isValid());
+
+        $this->assertEquals($noteName, $this->note->getName());
+        $this->assertEquals($noteType, $this->note->getType());
     }
 }

@@ -36,9 +36,12 @@ trait HasNotes {
      * @return $this
      */
     public function addNote(NoteEntity $note) {
+        //Required only for deserialization
+        // @codeCoverageIgnoreStart
         if (is_null($this->notes)) {
             $this->notes = new ArrayCollection();
         }
+        // @codeCoverageIgnoreEnd
 
         if(!$this->notes->contains($note)) {
             $this->notes->add($note);
