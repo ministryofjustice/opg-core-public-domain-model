@@ -124,4 +124,46 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->poa->setAttorneyMentalActPermission(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
         $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyMentalActPermission());
     }
+
+    public function testGetSetPayByCard()
+    {
+        $expectedCardDetails = 'Number 1234567890123456 \n Expiry 01/18\n CCV 123\n Name A Test Card User';
+
+        $this->assertFalse($this->poa->getPaymentByDebitCreditCard());
+
+        $this->poa
+            ->setPaymentByDebitCreditCard(true)
+            ->setCardPaymentContact($expectedCardDetails);
+
+        $this->assertTrue($this->poa->getPaymentByDebitCreditCard());
+
+        $this->assertEquals($expectedCardDetails, $this->poa->getCardPaymentContact());
+    }
+
+    public function testGetSetPayByCheque()
+    {
+        $this->assertFalse($this->poa->getPaymentByCheque());
+        $this->poa->setPaymentByCheque(true);
+        $this->assertTrue($this->poa->getPaymentByCheque());
+        $this->poa->setPaymentByCheque();
+        $this->assertFalse($this->poa->getPaymentByCheque());
+    }
+
+    public function testGetSetFeeExemption()
+    {
+        $this->assertFalse($this->poa->getFeeExemptionAppliedFor());
+        $this->poa->setFeeExemptionAppliedFor(true);
+        $this->assertTrue($this->poa->getFeeExemptionAppliedFor());
+        $this->poa->setFeeExemptionAppliedFor();
+        $this->assertFalse($this->poa->getFeeExemptionAppliedFor());
+    }
+
+    public function testGetSetFeeRemission()
+    {
+        $this->assertFalse($this->poa->getFeeRemissionAppliedFor());
+        $this->poa->setFeeRemissionAppliedFor(true);
+        $this->assertTrue($this->poa->getFeeRemissionAppliedFor());
+        $this->poa->setFeeRemissionAppliedFor();
+        $this->assertFalse($this->poa->getFeeRemissionAppliedFor());
+    }
 }
