@@ -513,6 +513,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'applicationType' => 0,
                 'registrationDate' => null,
                 'closedDate' => null,
+                'lifeSustainingTreatment' => false,
+                'lifeSustainingTreatmentSignatureDate' => null,
             ),
             $lpa->toArrayRecursive()
         );
@@ -618,5 +620,18 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->lpa->getLpaReceiptDate());
         $this->lpa->setLpaReceiptDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDate());
+    }
+
+    public function testGetSetLifeSustainingTreatment()
+    {
+        $lstDate = new \DateTime();
+
+        $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertFalse($this->lpa->hasLifeSustainingTreatment());
+
+        $this->lpa->setLifeSustainingTreatment(true)->setLifeSustainingTreatmentSignatureDate($lstDate);
+
+        $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
     }
 }
