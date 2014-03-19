@@ -203,4 +203,28 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($this->poa->getCaseAttorneySingular());
     }
 
+    public function testGetSetNotificationDate()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNull($this->poa->getNotificationDate());
+        $this->poa->setNotificationDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->poa->getNotificationDate());
+    }
+
+    public function testGetNoticeGivenDate()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNull($this->poa->getNoticeGivenDate());
+        $this->poa->setNoticeGivenDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->poa->getNoticeGivenDate());
+    }
+
+    public function testGetSetDispatchDate()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNull($this->poa->getDispatchDate());
+        $this->poa->setDispatchDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->poa->getDispatchDate());
+    }
+
 }

@@ -515,6 +515,9 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'closedDate' => null,
                 'lifeSustainingTreatment' => false,
                 'lifeSustainingTreatmentSignatureDate' => null,
+                'notificationDate' => null,
+                'dispatchDate' => null,
+                'noticeGivenDate' => null
             ),
             $lpa->toArrayRecursive()
         );

@@ -311,6 +311,24 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $correspondentComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
 
+    /**@ORM\Column(type="datetime", nullable="true")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $notificationDate;
+
+    /**@ORM\Column(type="datetime", nullable="true")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $dispatchDate;
+
+    /**@ORM\Column(type="datetime", nullable="true")
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $noticeGivenDate;
+
     public function __construct ()
     {
         parent::__construct();
@@ -1083,6 +1101,60 @@ abstract class PowerOfAttorney extends CaseItem
     public function getCaseAttorneySingular()
     {
         return $this->caseAttorneySingular;
+    }
+
+    /**
+     * @param \DateTime $dispatchDate
+     * @return PowerOfAttorney
+     */
+    public function setDispatchDate(\DateTime $dispatchDate)
+    {
+        $this->dispatchDate = $dispatchDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDispatchDate()
+    {
+        return $this->dispatchDate;
+    }
+
+    /**
+     * @param \DateTime $noticeGivenDate
+     * @return PowerOfAttorney
+     */
+    public function setNoticeGivenDate(\DateTime $noticeGivenDate)
+    {
+        $this->noticeGivenDate = $noticeGivenDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getNoticeGivenDate()
+    {
+        return $this->noticeGivenDate;
+    }
+
+    /**
+     * @param \DateTime $notificationDate
+     * @return PowerOfAttorney
+     */
+    public function setNotificationDate(\DateTime $notificationDate)
+    {
+        $this->notificationDate = $notificationDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getNotificationDate()
+    {
+        return $this->notificationDate;
     }
 
 
