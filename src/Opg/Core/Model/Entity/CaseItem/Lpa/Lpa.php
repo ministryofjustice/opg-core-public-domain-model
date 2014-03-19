@@ -72,6 +72,34 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaCreatedDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lpaReceiptDate;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Type("boolean")
+     */
+    protected $lifeSustainingTreatment = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("datetime")
+     */
+    protected $lifeSustainingTreatmentSignatureDate;
+
+    /**
      * @param int $signedBy
      * @return Lpa
      */
@@ -237,5 +265,89 @@ class Lpa extends PowerOfAttorney
         }
         return $this;
     }
+
+    /**
+     * @param \DateTime $lpaCreatedDate
+     * @return Lpa
+     */
+    public function setLpaCreatedDate(\DateTime $lpaCreatedDate = null)
+    {
+        $this->lpaCreatedDate =
+            (null === $lpaCreatedDate) ? new \DateTime() : $lpaCreatedDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaCreatedDate()
+    {
+        return $this->lpaCreatedDate;
+    }
+
+    /**
+     * @param \DateTime $lpaReceiptDate
+     * @return Lpa
+     */
+    public function setLpaReceiptDate(\DateTime $lpaReceiptDate)
+    {
+        $this->lpaReceiptDate = $lpaReceiptDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaReceiptDate()
+    {
+        return $this->lpaReceiptDate;
+    }
+
+    /**
+     * @param boolean $lifeSustainingTreatment
+     * @return Lpa
+     */
+    public function setLifeSustainingTreatment($lifeSustainingTreatment = false)
+    {
+        $this->lifeSustainingTreatment = $lifeSustainingTreatment;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getLifeSustainingTreatment()
+    {
+        return $this->lifeSustainingTreatment;
+    }
+
+    /**
+     * Alias for getLifeSustainingTreatment
+     * @return boolean
+     */
+    public function hasLifeSustainingTreatment()
+    {
+        return $this->getLifeSustainingTreatment();
+    }
+
+    /**
+     * @param \DateTime $lifeSustainingTreatmentSignatureDate
+     * @return Lpa
+     */
+    public function setLifeSustainingTreatmentSignatureDate(\DateTime $lifeSustainingTreatmentSignatureDate)
+    {
+        $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLifeSustainingTreatmentSignatureDate()
+    {
+        return $this->lifeSustainingTreatmentSignatureDate;
+    }
+
+
 
 }

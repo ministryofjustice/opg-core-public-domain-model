@@ -2,6 +2,7 @@
 namespace OpgTest\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
@@ -301,5 +302,44 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock = $this->getMockedClass();
         $caseItemMock->setTaskStatus($seedStatus);
         $this->assertEquals($statuses, $caseItemMock->getTaskStatus());
+    }
+
+    public function testGetSetApplicationType()
+    {
+        $caseItemMock = $this->getMockedClass();
+        $this->assertEquals($caseItemMock->getApplicationType(), CaseItem::APPLICATION_TYPE_CLASSIC);
+        $caseItemMock->setApplicationType(CaseItem::APPLICATION_TYPE_ONLINE);
+        $this->assertEquals($caseItemMock->getApplicationType(), CaseItem::APPLICATION_TYPE_ONLINE);
+    }
+
+    public function testGetOldCaseId()
+    {
+        $expectedId = 'OLD_CASE_' . uniqid();
+
+        $caseItemMock = $this->getMockedClass();
+        $this->assertNull($caseItemMock->getOldCaseId());
+
+        $caseItemMock->setOldCaseId($expectedId);
+        $this->assertEquals($expectedId, $caseItemMock->getOldCaseId());
+    }
+
+    public function testGetSetRegistrationDate()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertNull($caseItemMock->getRegistrationDate());
+        $caseItemMock->setRegistrationDate($expectedDate);
+        $this->assertEquals($expectedDate, $caseItemMock->getRegistrationDate());
+    }
+
+    public function testGetSetClosedDate()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertNull($caseItemMock->getClosedDate());
+        $caseItemMock->setClosedDate($expectedDate);
+        $this->assertEquals($expectedDate, $caseItemMock->getClosedDate());
     }
 }

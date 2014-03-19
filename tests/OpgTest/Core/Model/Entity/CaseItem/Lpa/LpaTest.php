@@ -507,10 +507,18 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'caseAttorneyJointlyAndSeverally' => false,
                 'caseAttorneyJointly' => false,
                 'caseAttorneyJointlyAndJointlyAndSeverally' => false,
-
+                'lpaCreatedDate'    => null,
+                'lpaReceiptDate'   => null,
+                'oldCaseId' => null,
+                'applicationType' => 0,
+                'registrationDate' => null,
+                'closedDate' => null,
+                'lifeSustainingTreatment' => false,
+                'lifeSustainingTreatmentSignatureDate' => null,
+                'notificationDate' => null,
+                'dispatchDate' => null,
+                'noticeGivenDate' => null
             ),
-
-
             $lpa->toArrayRecursive()
         );
     }
@@ -598,5 +606,35 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->lpa->setAccuracyAscertainedBy(LPA::PERMISSION_GIVEN_PLURAL);
         $this->assertEquals(Lpa::PERMISSION_GIVEN_PLURAL, $this->lpa->getAccuracyAscertainedBy());
+    }
+
+    public function testGetSetLpaCreatedDate()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNull($this->lpa->getLpaCreatedDate());
+        $this->lpa->setLpaCreatedDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->lpa->getLpaCreatedDate());
+
+    }
+
+    public function testGetSetLpaReceiptDate()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNull($this->lpa->getLpaReceiptDate());
+        $this->lpa->setLpaReceiptDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDate());
+    }
+
+    public function testGetSetLifeSustainingTreatment()
+    {
+        $lstDate = new \DateTime();
+
+        $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertFalse($this->lpa->hasLifeSustainingTreatment());
+
+        $this->lpa->setLifeSustainingTreatment(true)->setLifeSustainingTreatmentSignatureDate($lstDate);
+
+        $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
     }
 }
