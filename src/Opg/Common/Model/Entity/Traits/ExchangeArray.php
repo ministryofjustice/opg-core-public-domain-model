@@ -8,7 +8,7 @@ trait ExchangeArray {
         $classData = get_class_vars(get_class($this));
 
         foreach($classData as $key=>$value) {
-            if (gettype($this->{$key}) === "boolean") {
+            if (gettype($value) === "boolean") {
                 (!isset($data[$key])) ? : (bool)$this->{$key} = $data[$key];
             }
             else {
