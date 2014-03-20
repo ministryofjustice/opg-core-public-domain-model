@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -35,6 +36,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
+    use ExchangeArray {
+        exchangeArray as exchangeArrayTrait;
+    }
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -266,12 +270,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function addTask(Task $task)
     {
-        //Only required when we deserialize
-        // @codeCoverageIgnoreStart
         if (is_null($this->tasks)) {
             $this->tasks = new ArrayCollection();
         }
-        // @codeCoverageIgnoreEnd
         $this->tasks->add($task);
     }
 
@@ -318,20 +319,15 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         return $this;
     }
 
-
     /**
+     * @TODO is this still required?
+     *
      * @param array $data
      * @return CaseItem
      */
     public function exchangeArray(array $data)
     {
-        empty($data['id']) ? : $this->setId($data['id']);
-        empty($data['uid']) ? : $this->setUid($data['uid']);
-        empty($data['caseType']) ? : $this->setCaseType($data['caseType']);
-        empty($data['caseSubtype']) ? : $this->setCaseSubtype($data['caseSubtype']);
-        empty($data['dueDate']) ? : $this->setDueDate($data['dueDate']);
-        empty($data['status']) ? : $this->setStatus($data['status']);
-        empty($data['title']) ? : $this->setTitle($data['title']);
+        $this->exchangeArrayTrait($data);
 
         if (!empty($data['assignedUser'])) {
             $assignedUser = new User();
@@ -340,6 +336,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         if (!empty($data['tasks'])) {
+            $this->tasks = null;
             foreach ($data['tasks'] as $taskData) {
                 $newTask = new Task();
                 $this->addTask(is_object($taskData) ? $taskData : $newTask->exchangeArray($taskData));
@@ -347,6 +344,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         if (!empty($data['notes'])) {
+            $this->notes = null;
             foreach ($data['notes'] as $noteData) {
                 $newNote = new Note();
                 $this->addNote(is_object($noteData) ? $noteData : $newNote->exchangeArray($noteData));
@@ -354,6 +352,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         if (!empty($data['documents'])) {
+            $this->documents = null;
             foreach ($data['documents'] as $documentData) {
                 $newDocument = new Document();
                 $this->addDocument(is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData));
@@ -361,7 +360,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
         return $this;
     }
-
 
     /**
      * @return \ArrayIterator
