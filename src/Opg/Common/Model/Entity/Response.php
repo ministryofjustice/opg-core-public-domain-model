@@ -18,7 +18,12 @@ class Response implements \IteratorAggregate
     /**
      * @var EntityInterface
      */
-    private $data;
+    protected $data;
+
+    /**
+     * @var array
+     */
+    protected $additionalData;
 
     /**
      * @param $data
@@ -27,20 +32,36 @@ class Response implements \IteratorAggregate
     public function setData($data)
     {
         $this->data = $data;
-
         return $this;
     }
 
     /**
-     * @param string $data
-     *
+     * @param $additionalData
      * @return Response
      */
-    public function setJsonData($data)
+    public function setAdditionalData($additionalData)
+    {
+        $this->additionalData = $additionalData;
+        return $this;
+    }
+
+
+    /**
+     * @param string $data
+     * @param string $additionalData
+     * @return Response
+     */
+    public function setJsonData($data, $additionalData = null)
     {
         $this->setData(
             json_decode($data)
         );
+
+        if (!is_null($additionalData)) {
+            $this->setAdditionalData(
+              json_decode($additionalData)
+            );
+        }
 
         return $this;
     }
@@ -54,12 +75,21 @@ class Response implements \IteratorAggregate
     }
 
     /**
+     * @return EntityInterface
+     */
+    public function getAdditionalData()
+    {
+        return $this->additionalData;
+    }
+
+    /**
      * @param array $data
      * @return Response
      */
     public function exchangeArray(array $data)
     {
         empty($data['data'])?: $this->setData($data['data']);
+        empty($data['additionalData'])?: $this->setAdditionalData($data['additionalData']);
 
         return $this;
     }

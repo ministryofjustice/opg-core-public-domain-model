@@ -14,6 +14,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Entity
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  *
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document

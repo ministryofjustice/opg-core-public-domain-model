@@ -51,10 +51,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         );
 
         $response->setJsonData(
+            json_encode($data),
             json_encode($data)
         );
 
         $this->assertEquals($data, $response->getData());
+        $this->assertEquals($data, $response->getAdditionalData());
     }
 
     public function testToArray()
@@ -62,7 +64,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $dataAsArray = ["Hello", "World"];
 
         $expected = [
-            'data' => $dataAsArray
+            'data'              => $dataAsArray,
+            'additionalData'    => null
         ];
 
         $response = new Response();
