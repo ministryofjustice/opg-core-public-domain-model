@@ -90,7 +90,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Note\Note>")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      */
     protected $notes;
 
