@@ -64,6 +64,7 @@ class Donor extends BasePerson implements PartyInterface
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Type("string")
      */
     protected $previousNames;
 
