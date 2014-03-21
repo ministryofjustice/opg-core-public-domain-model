@@ -124,6 +124,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Task\Task>")
+     * @ReadOnly
      */
     protected $tasks;
 
@@ -132,6 +133,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
+     * @ReadOnly
      */
     protected $notes;
 
@@ -139,6 +141,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document")
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
+     * @ReadOnly
      */
     protected $documents;
 
