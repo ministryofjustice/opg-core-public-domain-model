@@ -477,7 +477,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
                                 'name'    => 'StringLength',
                                 'options' => array(
                                     'encoding' => 'UTF-8',
-                                    'min'      => 5,
+                                    'min'      => 2,
                                     'max'      => 24,
                                 ),
                             )
