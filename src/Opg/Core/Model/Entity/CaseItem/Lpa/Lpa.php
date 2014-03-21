@@ -34,9 +34,10 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "datetime")
      * @var \DateTime
-     * @Type("datetime")
+     * @Type("datetime<'d/m/Y'>")
      */
     protected $lpaDonorSignatureDate;
+
 
     /**
      * @ORM\Column(type = "string")
