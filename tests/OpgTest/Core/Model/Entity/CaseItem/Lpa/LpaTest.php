@@ -602,10 +602,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetAccuracyAscertainedBy()
     {
-        $this->assertEquals(Lpa::PERMISSION_GIVEN_SINGULAR, $this->lpa->getAccuracyAscertainedBy());
+        $this->assertEquals('I', $this->lpa->getAccuracyAscertainedBy());
 
-        $this->lpa->setAccuracyAscertainedBy(LPA::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(Lpa::PERMISSION_GIVEN_PLURAL, $this->lpa->getAccuracyAscertainedBy());
+        $this->lpa->setAccuracyAscertainedBy('We');
+        $this->assertEquals('We', $this->lpa->getAccuracyAscertainedBy());
     }
 
     public function testGetSetLpaCreatedDate()

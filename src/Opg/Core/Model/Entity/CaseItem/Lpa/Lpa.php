@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
@@ -25,7 +26,8 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
      * @var integer
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getAccuracyAscertainedBy",setter="setAccuracyAscertainedBy")
      */
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -100,21 +102,26 @@ class Lpa extends PowerOfAttorney
     protected $lifeSustainingTreatmentSignatureDate;
 
     /**
-     * @param int $signedBy
+     * @param string $signedBy
      * @return Lpa
      */
-    public function setAccuracyAscertainedBy($signedBy = self::PERMISSION_GIVEN_SINGULAR)
+    public function setAccuracyAscertainedBy($signedBy)
     {
-        $this->lpaAccuracyAscertainedBy = $signedBy;
+        $this->lpaAccuracyAscertainedBy =
+            ($signedBy === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getAccuracyAscertainedBy()
     {
-        return $this->lpaAccuracyAscertainedBy;
+        return ($this->lpaAccuracyAscertainedBy === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
