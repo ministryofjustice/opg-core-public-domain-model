@@ -46,7 +46,7 @@ class Donor extends BasePerson implements PartyInterface
                                 'name'    => 'StringLength',
                                 'options' => array(
                                     'encoding' => 'UTF-8',
-                                    'min'      => 3,
+                                    'min'      => 2,
                                     'max'      => 24,
                                 ),
                             )
