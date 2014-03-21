@@ -14,6 +14,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
@@ -98,8 +99,9 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\Column(type = "integer",options={"default"=1})
-     * @var integer
-     * @Type("integer")
+     * @var int
+     * @Type("string")
+     * @Accessor(getter="getNotifiedPersonPermissionBy",setter="setNotifiedPersonPermissionBy")
      */
     protected $notifiedPersonPermissionBy = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -272,21 +274,24 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getAttorneyPartyDeclaration",setter="setAttorneyPartyDeclaration")
      */
     protected $attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getAttorneyApplicationAssertion",setter="setAttorneyApplicationAssertion")
      */
     protected $attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getAttorneyMentalActPermission",setter="setAttorneyMentalActPermission")
      */
     protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -834,39 +839,49 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param int $permissionBy
+     * @param string $permissionBy
      * @return PowerOfAttorney
      */
-    public function setNotifiedPersonPermissionBy($permissionBy = self::PERMISSION_GIVEN_SINGULAR)
+    public function setNotifiedPersonPermissionBy($permissionBy)
     {
-        $this->notifiedPersonPermissionBy = $permissionBy;
+        $this->notifiedPersonPermissionBy =
+            ($permissionBy === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getNotifiedPersonPermissionBy()
     {
-        return $this->notifiedPersonPermissionBy;
+        return ($this->notifiedPersonPermissionBy === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
-     * @param int $attorneyApplicationAssertion
+     * @param string $attorneyApplicationAssertion
      * @return PowerOfAttorney
      */
-    public function setAttorneyApplicationAssertion($attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR)
+    public function setAttorneyApplicationAssertion($attorneyApplicationAssertion)
     {
-        $this->attorneyApplicationAssertion = $attorneyApplicationAssertion;
+        $this->attorneyApplicationAssertion =
+            ($attorneyApplicationAssertion === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getAttorneyApplicationAssertion()
     {
-        return $this->attorneyApplicationAssertion;
+        return ($this->attorneyApplicationAssertion === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
@@ -906,57 +921,72 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param int $attorneyMentalActPermission
+     * @param string $attorneyMentalActPermission
      * @return PowerOfAttorney
      */
-    public function setAttorneyMentalActPermission($attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR)
+    public function setAttorneyMentalActPermission($attorneyMentalActPermission)
     {
-        $this->attorneyMentalActPermission = $attorneyMentalActPermission;
+        $this->attorneyMentalActPermission =
+            ($attorneyMentalActPermission === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getAttorneyMentalActPermission()
     {
-        return $this->attorneyMentalActPermission;
+        return ($this->attorneyMentalActPermission === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
-     * @param int $attorneyPartyDeclaration
+     * @param string $attorneyPartyDeclaration
      * @return PowerOfAttorney
      */
-    public function setAttorneyPartyDeclaration($attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR)
+    public function setAttorneyPartyDeclaration($attorneyPartyDeclaration)
     {
-        $this->attorneyPartyDeclaration = $attorneyPartyDeclaration;
+        $this->attorneyPartyDeclaration =
+            ($attorneyPartyDeclaration === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getAttorneyPartyDeclaration()
     {
-        return $this->attorneyPartyDeclaration;
+        return ($this->attorneyPartyDeclaration === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
-     * @param int $correspondentComplianceAssertion
+     * @param string $correspondentComplianceAssertion
      * @return PowerOfAttorney
      */
-    public function setCorrespondentComplianceAssertion($correspondentComplianceAssertion = self::PERMISSION_GIVEN_SINGULAR)
+    public function setCorrespondentComplianceAssertion($correspondentComplianceAssertion)
     {
-        $this->correspondentComplianceAssertion = $correspondentComplianceAssertion;
+        $this->correspondentComplianceAssertion =
+            ($correspondentComplianceAssertion === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getCorrespondentComplianceAssertion()
     {
-        return $this->correspondentComplianceAssertion;
+        return ($this->correspondentComplianceAssertion === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
@@ -1156,8 +1186,5 @@ abstract class PowerOfAttorney extends CaseItem
     {
         return $this->notificationDate;
     }
-
-
-
 }
 
