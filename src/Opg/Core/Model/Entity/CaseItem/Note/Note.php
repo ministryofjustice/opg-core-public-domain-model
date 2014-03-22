@@ -68,13 +68,14 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string description
+     * @Type("string")
      */
     private $description;
 
     /**
      * @ORM\Column(type = "string", nullable = false)
      * @Type("string")
-     * @var string name
+     * @var string
      */
     private $name;
 
