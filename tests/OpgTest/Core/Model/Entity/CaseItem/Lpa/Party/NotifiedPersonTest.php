@@ -61,4 +61,11 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->notifiedPerson->setSurname('Test-Surname');
         $this->assertTrue($this->notifiedPerson->isValid());
     }
+
+    public function testGetSetRelationshipToDonor()
+    {
+        $expectedRelationship = 'Sibling';
+        $this->notifiedPerson->setRelationshipToDonor($expectedRelationship);
+        $this->assertEquals($expectedRelationship, $this->notifiedPerson->getRelationshipToDonor());
+    }
 }
