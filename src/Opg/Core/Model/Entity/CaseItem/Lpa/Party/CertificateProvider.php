@@ -3,6 +3,7 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
@@ -14,12 +15,13 @@ use Zend\Validator\Callback;
  * @package Opg Domain Model
  *
  */
-class CertificateProvider extends BasePerson implements PartyInterface
+class CertificateProvider extends BasePerson implements PartyInterface, HasRelationshipToDonor
 {
     use ToArray {
         toArray as toTraitArray;
     }
     use ExchangeArray;
+    use RelationshipToDonor;
 
     /**
      * @ORM\Column(type = "string")
