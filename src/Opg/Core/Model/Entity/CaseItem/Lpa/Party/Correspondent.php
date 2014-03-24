@@ -3,12 +3,14 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -17,13 +19,14 @@ use Zend\Validator\Callback;
  * @author Chris Moreton <chris@netsensia.com>
  *
  */
-class Correspondent extends BasePerson implements PartyInterface, EntityInterface
+class Correspondent extends BasePerson implements PartyInterface, EntityInterface, HasRelationshipToDonor
 {
     use Company;
     use ToArray {
         toArray as toTraitArray;
     }
     use ExchangeArray;
+    use RelationshipToDonor;
 
     /**
      * @param bool $exposeClassName

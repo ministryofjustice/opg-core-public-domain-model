@@ -73,4 +73,11 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         $this->certificateProvider->setSurname('Test-Surname');
         $this->assertTrue($this->certificateProvider->isValid());
     }
+
+    public function testGetSetRelationshipToDonor()
+    {
+        $expectedRelationship = 'Doctor';
+        $this->certificateProvider->setRelationshipToDonor($expectedRelationship);
+        $this->assertEquals($expectedRelationship, $this->certificateProvider->getRelationshipToDonor());
+    }
 }

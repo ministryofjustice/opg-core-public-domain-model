@@ -217,5 +217,17 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($inputFilter, $this->person->getInputFilter());
     }
 
+    public function testGetSetDateOfDeath()
+    {
+        $this->assertNull($this->person->getDateOfDeath());
+        $this->assertFalse($this->person->isDeceased());
+
+        $expectedDate = date('d/m/Y');
+        $this->person->setDateOfDeath($expectedDate);
+        $this->assertNotNull($this->person->getDateOfDeath());
+        $this->assertEquals($expectedDate, $this->person->getDateOfDeath());
+        $this->assertTrue($this->person->isDeceased());
+    }
+
   }
 
