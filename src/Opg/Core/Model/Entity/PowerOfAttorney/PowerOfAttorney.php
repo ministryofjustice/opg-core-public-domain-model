@@ -102,6 +102,9 @@ abstract class PowerOfAttorney extends CaseItem
      * @var int
      * @Type("string")
      * @Accessor(getter="getNotifiedPersonPermissionBy",setter="setNotifiedPersonPermissionBy")
+     *
+     * These accessors are required to convert between the integer type we store the field as and the
+     * human readable text passed around the front end
      */
     protected $notifiedPersonPermissionBy = self::PERMISSION_GIVEN_SINGULAR;
 

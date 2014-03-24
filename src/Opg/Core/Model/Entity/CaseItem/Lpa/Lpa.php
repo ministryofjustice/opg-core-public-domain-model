@@ -27,7 +27,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
      * @var integer
      * @Type("string")
-     * @Accessor(getter="getAccuracyAscertainedBy",setter="setAccuracyAscertainedBy")
+     * @Accessor(getter="getLpaAccuracyAscertainedBy",setter="setLPaAccuracyAscertainedBy")
      */
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -106,7 +106,7 @@ class Lpa extends PowerOfAttorney
      * @param string $signedBy
      * @return Lpa
      */
-    public function setAccuracyAscertainedBy($signedBy)
+    public function setLpaAccuracyAscertainedBy($signedBy)
     {
         $this->lpaAccuracyAscertainedBy =
             ($signedBy === 'I') ?
@@ -118,7 +118,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @return string
      */
-    public function getAccuracyAscertainedBy()
+    public function getLpaAccuracyAscertainedBy()
     {
         return ($this->lpaAccuracyAscertainedBy === self::PERMISSION_GIVEN_SINGULAR)
             ? 'I'
