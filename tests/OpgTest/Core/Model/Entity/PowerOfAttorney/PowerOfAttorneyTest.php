@@ -104,7 +104,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetAttorneyApplicationDeclarations()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $expectedSignatory = 'Mr Test Signatory';
 
         $this->assertEquals('I', $this->poa->getAttorneyApplicationAssertion());
@@ -205,7 +205,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetNotificationDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getNotificationDate());
         $this->poa->setNotificationDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNotificationDate());
@@ -213,7 +213,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetNoticeGivenDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getNoticeGivenDate());
         $this->poa->setNoticeGivenDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNoticeGivenDate());
@@ -221,7 +221,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetDispatchDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getDispatchDate());
         $this->poa->setDispatchDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getDispatchDate());

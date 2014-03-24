@@ -296,9 +296,9 @@ abstract class PowerOfAttorney extends CaseItem
     protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $attorneyDeclarationSignatureDate;
 
@@ -316,21 +316,21 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $correspondentComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
 
-    /**@ORM\Column(type="datetime", nullable="true")
-     * @var \DateTime
-     * @Type("datetime")
+    /**@ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $notificationDate;
 
-    /**@ORM\Column(type="datetime", nullable="true")
-     * @var \DateTime
-     * @Type("datetime")
+    /**@ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $dispatchDate;
 
-    /**@ORM\Column(type="datetime", nullable="true")
-     * @var \DateTime
-     * @Type("datetime")
+    /**@ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $noticeGivenDate;
 
@@ -903,17 +903,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param \DateTime $attorneyDeclarationSignatureDate
+     * @param string $attorneyDeclarationSignatureDate
      * @return PowerOfAttorney
      */
-    public function setAttorneyDeclarationSignatureDate(\DateTime $attorneyDeclarationSignatureDate)
+    public function setAttorneyDeclarationSignatureDate($attorneyDeclarationSignatureDate)
     {
         $this->attorneyDeclarationSignatureDate = $attorneyDeclarationSignatureDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getAttorneyDeclarationSignatureDate()
     {
@@ -1134,17 +1134,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param \DateTime $dispatchDate
+     * @param string $dispatchDate
      * @return PowerOfAttorney
      */
-    public function setDispatchDate(\DateTime $dispatchDate)
+    public function setDispatchDate($dispatchDate)
     {
         $this->dispatchDate = $dispatchDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDispatchDate()
     {
@@ -1152,17 +1152,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param \DateTime $noticeGivenDate
+     * @param string $noticeGivenDate
      * @return PowerOfAttorney
      */
-    public function setNoticeGivenDate(\DateTime $noticeGivenDate)
+    public function setNoticeGivenDate( $noticeGivenDate)
     {
         $this->noticeGivenDate = $noticeGivenDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getNoticeGivenDate()
     {
@@ -1170,17 +1170,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param \DateTime $notificationDate
+     * @param string $notificationDate
      * @return PowerOfAttorney
      */
-    public function setNotificationDate(\DateTime $notificationDate)
+    public function setNotificationDate($notificationDate)
     {
         $this->notificationDate = $notificationDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getNotificationDate()
     {
