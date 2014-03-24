@@ -106,6 +106,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var string
      * @Type("string")
      */
+    protected $dateOfDeath;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Type("string")
+     */
     protected $title;
 
     /**
@@ -231,7 +238,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     *
      * @return string $dob
      */
     public function getDob ()
@@ -240,14 +246,39 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     *
-     * @param number $dob
+     * @param string
      * @return PartyInterface
      */
     public function setDob ($dob)
     {
         $this->dob = $dob;
         return $this;
+    }
+
+    /**
+     * @param string
+     * @return PartyInterface
+     */
+    public function setDateOfDeath($dateOfDeath)
+    {
+        $this->dateOfDeath = $dateOfDeath;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateOfDeath()
+    {
+        return $this->dateOfDeath;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeceased()
+    {
+        return $this->dateOfDeath !== null;
     }
 
     /**
@@ -320,8 +351,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     *
-     * @param string $surnameInputFactory
+     * @param string
      * @return PartyInterface
      */
     public function setSurname ($surname)
