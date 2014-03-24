@@ -56,4 +56,11 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
         $this->correspondent->setSurname('Test-Surname');
         $this->assertTrue($this->correspondent->isValid());
     }
+
+    public function testGetSetRelationshipToDonor()
+    {
+        $expectedRelationship = 'Siblig';
+        $this->correspondent->setRelationshipToDonor($expectedRelationship);
+        $this->assertEquals($expectedRelationship, $this->correspondent->getRelationshipToDonor());
+    }
 }
