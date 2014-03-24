@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
@@ -16,19 +17,14 @@ use Zend\Validator\Callback;
  * @package Opg Core
  *
  */
-class Attorney extends BasePerson implements  PartyInterface
+class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToDonor
 {
     use Company;
     use ToArray {
         toArray as traitToArray;
     }
     use ExchangeArray;
-
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $relationshipToDonor;
+    use RelationshipToDonor;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -47,24 +43,6 @@ class Attorney extends BasePerson implements  PartyInterface
      * @var boolean
      */
     protected $isReplacementAttorney = false;
-
-    /**
-     * @return string $relationshipToDonor
-     */
-    public function getRelationshipToDonor()
-    {
-        return $this->relationshipToDonor;
-    }
-
-    /**
-     * @param string $relationshipToDonor
-     * @return Attorney
-     */
-    public function setRelationshipToDonor($relationshipToDonor)
-    {
-        $this->relationshipToDonor = $relationshipToDonor;
-        return $this;
-    }
 
     /**
      * @return string $occupation
