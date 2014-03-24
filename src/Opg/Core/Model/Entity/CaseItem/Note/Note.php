@@ -32,51 +32,53 @@ class Note implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}, nullable = true)
      * @var int $sourceId
      */
-    private $sourceId;
+    protected $sourceId;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $sourceTable
      */
-    private $sourceTable;
+    protected $sourceTable;
 
     /**
      * @ORM\Column(type = "string", nullable = false)
-     * @Type("string")
      * @var string $type
+     * @Type("string")
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User")
      * @var User $user
      */
-    private $createdByUser;
+    protected $createdByUser;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string status
+     * @Type("string")
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string description
+     * @Type("string")
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type = "string", nullable = false)
+     * @var string
      * @Type("string")
-     * @var string name
      */
-    private $name;
+    protected $name;
 
     /**
      * Don't persist this
