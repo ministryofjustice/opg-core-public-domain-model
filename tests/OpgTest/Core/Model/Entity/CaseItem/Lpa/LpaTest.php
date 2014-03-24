@@ -600,17 +600,17 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedLpaInfo, $this->lpa->getPreviousLpaInfo());
     }
 
-    public function testGetSetAccuracyAscertainedBy()
+    public function testGetSetLpaAccuracyAscertainedBy()
     {
-        $this->assertEquals(Lpa::PERMISSION_GIVEN_SINGULAR, $this->lpa->getAccuracyAscertainedBy());
+        $this->assertEquals('I', $this->lpa->getLpaAccuracyAscertainedBy());
 
-        $this->lpa->setAccuracyAscertainedBy(LPA::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(Lpa::PERMISSION_GIVEN_PLURAL, $this->lpa->getAccuracyAscertainedBy());
+        $this->lpa->setLpaAccuracyAscertainedBy('We');
+        $this->assertEquals('We', $this->lpa->getLpaAccuracyAscertainedBy());
     }
 
     public function testGetSetLpaCreatedDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/Y');
         $this->assertNull($this->lpa->getLpaCreatedDate());
         $this->lpa->setLpaCreatedDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaCreatedDate());
@@ -619,7 +619,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaReceiptDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/Y');
         $this->assertNull($this->lpa->getLpaReceiptDate());
         $this->lpa->setLpaReceiptDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDate());
@@ -627,7 +627,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLifeSustainingTreatment()
     {
-        $lstDate = new \DateTime();
+        $lstDate = date('d/m/Y');
 
         $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertFalse($this->lpa->hasLifeSustainingTreatment());

@@ -79,37 +79,37 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $expectedHasNotifiedPersons = true;
 
         $this->assertFalse($this->poa->hasNotifiedPersons());
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getNotifiedPersonPermissionBy());
+        $this->assertEquals('I', $this->poa->getNotifiedPersonPermissionBy());
 
         $this->poa->setUsesNotifiedPersons($expectedHasNotifiedPersons);
         $this->assertTrue($this->poa->hasNotifiedPersons());
 
-        $this->poa->setNotifiedPersonPermissionBy(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getNotifiedPersonPermissionBy());
+        $this->poa->setNotifiedPersonPermissionBy('We');
+        $this->assertEquals('We', $this->poa->getNotifiedPersonPermissionBy());
     }
 
     public function testGetSetAttorneyPartyDeclarations()
     {
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyPartyDeclaration());
-        $this->poa->setAttorneyPartyDeclaration(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyPartyDeclaration());
+        $this->assertEquals('I', $this->poa->getAttorneyPartyDeclaration());
+        $this->poa->setAttorneyPartyDeclaration('We');
+        $this->assertEquals('We', $this->poa->getAttorneyPartyDeclaration());
     }
 
     public function testGetSetCorrespondentCompliance()
     {
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getCorrespondentComplianceAssertion());
-        $this->poa->setCorrespondentComplianceAssertion(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getCorrespondentComplianceAssertion());
+        $this->assertEquals('I', $this->poa->getCorrespondentComplianceAssertion());
+        $this->poa->setCorrespondentComplianceAssertion('We');
+        $this->assertEquals('We', $this->poa->getCorrespondentComplianceAssertion());
     }
 
     public function testGetSetAttorneyApplicationDeclarations()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $expectedSignatory = 'Mr Test Signatory';
 
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyApplicationAssertion());
-        $this->poa->setAttorneyApplicationAssertion(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyApplicationAssertion());
+        $this->assertEquals('I', $this->poa->getAttorneyApplicationAssertion());
+        $this->poa->setAttorneyApplicationAssertion('We');
+        $this->assertEquals('We', $this->poa->getAttorneyApplicationAssertion());
 
         $this->poa->setAttorneyDeclarationSignatoryFullName($expectedSignatory);
         $this->poa->setAttorneyDeclarationSignatureDate($expectedDate);
@@ -120,9 +120,9 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetMentalHealthDeclarations()
     {
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_SINGULAR, $this->poa->getAttorneyMentalActPermission());
-        $this->poa->setAttorneyMentalActPermission(PowerOfAttorney::PERMISSION_GIVEN_PLURAL);
-        $this->assertEquals(PowerOfAttorney::PERMISSION_GIVEN_PLURAL, $this->poa->getAttorneyMentalActPermission());
+        $this->assertEquals('I', $this->poa->getAttorneyMentalActPermission());
+        $this->poa->setAttorneyMentalActPermission('We');
+        $this->assertEquals('We', $this->poa->getAttorneyMentalActPermission());
     }
 
     public function testGetSetPayByCard()
@@ -205,7 +205,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetNotificationDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getNotificationDate());
         $this->poa->setNotificationDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNotificationDate());
@@ -213,7 +213,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetNoticeGivenDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getNoticeGivenDate());
         $this->poa->setNoticeGivenDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNoticeGivenDate());
@@ -221,7 +221,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetDispatchDate()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate = date('d/m/y');
         $this->assertNull($this->poa->getDispatchDate());
         $this->poa->setDispatchDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getDispatchDate());

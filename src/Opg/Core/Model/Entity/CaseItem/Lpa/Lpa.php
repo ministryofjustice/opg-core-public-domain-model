@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
@@ -25,16 +26,18 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
      * @var integer
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getLpaAccuracyAscertainedBy",setter="setLPaAccuracyAscertainedBy")
      */
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type = "datetime")
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type = "string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $lpaDonorSignatureDate;
+
 
     /**
      * @ORM\Column(type = "string")
@@ -58,9 +61,9 @@ class Lpa extends PowerOfAttorney
     protected $previousLpaInfo;
 
     /**
-     * @ORM\Column(type = "datetime")
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type = "string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $lpaDonorDeclarationSignatureDate;
 
@@ -72,16 +75,16 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $lpaCreatedDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $lpaReceiptDate;
 
@@ -93,42 +96,47 @@ class Lpa extends PowerOfAttorney
     protected $lifeSustainingTreatment = false;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $lifeSustainingTreatmentSignatureDate;
 
     /**
-     * @param int $signedBy
+     * @param string $signedBy
      * @return Lpa
      */
-    public function setAccuracyAscertainedBy($signedBy = self::PERMISSION_GIVEN_SINGULAR)
+    public function setLpaAccuracyAscertainedBy($signedBy)
     {
-        $this->lpaAccuracyAscertainedBy = $signedBy;
+        $this->lpaAccuracyAscertainedBy =
+            ($signedBy === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAccuracyAscertainedBy()
+    public function getLpaAccuracyAscertainedBy()
     {
-        return $this->lpaAccuracyAscertainedBy;
+        return ($this->lpaAccuracyAscertainedBy === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
     }
 
     /**
-     * @param \DateTime $signatureDate
+     * @param string $signatureDate
      * @return $this
      */
-    public function setDonorSignatureDate(\DateTime $signatureDate)
+    public function setDonorSignatureDate($signatureDate)
     {
         $this->lpaDonorSignatureDate = $signatureDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDonorSignatureDate()
     {
@@ -154,17 +162,17 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param \DateTime $signatureDate
+     * @param string $signatureDate
      * @return $this
      */
-    public function setDonorDeclarationSignatureDate(\DateTime $signatureDate)
+    public function setDonorDeclarationSignatureDate($signatureDate)
     {
         $this->lpaDonorDeclarationSignatureDate = $signatureDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDonorDeclarationSignatureDate()
     {
@@ -267,18 +275,18 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param \DateTime $lpaCreatedDate
+     * @param string $lpaCreatedDate
      * @return Lpa
      */
-    public function setLpaCreatedDate(\DateTime $lpaCreatedDate = null)
+    public function setLpaCreatedDate($lpaCreatedDate = null)
     {
         $this->lpaCreatedDate =
-            (null === $lpaCreatedDate) ? new \DateTime() : $lpaCreatedDate;
+            (null === $lpaCreatedDate) ? date('d/m/Y') : $lpaCreatedDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getLpaCreatedDate()
     {
@@ -286,17 +294,17 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param \DateTime $lpaReceiptDate
+     * @param string $lpaReceiptDate
      * @return Lpa
      */
-    public function setLpaReceiptDate(\DateTime $lpaReceiptDate)
+    public function setLpaReceiptDate($lpaReceiptDate)
     {
         $this->lpaReceiptDate = $lpaReceiptDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getLpaReceiptDate()
     {
@@ -331,17 +339,17 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param \DateTime $lifeSustainingTreatmentSignatureDate
+     * @param string $lifeSustainingTreatmentSignatureDate
      * @return Lpa
      */
-    public function setLifeSustainingTreatmentSignatureDate(\DateTime $lifeSustainingTreatmentSignatureDate)
+    public function setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate)
     {
         $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getLifeSustainingTreatmentSignatureDate()
     {
