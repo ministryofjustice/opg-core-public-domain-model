@@ -373,6 +373,30 @@ class User implements EntityInterface, \IteratorAggregate
                     )
                 )
             );
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'roles',
+                        'required'   => true,
+                        'validators' => array(
+                            array(
+                                'name'    => 'Callback',
+                                'options' => array(
+                                    'messages' => array(
+                                        \Zend\Validator\Callback::INVALID_VALUE => 'The user must either be an OPG user or a COP user.',
+                                    ),
+                                    'callback' => function ($roles) {
+                                        $keyedRoles = array_flip($roles);
+
+                                        return (array_key_exists('OPG User', $keyedRoles) xor
+                                                array_key_exists('COP User', $keyedRoles));
+                                    }
+                                ),
+                            ),
+                        )
+                    )
+                )
+            );
             $this->inputFilter = $inputFilter;
         }
 
