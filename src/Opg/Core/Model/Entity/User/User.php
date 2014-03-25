@@ -26,7 +26,9 @@ class User implements EntityInterface, \IteratorAggregate
     use ToArray {
         toArray as traitToArray;
     }
-    use ExchangeArray;
+    use ExchangeArray {
+        exchangeArray as traitExchangeArray
+    };
     use IteratorAggregate;
     use InputFilterTrait;
 
@@ -606,5 +608,18 @@ class User implements EntityInterface, \IteratorAggregate
         return $this->deputyships;
     }
 
+    /**
+     * @param array $data
+     * @return User $this
+     */
+    public function exchangeArray(array $data) {
+        $this->traitExchangeArray($data);
+
+        if (isset($data['roles'])) {
+            $this->setRoles($data['roles']);
+        }
+
+        return $this;
+    }
 }
 
