@@ -26,7 +26,9 @@ class User implements EntityInterface, \IteratorAggregate
     use ToArray {
         toArray as traitToArray;
     }
-    use ExchangeArray;
+    use ExchangeArray {
+        exchangeArray as traitExchangeArray;
+    }
     use IteratorAggregate;
     use InputFilterTrait;
 
@@ -373,6 +375,30 @@ class User implements EntityInterface, \IteratorAggregate
                     )
                 )
             );
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'roles',
+                        'required'   => true,
+                        'validators' => array(
+                            array(
+                                'name'    => 'Callback',
+                                'options' => array(
+                                    'messages' => array(
+                                        \Zend\Validator\Callback::INVALID_VALUE => 'The user must either be an OPG user or a COP user.',
+                                    ),
+                                    'callback' => function ($roles) {
+                                        $keyedRoles = array_flip($roles);
+
+                                        return (array_key_exists('OPG User', $keyedRoles) xor
+                                                array_key_exists('COP User', $keyedRoles));
+                                    }
+                                ),
+                            ),
+                        )
+                    )
+                )
+            );
             $this->inputFilter = $inputFilter;
         }
 
@@ -582,5 +608,18 @@ class User implements EntityInterface, \IteratorAggregate
         return $this->deputyships;
     }
 
+    /**
+     * @param array $data
+     * @return User $this
+     */
+    public function exchangeArray(array $data) {
+        $this->traitExchangeArray($data);
+
+        if (isset($data['roles'])) {
+            $this->setRoles($data['roles']);
+        }
+
+        return $this;
+    }
 }
 
