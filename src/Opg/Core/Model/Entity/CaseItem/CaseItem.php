@@ -94,16 +94,16 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $closedDate;
 
@@ -523,16 +523,16 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param \DateTime $closedDate
+     * @param string $closedDate
      * @return CaseItem
      */
-    public function setClosedDate(\DateTime $closedDate)
+    public function setClosedDate($closedDate)
     {
         $this->closedDate = $closedDate;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getClosedDate()
     {
@@ -540,18 +540,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param \DateTime $registrationDate
+     * @param string $registrationDate
      * @return CaseItem
      */
-    public function setRegistrationDate(\DateTime $registrationDate = null)
+    public function setRegistrationDate($registrationDate = null)
     {
         $this->registrationDate =
-            (null === $registrationDate) ? new \DateTime() : $registrationDate;
+            (null === $registrationDate) ? date('d/m/Y') : $registrationDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getRegistrationDate()
     {
