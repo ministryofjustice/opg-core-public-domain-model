@@ -26,6 +26,7 @@ use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\MappedSuperclass
@@ -60,7 +61,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var number
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getApplicationType",setter="setApplicationType")
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
@@ -505,16 +507,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getApplicationType()
     {
-        return $this->applicationType;
+        return ($this->applicationType == self::APPLICATION_TYPE_CLASSIC) ? 'Classic' : 'Online';
     }
 
     /**
-     * @param int $applicationType
+     * @param string $applicationType
      * @return CaseItem
      */
-    public function setApplicationType($applicationType = self::APPLICATION_TYPE_CLASSIC)
+    public function setApplicationType($applicationType)
     {
-        $this->applicationType = $applicationType;
+        $this->applicationType = ($applicationType == 'Classic')
+            ? self::APPLICATION_TYPE_CLASSIC
+            : self::APPLICATION_TYPE_ONLINE;
         return $this;
     }
 
