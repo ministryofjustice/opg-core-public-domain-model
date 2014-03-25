@@ -27,8 +27,8 @@ class User implements EntityInterface, \IteratorAggregate
         toArray as traitToArray;
     }
     use ExchangeArray {
-        exchangeArray as traitExchangeArray
-    };
+        exchangeArray as traitExchangeArray;
+    }
     use IteratorAggregate;
     use InputFilterTrait;
 
