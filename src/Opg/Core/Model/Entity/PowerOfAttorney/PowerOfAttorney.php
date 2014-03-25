@@ -315,7 +315,8 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getCorrespondentComplianceAssertion",setter="setCorrespondentComplianceAssertion")
      */
     protected $correspondentComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
 
