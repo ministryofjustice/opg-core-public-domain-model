@@ -320,19 +320,22 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $correspondentComplianceAssertion  = self::PERMISSION_GIVEN_SINGULAR;
 
-    /**@ORM\Column(type="string", nullable=true)
+    /**
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Type("string")
      */
     protected $notificationDate;
 
-    /**@ORM\Column(type="string", nullable=true)
+    /**
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Type("string")
      */
     protected $dispatchDate;
 
-    /**@ORM\Column(type="string", nullable=true)
+    /**
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Type("string")
      */
