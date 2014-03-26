@@ -88,14 +88,14 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * Don't persist this
      * @var CaseItem $case
-     * @ReadOnly
+     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Lpa")
      */
     protected $case;
 
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
-     * @ReadOnly
+     * @Type("pg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      */
     protected $person;
 
