@@ -307,9 +307,9 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     public function testGetSetApplicationType()
     {
         $caseItemMock = $this->getMockedClass();
-        $this->assertEquals($caseItemMock->getApplicationType(), CaseItem::APPLICATION_TYPE_CLASSIC);
-        $caseItemMock->setApplicationType(CaseItem::APPLICATION_TYPE_ONLINE);
-        $this->assertEquals($caseItemMock->getApplicationType(), CaseItem::APPLICATION_TYPE_ONLINE);
+        $this->assertEquals($caseItemMock->getApplicationType(), 'Classic');
+        $caseItemMock->setApplicationType('Online');
+        $this->assertEquals($caseItemMock->getApplicationType(), 'Online');
     }
 
     public function testGetOldCaseId()

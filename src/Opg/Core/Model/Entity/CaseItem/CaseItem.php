@@ -26,6 +26,7 @@ use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\MappedSuperclass
@@ -60,7 +61,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var number
-     * @Type("integer")
+     * @Type("string")
+     * @Accessor(getter="getApplicationType",setter="setApplicationType")
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
@@ -92,16 +94,16 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     * @Type("datetime")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
     protected $closedDate;
 
@@ -505,30 +507,32 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getApplicationType()
     {
-        return $this->applicationType;
+        return ($this->applicationType == self::APPLICATION_TYPE_CLASSIC) ? 'Classic' : 'Online';
     }
 
     /**
-     * @param int $applicationType
+     * @param string $applicationType
      * @return CaseItem
      */
-    public function setApplicationType($applicationType = self::APPLICATION_TYPE_CLASSIC)
+    public function setApplicationType($applicationType)
     {
-        $this->applicationType = $applicationType;
+        $this->applicationType = ($applicationType == 'Classic')
+            ? self::APPLICATION_TYPE_CLASSIC
+            : self::APPLICATION_TYPE_ONLINE;
         return $this;
     }
 
     /**
-     * @param \DateTime $closedDate
+     * @param string $closedDate
      * @return CaseItem
      */
-    public function setClosedDate(\DateTime $closedDate)
+    public function setClosedDate($closedDate)
     {
         $this->closedDate = $closedDate;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getClosedDate()
     {
@@ -536,18 +540,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param \DateTime $registrationDate
+     * @param string $registrationDate
      * @return CaseItem
      */
-    public function setRegistrationDate(\DateTime $registrationDate = null)
+    public function setRegistrationDate($registrationDate = null)
     {
         $this->registrationDate =
-            (null === $registrationDate) ? new \DateTime() : $registrationDate;
+            (null === $registrationDate) ? date('d/m/Y') : $registrationDate;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getRegistrationDate()
     {
