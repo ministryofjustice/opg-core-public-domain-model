@@ -3,8 +3,8 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 
 use Application\Specification\Lpa\StatutoryWaitingPeriodSpecification;
+use Application\Specification\SpecificationException;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-
 
 class LpaListener
 {
@@ -22,11 +22,11 @@ class LpaListener
      * @param Lpa $lpa
      * @param $eventArgs
      */
-    public function preUpdate(Lpa $lpa,PreUpdateEventArgs $eventArgs)
+    public function preUpdate(Lpa $lpa, PreUpdateEventArgs $eventArgs)
     {
        if($eventArgs->hasChangedField('status') && $eventArgs->getNewValue('status') == 'Registered') {
            if(!$this->statutoryWaitingPeriodSpecification->isSatisfiedBy($lpa)) {
-                throw new \Exception($this->statutoryWaitingPeriodSpecification->getErrorMessage());
+               throw new SpecificationException($this->statutoryWaitingPeriodSpecification->getErrorMessage(), 400, 'status');
            }
        }
     }
