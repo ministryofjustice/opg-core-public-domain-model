@@ -95,7 +95,7 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
-     * @Type("pg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
+     * @Type("Lpg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      */
     protected $person;
 
