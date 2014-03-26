@@ -11,6 +11,7 @@ use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -31,18 +32,21 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
+     * @Type("integer")
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}, nullable = true)
      * @var int $sourceId
+     * @Type("integer")
      */
     protected $sourceId;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $sourceTable
+     * @Type("string")
      */
     protected $sourceTable;
 
@@ -56,6 +60,7 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User")
      * @var User $user
+     * @Type("Opg\Core\Model\Entity\User\User")
      */
     protected $createdByUser;
 
@@ -83,12 +88,14 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * Don't persist this
      * @var CaseItem $case
+     * @ReadOnly
      */
     protected $case;
 
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
+     * @ReadOnly
      */
     protected $person;
 
