@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"Opg\Core\Model\Entity\CaseItem\Lpa\LpaListener"})
  *
  * Class Lpa
  *
