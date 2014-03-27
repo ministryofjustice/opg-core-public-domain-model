@@ -3,33 +3,34 @@
 namespace OpgTest\Core\Model\Entity\CaseItem\Lpa;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\LpaListener;
-use Opg\Core\Model\Entity\CaseItem\Lpa;
-use Application\Specification\SpecificationException;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 
 
 class LpaListenerTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function __setup()
+    public function setUp()
     {
-        $this->preUpdateEventArgs = \Mockery::mock('PreUpdateEventArgs');
+        $this->preUpdateEventArgs = \Mockery::mock('Doctrine\ORM\Event\PreUpdateEventArgs');
         $this->preUpdateEventArgs->shouldReceive('hasChangedField')->andReturn(true)->mock();
         $this->preUpdateEventArgs->shouldReceive('getNewValue')->with('status')->andReturn(true)->mock();
 
-        $this->testStatutoryWaitingPeriodSpecification = \Mockery::mock('StatutoryWaitingPeriodSpecification');
-        $this->testStatutoryWaitingPeriodSpecification->shouldReceive('isSatisfiedBy')->andReturn('false');
+        $this->lpa = new Lpa();
+
+        $this->testStatutoryWaitingPeriodSpecification = \Mockery::mock('Application\Specification\Lpa\StatutoryWaitingPeriodSpecification');
+        $this->testStatutoryWaitingPeriodSpecification->shouldReceive('isSatisfiedBy')->with($this->lpa)->andReturn(false)->mock();
+
     }
 
     /**
-     * expectedException     SpecificationException
+     * expectedException     \Application\Specification\SpecificationException
      * expectedExceptionCode 400
      */
     public function testLpaListenerTestThrowsException()
     {
-        $this->markTestIncomplete('will fix');
+        $this->markTestIncomplete('need to sort out dependancies');
         $lpaListener = new LpaListener($this->testStatutoryWaitingPeriodSpecification);
-        $lpa = new Lpa();
-        $lpaListener->preUpdate($lpa, $this->preUpdateEventArgs);
+        $lpaListener->preUpdate($this->lpa, $this->preUpdateEventArgs);
 
     }
 }
