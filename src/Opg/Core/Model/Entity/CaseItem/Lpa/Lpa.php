@@ -282,7 +282,7 @@ class Lpa extends PowerOfAttorney
     public function setLpaCreatedDate($lpaCreatedDate = null)
     {
         $this->lpaCreatedDate =
-            (null === $lpaCreatedDate) ? date('d/m/Y') : $lpaCreatedDate;
+            (null === $lpaCreatedDate) ? date('Y-m-d H:i:s') : $lpaCreatedDate;
         return $this;
     }
 
