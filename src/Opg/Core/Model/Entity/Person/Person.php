@@ -12,6 +12,7 @@ use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
@@ -59,7 +60,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Lpa", cascade={"persist"})
      * @ORM\JoinTable(name="person_pas",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
@@ -67,7 +68,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @var ArrayCollection
      * @MaxDepth(5)
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney>")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Lpa>")
      */
     protected $powerOfAttorneys;
 
