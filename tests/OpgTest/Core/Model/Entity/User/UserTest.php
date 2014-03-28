@@ -401,4 +401,24 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($deputyCollection, $this->user->getDeputyships());
 
     }
+
+    public function testDefaultRoleRequirementsFailMissing() {
+        $this->assertFalse($this->user->isValid(array('roles')));
+    }
+
+    public function testDefaultRoleRequirementsFailBoth() {
+        $this->user->addRole('OPG User');
+        $this->user->addRole('COP User');
+        $this->assertFalse($this->user->isValid(array('roles')));
+    }
+
+     public function testDefaultRoleRequirementsPassOPG() {
+        $this->user->addRole('OPG User');
+        $this->assertTrue($this->user->isValid(array('roles')));
+    }
+
+     public function testDefaultRoleRequirementsPassCOP() {
+        $this->user->addRole('COP User');
+        $this->assertTrue($this->user->isValid(array('roles')));
+    }
 }
