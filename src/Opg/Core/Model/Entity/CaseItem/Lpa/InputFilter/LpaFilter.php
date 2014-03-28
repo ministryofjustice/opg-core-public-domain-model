@@ -54,7 +54,7 @@ class LpaFilter extends InputFilter
                             'name'    => 'InArray',
                             'options' => array(
                                 'encoding' => 'UTF-8',
-                                'haystack' => array('Perfect', 'Imperfect', 'Registered'),
+                                'haystack' => array('Perfect', 'Imperfect', 'Registered', 'Pending', 'Withdrawn'),
                                 'strict'   => \Zend\Validator\InArray::COMPARE_STRICT
                             ),
                         )
