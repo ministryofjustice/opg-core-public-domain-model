@@ -286,7 +286,7 @@ class User implements EntityInterface, \IteratorAggregate
                                 'name'    => 'StringLength',
                                 'options' => array(
                                     'encoding' => 'UTF-8',
-                                    'min'      => 3,
+                                    'min'      => 1,
                                     'max'      => 128,
                                 ),
                             )
@@ -308,7 +308,7 @@ class User implements EntityInterface, \IteratorAggregate
                                 'name'    => 'StringLength',
                                 'options' => array(
                                     'encoding' => 'UTF-8',
-                                    'min'      => 3,
+                                    'min'      => 1,
                                     'max'      => 128,
                                 ),
                             )
