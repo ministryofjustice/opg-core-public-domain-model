@@ -130,7 +130,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $tasks;
 
-
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @var ArrayCollection
@@ -140,13 +139,20 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document")
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
      * @ReadOnly
      */
     protected $documents;
 
+    /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
+     * @ReadOnly
+     */
+    protected $correspondence;
 
     // Fields below are NOT persisted
     /**
@@ -270,7 +276,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param Task $task
+     * @param  Task  $task
      * @return $this
      */
     public function addTask(Task $task)
@@ -282,7 +288,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param Document $document
+     * @param  Document $document
      * @return $this
      */
     public function addDocument(Document $document)
@@ -299,7 +305,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param ArrayCollection $tasks
+     * @param  ArrayCollection $tasks
      * @return CaseItem
      */
     public function setTasks(ArrayCollection $tasks)
@@ -312,7 +318,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param ArrayCollection $documents
+     * @param  ArrayCollection $documents
      * @return CaseItem
      */
     public function setDocuments(ArrayCollection $documents)
@@ -327,7 +333,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @TODO is this still required?
      *
-     * @param array $data
+     * @param  array    $data
      * @return CaseItem
      */
     public function exchangeArray(array $data)
@@ -363,6 +369,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
                 $this->addDocument(is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData));
             }
         }
+
         return $this;
     }
 
@@ -383,7 +390,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $title
+     * @param  string   $title
      * @return CaseItem
      */
     public function setTitle($title)
@@ -393,9 +400,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         return $this;
     }
 
-
     /**
-     * @param number $id
+     * @param  number   $id
      * @return CaseItem
      */
     public function setId($id)
@@ -421,9 +427,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         return $this->caseItems;
     }
 
-
     /**
-     * @param ArrayCollection $caseItems
+     * @param  ArrayCollection $caseItems
      * @return CaseItem
      */
     public function setCaseItems(ArrayCollection $caseItems)
@@ -436,7 +441,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param CaseItem $item
+     * @param  CaseItem $item
      * @return CaseItem
      */
     public function addCaseItem(CaseItem $item)
@@ -467,19 +472,20 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param array $taskStatus
+     * @param  array    $taskStatus
      * @return CaseItem
      */
     public function setTaskStatus(array $taskStatus)
     {
-        foreach($taskStatus as $item) {
+        foreach ($taskStatus as $item) {
             $this->taskStatus[str_replace(' ' ,'',$item['status'])] = $item['counter'];
         }
+
         return $this;
     }
 
     /**
-     * @param Person $person
+     * @param  Person   $person
      * @return CaseItem
      */
     abstract public function addPerson(Person $person);
@@ -499,6 +505,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setOldCaseId($oldCaseId)
     {
         $this->oldCaseId = $oldCaseId;
+
         return $this;
     }
 
@@ -511,7 +518,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $applicationType
+     * @param  string   $applicationType
      * @return CaseItem
      */
     public function setApplicationType($applicationType)
@@ -519,11 +526,12 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->applicationType = ($applicationType == 'Classic')
             ? self::APPLICATION_TYPE_CLASSIC
             : self::APPLICATION_TYPE_ONLINE;
+
         return $this;
     }
 
     /**
-     * @param string $closedDate
+     * @param  string   $closedDate
      * @return CaseItem
      */
     public function setClosedDate($closedDate)
@@ -540,13 +548,14 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $registrationDate
+     * @param  string   $registrationDate
      * @return CaseItem
      */
     public function setRegistrationDate($registrationDate = null)
     {
         $this->registrationDate =
             (null === $registrationDate) ? date('d/m/Y') : $registrationDate;
+
         return $this;
     }
 
@@ -557,6 +566,5 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         return $this->registrationDate;
     }
-
 
 }
