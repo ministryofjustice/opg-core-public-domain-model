@@ -6,8 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
+use Opg\Common\Model\Entity\HasCorrespondenceInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
+use Opg\Common\Model\Entity\Traits\HasCorrespondence as HasCorrespondenceTrait;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
@@ -38,11 +40,12 @@ use Zend\InputFilter\Factory as InputFactory;
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
  */
-abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate
+abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasCorrespondenceInterface
 {
     use HasNotesTrait;
     use UniqueIdentifier;
     use InputFilterTrait;
+    use HasCorrespondenceTrait;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id

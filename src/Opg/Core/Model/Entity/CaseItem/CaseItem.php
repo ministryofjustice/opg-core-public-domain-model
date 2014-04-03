@@ -10,10 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
+use Opg\Common\Model\Entity\HasCorrespondenceInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
+use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -31,7 +33,7 @@ use JMS\Serializer\Annotation\Accessor;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface
+abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface, HasCorrespondenceInterface
 {
     use ToArray;
     use HasNotes;
@@ -40,6 +42,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use ExchangeArray {
         exchangeArray as exchangeArrayTrait;
     }
+    use HasCorrespondence;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
