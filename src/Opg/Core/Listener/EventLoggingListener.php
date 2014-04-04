@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Listener;
 
 use Doctrine\Common\EventSubscriber;
@@ -35,7 +34,10 @@ class EventLoggingListener implements EventSubscriber
 
     private $config = array(
         'events' => array(
-            'READ', 'INS', 'UPD', 'DEL'
+            'READ',
+            'INS',
+            'UPD',
+            'DEL'
         )
     );
 
@@ -127,7 +129,7 @@ class EventLoggingListener implements EventSubscriber
     {
         if (is_object($value) && $em->contains($value)) {
             $simplifiedValue = array(
-                'class' => ClassUtils::getClass($value),
+                'class'      => ClassUtils::getClass($value),
                 'identifier' => $em->getClassMetadata(ClassUtils::getClass($value))->getIdentifierValues($value),
             );
 
@@ -139,7 +141,7 @@ class EventLoggingListener implements EventSubscriber
 
     private function recordEvent(EntityManager $em, $entity, $type, array $entityChangeset = null)
     {
-        $currentUser = $this->userIdentityProvider->getUserIdentity();
+        $currentUser  = $this->userIdentityProvider->getUserIdentity();
         $owningEntity = $this->findOwningEntity($em, $entity);
 
         $em->getConnection()->executeQuery(
@@ -177,20 +179,21 @@ class EventLoggingListener implements EventSubscriber
         } elseif ($entity instanceof Donor) {
             return $entity;
         } elseif ($entity instanceof Correspondent) {
-            return $this->getCaseByPersonAttached($em,$entity,'correspondent');
+            return $this->getCaseByPersonAttached($em, $entity, 'correspondent');
         } elseif ($entity instanceof Attorney) {
             return $this->getCaseByAssociationMembership($em, $entity, 'attorneys');
         } elseif ($entity instanceof NotifiedPerson) {
-            return $this->getCaseByAssociationMembership($em,$entity,'notifiedPersons');
+            return $this->getCaseByAssociationMembership($em, $entity, 'notifiedPersons');
         } elseif ($entity instanceof CertificateProvider) {
-            return $this->getCaseByAssociationMembership($em,$entity,'certificateProviders');
+            return $this->getCaseByAssociationMembership($em, $entity, 'certificateProviders');
         } elseif ($entity instanceof Address) {
-            return $this->getAssociatedPerson($em,$entity,'addresses');
+            return $this->getAssociatedPerson($em, $entity, 'addresses');
         } elseif ($entity instanceof PhoneNumber) {
-            return $this->getAssociatedPerson($em,$entity,'phoneNumbers');
+            return $this->getAssociatedPerson($em, $entity, 'phoneNumbers');
         } elseif ($entity instanceof Correspondence) {
             return $this->findOwningEntityForCorrespondence($em, $entity);
         }
+
         return null;
     }
 
@@ -219,16 +222,20 @@ class EventLoggingListener implements EventSubscriber
         $return = null;
 
         try {
-            $return =  $this->getCaseByAssociationMembership($em, $note, 'notes');
-        } catch(\LogicException $e){}
+            $return = $this->getCaseByAssociationMembership($em, $note, 'notes');
+        } catch (\LogicException $e) {
+        }
 
         try {
-            $return =  $this->getAssociatedPerson($em, $note, 'notes');
+            $return = $this->getAssociatedPerson($em, $note, 'notes');
+        } catch (\LogicException $e) {
         }
-        catch(\LogicException $e){}
 
         if (is_null($return)) {
-            throw new \LogicException(sprintf('Could not find parent entity for class "%s".', ClassUtils::getClass($note)));
+            throw new \LogicException(sprintf(
+                'Could not find parent entity for class "%s".',
+                ClassUtils::getClass($note)
+            ));
         }
 
         return $return;
@@ -241,14 +248,18 @@ class EventLoggingListener implements EventSubscriber
 
     private function getCaseByPersonAttached(EntityManager $em, $entity, $personName)
     {
-        $poa = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE c." . $personName ." = :entity")
+        $poa = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE c." . $personName . " = :entity"
+        )
             ->setParameter('entity', $entity->getId())
             ->getOneOrNullResult();
         if ($poa instanceof PowerOfAttorney) {
             return $poa;
         }
 
-        $deputyship = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE c." . $personName ." = :entity")
+        $deputyship = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE c." . $personName . " = :entity"
+        )
             ->setParameter('entity', $entity->getId())
             ->getOneOrNullResult();
         if ($deputyship instanceof Deputyship) {
@@ -260,14 +271,18 @@ class EventLoggingListener implements EventSubscriber
 
     private function getCaseByAssociationMembership(EntityManager $em, $entity, $associationName)
     {
-        $poa = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE :entity MEMBER OF c.".$associationName)
+        $poa = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE :entity MEMBER OF c." . $associationName
+        )
             ->setParameter('entity', $entity)
             ->getOneOrNullResult();
         if ($poa instanceof PowerOfAttorney) {
             return $poa;
         }
 
-        $deputyship = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE :entity MEMBER OF c.".$associationName)
+        $deputyship = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE :entity MEMBER OF c." . $associationName
+        )
             ->setParameter('entity', $entity)
             ->getOneOrNullResult();
         if ($deputyship instanceof Deputyship) {
@@ -279,17 +294,19 @@ class EventLoggingListener implements EventSubscriber
 
     private function getIdentifier(EntityManager $em, $entity)
     {
-        $compositeIdentifier = $em->getMetadataFactory()->getMetadataFor(ClassUtils::getClass($entity))->getIdentifierValues($entity);
+        $compositeIdentifier = $em->getMetadataFactory()->getMetadataFor(
+            ClassUtils::getClass($entity)
+        )->getIdentifierValues($entity);
         if (count($compositeIdentifier) > 1) {
             throw new \LogicException('EventLoggingListener does not support composite primary keys at the moment.');
         }
 
         $id = reset($compositeIdentifier);
-        if ( ! is_numeric($id)) {
+        if (!is_numeric($id)) {
             throw new \LogicException(sprintf('Id must be an integer, but got "%s".', $id));
         }
 
-        return (integer) $id;
+        return (integer)$id;
     }
 
     private function findOwningEntityForCorrespondence(EntityManager $em, Correspondence $correspondence)
@@ -297,16 +314,20 @@ class EventLoggingListener implements EventSubscriber
         $return = null;
 
         try {
-            $return =  $this->getCaseByAssociationMembership($em, $correspondence, 'correspondence');
-        } catch(\LogicException $e){}
+            $return = $this->getCaseByAssociationMembership($em, $correspondence, 'correspondence');
+        } catch (\LogicException $e) {
+        }
 
         try {
-            $return =  $this->getAssociatedPerson($em, $correspondence, 'correspondence');
+            $return = $this->getAssociatedPerson($em, $correspondence, 'correspondence');
+        } catch (\LogicException $e) {
         }
-        catch(\LogicException $e){}
 
         if (is_null($return)) {
-            throw new \LogicException(sprintf('Could not find parent entity for class "%s".', ClassUtils::getClass($correspondence)));
+            throw new \LogicException(sprintf(
+                'Could not find parent entity for class "%s".',
+                ClassUtils::getClass($correspondence)
+            ));
         }
 
         return $return;
