@@ -184,4 +184,9 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     {
         return $this->person;
     }
+
+    public function getDocumentStoreFilename()
+    {
+        return $this->getId() ."_".$this->getFilename();
+    }
 }

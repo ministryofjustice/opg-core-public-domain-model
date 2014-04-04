@@ -70,4 +70,12 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->correspondence->setPerson($donor);
         $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor', $this->correspondence->getPerson());
     }
+
+    public function testSetGetDocumentStoreFilename()
+    {
+        $this->correspondence->setId('10');
+        $this->correspondence->setFilename('document');
+        $expectedOutput = '10_document';
+        $this->assertEquals($expectedOutput,$this->correspondence->getDocumentStoreFilename());
+    }
 }
