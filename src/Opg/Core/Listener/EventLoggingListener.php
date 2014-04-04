@@ -19,6 +19,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Correspondence\Correspondence;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -164,6 +165,7 @@ class EventLoggingListener implements EventSubscriber
 
     private function findOwningEntity(EntityManager $em, $entity)
     {
+        //@TODO move to a 'switch'
         if ($entity instanceof Task) {
             return $this->findOwningEntityForTask($em, $entity);
         } elseif ($entity instanceof Note) {
@@ -186,6 +188,8 @@ class EventLoggingListener implements EventSubscriber
             return $this->getAssociatedPerson($em,$entity,'addresses');
         } elseif ($entity instanceof PhoneNumber) {
             return $this->getAssociatedPerson($em,$entity,'phoneNumbers');
+        } elseif ($entity instanceof Correspondence) {
+            return $this->findOwningEntityForCorrespondence($em, $entity);
         }
         return null;
     }
@@ -286,5 +290,25 @@ class EventLoggingListener implements EventSubscriber
         }
 
         return (integer) $id;
+    }
+
+    private function findOwningEntityForCorrespondence(EntityManager $em, Correspondence $correspondence)
+    {
+        $return = null;
+
+        try {
+            $return =  $this->getCaseByAssociationMembership($em, $correspondence, 'correspondence');
+        } catch(\LogicException $e){}
+
+        try {
+            $return =  $this->getAssociatedPerson($em, $correspondence, 'correspondence');
+        }
+        catch(\LogicException $e){}
+
+        if (is_null($return)) {
+            throw new \LogicException(sprintf('Could not find parent entity for class "%s".', ClassUtils::getClass($correspondence)));
+        }
+
+        return $return;
     }
 }
