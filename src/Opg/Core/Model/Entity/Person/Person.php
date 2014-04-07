@@ -6,8 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
+use Opg\Common\Model\Entity\HasCorrespondenceInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
+use Opg\Common\Model\Entity\Traits\HasCorrespondence as HasCorrespondenceTrait;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
@@ -39,11 +41,12 @@ use Zend\InputFilter\Factory as InputFactory;
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
  */
-abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate
+abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasCorrespondenceInterface
 {
     use HasNotesTrait;
     use UniqueIdentifier;
     use InputFilterTrait;
+    use HasCorrespondenceTrait;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -94,6 +97,17 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      */
     protected $notes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\JoinTable(name="person_correspondence",
+     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}
+     * )
+     * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
+     */
+    protected $correspondence;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -161,23 +175,25 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\Address\Address $address
+     * @param  \Opg\Core\Model\Entity\Address\Address $address
      * @return Person
      */
     public function addAddress(Address $address = null)
     {
         $address->setPerson($this);
         $this->addresses->add($address);
+
         return $this;
     }
 
     /**
-     * @param ArrayCollection $addresses
+     * @param  ArrayCollection $addresses
      * @return Person
      */
     public function setAddresses(ArrayCollection $addresses)
     {
         $this->addresses =  $addresses;
+
         return $this;
     }
 
@@ -187,6 +203,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function clearAddresses()
     {
         $this->addresses = new ArrayCollection();
+
         return $this;
     }
 
@@ -202,19 +219,20 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $email
      */
-    public function getEmail ()
+    public function getEmail()
     {
         return $this->email;
     }
 
     /**
      *
-     * @param string $email
+     * @param  string         $email
      * @return PartyInterface
      */
-    public function setEmail ($email)
+    public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -222,26 +240,27 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $id
      */
-    public function getId ()
+    public function getId()
     {
         return $this->id;
     }
 
     /**
      *
-     * @param string $id
+     * @param  string         $id
      * @return PartyInterface
      */
-    public function setId ($id)
+    public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
      * @return string $dob
      */
-    public function getDob ()
+    public function getDob()
     {
         return $this->dob;
     }
@@ -250,9 +269,10 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @param string
      * @return PartyInterface
      */
-    public function setDob ($dob)
+    public function setDob($dob)
     {
         $this->dob = $dob;
+
         return $this;
     }
 
@@ -263,6 +283,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function setDateOfDeath($dateOfDeath)
     {
         $this->dateOfDeath = $dateOfDeath;
+
         return $this;
     }
 
@@ -286,19 +307,20 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $title
      */
-    public function getTitle ()
+    public function getTitle()
     {
         return $this->title;
     }
 
     /**
      *
-     * @param string $title
+     * @param  string         $title
      * @return PartyInterface
      */
-    public function setTitle ($title)
+    public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -306,19 +328,20 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $firstname
      */
-    public function getFirstname ()
+    public function getFirstname()
     {
         return $this->firstname;
     }
 
     /**
      *
-     * @param string $firstname
+     * @param  string         $firstname
      * @return PartyInterface
      */
-    public function setFirstname ($firstname)
+    public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 
@@ -326,19 +349,20 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $middlenames
      */
-    public function getMiddlename ()
+    public function getMiddlename()
     {
         return $this->middlenames;
     }
 
     /**
      *
-     * @param string $middlenames
+     * @param  string         $middlenames
      * @return PartyInterface
      */
-    public function setMiddlename ($middlenames)
+    public function setMiddlename($middlenames)
     {
         $this->middlenames = $middlenames;
+
         return $this;
     }
 
@@ -346,7 +370,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @return string $surname
      */
-    public function getSurname ()
+    public function getSurname()
     {
         return $this->surname;
     }
@@ -355,68 +379,71 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @param string
      * @return PartyInterface
      */
-    public function setSurname ($surname)
+    public function setSurname($surname)
     {
         $this->surname = $surname;
+
         return $this;
     }
 
     /**
      *
-     * @param \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
+     * @param  \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
      * @throws Exception
      * @return Person
      */
-    public function addCase (CaseItemInterface $case)
+    public function addCase(CaseItemInterface $case)
     {
         if ($case instanceof PowerOfAttorney) {
             // @codeCoverageIgnoreStart
             // requires PersonFactory to test
-            if(is_null($this->powerOfAttorneys)) {
+            if (is_null($this->powerOfAttorneys)) {
                 $this->powerOfAttorneys = new ArrayCollection();
             }
             // @codeCoverageIgnoreEnd
-            if(!$this->powerOfAttorneys->contains($case)) {
+            if (!$this->powerOfAttorneys->contains($case)) {
                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
             // @codeCoverageIgnoreStart
             // requires PersonFactory to test
-            if(is_null($this->powerOfAttorneys)) {
+            if (is_null($this->powerOfAttorneys)) {
                 $this->deputyships = new ArrayCollection();
             }
             // @codeCoverageIgnoreEnd
-            if(!$this->deputyships->contains($case)) {
+            if (!$this->deputyships->contains($case)) {
                 $this->deputyships->add($case);
             }
         } else {
             throw new Exception('A case can only be of type PowerOfAttorney or DeputyShip');
         }
+
         return $this;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getPowerOfAttorneys ()
+    public function getPowerOfAttorneys()
     {
         // @codeCoverageIgnoreStart
         // requires PersonFactory to test
-        if(is_null($this->powerOfAttorneys)) {
+        if (is_null($this->powerOfAttorneys)) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
         // @codeCoverageIgnoreEnd
         return $this->powerOfAttorneys;
     }
 
-    public function getCases() {
+    public function getCases()
+    {
         return array ($this->getPowerOfAttorneys(), $this->getDeputyships());
     }
     /**
-     * @param ArrayCollection $cases
+     * @param  ArrayCollection $cases
      * @return PartyInterface
      */
-    public function setCases (ArrayCollection $cases)
+    public function setCases(ArrayCollection $cases)
     {
        foreach ($cases as $case) {
            $this->addCase($case);
@@ -426,11 +453,11 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @return ArrayCollection
      */
-    public function getDeputyships ()
+    public function getDeputyships()
     {
         // @codeCoverageIgnoreStart
         // requires PersonFactory to test
-        if(is_null($this->deputyships)) {
+        if (is_null($this->deputyships)) {
             $this->deputyships = new ArrayCollection();
         }
         // @codeCoverageIgnoreEnd
@@ -438,23 +465,25 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @param PhoneNumber $phoneNumber
+     * @param  PhoneNumber $phoneNumber
      * @return $this
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber)
     {
         $phoneNumber->setPerson($this);
         $this->phoneNumbers->add($phoneNumber);
+
         return $this;
     }
 
     /**
-     * @param ArrayCollection $phoneNumbers
+     * @param  ArrayCollection $phoneNumbers
      * @return $this
      */
     public function setPhoneNumbers(ArrayCollection $phoneNumbers)
     {
         $this->phoneNumbers = $phoneNumbers;
+
         return $this;
     }
 
@@ -472,16 +501,18 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function clearPhoneNumbers()
     {
         $this->phoneNumbers = new ArrayCollection();
+
         return $this;
     }
 
     /**
-     * @param InputFilterInterface $inputFilter
-     * @return return Person
+     * @param  InputFilterInterface $inputFilter
+     * @return return               Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         $this->inputFilter = $inputFilter;
+
         return $this;
     }
 
@@ -519,6 +550,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
             $this->inputFilter = $inputFilter;
         }
+
         return $this->inputFilter;
     }
 
@@ -534,7 +566,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @return bool
      *
      */
-    public function hasAttachedCase() {
+    public function hasAttachedCase()
+    {
         return
             (bool) (
                 ($this->getPowerOfAttorneys()->count() > 0)
@@ -543,4 +576,3 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             );
     }
 }
-
