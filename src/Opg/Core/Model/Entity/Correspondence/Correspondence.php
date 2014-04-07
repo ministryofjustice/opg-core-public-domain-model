@@ -33,6 +33,11 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
+     * @var string
+     */
+    protected $type;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
@@ -100,7 +105,7 @@ class Correspondence implements EntityInterface, \IteratorAggregate
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'Digits'
+                                'name' => 'Digits'
                             )
                         )
                     )
@@ -114,13 +119,13 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     *  @param string $id
+     * @param string $id
      *
      * @return Correspondence
      */
     public function setId($id)
     {
-        $this->id = (string) $id;
+        $this->id = (string)$id;
 
         return $this;
     }
@@ -187,6 +192,26 @@ class Correspondence implements EntityInterface, \IteratorAggregate
 
     public function getDocumentStoreFilename()
     {
-        return $this->getId() ."_".$this->getFilename();
+        return $this->getId() . "_" . $this->getFilename();
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Correspondence
+     */
+    public function setType($type)
+    {
+        $this->type = (string)$type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
