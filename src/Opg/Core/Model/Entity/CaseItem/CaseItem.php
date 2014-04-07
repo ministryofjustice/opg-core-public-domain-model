@@ -49,21 +49,21 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var number autoincrementID
+     * @var int autoincrementID
      * @Type("integer")
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "integer", nullable=true)
-     * @var number
+     * @var int
      * @Type("integer")
      */
     protected $oldCaseId;
 
     /**
      * @ORM\Column(type = "integer", nullable=true)
-     * @var number
+     * @var int
      * @Type("string")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
      */
@@ -404,7 +404,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  number   $id
+     * @param  int   $id
      * @return CaseItem
      */
     public function setId($id)
@@ -415,7 +415,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return number
+     * @return int
      */
     public function getId()
     {
@@ -494,7 +494,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     abstract public function addPerson(Person $person);
 
     /**
-     * @return number
+     * @return int
      */
     public function getOldCaseId()
     {
@@ -513,7 +513,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return number
+     * @return int
      */
     public function getApplicationType()
     {
