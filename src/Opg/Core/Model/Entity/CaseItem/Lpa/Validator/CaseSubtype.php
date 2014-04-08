@@ -5,7 +5,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
 use Zend\Validator\Callback;
 
 /**
- * Class CaseSubType
+ * Class CaseSubtype
  *
  * @package Opg\Core\Model\Entity\CaseItem\Lpa\Validator
  */
@@ -29,7 +29,7 @@ class CaseSubtype extends Callback
                 return true;
             }
 
-            // Prepare a list of valid CaseSubTypes, based on the parent CaseType
+            // Prepare a list of valid CaseSubtypes, based on the parent CaseType
             switch($caseType) {
                 case CaseTypeValidator::CASE_TYPE_LPA:
                     $validSubtypes = [
