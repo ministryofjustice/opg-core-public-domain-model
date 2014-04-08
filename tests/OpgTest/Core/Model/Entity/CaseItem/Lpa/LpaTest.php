@@ -465,7 +465,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'paymentDate' => NULL,
                 'id' => NULL,
                 'title' => NULL,
-                'caseType' => NULL,
+                'caseType' => 'lpa',
                 'caseSubtype' => NULL,
                 'dueDate' => NULL,
                 'status' => NULL,
@@ -637,5 +637,39 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
+    }
+
+    public function testValidatorInvalidNoCaseType()
+    {
+        // By default a new Lpa should have a caseType of 'lpa', which is valid.
+        $this->assertTrue($this->lpa->isValid(['caseType']));
+    }
+
+    public function testValidatorValidDefaultCaseType()
+    {
+        $this->lpa->setCaseType(null);
+
+        $this->assertFalse($this->lpa->isValid(['caseType']));
+    }
+
+    public function testValidatorInvalidNonExistentCaseType()
+    {
+        $this->lpa->setCaseType('NOT_A_REAL_CASE_TYPE');
+
+        $this->assertFalse($this->lpa->isValid(['caseType']));
+    }
+
+    public function testValidatorInvalidNoCaseSubtype()
+    {
+        $this->lpa->setCaseSubtype(null);
+
+        $this->assertFalse($this->lpa->isValid(['caseSubtype']));
+    }
+
+    public function testValidatorInvalidNonExistentCaseSubtype()
+    {
+        $this->lpa->setCaseType('NOT_A_REAL_CASE__TYPE');
+
+        $this->assertFalse($this->lpa->isValid(['caseSubtype']));
     }
 }
