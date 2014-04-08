@@ -1,11 +1,11 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
-
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
@@ -23,6 +23,13 @@ use JMS\Serializer\Annotation\Accessor;
  */
 class Lpa extends PowerOfAttorney
 {
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Type("string")
+     */
+    protected $caseType = CaseTypeValidator::CASE_TYPE_LPA;
 
     /**
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")

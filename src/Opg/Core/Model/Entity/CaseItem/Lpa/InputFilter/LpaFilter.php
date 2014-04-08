@@ -1,6 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseSubType;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\HowAttorneysAct;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\PaymentMethod;
 use Opg\Core\Model\Entity\PowerOfAttorney\Validator\Applicants;
@@ -83,7 +85,8 @@ class LpaFilter extends InputFilter
                                 'min'      => 2,
                                 'max'      => 24,
                             ),
-                        )
+                        ),
+                        new CaseType()
                     )
                 )
             )
@@ -109,6 +112,7 @@ class LpaFilter extends InputFilter
                                 'min'      => 2,
                                 'max'      => 24,
                             ),
+                            new CaseSubType()
                         )
                     )
                 )
