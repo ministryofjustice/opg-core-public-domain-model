@@ -6,6 +6,12 @@ use Application\Specification\Lpa\StatutoryWaitingPeriodSpecification;
 use Application\Specification\SpecificationException;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
+/**
+ * Class LpaListener
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa
+ * @codeCoverageIgnore
+ * This test cannot be run at the domain model level as it requires the entity manager
+ */
 class LpaListener
 {
     /**
