@@ -629,14 +629,16 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     public function testGetSetLifeSustainingTreatment()
     {
         $lstDate = date('d/m/Y');
+        $lstType = 'Option A';
 
         $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
-        $this->assertFalse($this->lpa->hasLifeSustainingTreatment());
+        $this->assertEmpty($this->lpa->hasLifeSustainingTreatment());
 
-        $this->lpa->setLifeSustainingTreatment(true)->setLifeSustainingTreatmentSignatureDate($lstDate);
+        $this->lpa->setLifeSustainingTreatment($lstType)->setLifeSustainingTreatmentSignatureDate($lstDate);
 
         $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
+        $this->assertEquals($lstType, $this->lpa->getLifeSustainingTreatment());
     }
 
     public function testValidatorInvalidNoCaseType()

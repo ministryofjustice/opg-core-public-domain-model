@@ -97,11 +97,11 @@ class Lpa extends PowerOfAttorney
     protected $lpaReceiptDate;
 
     /**
-     * @ORM\Column(type="boolean",options={"default"=0})
-     * @var bool
-     * @Type("boolean")
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Type("string")
      */
-    protected $lifeSustainingTreatment = false;
+    protected $lifeSustainingTreatment;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -320,17 +320,17 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param boolean $lifeSustainingTreatment
+     * @param string $lifeSustainingTreatment
      * @return Lpa
      */
-    public function setLifeSustainingTreatment($lifeSustainingTreatment = false)
+    public function setLifeSustainingTreatment($lifeSustainingTreatment = '')
     {
         $this->lifeSustainingTreatment = $lifeSustainingTreatment;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return string
      */
     public function getLifeSustainingTreatment()
     {
@@ -343,7 +343,7 @@ class Lpa extends PowerOfAttorney
      */
     public function hasLifeSustainingTreatment()
     {
-        return $this->getLifeSustainingTreatment();
+        return !empty($this->getLifeSustainingTreatment());
     }
 
     /**
