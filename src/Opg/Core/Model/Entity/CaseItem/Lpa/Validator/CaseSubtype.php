@@ -8,6 +8,9 @@ use Zend\Validator\Callback;
  * Class CaseSubtype
  *
  * @package Opg\Core\Model\Entity\CaseItem\Lpa\Validator
+ *
+ * @codeCoverageIgnore
+ * Anonymous function not covered by unit tests, it is being called but the parser does not see this
  */
 class CaseSubtype extends Callback
 {
