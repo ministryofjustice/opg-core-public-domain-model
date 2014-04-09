@@ -25,7 +25,11 @@ class Event implements EntityInterface
     use ExchangeArray;
 
     /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @ORM\Column(type = "integer", options = {"unsigned": true})
+     * @ORM\GeneratedValue(strategy = "SEQUENCE")
+     * @ORM\Id
+     * @ORM\SequenceGenerator(sequenceName = "events_seq", initialValue = 1, allocationSize = 100)
+     *
      * @var int $id
      */
     protected $id;

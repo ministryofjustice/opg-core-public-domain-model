@@ -8,6 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\Id\SequenceGenerator;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -141,13 +142,16 @@ class EventLoggingListener implements EventSubscriber
 
     private function recordEvent(EntityManager $em, $entity, $type, array $entityChangeset = null)
     {
+        $metadata = $em->getClassMetadata('Opg\Core\Model\Entity\Event');
+
         $currentUser  = $this->userIdentityProvider->getUserIdentity();
         $owningEntity = $this->findOwningEntity($em, $entity);
 
         $em->getConnection()->executeQuery(
-            "INSERT INTO events (sourceEntityId, sourceEntityClass, type, user_id, createdOn, changeset, owningEntityId, owningEntityClass, entity)
-                 VALUES (:sourceId, :sourceEntityClass, :type, :createdByUser, :createdTime, :changeset, :owningEntityId, :owningEntityClass, :entity)",
+            "INSERT INTO events (id, sourceEntityId, sourceEntityClass, type, user_id, createdOn, changeset, owningEntityId, owningEntityClass, entity)
+                 VALUES (:id, :sourceId, :sourceEntityClass, :type, :createdByUser, :createdTime, :changeset, :owningEntityId, :owningEntityClass, :entity)",
             array(
+                'id'                => $metadata->idGenerator->generate($em, null),
                 'sourceId'          => $this->getIdentifier($em, $entity),
                 'sourceEntityClass' => ClassUtils::getClass($entity),
                 'type'              => $type,
