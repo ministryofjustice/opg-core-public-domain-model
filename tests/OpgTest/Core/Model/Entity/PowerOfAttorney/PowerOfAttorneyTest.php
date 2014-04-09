@@ -129,42 +129,44 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
     {
         $expectedCardDetails = 'Number 1234567890123456 \n Expiry 01/18\n CCV 123\n Name A Test Card User';
 
-        $this->assertFalse($this->poa->getPaymentByDebitCreditCard());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentByDebitCreditCard());
 
         $this->poa
-            ->setPaymentByDebitCreditCard(true)
+            ->setPaymentByDebitCreditCard(PowerOfAttorney::PAYMENT_OPTION_TRUE)
             ->setCardPaymentContact($expectedCardDetails);
 
-        $this->assertTrue($this->poa->getPaymentByDebitCreditCard());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentByDebitCreditCard());
 
         $this->assertEquals($expectedCardDetails, $this->poa->getCardPaymentContact());
     }
 
     public function testGetSetPayByCheque()
     {
-        $this->assertFalse($this->poa->getPaymentByCheque());
-        $this->poa->setPaymentByCheque(true);
-        $this->assertTrue($this->poa->getPaymentByCheque());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentByCheque());
+        $this->poa->setPaymentByCheque(PowerOfAttorney::PAYMENT_OPTION_FALSE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE,$this->poa->getPaymentByCheque());
+        $this->poa->setPaymentByCheque(PowerOfAttorney::PAYMENT_OPTION_TRUE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE,$this->poa->getPaymentByCheque());
         $this->poa->setPaymentByCheque();
-        $this->assertFalse($this->poa->getPaymentByCheque());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentByCheque());
     }
 
     public function testGetSetFeeExemption()
     {
-        $this->assertFalse($this->poa->getFeeExemptionAppliedFor());
-        $this->poa->setFeeExemptionAppliedFor(true);
-        $this->assertTrue($this->poa->getFeeExemptionAppliedFor());
-        $this->poa->setFeeExemptionAppliedFor();
-        $this->assertFalse($this->poa->getFeeExemptionAppliedFor());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getFeeExemptionAppliedFor());
+        $this->poa->setFeeExemptionAppliedFor(PowerOfAttorney::PAYMENT_OPTION_TRUE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getFeeExemptionAppliedFor());
+        $this->poa->setFeeExemptionAppliedFor(PowerOfAttorney::PAYMENT_OPTION_FALSE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getFeeExemptionAppliedFor());
     }
 
     public function testGetSetFeeRemission()
     {
-        $this->assertFalse($this->poa->getFeeRemissionAppliedFor());
-        $this->poa->setFeeRemissionAppliedFor(true);
-        $this->assertTrue($this->poa->getFeeRemissionAppliedFor());
-        $this->poa->setFeeRemissionAppliedFor();
-        $this->assertFalse($this->poa->getFeeRemissionAppliedFor());
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getFeeRemissionAppliedFor());
+        $this->poa->setFeeRemissionAppliedFor(PowerOfAttorney::PAYMENT_OPTION_TRUE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getFeeRemissionAppliedFor());
+        $this->poa->setFeeRemissionAppliedFor(PowerOfAttorney::PAYMENT_OPTION_FALSE);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getFeeRemissionAppliedFor());
     }
 
     public function testGetSetCaseAttorneyJointly()

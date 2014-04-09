@@ -121,32 +121,32 @@ abstract class PowerOfAttorney extends CaseItem
     protected $certificateProviders;
 
     /**
-     * @ORM\Column(type="boolean",options={"default"=0})
-     * @var bool
-     * @Type("boolean")
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var integer
+     * @Type("integer")
      */
-    protected $paymentByDebitCreditCard = false;
+    protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
 
     /**
-     * @ORM\Column(type="boolean",options={"default"=0})
-     * @var bool
-     * @Type("boolean")
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var integer
+     * @Type("integer")
      */
-
-    protected $paymentByCheque = false;
-    /**
-     * @ORM\Column(type="boolean",options={"default"=0})
-     * @var bool
-     * @Type("boolean")
-     */
-    protected $feeExemptionAppliedFor = false;
+    protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
 
     /**
-     * @ORM\Column(type="boolean",options={"default"=0})
-     * @var bool
-     * @Type("boolean")
+     * @ORM\Column(type="integer", options={"default"=0})
+     * @var integer
+     * @Type("integer")
      */
-    protected $feeRemissionAppliedFor = false;
+    protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
+
+    /**
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var integer
+     * @Type("integer")
+     */
+    protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
@@ -997,17 +997,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param bool $feeExemptionAppliedFor
+     * @param int $feeExemptionAppliedFor
      * @return PowerOfAttorney
      */
-    public function setFeeExemptionAppliedFor($feeExemptionAppliedFor = false)
+    public function setFeeExemptionAppliedFor($feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET)
     {
         $this->feeExemptionAppliedFor = $feeExemptionAppliedFor;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return int
      */
     public function getFeeExemptionAppliedFor()
     {
@@ -1015,17 +1015,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param bool $feeRemissionAppliedFor
+     * @param int $feeRemissionAppliedFor
      * @return PowerOfAttorney
      */
-    public function setFeeRemissionAppliedFor($feeRemissionAppliedFor = false)
+    public function setFeeRemissionAppliedFor($feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET)
     {
         $this->feeRemissionAppliedFor = $feeRemissionAppliedFor;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return int
      */
     public function getFeeRemissionAppliedFor()
     {
@@ -1033,17 +1033,17 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param boolean $paymentByCheque
+     * @param int $paymentByCheque
      * @return PowerOfAttorney
      */
-    public function setPaymentByCheque($paymentByCheque = false)
+    public function setPaymentByCheque($paymentByCheque = self::PAYMENT_OPTION_NOT_SET)
     {
         $this->paymentByCheque = $paymentByCheque;
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return int
      */
     public function getPaymentByCheque()
     {
@@ -1051,10 +1051,10 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param boolean $paymentByDebitCreditCard
+     * @param int $paymentByDebitCreditCard
      * @return PowerOfAttorney
      */
-    public function setPaymentByDebitCreditCard($paymentByDebitCreditCard)
+    public function setPaymentByDebitCreditCard($paymentByDebitCreditCard =  self::PAYMENT_OPTION_NOT_SET)
     {
         $this->paymentByDebitCreditCard = $paymentByDebitCreditCard;
         return $this;
