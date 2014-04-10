@@ -10,6 +10,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\Orm;
 use JMS\Serializer\Annotation\Type;
+use Zend\InputFilter\Factory as InputFactory;
 
 
 /**

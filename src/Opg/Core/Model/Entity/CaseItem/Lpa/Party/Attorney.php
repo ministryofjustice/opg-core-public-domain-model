@@ -6,7 +6,6 @@ use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
@@ -18,9 +17,8 @@ use JMS\Serializer\Annotation\Type;
  * @package Opg Core
  *
  */
-class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelationshipToDonor
 {
-    use Company;
     use ToArray {
         toArray as traitToArray;
     }
