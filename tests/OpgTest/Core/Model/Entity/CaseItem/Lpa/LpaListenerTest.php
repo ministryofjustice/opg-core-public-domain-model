@@ -5,7 +5,11 @@ namespace OpgTest\Core\Model\Entity\CaseItem\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\LpaListener;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 
-
+/**
+ * Class LpaListenerTest
+ * @package OpgTest\Core\Model\Entity\CaseItem\Lpa
+ * @todo Move this into the backend
+ */
 class LpaListenerTest extends \PHPUnit_Framework_TestCase
 {
 

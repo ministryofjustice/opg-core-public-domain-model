@@ -48,6 +48,15 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     const APPLICATION_TYPE_ONLINE  = 1;
 
     /**
+     * Constants below are for payment types radio buttons, we use 0
+     * as default
+     */
+    const PAYMENT_OPTION_NOT_SET   = 0;
+    const PAYMENT_OPTION_FALSE     = 1;
+    const PAYMENT_OPTION_TRUE      = 2;
+
+
+    /**
      * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int autoincrementID
      * @Type("integer")
