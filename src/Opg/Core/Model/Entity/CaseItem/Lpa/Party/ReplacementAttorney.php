@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 
 /**
+ * @ORM\Entity
+ *
  * Class ReplacementAttorney
  * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
  */

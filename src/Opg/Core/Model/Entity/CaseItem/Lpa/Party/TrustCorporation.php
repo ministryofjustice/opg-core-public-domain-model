@@ -7,6 +7,12 @@ use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 
+/**
+ * @ORM\Entity
+ * 
+ * Class TrustCorporation
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ */
 class TrustCorporation extends AttorneyAbstract
 {
     use ToArray;
