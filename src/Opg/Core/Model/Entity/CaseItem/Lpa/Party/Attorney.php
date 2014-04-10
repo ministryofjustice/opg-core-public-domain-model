@@ -88,29 +88,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'email',
-                        'required'   => false,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
                         'name'       => 'powerOfAttorneys',
                         'required'   => true,
                         'validators' => array(
