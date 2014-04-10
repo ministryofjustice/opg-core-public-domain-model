@@ -15,6 +15,7 @@ use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -36,6 +37,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Type("integer")
+     * @Groups("api-poa-list")
      */
     protected $id;
 
@@ -43,6 +45,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $email;
 
@@ -50,6 +53,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string");
+     * @Groups("api-poa-list")
      */
     protected $firstname;
 
@@ -57,6 +61,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $surname;
 

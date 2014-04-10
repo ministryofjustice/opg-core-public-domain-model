@@ -23,6 +23,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Groups;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -52,6 +53,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Type("integer")
+     * @Groups("api-poa-list")
      */
     protected $id;
 
@@ -59,6 +61,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $email;
 
@@ -113,6 +116,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $dob;
 
@@ -120,6 +124,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $dateOfDeath;
 
@@ -127,6 +132,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $title;
 
@@ -134,6 +140,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $firstname;
 
@@ -141,6 +148,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $middlenames;
 
@@ -148,6 +156,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $surname;
 

@@ -15,6 +15,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -47,6 +48,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor", fetch = "EAGER")
      * @var Donor
      * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
+     * @Groups("api-poa-list")
      */
     protected $donor;
 

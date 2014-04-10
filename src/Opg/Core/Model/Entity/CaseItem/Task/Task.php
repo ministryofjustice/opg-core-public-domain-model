@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
@@ -32,6 +33,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
      * @Type("integer")
+     * @Groups("api-poa-list")
      */
     protected $id;
 
@@ -47,6 +49,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $status;
 
@@ -54,6 +57,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $priority;
 
@@ -61,6 +65,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $dueDate;
 
@@ -68,6 +73,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
      * @Type("string")
+     * @Groups("api-poa-list")
      */
     protected $name;
 
