@@ -40,12 +40,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
     protected $isTrustCorporation = false;
 
     /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
-     */
-    protected $isReplacementAttorney = false;
-
-    /**
      * @return string $occupation
      */
     public function getOccupation()
@@ -78,24 +72,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
     public function setIsTrustCorporation($isTrustCorporation)
     {
         $this->isTrustCorporation = $isTrustCorporation;
-        return $this;
-    }
-
-    /**
-     * @return boolean $isReplacementAttorney
-     */
-    public function isReplacementAttorney()
-    {
-        return $this->isReplacementAttorney;
-    }
-
-    /**
-     * @param boolean $isReplacementAttorney
-     * @return Attorney
-     */
-    public function setIsReplacementAttorney($isReplacementAttorney)
-    {
-        $this->isReplacementAttorney = $isReplacementAttorney;
         return $this;
     }
 
