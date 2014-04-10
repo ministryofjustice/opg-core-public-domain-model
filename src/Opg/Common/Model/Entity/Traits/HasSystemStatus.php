@@ -12,11 +12,11 @@ use JMS\Serializer\Annotation\Type;
 trait HasSystemStatus
 {
     /**
-     * @ORM\Column(type = "boolean",options={"default":0})
+     * @ORM\Column(type = "boolean",options={"default":1})
      * @var bool
      * @Type("boolean")
      */
-    protected $systemStatus;
+    protected $systemStatus =true;
 
     /**
      * @return bool
