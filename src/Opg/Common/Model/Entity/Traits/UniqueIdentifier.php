@@ -10,6 +10,7 @@ trait UniqueIdentifier {
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
      * @Type("integer")
+     * @Groups("api-poa-list")
      */
     protected $uId;
 
