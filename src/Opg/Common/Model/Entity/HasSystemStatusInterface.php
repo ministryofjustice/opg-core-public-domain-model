@@ -18,10 +18,10 @@ interface HasSystemStatusInterface
      * @param boolean $active
      * @return HasSystemStatusInterface
      */
-    public function setStatus($active);
+    public function setSystemStatus($active);
 
     /**
      * @return boolean
      */
-    public function getStatus();
+    public function getSystemStatus();
 }

@@ -23,14 +23,14 @@ trait HasSystemStatus
      */
     public function isActive()
     {
-        return !empty($this->getStatus());
+        return !empty($this->getSystemStatus());
     }
 
     /**
      * @param bool $status
      * @return HasSystemStatusInterface
      */
-    public function setStatus($status)
+    public function setSystemStatus($status)
     {
         $this->systemStatus = (bool) $status;
         return $this;
@@ -39,7 +39,7 @@ trait HasSystemStatus
     /**
      * @return bool
      */
-    public function getStatus()
+    public function getSystemStatus()
     {
         return $this->systemStatus;
     }

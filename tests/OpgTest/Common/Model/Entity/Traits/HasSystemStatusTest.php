@@ -34,7 +34,7 @@ class HasSystemStatusTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->status->isActive());
 
-        $this->status->setStatus(true);
+        $this->status->setSystemStatus(true);
         $this->assertTrue($this->status->isActive());
     }
 }
