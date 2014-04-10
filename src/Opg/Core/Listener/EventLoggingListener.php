@@ -284,6 +284,10 @@ class EventLoggingListener implements EventSubscriber
             return $poa;
         }
 
+        if ($associationName === 'attorneys') {
+            return null;
+        }
+
         $deputyship = $em->createQuery(
             "SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE :entity MEMBER OF c." . $associationName
         )
