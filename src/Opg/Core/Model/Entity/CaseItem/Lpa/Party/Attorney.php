@@ -31,11 +31,6 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     protected $occupation;
 
-    /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
-     */
-    protected $isTrustCorporation = false;
 
     /**
      * @return string $occupation
@@ -52,24 +47,6 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     public function setOccupation($occupation)
     {
         $this->occupation = $occupation;
-        return $this;
-    }
-
-    /**
-     * @return boolean $isTrustCorporation
-     */
-    public function isTrustCorporation()
-    {
-        return $this->isTrustCorporation;
-    }
-
-    /**
-     * @param boolean $isTrustCorporation
-     * @return Attorney
-     */
-    public function setIsTrustCorporation($isTrustCorporation)
-    {
-        $this->isTrustCorporation = $isTrustCorporation;
         return $this;
     }
 

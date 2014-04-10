@@ -42,15 +42,6 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSetGetIsTrustCorporation()
-    {
-        $this->attorney->setIsTrustCorporation(true);
-        $this->assertTrue($this->attorney->isTrustCorporation());
-
-        $this->attorney->setIsTrustCorporation(false);
-        $this->assertFalse($this->attorney->isTrustCorporation());
-    }
-
     public function testToArrayExchangeArray()
     {
         $this->attorney
