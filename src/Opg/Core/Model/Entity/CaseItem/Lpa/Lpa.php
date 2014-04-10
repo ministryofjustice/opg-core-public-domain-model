@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
@@ -266,7 +267,7 @@ class Lpa extends PowerOfAttorney
      */
     public function addPerson(Person $person)
     {
-        if ($person instanceof Attorney) {
+        if ($person instanceof AttorneyAbstract) {
             $this->addAttorney($person);
         } elseif ($person instanceof CertificateProvider) {
             $this->addCertificateProvider($person);
