@@ -17,6 +17,7 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
     public function testSetUp()
     {
         $this->assertTrue($this->attorney instanceof ReplacementAttorney);
+        $this->assertFalse($this->attorney->isActive());
     }
 
     public function testSetGetIsReplacementAttorney()

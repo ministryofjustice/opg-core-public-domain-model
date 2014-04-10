@@ -34,6 +34,12 @@ class ReplacementAttorney extends AttorneyAbstract
      */
     protected $isReplacementAttorney = false;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->systemStatus = false;
+    }
+
     /**
      * @return boolean $isReplacementAttorney
      */
@@ -69,6 +75,5 @@ class ReplacementAttorney extends AttorneyAbstract
     {
         return $this->lpaPartCSignatureDate;
     }
-
 
 }
