@@ -9,7 +9,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -29,7 +28,6 @@ class Address implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      */
     protected $id;
 
@@ -37,49 +35,42 @@ class Address implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="addresses")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
     /**
      * @ORM\Column(type = "json_array", name="address_lines")
      * @var array
-     * @Type("array")
      */
     protected $addressLines = [];
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $town;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $county;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $postcode;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $country;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $type = 'Primary';
 

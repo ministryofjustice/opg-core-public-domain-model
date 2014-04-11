@@ -7,7 +7,6 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -64,7 +63,6 @@ class Donor extends BasePerson implements PartyInterface
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $previousNames;
 

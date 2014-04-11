@@ -3,11 +3,9 @@
 
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -25,14 +23,12 @@ class ReplacementAttorney extends AttorneyAbstract
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lpaPartCSignatureDate;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var boolean
-     * @Type("boolean")
      */
     protected $isReplacementAttorney = false;
 

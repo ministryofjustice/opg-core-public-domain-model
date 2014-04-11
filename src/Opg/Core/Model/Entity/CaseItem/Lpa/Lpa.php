@@ -1,6 +1,5 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
@@ -11,7 +10,6 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 
 /**
@@ -28,14 +26,12 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      */
     protected $caseType = CaseTypeValidator::CASE_TYPE_LPA;
 
     /**
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
      * @var integer
-     * @Type("string")
      * @Accessor(getter="getLpaAccuracyAscertainedBy",setter="setLPaAccuracyAscertainedBy")
      */
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
@@ -43,7 +39,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lpaDonorSignatureDate;
 
@@ -51,63 +46,54 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $lpaDonorSignatoryFullName;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var bool
-     * @Type("boolean")
      */
     protected $donorHasPreviousLpas = false;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $previousLpaInfo;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lpaDonorDeclarationSignatureDate;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lpaCreatedDate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lpaReceiptDate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lifeSustainingTreatment;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $lifeSustainingTreatmentSignatureDate;
 

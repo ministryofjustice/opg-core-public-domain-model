@@ -2,7 +2,6 @@
 namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -14,7 +13,6 @@ trait Time {
     /**
      * @ORM\Column(type = "string")
      * @var string createdTime
-     * @Type("string")
      */
     private $createdTime;
 

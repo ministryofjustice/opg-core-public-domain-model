@@ -12,7 +12,6 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
@@ -36,7 +35,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      * @Groups("api-poa-list")
      */
     protected $id;
@@ -44,7 +42,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups("api-poa-list")
      */
     protected $email;
@@ -52,7 +49,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string");
      * @Groups("api-poa-list")
      */
     protected $firstname;
@@ -60,7 +56,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups("api-poa-list")
      */
     protected $surname;
@@ -73,7 +68,6 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      * @Exclude
      */
     protected $powerOfAttorneys;
@@ -86,7 +80,6 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\Deputyship\Deputyship")
      * @Exclude
      */
     protected $deputyships;
@@ -105,20 +98,17 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      */
     protected $password;
 
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      */
     protected $token;
 
     /**
      * @var boolean
-     * @Type("boolean")
      */
     protected $locked;
 
@@ -178,7 +168,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "boolean", options={"default":0})
      * @var boolean
-     * @Type("boolean")
      */
     protected $suspended;
 

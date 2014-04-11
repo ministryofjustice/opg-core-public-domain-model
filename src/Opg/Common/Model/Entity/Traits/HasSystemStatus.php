@@ -3,7 +3,6 @@
 namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
 /**
  * Class HasSystemStatus
@@ -14,7 +13,6 @@ trait HasSystemStatus
     /**
      * @ORM\Column(type = "boolean",options={"default":1})
      * @var bool
-     * @Type("boolean")
      */
     protected $systemStatus =true;
 

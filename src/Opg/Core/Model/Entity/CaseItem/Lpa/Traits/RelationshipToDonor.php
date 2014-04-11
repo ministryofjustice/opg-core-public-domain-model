@@ -3,14 +3,12 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
 trait RelationshipToDonor
 {
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string");
      */
     protected $relationshipToDonor;
 

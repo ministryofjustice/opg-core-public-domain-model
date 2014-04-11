@@ -7,7 +7,6 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -80,7 +79,6 @@ class Event implements EntityInterface
     /**
      * @ORM\Column(type= "json_array", nullable = true)
      * @var string $name
-     * @Type("array")
      */
     protected $entity;
 

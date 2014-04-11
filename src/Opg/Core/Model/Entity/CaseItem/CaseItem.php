@@ -19,14 +19,12 @@ use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
@@ -60,7 +58,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int autoincrementID
-     * @Type("integer")
      * @Serializer\Groups("api-poa-list")
      */
     protected $id;
@@ -68,7 +65,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
-     * @Type("integer")
      * @Serializer\Groups("api-poa-list")
      */
     protected $oldCaseId;
@@ -76,7 +72,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
-     * @Type("string")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
      * @Serializer\Groups("api-poa-list")
      */
@@ -84,7 +79,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $title;
@@ -92,7 +86,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $caseType;
@@ -100,7 +93,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $caseSubtype;
@@ -108,7 +100,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $dueDate;
@@ -116,7 +107,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $registrationDate;
@@ -124,7 +114,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $closedDate;
@@ -132,7 +121,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Serializer\Groups("api-poa-list")
      */
     protected $status;
@@ -141,7 +129,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\MaxDepth(1)
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
      * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
      * @Serializer\Groups("api-poa-list")
      */
     protected $assignedUser;
@@ -149,7 +136,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Task\Task>")
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */
@@ -158,7 +144,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      * @ReadOnly
      */
     protected $notes;
@@ -166,7 +151,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
      * @ReadOnly
      */
     protected $documents;
@@ -174,7 +158,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
      * @ReadOnly
      */
     protected $correspondence;

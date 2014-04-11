@@ -3,13 +3,11 @@
 
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use Zend\InputFilter\Factory as InputFactory;
 
 
@@ -25,7 +23,6 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $dxNumber;
 
