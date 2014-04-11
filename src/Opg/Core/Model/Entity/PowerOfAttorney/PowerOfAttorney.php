@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
@@ -71,7 +72,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $applicants;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person")
      * @ORM\JoinTable(name="pa_attorneys",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
@@ -727,10 +728,10 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param Attorney $attorney
+     * @param AttorneyAbstract $attorney
      * @return PowerOfAttorney
      */
-    public function addAttorney (Attorney $attorney)
+    public function addAttorney (AttorneyAbstract $attorney)
     {
         if (!$this->attorneys->contains($attorney)) {
             $this->attorneys->add($attorney);

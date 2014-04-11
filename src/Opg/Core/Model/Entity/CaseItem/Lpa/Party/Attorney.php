@@ -6,7 +6,6 @@ use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
@@ -18,9 +17,8 @@ use JMS\Serializer\Annotation\Type;
  * @package Opg Core
  *
  */
-class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelationshipToDonor
 {
-    use Company;
     use ToArray {
         toArray as traitToArray;
     }
@@ -33,17 +31,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
      */
     protected $occupation;
 
-    /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
-     */
-    protected $isTrustCorporation = false;
-
-    /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
-     */
-    protected $isReplacementAttorney = false;
 
     /**
      * @return string $occupation
@@ -64,42 +51,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
     }
 
     /**
-     * @return boolean $isTrustCorporation
-     */
-    public function isTrustCorporation()
-    {
-        return $this->isTrustCorporation;
-    }
-
-    /**
-     * @param boolean $isTrustCorporation
-     * @return Attorney
-     */
-    public function setIsTrustCorporation($isTrustCorporation)
-    {
-        $this->isTrustCorporation = $isTrustCorporation;
-        return $this;
-    }
-
-    /**
-     * @return boolean $isReplacementAttorney
-     */
-    public function isReplacementAttorney()
-    {
-        return $this->isReplacementAttorney;
-    }
-
-    /**
-     * @param boolean $isReplacementAttorney
-     * @return Attorney
-     */
-    public function setIsReplacementAttorney($isReplacementAttorney)
-    {
-        $this->isReplacementAttorney = $isReplacementAttorney;
-        return $this;
-    }
-
-    /**
      * @return void|InputFilterInterface
      */
     public function getInputFilter()
@@ -108,29 +59,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
             $inputFilter = parent::getInputFilter();
 
             $factory = new InputFactory();
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'email',
-                        'required'   => false,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
 
             $inputFilter->add(
                 $factory->createInput(

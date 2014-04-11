@@ -22,6 +22,12 @@ class PersonFactory
                 case "Attorney" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney";
                      break;
+                case "ReplacementAttorney" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\ReplacementAttorney";
+                    break;
+                case "TrustCorporation" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\TrustCorporation";
+                    break;
                 case "CertificateProvider" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider";
                     break;
