@@ -169,7 +169,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Address\Address>")
-     * @ReadOnly
      */
     protected $addresses;
 
@@ -177,7 +176,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\PhoneNumber\PhoneNumber>")
-     * @ReadOnly
      */
     protected $phoneNumbers;
 
