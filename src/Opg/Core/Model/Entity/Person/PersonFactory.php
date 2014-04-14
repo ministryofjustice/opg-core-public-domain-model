@@ -46,11 +46,17 @@ class PersonFactory
             throw new \Exception('Cannot build unknown person type.');
         }
 
-        return
-            $serializer->deserialize(
+        // Try-Catch added due to https://github.com/schmittjoh/serializer/issues/216
+        try {
+            $person = $serializer->deserialize(
                 json_encode($data),
                 $personType,
                 'json'
             );
+        } catch (\Exception $e) {
+            $person = null;
+        }
+
+        return $person;
     }
 }
