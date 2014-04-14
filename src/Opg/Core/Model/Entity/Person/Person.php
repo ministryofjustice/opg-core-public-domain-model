@@ -14,9 +14,7 @@ use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
-use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -24,6 +22,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -77,6 +76,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var ArrayCollection
      * @MaxDepth(5)
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Lpa>")
+     * @ReadOnly
      */
     protected $powerOfAttorneys;
 
@@ -89,6 +89,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @MaxDepth(5)
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Deputyship\Deputyship>")
+     * @ReadOnly
      */
     protected $deputyships;
 
@@ -100,6 +101,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
+     * @ReadOnly
      */
     protected $notes;
 
@@ -111,6 +113,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
+     * @ReadOnly
      */
     protected $correspondence;
 
@@ -166,6 +169,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Address\Address>")
+     * @ReadOnly
      */
     protected $addresses;
 
@@ -173,6 +177,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
      * @Type("ArrayCollection<Opg\Core\Model\Entity\PhoneNumber\PhoneNumber>")
+     * @ReadOnly
      */
     protected $phoneNumbers;
 
