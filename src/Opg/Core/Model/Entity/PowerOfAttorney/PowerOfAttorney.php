@@ -17,6 +17,7 @@ use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -50,6 +51,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var Donor
      * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      * @Groups("api-poa-list")
+     * @ReadOnly
      */
     protected $donor;
 
@@ -57,6 +59,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent", fetch = "EAGER")
      * @var Correspondent
      * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent")
+     * @ReadOnly
      */
     protected $correspondent;
 
@@ -66,7 +69,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $applicants;
@@ -77,7 +80,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $attorneys;
@@ -88,7 +91,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_person_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $notifiedPersons;
@@ -120,6 +123,7 @@ abstract class PowerOfAttorney extends CaseItem
      * )
      * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider>")
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $certificateProviders;
 
