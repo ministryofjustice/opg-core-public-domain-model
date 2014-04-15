@@ -21,6 +21,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -71,6 +72,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @var ArrayCollection
      * @MaxDepth(5)
+     * @ReadOnly
      */
     protected $powerOfAttorneys;
 
@@ -82,6 +84,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @MaxDepth(5)
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $deputyships;
 
@@ -92,6 +95,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $notes;
 
@@ -102,6 +106,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $correspondence;
 

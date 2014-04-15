@@ -129,6 +129,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\MaxDepth(1)
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
      * @var User
+     * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */
     protected $assignedUser;

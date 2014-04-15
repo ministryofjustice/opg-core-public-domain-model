@@ -16,6 +16,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -48,12 +49,14 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor", fetch = "EAGER")
      * @var Donor
      * @Groups("api-poa-list")
+     * @ReadOnly
      */
     protected $donor;
 
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent", fetch = "EAGER")
      * @var Correspondent
+     * @ReadOnly
      */
     protected $correspondent;
 
@@ -63,7 +66,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $applicants;
@@ -74,7 +77,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $attorneys;
@@ -85,7 +88,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_person_id", referencedColumnName="id")}
      * )
-     *
+     * @ReadOnly
      * @var ArrayCollection
      */
     protected $notifiedPersons;
@@ -114,6 +117,7 @@ abstract class PowerOfAttorney extends CaseItem
      * referencedColumnName="id")}
      * )
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $certificateProviders;
 

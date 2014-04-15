@@ -15,6 +15,7 @@ use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -69,6 +70,7 @@ class User implements EntityInterface, \IteratorAggregate
      *
      * @var ArrayCollection
      * @Exclude
+     * @ReadOnly
      */
     protected $powerOfAttorneys;
 
@@ -81,6 +83,7 @@ class User implements EntityInterface, \IteratorAggregate
      *
      * @var ArrayCollection
      * @Exclude
+     * @ReadOnly
      */
     protected $deputyships;
 

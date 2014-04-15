@@ -8,6 +8,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -61,6 +62,7 @@ class Document implements EntityInterface, \IteratorAggregate
      * @ORM\OrderBy({"pageNumber" = "ASC"})
      *
      * @var ArrayCollection
+     * @ReadOnly
      */
     protected $pages;
 

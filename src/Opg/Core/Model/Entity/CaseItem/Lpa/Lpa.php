@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
