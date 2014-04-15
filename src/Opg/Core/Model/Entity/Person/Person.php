@@ -51,6 +51,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     use HasCorrespondenceTrait;
 
     /**
+     * Constants below are for yes/no radio buttons, we use 0
+     * as default
+     */
+    const OPTION_NOT_SET   = 0;
+    const OPTION_FALSE     = 1;
+    const OPTION_TRUE      = 2;
+
+    /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Type("integer")

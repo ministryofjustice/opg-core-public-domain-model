@@ -83,7 +83,7 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->attorney->getLpa002SignatureDate());
     }
 
-    public function testsGetSetLpaPartCSignatureDate()
+    public function testGetSetLpaPartCSignatureDate()
     {
         $expected = date('Y-m-d');
 
@@ -91,5 +91,14 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->attorney->setLpaPartCSignatureDate($expected);
 
         $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetIsAttorneyApplyingToRegister()
+    {
+        $this->assertEquals(Attorney::OPTION_NOT_SET, $this->attorney->getIsAttorneyApplyingToRegister());
+
+        $this->attorney->setIsAttorneyApplyingToRegister(Attorney::OPTION_FALSE);
+        $this->assertEquals(Attorney::OPTION_FALSE, $this->attorney->getIsAttorneyApplyingToRegister());
+        $this->assertNotEquals(Attorney::OPTION_TRUE, $this->attorney->getIsAttorneyApplyingToRegister());
     }
 }

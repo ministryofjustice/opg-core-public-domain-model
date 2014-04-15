@@ -47,6 +47,13 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     protected $lpa002SignatureDate;
 
     /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     * @Type("integer")
+     */
+    protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
+
+    /**
      * @return string $occupation
      */
     public function getOccupation()
@@ -148,4 +155,24 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     {
         return $this->lpaPartCSignatureDate;
     }
+
+    /**
+     * @param int $isAttorneyApplyingToRegister
+     * @return Attorney
+     */
+    public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = self::OPTION_FALSE)
+    {
+        $this->isAttorneyApplyingToRegister = $isAttorneyApplyingToRegister;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsAttorneyApplyingToRegister()
+    {
+        return $this->isAttorneyApplyingToRegister;
+    }
+
+
 }
