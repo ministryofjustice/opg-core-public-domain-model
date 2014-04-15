@@ -28,9 +28,23 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $occupation;
 
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Type("string")
+     */
+    protected $lpaPartCSignatureDate;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Type("string")
+     */
+    protected $lpa002SignatureDate;
 
     /**
      * @return string $occupation
@@ -97,5 +111,41 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     public function toArray($exposeClassname = TRUE) {
         return $this->traitToArray($exposeClassname);
+    }
+
+    /**
+     * @param string $lpa002SignatureDate
+     * @return Attorney
+     */
+    public function setLpa002SignatureDate($lpa002SignatureDate)
+    {
+        $this->lpa002SignatureDate = $lpa002SignatureDate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLpa002SignatureDate()
+    {
+        return $this->lpa002SignatureDate;
+    }
+
+    /**
+     * @param string $lpaPartCSignatureDate
+     * @return Attorney
+     */
+    public function setLpaPartCSignatureDate($lpaPartCSignatureDate)
+    {
+        $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLpaPartCSignatureDate()
+    {
+        return $this->lpaPartCSignatureDate;
     }
 }

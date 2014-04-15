@@ -72,4 +72,24 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->attorney->setSurname('Test-Surname');
         $this->assertTrue($this->attorney->isValid());
     }
+
+    public function testGetLpa002SignatureDate()
+    {
+        $expected = date('Y-m-d');
+
+        $this->assertNull($this->attorney->getLpa002SignatureDate());
+        $this->attorney->setLpa002SignatureDate($expected);
+
+        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDate());
+    }
+
+    public function testsGetSetLpaPartCSignatureDate()
+    {
+        $expected = date('Y-m-d');
+
+        $this->assertNull($this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate($expected);
+
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+    }
 }
