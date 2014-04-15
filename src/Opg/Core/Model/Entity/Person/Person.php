@@ -42,6 +42,7 @@ use Zend\InputFilter\Factory as InputFactory;
  *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
 abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasCorrespondenceInterface
 {

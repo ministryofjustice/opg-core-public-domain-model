@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Entity
  * @ORM\Table(name = "phonenumbers")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PhoneNumberRepository")
  *
  * Class PhoneNumber
  * @package Opg\Core\Model\Entity\PhoneNumber

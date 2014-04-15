@@ -18,6 +18,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @ORM\Entity
  * @ORM\Table(name = "tasks")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\TaskRepository")
  *
  * @package Opg Core
  * @author Chris Moreton

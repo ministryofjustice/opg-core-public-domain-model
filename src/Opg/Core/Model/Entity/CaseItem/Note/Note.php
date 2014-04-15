@@ -17,6 +17,7 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\Entity
  * @ORM\Table(name = "notes")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\NoteRepository")
  *
  * @package Opg Core
  * @author  Chris Moreton <chris@netsensia.com>
