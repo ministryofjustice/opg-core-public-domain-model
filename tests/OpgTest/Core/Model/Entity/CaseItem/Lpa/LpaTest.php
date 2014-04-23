@@ -674,4 +674,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->lpa->isValid(['caseSubtype']));
     }
+
+    public function testConstantsExist()
+    {
+        $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
+        $this->assertEquals($class::HW_FULLTEXTNAME,"Health and Welfare");
+        $this->assertEquals($class::PF_FULLTEXTNAME,"Personal Finance");
+    }
 }

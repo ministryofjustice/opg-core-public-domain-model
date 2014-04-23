@@ -27,14 +27,24 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Type("string")
      */
     protected $certificateProviderStatementType;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Type("string")
      */
     protected $statement;
+
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Type("string")
+     */
+    protected $certificateProviderSkills;
 
     /**
      * @return string $certificateProviderStatementType
@@ -82,6 +92,25 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     {
         return $this->toTraitArray($exposeClassName);
     }
+
+    /**
+     * @param string $certificateProviderSkills
+     * @return CertificateProvider
+     */
+    public function setCertificateProviderSkills($certificateProviderSkills)
+    {
+        $this->certificateProviderSkills = $certificateProviderSkills;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCertificateProviderSkills()
+    {
+        return $this->certificateProviderSkills;
+    }
+
 
     /**
      * @return void|InputFilterInterface
