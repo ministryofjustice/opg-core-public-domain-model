@@ -80,4 +80,14 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         $this->certificateProvider->setRelationshipToDonor($expectedRelationship);
         $this->assertEquals($expectedRelationship, $this->certificateProvider->getRelationshipToDonor());
     }
+
+    public function testGetSetCertificateProviderSkills()
+    {
+        $expected = 'Medically trained';
+
+        $this->assertEmpty($this->certificateProvider->getCertificateProviderSkills());
+
+        $this->certificateProvider->setCertificateProviderSkills($expected);
+        $this->assertEquals($expected, $this->certificateProvider->getCertificateProviderSkills());
+    }
 }
