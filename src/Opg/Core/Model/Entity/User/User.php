@@ -91,6 +91,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "json_array")
      * @var array
      * @Accessor(getter="getNormalisedRoles",setter="setFromNormalisedRoles")
+     * @Type("array")
      * @todo change the way this is persisted to a 0 index array
      */
     protected $roles = [];

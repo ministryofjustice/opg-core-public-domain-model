@@ -41,6 +41,7 @@ use Zend\InputFilter\Factory as InputFactory;
  *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
 abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasCorrespondenceInterface
 {
@@ -48,6 +49,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     use UniqueIdentifier;
     use InputFilterTrait;
     use HasCorrespondenceTrait;
+
+    /**
+     * Constants below are for yes/no radio buttons, we use 0
+     * as default
+     */
+    const OPTION_NOT_SET   = 0;
+    const OPTION_FALSE     = 1;
+    const OPTION_TRUE      = 2;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
