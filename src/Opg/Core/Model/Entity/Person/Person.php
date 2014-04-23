@@ -23,6 +23,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -147,6 +148,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var string
      * @Type("string")
      * @Groups("api-poa-list")
+     * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
 
