@@ -29,6 +29,7 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\DiscriminatorMap({
  * "lpa" = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa",
  * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PowerOfAttorneyRepository")
  */
 abstract class PowerOfAttorney extends CaseItem
 {
