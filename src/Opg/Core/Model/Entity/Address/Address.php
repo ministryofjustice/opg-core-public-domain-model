@@ -328,15 +328,15 @@ class Address implements EntityInterface, \IteratorAggregate
         if (self::INCLUDE_PERSON === $showPerson && !is_null($personEntity)) {
             $person = [];
 
-            if (self::TITLE === $personFormat & self::TITLE) {
+            if (self::TITLE === ($personFormat & self::TITLE)) {
                 $person[] = $personEntity->getTitle();
             }
 
-            if (self::FIRSTNAME === $personFormat & self::FIRSTNAME) {
+            if (self::FIRSTNAME === ($personFormat & self::FIRSTNAME)) {
                 $person[] = $personEntity->getFirstname();
             }
 
-            if (self::SURNAME === $personFormat & self::SURNAME) {
+            if (self::SURNAME === ($personFormat & self::SURNAME)) {
                 $person[] = $personEntity->getSurname();
             }
 
