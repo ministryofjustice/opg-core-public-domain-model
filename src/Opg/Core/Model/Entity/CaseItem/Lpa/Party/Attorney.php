@@ -27,28 +27,24 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      */
     protected $occupation;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      */
     protected $lpaPartCSignatureDate;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      */
     protected $lpa002SignatureDate;
 
     /**
      * @ORM\Column(type = "integer", nullable = true)
      * @var int
-     * @Type("integer")
      */
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 
