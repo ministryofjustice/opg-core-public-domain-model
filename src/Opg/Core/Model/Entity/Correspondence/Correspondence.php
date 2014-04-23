@@ -44,6 +44,20 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     protected $filename;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @type("string")
+     */
+    protected $recipientName;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @type("string")
+     */
+    protected $address;
+
+    /**
      * Don't persist this
      * @var CaseItem $case
      * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Lpa")
@@ -159,6 +173,26 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     }
 
     /**
+     * @param string $recipientName
+     *
+     * @return Correspondence
+     */
+    public function setRecipientName($recipientName)
+    {
+        $this->recipientName = $recipientName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRecipientName()
+    {
+        return $this->recipientName;
+    }
+
+    /**
      * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
      */
     public function setCase($case)
@@ -213,5 +247,21 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }
