@@ -318,10 +318,10 @@ class EventLoggingListener implements EventSubscriber
         } catch (\LogicException $e) {
         }
 
-//        try {
-//            $return = $this->getAssociatedPerson($em, $correspondence, 'correspondence');
-//        } catch (\LogicException $e) {
-//        }
+        try {
+            $return = $this->getAssociatedPerson($em, $correspondence, 'correspondence');
+        } catch (\LogicException $e) {
+        }
 
         if (is_null($return)) {
             throw new \LogicException(sprintf(
