@@ -84,8 +84,12 @@ class ElasticSynchronizationListener implements EventSubscriber
                 $this->client->delete($params);
             }
             catch(\Exception $e) {
-                echo 'Error Occurred indexing item. See tcpflow port 9200 to see actual error' .
-                    $e->getMessage();
+                $this->getServiceLocator()
+                    ->get('Logger')
+                    ->warn(
+                        'Error Occurred indexing item. See tcpflow port 9200 to see actual error' . PHP_EOL .
+                        $e->getMessage() . PHP_EOL
+                    );
             }
 
             $this->client->create(
