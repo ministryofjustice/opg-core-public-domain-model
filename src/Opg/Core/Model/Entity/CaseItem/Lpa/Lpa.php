@@ -23,6 +23,8 @@ use JMS\Serializer\Annotation\ReadOnly;
  */
 class Lpa extends PowerOfAttorney
 {
+    const PF_FULLTEXTNAME = 'Personal Finance';
+    const HW_FULLTEXTNAME = 'Health and Welfare';
 
     /**
      * @ORM\Column(type = "string", nullable = true)

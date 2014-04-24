@@ -63,6 +63,14 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->person->getTitle(), $expected);
     }
 
+    public function testSetGetSalutation ()
+    {
+        $expected  = 'Mr';
+
+        $this->person->setSalutation($expected);
+        $this->assertEquals($expected, $this->person->getSalutation());
+    }
+
     public function testSetGetNames ()
     {
         $expectedFirst = 'First';

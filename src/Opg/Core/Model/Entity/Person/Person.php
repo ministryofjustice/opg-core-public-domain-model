@@ -22,6 +22,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -137,8 +138,9 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Groups("api-poa-list")
+     * @Accessor(getter="getTitle",setter="setTitle")
      */
-    protected $title;
+    protected $salutation;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -317,17 +319,38 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->salutation;
     }
 
     /**
      *
-     * @param  string         $title
+     * @param  string         $salutation
      * @return PartyInterface
      */
-    public function setTitle($title)
+    public function setTitle($salutation)
     {
-        $this->title = $title;
+        $this->salutation = (string)$salutation;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @return string $salutation
+     */
+    public function getSalutation()
+    {
+        return $this->salutation;
+    }
+
+    /**
+     *
+     * @param  string         $salutation
+     * @return PartyInterface
+     */
+    public function setSalutation($salutation)
+    {
+        $this->salutation = $salutation;
 
         return $this;
     }
