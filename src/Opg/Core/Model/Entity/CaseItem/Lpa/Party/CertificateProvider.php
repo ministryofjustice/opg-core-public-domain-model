@@ -26,14 +26,12 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $certificateProviderStatementType;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $statement;
 
@@ -41,7 +39,6 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $certificateProviderSkills;
 
