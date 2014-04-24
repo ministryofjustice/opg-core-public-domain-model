@@ -51,6 +51,7 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValid()
     {
+        $this->markTestSkipped('Validation has been removed');
         $this->assertFalse($this->notifiedPerson->isValid());
 
         $errors = $this->notifiedPerson->getErrorMessages();
