@@ -43,6 +43,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
      * @Type("Opg\Core\Model\Entity\User\User")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $assignedUser;
 
