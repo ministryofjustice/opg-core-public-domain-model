@@ -54,6 +54,7 @@ class PersonFactory
                 'json'
             );
         } catch (\Exception $e) {
+            //@todo add logging for this or return the actual exception
             $person = null;
         }
 
