@@ -11,14 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 trait Company
 {
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $companyName;
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $companyNumber;
 
