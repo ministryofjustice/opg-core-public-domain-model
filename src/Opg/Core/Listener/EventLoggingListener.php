@@ -11,7 +11,7 @@ use Doctrine\ORM\Events;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
@@ -180,7 +180,7 @@ class EventLoggingListener implements EventSubscriber
             return $entity;
         } elseif ($entity instanceof Correspondent) {
             return $this->getCaseByPersonAttached($em, $entity, 'correspondent');
-        } elseif ($entity instanceof Attorney) {
+        } elseif ($entity instanceof AttorneyAbstract) {
             return $this->getCaseByAssociationMembership($em, $entity, 'attorneys');
         } elseif ($entity instanceof NotifiedPerson) {
             return $this->getCaseByAssociationMembership($em, $entity, 'notifiedPersons');
