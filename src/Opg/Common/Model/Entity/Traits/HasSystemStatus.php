@@ -41,6 +41,6 @@ trait HasSystemStatus
      */
     public function getSystemStatus()
     {
-        return $this->systemStatus;
+        return (bool)$this->systemStatus;
     }
 }
