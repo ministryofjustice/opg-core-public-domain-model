@@ -64,28 +64,28 @@ class Address implements EntityInterface, \IteratorAggregate
      * @var string
      * @Type("string")
      */
-    protected $town;
+    protected $town = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
      */
-    protected $county;
+    protected $county = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
      */
-    protected $postcode;
+    protected $postcode = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
      */
-    protected $country;
+    protected $country = '';
 
     /**
      * @ORM\Column(type = "string")
