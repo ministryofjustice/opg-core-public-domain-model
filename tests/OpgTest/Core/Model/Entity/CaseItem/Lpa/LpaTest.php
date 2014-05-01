@@ -589,6 +589,39 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedDate, $this->lpa->getDonorSignatureDate());
         $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorLpaSignatoryFullName());
+
+    }
+
+    public function testGetSetDonorSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getDonorSignatureDate());
+        $this->lpa->setDonorSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getDonorSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function GetSetDonorSignatureDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getDonorSignatureDate());
+        $this->lpa->setDonorSignatureDate('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateTimeFormat(),
+                $this->lpa->getDonorSignatureDate()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testGetSetPreviousLpa()
