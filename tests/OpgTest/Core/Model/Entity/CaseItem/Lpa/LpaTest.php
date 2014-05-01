@@ -572,10 +572,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
         $expectedDonorFullName = 'Mr Test Donor';
 
-        $this->lpa->setLpaDonorDeclarationSignatureDate($expectedDate);
+        $this->lpa->setDonorDeclarationSignatureDate($expectedDate);
         $this->lpa->setDonorDeclarationLpaSignatoryFullName($expectedDonorFullName);
 
-        $this->assertEquals($expectedDate, $this->lpa->getLpaDonorDeclarationSignatureDate());
+        $this->assertEquals($expectedDate, $this->lpa->getDonorDeclarationSignatureDate());
         $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorDeclarationLpaSignatoryFullName());
     }
 
@@ -583,12 +583,12 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->lpa->getLpaDonorDeclarationSignatureDate());
-        $this->lpa->setLpaDonorDeclarationSignatureDate();
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDate());
+        $this->lpa->setDonorDeclarationSignatureDate();
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->lpa->getLpaDonorDeclarationSignatureDate()->format(OPGDateFormat::getDateFormat())
+            $this->lpa->getDonorDeclarationSignatureDate()->format(OPGDateFormat::getDateFormat())
         );
     }
 
@@ -596,13 +596,13 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->lpa->getLpaDonorDeclarationSignatureDateString());
-        $this->lpa->setLpaDonorDeclarationSignatureDateString('');
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
+        $this->lpa->setDonorDeclarationSignatureDateString('');
 
         $returnedDate =
             \DateTime::createFromFormat(
                 OPGDateFormat::getDateFormat(),
-                $this->lpa->getLpaDonorDeclarationSignatureDateString()
+                $this->lpa->getDonorDeclarationSignatureDateString()
             );
 
         $this->assertEquals(

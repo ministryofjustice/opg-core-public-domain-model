@@ -77,7 +77,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLpaDonorDeclarationSignatureDateString", setter="setLpaDonorDeclarationSignatureDateString")
+     * @Accessor(getter="getDonorDeclarationSignatureDateString", setter="setDonorDeclarationSignatureDateString")
      */
     protected $lpaDonorDeclarationSignatureDate;
 
@@ -208,7 +208,7 @@ class Lpa extends PowerOfAttorney
      * @param \DateTime $signatureDate
      * @return $this
      */
-    public function setLpaDonorDeclarationSignatureDate(\DateTime $signatureDate = null)
+    public function setDonorDeclarationSignatureDate(\DateTime $signatureDate = null)
     {
         if (is_null($signatureDate)) {
             $signatureDate = new \DateTime();
@@ -221,18 +221,18 @@ class Lpa extends PowerOfAttorney
      * @param string $signatureDate
      * @return Lpa
      */
-    public function setLpaDonorDeclarationSignatureDateString($signatureDate)
+    public function setDonorDeclarationSignatureDateString($signatureDate)
     {
         if (empty($signatureDate)) {
             $signatureDate = null;
         }
-        return $this->setLpaDonorDeclarationSignatureDate(new \DateTime($signatureDate));
+        return $this->setDonorDeclarationSignatureDate(new \DateTime($signatureDate));
     }
 
     /**
      * @return string
      */
-    public function getLpaDonorDeclarationSignatureDate()
+    public function getDonorDeclarationSignatureDate()
     {
         return $this->lpaDonorDeclarationSignatureDate;
     }
@@ -240,7 +240,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @return string
      */
-    public function getLpaDonorDeclarationSignatureDateString()
+    public function getDonorDeclarationSignatureDateString()
     {
         if (!empty($this->lpaDonorDeclarationSignatureDate)) {
             return $this->lpaDonorDeclarationSignatureDate->format(OPGDateFormat::getDateFormat());
