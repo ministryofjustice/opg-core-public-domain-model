@@ -14,9 +14,9 @@ interface CaseItemInterface
     public function getDueDate();
 
     /**
-     * @param string $dueDate
+     * @param \DateTime $dueDate
      */
-    public function setDueDate($dueDate);
+    public function setDueDate(\DateTime $dueDate);
 
     /**
      * @return string $caseType

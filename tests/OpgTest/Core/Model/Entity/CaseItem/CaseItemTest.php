@@ -50,11 +50,24 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     public function testSetGetDueDate()
     {
         $caseItemMock = $this->getMockedClass();
-        $expected     = '2014-09-25';
+
+        $caseItemMock->setDueDateString('');
+        $this->assertEmpty($caseItemMock->getDueDate());
+        $this->assertEmpty($caseItemMock->getDueDateString());
+
+        $expected     = new \DateTime('2014-09-25');
 
         $caseItemMock->setDueDate($expected);
         $this->assertEquals($expected, $caseItemMock->getDueDate());
+
+        $expectedString = '2015-01-01';
+
+        $caseItemMock->setDueDateString($expectedString);
+        $expected     = new \DateTime($expectedString);
+        $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getDueDateString());
     }
+
+
 
     public function testSetGetAssignedUser()
     {
@@ -325,12 +338,22 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetRegistrationDate()
     {
-        $expectedDate = new \DateTime();
         $caseItemMock = $this->getMockedClass();
 
-        $this->assertNull($caseItemMock->getRegistrationDate());
-        $caseItemMock->setRegistrationDate($expectedDate);
-        $this->assertEquals($expectedDate, $caseItemMock->getRegistrationDate());
+        $caseItemMock->setRegistrationDateString('');
+        $this->assertEmpty($caseItemMock->getRegistrationDate());
+        $this->assertEmpty($caseItemMock->getRegistrationDateString());
+
+        $expected     = new \DateTime('2014-09-25');
+
+        $caseItemMock->setRegistrationDate($expected);
+        $this->assertEquals($expected, $caseItemMock->getRegistrationDate());
+
+        $expectedString = '2015-01-01';
+
+        $caseItemMock->setRegistrationDateString($expectedString);
+        $expected     = new \DateTime($expectedString);
+        $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getRegistrationDateString());
     }
 
     public function testGetSetClosedDate()
