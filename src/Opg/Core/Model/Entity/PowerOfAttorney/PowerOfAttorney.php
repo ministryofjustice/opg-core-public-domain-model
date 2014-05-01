@@ -18,6 +18,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -192,9 +193,10 @@ abstract class PowerOfAttorney extends CaseItem
     protected $cardPaymentContact;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getRegistrationDueDateString", setter="setRegistrationDueDateString")
      */
     protected $registrationDueDate;
 
@@ -382,7 +384,7 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      *
-     * @return string $registrationDueDate
+     * @return \DateTime $registrationDueDate
      */
     public function getRegistrationDueDate ()
     {
@@ -390,13 +392,38 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+     * @return string
+     */
+    public function getRegistrationDueDateString()
+    {
+        if (!empty($this->registrationDueDate)) {
+            return $this->registrationDueDate->format(OPGDateFormat::getDateFormat());
+        }
+        return '';
+    }
+
+    /**
+     *
+     * @param \DateTime $registrationDueDate
+     * @return PowerOfAttorney
+     */
+    public function setRegistrationDueDate (\DateTime $registrationDueDate)
+    {
+        $this->registrationDueDate = $registrationDueDate;
+
+        return $this;
+    }
+
+    /**
      *
      * @param string $registrationDueDate
      * @return PowerOfAttorney
      */
-    public function setRegistrationDueDate ($registrationDueDate)
+    public function setRegistrationDueDateString ($registrationDueDate)
     {
-        $this->registrationDueDate = $registrationDueDate;
+        if (!empty($this->registrationDueDate)) {
+            $this->setRegistrationDueDate(new \DateTime($registrationDueDate));
+        }
 
         return $this;
     }

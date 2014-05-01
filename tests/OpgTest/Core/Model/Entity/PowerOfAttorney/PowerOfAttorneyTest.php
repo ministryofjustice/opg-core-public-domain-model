@@ -229,4 +229,22 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedDate, $this->poa->getDispatchDate());
     }
 
+    public function testGetSetRegistrationDueDate()
+    {
+        $this->poa->setRegistrationDueDateString('');
+        $this->assertEmpty($this->poa->getRegistrationDueDate());
+        $this->assertEmpty($this->poa->getRegistrationDueDateString());
+
+        $expected     = new \DateTime('2014-09-25');
+
+        $this->poa->setRegistrationDueDate($expected);
+        $this->assertEquals($expected, $this->poa->getRegistrationDueDate());
+
+        $expectedString = '2015-01-01';
+
+        $this->poa->setRegistrationDueDateString($expectedString);
+        $expected     = new \DateTime($expectedString);
+        $this->assertEquals($expected->format('d/m/Y'), $this->poa->getRegistrationDueDateString());
+    }
+
 }
