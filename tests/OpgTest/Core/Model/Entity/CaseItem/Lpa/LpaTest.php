@@ -615,11 +615,41 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaCreatedDate()
     {
-        $expectedDate = date('d/m/Y');
+        $expectedDate = new \DateTime();
         $this->assertNull($this->lpa->getLpaCreatedDate());
+
         $this->lpa->setLpaCreatedDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaCreatedDate());
 
+    }
+
+    public function testGetSetLpaCreatedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertEmpty($this->lpa->getLpaCreatedDate());
+        $this->lpa->setLpaCreatedDate();
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLpaCreatedDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaCreatedDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaCreatedDateString());
+        $this->lpa->setLpaCreatedDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->lpa->getLpaCreatedDateString()
+            );
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testGetSetLpaReceiptDate()
