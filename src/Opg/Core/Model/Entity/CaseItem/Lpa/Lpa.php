@@ -1,6 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -94,9 +95,10 @@ class Lpa extends PowerOfAttorney
     protected $lpaCreatedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLpaReceiptDateString",setter="setLpaReceiptDateString")
      */
     protected $lpaReceiptDate;
 
@@ -306,22 +308,49 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $lpaReceiptDate
+     * @param \DateTime $lpaReceiptDate
      * @return Lpa
      */
-    public function setLpaReceiptDate($lpaReceiptDate)
+    public function setLpaReceiptDate(\DateTime $lpaReceiptDate = null)
     {
+        if (is_null($lpaReceiptDate)) {
+            $lpaReceiptDate = new \DateTime();
+        }
         $this->lpaReceiptDate = $lpaReceiptDate;
         return $this;
     }
 
     /**
-     * @return string
+     * @param string $lpaReceiptDate
+     * @return Lpa
+     */
+    public function setLpaReceiptDateString($lpaReceiptDate)
+    {
+        if (empty($lpaReceiptDate)) {
+            $lpaReceiptDate = null;
+        }
+        return $this->setLpaReceiptDate(new \DateTime($lpaReceiptDate));
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getLpaReceiptDate()
     {
         return $this->lpaReceiptDate;
     }
+
+    /**
+     * @return string
+     */
+    public function getLpaReceiptDateString()
+    {
+        if (!empty($this->lpaReceiptDate)) {
+            return $this->lpaReceiptDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
+     }
 
     /**
      * @param string $lifeSustainingTreatment

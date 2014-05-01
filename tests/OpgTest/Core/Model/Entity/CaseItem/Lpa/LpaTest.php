@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Lpa test case.
@@ -169,7 +170,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetRegistrationDueDate()
     {
-        $expected = '2014-09-25';
+        $expected = new \DateTime('2014-09-25');
+
+        $this->assertEmpty($this->lpa->getRegistrationDueDate());
+        $this->assertEmpty($this->lpa->getRegistrationDueDateString());
 
         $this->lpa->setRegistrationDueDate($expected);
 
@@ -620,10 +624,45 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaReceiptDate()
     {
-        $expectedDate = date('d/m/Y');
-        $this->assertNull($this->lpa->getLpaReceiptDate());
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDate());
+        $this->assertEmpty($this->lpa->getLpaReceiptDateString());
+
         $this->lpa->setLpaReceiptDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDate());
+    }
+
+    public function testGetSetLpaReceiptDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDate());
+        $this->lpa->setLpaReceiptDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLpaReceiptDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaReceiptDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDateString());
+        $this->lpa->setLpaReceiptDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateTimeFormat(),
+                $this->lpa->getLpaReceiptDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testGetSetLifeSustainingTreatment()
