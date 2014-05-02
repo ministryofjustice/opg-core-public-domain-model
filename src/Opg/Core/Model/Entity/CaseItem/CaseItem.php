@@ -125,10 +125,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="getClosedDateString", setter="setClosedDateString")
      */
     protected $closedDate;
 
@@ -585,12 +586,27 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $closedDate
+     * @param  \DateTime $closedDate
      * @return CaseItem
      */
-    public function setClosedDate($closedDate)
+    public function setClosedDate(\DateTime $closedDate = null)
     {
+        if (is_null($closedDate)) {
+            $closedDate = new \DateTime();
+        }
         $this->closedDate = $closedDate;
+    }
+
+    /**
+     * @param string $closedDate
+     * @return Lpa
+     */
+    public function setClosedDateString($closedDate)
+    {
+        if (empty($closedDate)) {
+            $closedDate = null;
+        }
+        return $this->setClosedDate(new \DateTime($closedDate));
     }
 
     /**
@@ -599,6 +615,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function getClosedDate()
     {
         return $this->closedDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClosedDateString()
+    {
+        if (!empty($this->closedDate)) {
+            return $this->closedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**

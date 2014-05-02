@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\User\User;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * ToArray test case.
@@ -365,4 +366,40 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock->setClosedDate($expectedDate);
         $this->assertEquals($expectedDate, $caseItemMock->getClosedDate());
     }
+
+    public function testGetSetClosedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertEmpty($caseItemMock->getClosedDate());
+        $caseItemMock->setClosedDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $caseItemMock->getClosedDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    //remember date format for this one
+    public function testGetSetClosedDateString()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertEmpty($caseItemMock->getClosedDateString());
+        $caseItemMock->setClosedDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $caseItemMock->getClosedDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
 }
