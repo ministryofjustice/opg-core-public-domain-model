@@ -12,6 +12,7 @@ use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
@@ -122,7 +123,7 @@ class Note implements EntityInterface, \IteratorAggregate
 
     public function __construct()
     {
-        $this->setCreatedTime(date('Y-m-d H:i:s'));
+        $this->setCreatedTime();
     }
 
     /**

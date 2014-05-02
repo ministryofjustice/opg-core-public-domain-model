@@ -26,7 +26,6 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         'assignedUser'  => null,
         'priority'      => 'high',
         'dueDate'       => '2010-01-01',
-        'createdTime'   => '2000-01-01T00:00:00',
         'errorMessages' => array(),
         'case'          => null
     );
@@ -37,6 +36,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
+
+        $this->data['createdTime'] = new \DateTime();
 
         $this->task = new Task();
     }
@@ -137,8 +138,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateInvalidDueDate()
     {
-        $expected       = '2013-09-24';
-        $expectedError  = "The due date cannot be in the past";
+        $expected      = '2013-09-24';
+        $expectedError = "The due date cannot be in the past";
 
         $this->task->setDueDate($expected);
         $this->assertFalse($this->task->isValid(array('dueDate')));
@@ -160,7 +161,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedTime()
     {
-        $expected = '2013-11-22T04:03:02';
+        $expected = new \DateTime('2013-11-22T04:03:02');
 
         $this->task->setCreatedTime($expected);
 
@@ -188,16 +189,16 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expectedErrors = array(
             'errors' => array(
-                'name' => array(
+                'name'    => array(
                     'isEmpty' => "Value is required and can't be empty"
                 ),
-                'status' => array(
-                        'isEmpty' => "Value is required and can't be empty"
+                'status'  => array(
+                    'isEmpty' => "Value is required and can't be empty"
                 ),
                 'dueDate' => array(
                     'isEmpty' => "Value is required and can't be empty"
                 ),
-                'case' => array(
+                'case'    => array(
                     'isEmpty' => "Value is required and can't be empty"
                 )
             )
