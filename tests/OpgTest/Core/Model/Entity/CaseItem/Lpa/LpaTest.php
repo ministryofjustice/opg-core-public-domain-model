@@ -708,12 +708,12 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $returnedDate =
             \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
+                OPGDateFormat::getDateTimeFormat(),
                 $this->lpa->getLpaCreatedDateString()
             );
         $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
         );
     }
 
