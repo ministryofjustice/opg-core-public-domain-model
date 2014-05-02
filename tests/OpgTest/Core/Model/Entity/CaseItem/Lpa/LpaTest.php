@@ -637,17 +637,17 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function GetSetLpaDonorSignatureDateEmptyString()
+    public function testGetSetLpaDonorSignatureDateEmptyString()
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->lpa->getLpaDonorSignatureDate());
-        $this->lpa->setLpaDonorSignatureDate('');
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
+        $this->lpa->setLpaDonorSignatureDateString('');
 
         $returnedDate =
             \DateTime::createFromFormat(
-                OPGDateFormat::getDateTimeFormat(),
-                $this->lpa->getLpaDonorSignatureDate()
+                OPGDateFormat::getDateFormat(),
+                $this->lpa->getLpaDonorSignatureDateString()
             );
 
         $this->assertEquals(
