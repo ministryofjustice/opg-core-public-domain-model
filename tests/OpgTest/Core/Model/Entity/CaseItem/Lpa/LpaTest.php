@@ -762,17 +762,51 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLifeSustainingTreatment()
     {
-        $lstDate = date('d/m/Y');
+        $lstDate = new \DateTime();
         $lstType = 'Option A';
 
         $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertEmpty($this->lpa->hasLifeSustainingTreatment());
 
-        $this->lpa->setLifeSustainingTreatment($lstType)->setLifeSustainingTreatmentSignatureDate($lstDate);
+        $this->lpa->setLifeSustainingTreatment($lstType);
+        $this->lpa->setLifeSustainingTreatmentSignatureDate($lstDate);
 
         $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
         $this->assertEquals($lstType, $this->lpa->getLifeSustainingTreatment());
+
+    }
+
+    public function testGetSetLifeSustainingTreatmentDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->lpa->setLifeSustainingTreatmentSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLifeSustainingTreatmentSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLifeSustainingTreatmentDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->lpa->getLifeSustainingTreatmentSignatureDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testValidatorInvalidNoCaseType()

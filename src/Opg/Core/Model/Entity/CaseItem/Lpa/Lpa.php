@@ -112,9 +112,10 @@ class Lpa extends PowerOfAttorney
     protected $lifeSustainingTreatment;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLifeSustainingTreatmentSignatureDateString",setter="setLifeSustainingTreatmentSignatureDateString")
      */
     protected $lifeSustainingTreatmentSignatureDate;
 
@@ -462,13 +463,28 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
+     * @param \DateTime $lifeSustainingTreatmentSignatureDate
+     * @return Lpa
+     */
+    public function setLifeSustainingTreatmentSignatureDate(\DateTime $lifeSustainingTreatmentSignatureDate = null)
+    {
+        if (is_null($lifeSustainingTreatmentSignatureDate)) {
+            $lifeSustainingTreatmentSignatureDate = new \DateTime();
+        }
+        $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
+        return $this;
+    }
+
+    /**
      * @param string $lifeSustainingTreatmentSignatureDate
      * @return Lpa
      */
-    public function setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate)
+    public function setLifeSustainingTreatmentSignatureDateString($lifeSustainingTreatmentSignatureDate)
     {
-        $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
-        return $this;
+        if (empty($lifeSustainingTreatmentSignatureDate)) {
+            $lifeSustainingTreatmentSignatureDate = null;
+        }
+        return $this->setLifeSustainingTreatmentSignatureDate(new \DateTime($lifeSustainingTreatmentSignatureDate));
     }
 
     /**
@@ -479,6 +495,16 @@ class Lpa extends PowerOfAttorney
         return $this->lifeSustainingTreatmentSignatureDate;
     }
 
+    /**
+     * @return string
+     */
+    public function getLifeSustainingTreatmentSignatureDateString()
+    {
+        if (!empty($this->lifeSustainingTreatmentSignatureDate)) {
+            return $this->lifeSustainingTreatmentSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
 
+        return '';
+    }
 
 }
