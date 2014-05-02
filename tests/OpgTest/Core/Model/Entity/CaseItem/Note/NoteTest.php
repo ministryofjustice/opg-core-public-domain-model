@@ -3,6 +3,7 @@ namespace OpgTest\Core\Model\CaseItem\Note;
 
 use Opg\Common\Exception\UnusedException;
 
+use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
@@ -122,7 +123,7 @@ class NoteTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedTime()
     {
-        $expected = '2013-11-22T04:03:02';
+        $expected = new \DateTime('2013-11-22T04:03:02');
 
         $this->note->setCreatedTime($expected);
 
@@ -157,22 +158,23 @@ class NoteTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray() {
+    public function testExchangeArray()
+    {
 
-        $expectedUser = new User();
+        $expectedUser          = new User();
         $expectedUserFirstName = 'Test';
         $expectedUserSurname   = 'User';
         $expectedUser->setFirstName($expectedUserFirstName)->setSurname($expectedUserSurname);
 
 
         $array = array(
-            'id'            => 1,
-            'type'          => 'General Note',
-            'createdTime'   => '2013-11-22T04:03:02',
-            'status'        => 'A',
-            'description'   => 'Test Note Body',
-            'name'          => 'Test Note Header',
-            'user'          => $expectedUser->toArray()
+            'id'          => 1,
+            'type'        => 'General Note',
+            'createdTime' => new \DateTime('2013-11-22T04:03:02'),
+            'status'      => 'A',
+            'description' => 'Test Note Body',
+            'name'        => 'Test Note Header',
+            'user'        => $expectedUser->toArray()
         );
 
         $this->note->exchangeArray($array);

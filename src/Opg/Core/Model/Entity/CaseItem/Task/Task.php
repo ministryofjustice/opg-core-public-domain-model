@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Accessor;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
@@ -21,7 +22,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @ORM\entity(repositoryClass="Application\Model\Repository\TaskRepository")
  *
  * @package Opg Core
- * @author Chris Moreton
+ * @author  Chris Moreton
  *
  */
 class Task implements EntityInterface, \IteratorAggregate
@@ -88,7 +89,7 @@ class Task implements EntityInterface, \IteratorAggregate
     public function __construct()
     {
         $now = new \DateTime();
-        $this->setCreatedTime($now->format('Y-m-d\Th:i:s'));
+        $this->setCreatedTime();
     }
 
     public function getIterator()
@@ -122,31 +123,37 @@ class Task implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $dueDate
+     *
      * @return Task
      */
     public function setDueDate($dueDate)
     {
         $this->dueDate = $dueDate;
+
         return $this;
     }
 
     /**
      * @param string $priority
+     *
      * @return Task
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
+
         return $this;
     }
 
     /**
      * @param string $name
+     *
      * @return Task
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -176,31 +183,37 @@ class Task implements EntityInterface, \IteratorAggregate
 
     /**
      * @param int $id
+     *
      * @return Task
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
      * @param User $assignedUser
+     *
      * @return Task
      */
     public function setAssignedUser(User $assignedUser = null)
     {
         $this->assignedUser = $assignedUser;
+
         return $this;
     }
 
     /**
      * @param string $status
+     *
      * @return Task
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -224,7 +237,7 @@ class Task implements EntityInterface, \IteratorAggregate
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'Digits',
+                                'name' => 'Digits',
                             )
                         )
                     )
@@ -293,22 +306,22 @@ class Task implements EntityInterface, \IteratorAggregate
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'Date'
+                                'name' => 'Date'
                             ),
                             array(
-                                'name'   => 'Callback',
+                                'name'    => 'Callback',
                                 'options' => array(
                                     'messages' => array(
-                                     \Zend\Validator\Callback::INVALID_VALUE => 'The due date cannot be in the past',
+                                        \Zend\Validator\Callback::INVALID_VALUE => 'The due date cannot be in the past',
                                     ),
-                                    'callback' => function($value, $context = array()) {
+                                    'callback' => function ($value, $context = array()) {
 
-                                        $dueDate = \DateTime::createFromFormat('Y-m-d', $value);
-                                        $now = new \DateTime();
+                                            $dueDate = \DateTime::createFromFormat('Y-m-d', $value);
+                                            $now     = new \DateTime();
 
                                             return $now <= $dueDate;
                                         }
-                                   )
+                                )
                             )
                         )
                     )
@@ -322,7 +335,7 @@ class Task implements EntityInterface, \IteratorAggregate
                         'required'   => true,
                         'validators' => array(
                             array(
-                                'name'    => 'NotEmpty',
+                                'name' => 'NotEmpty',
                             )
                         )
                     )
@@ -335,7 +348,8 @@ class Task implements EntityInterface, \IteratorAggregate
         return $this->inputFilter;
     }
 
-    public function exchangeArray(array $data) {
+    public function exchangeArray(array $data)
+    {
         if (!empty($data['id'])) {
             $this->setId($data['id']);
         }
@@ -371,11 +385,13 @@ class Task implements EntityInterface, \IteratorAggregate
 
     /**
      * @param CaseItem $case
+     *
      * @return Task
      */
     public function setCase(CaseItem $case)
     {
         $this->case = $case;
+
         return $this;
     }
 }
