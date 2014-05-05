@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
