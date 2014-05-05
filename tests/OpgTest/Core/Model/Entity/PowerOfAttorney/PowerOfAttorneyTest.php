@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorneyFactory;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
@@ -102,22 +103,6 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('We', $this->poa->getCorrespondentComplianceAssertion());
     }
 
-    public function testGetSetAttorneyApplicationDeclarations()
-    {
-        $expectedDate = date('d/m/y');
-        $expectedSignatory = 'Mr Test Signatory';
-
-        $this->assertEquals('I', $this->poa->getAttorneyApplicationAssertion());
-        $this->poa->setAttorneyApplicationAssertion('We');
-        $this->assertEquals('We', $this->poa->getAttorneyApplicationAssertion());
-
-        $this->poa->setAttorneyDeclarationSignatoryFullName($expectedSignatory);
-        $this->poa->setAttorneyDeclarationSignatureDate($expectedDate);
-
-        $this->assertEquals($expectedDate, $this->poa->getAttorneyDeclarationSignatureDate());
-        $this->assertEquals($expectedSignatory, $this->poa->getAttorneyDeclarationSignatoryFullName());
-    }
-
     public function testGetSetMentalHealthDeclarations()
     {
         $this->assertEquals('I', $this->poa->getAttorneyMentalActPermission());
@@ -205,46 +190,268 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($this->poa->getCaseAttorneySingular());
     }
 
+    public function testGetSetPaymentDate()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getPaymentDate());
+        $this->assertEmpty($this->poa->getPaymentDateString());
+
+        $this->poa->setPaymentDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->poa->getPaymentDate());
+    }
+
+    public function testGetSetPaymentDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getPaymentDate());
+        $this->poa->setPaymentDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getPaymentDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetPaymentDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getPaymentDate());
+        $this->poa->setPaymentDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getPaymentDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetAttorneyApplicationDeclarations()
+    {
+        $expectedDate = new \DateTime();
+        $expectedSignatory = 'Mr Test Signatory';
+
+        $this->assertEquals('I', $this->poa->getAttorneyApplicationAssertion());
+        $this->poa->setAttorneyApplicationAssertion('We');
+        $this->assertEquals('We', $this->poa->getAttorneyApplicationAssertion());
+
+        $this->poa->setAttorneyDeclarationSignatoryFullName($expectedSignatory);
+        $this->poa->setAttorneyDeclarationSignatureDate($expectedDate);
+
+        $this->assertEquals($expectedDate, $this->poa->getAttorneyDeclarationSignatureDate());
+        $this->assertEquals($expectedSignatory, $this->poa->getAttorneyDeclarationSignatoryFullName());
+    }
+
+    public function testGetSetAttorneyApplicationDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDate());
+        $this->poa->setAttorneyDeclarationSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getAttorneyDeclarationSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetAttorneyApplicationDateString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
+        $this->poa->setAttorneyDeclarationSignatureDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getAttorneyDeclarationSignatureDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
     public function testGetSetNotificationDate()
     {
-        $expectedDate = date('d/m/y');
-        $this->assertNull($this->poa->getNotificationDate());
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNotificationDate());
+        $this->assertEmpty($this->poa->getNotificationDateString());
+
         $this->poa->setNotificationDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNotificationDate());
     }
 
-    public function testGetNoticeGivenDate()
+    public function testGetSetNotificationDateNulls()
     {
-        $expectedDate = date('d/m/y');
-        $this->assertNull($this->poa->getNoticeGivenDate());
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNotificationDate());
+        $this->poa->setNotificationDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getNotificationDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetNotificationDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNotificationDateString());
+        $this->poa->setNotificationDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getNotificationDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetNoticeGivenDate()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNoticeGivenDate());
+        $this->assertEmpty($this->poa->getNoticeGivenDateString());
+
         $this->poa->setNoticeGivenDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getNoticeGivenDate());
     }
 
+    public function testGetSetNoticeGivenDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNoticeGivenDate());
+        $this->poa->setNoticeGivenDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getNoticeGivenDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetNoticeGivenDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getNoticeGivenDateString());
+        $this->poa->setNoticeGivenDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getNoticeGivenDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
     public function testGetSetDispatchDate()
     {
-        $expectedDate = date('d/m/y');
-        $this->assertNull($this->poa->getDispatchDate());
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getDispatchDate());
+        $this->assertEmpty($this->poa->getDispatchDateString());
+
         $this->poa->setDispatchDate($expectedDate);
         $this->assertEquals($expectedDate, $this->poa->getDispatchDate());
     }
 
+    public function testGetSetDispatchDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getDispatchDate());
+        $this->poa->setDispatchDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getDispatchDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetDispatchDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getDispatchDateString());
+        $this->poa->setDispatchDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getDispatchDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
     public function testGetSetRegistrationDueDate()
     {
-        $this->poa->setRegistrationDueDateString('');
+        $expectedDate = new \DateTime();
+
         $this->assertEmpty($this->poa->getRegistrationDueDate());
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
 
-        $expected     = new \DateTime('2014-09-25');
-
-        $this->poa->setRegistrationDueDate($expected);
-        $this->assertEquals($expected, $this->poa->getRegistrationDueDate());
-
-        $expectedString = '2015-01-01';
-
-        $this->poa->setRegistrationDueDateString($expectedString);
-        $expected     = new \DateTime($expectedString);
-        $this->assertEquals($expected->format('d/m/Y'), $this->poa->getRegistrationDueDateString());
+        $this->poa->setRegistrationDueDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->poa->getRegistrationDueDate());
     }
+
+    public function testGetSetRegistrationDueDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getRegistrationDueDate());
+        $this->poa->setRegistrationDueDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->poa->getRegistrationDueDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaReceiptDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->poa->getRegistrationDueDateString());
+        $this->poa->setRegistrationDueDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->poa->getRegistrationDueDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
 
 }

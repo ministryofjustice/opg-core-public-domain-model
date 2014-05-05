@@ -315,18 +315,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetPaymentDate()
-    {
-        $expected = '2014-07-27';
-
-        $this->lpa->setPaymentDate($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getPaymentDate()
-        );
-    }
-
     public function testDonorValidation()
     {
         $this->assertFalse($this->lpa->isValid(['donor']));
