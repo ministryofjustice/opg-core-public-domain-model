@@ -7,6 +7,7 @@ use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class AttorneyTest extends \PHPUnit_Framework_TestCase
 {
@@ -75,24 +76,91 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->attorney->isValid());
     }
 
-    public function testGetLpa002SignatureDate()
+    public function testGetSetLpa002SignatureDate()
     {
-        $expected = date('Y-m-d');
+        $expectedDate = new \DateTime();
 
-        $this->assertNull($this->attorney->getLpa002SignatureDate());
-        $this->attorney->setLpa002SignatureDate($expected);
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
 
-        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDate());
+        $this->attorney->setLpa002SignatureDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->attorney->getLpa002SignatureDate());
+
+    }
+
+    public function testGetSetLpa002SignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
+        $this->attorney->setLpa002SignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->attorney->getLpa002SignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpa002SignatureDateString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+        $this->attorney->setLpa002SignatureDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->attorney->getLpa002SignatureDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testGetSetLpaPartCSignatureDate()
     {
-        $expected = date('Y-m-d');
+        $expectedDate = new \DateTime();
 
-        $this->assertNull($this->attorney->getLpaPartCSignatureDate());
-        $this->attorney->setLpaPartCSignatureDate($expected);
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        $this->attorney->setLpaPartCSignatureDate($expectedDate);
 
-        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+        $this->assertEquals($expectedDate, $this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetLpaPartCSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->attorney->getLpaPartCSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaPartCSignatureDateString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        $this->attorney->setLpaPartCSignatureDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->attorney->getLpaPartCSignatureDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testGetSetIsAttorneyApplyingToRegister()
