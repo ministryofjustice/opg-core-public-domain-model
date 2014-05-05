@@ -6,6 +6,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Common\Exception\UnusedException;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,15 +20,47 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->notifiedPerson = new NotifiedPerson();
     }
 
-    public function testSetGetNotifiedPerson()
+    public function testSetGetNotifiedDate()
     {
-        $expected = '1993-11-22';
+        $expectedDate = new \DateTime();
 
-        $this->notifiedPerson->setNotifiedDate($expected);
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+
+        $this->notifiedPerson->setNotifiedDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->notifiedPerson->getNotifiedDate());
+    }
+
+    public function testSetGetNotifiedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
+        $this->notifiedPerson->setNotifiedDate($expectedDate);
 
         $this->assertEquals(
-            $expected,
-            $this->notifiedPerson->getNotifiedDate()
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->notifiedPerson->getNotifiedDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    //remember date format for this one
+    public function testSetGetNotifiedDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        $this->notifiedPerson->setNotifiedDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->notifiedPerson->getNotifiedDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
         );
     }
 

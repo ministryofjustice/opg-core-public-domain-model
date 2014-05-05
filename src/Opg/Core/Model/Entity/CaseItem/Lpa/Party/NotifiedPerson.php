@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Type;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -25,13 +26,40 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     use RelationshipToDonor;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
      */
     protected $notifiedDate;
 
     /**
-     * @return string $notifiedDate
+     * @param \DateTime $notifiedDate
+     * @return Lpa
+     */
+    public function setNotifiedDate($notifiedDate)
+    {
+        if (is_null($notifiedDate)) {
+            $notifiedDate = new \DateTime();
+        }
+        $this->notifiedDate = $notifiedDate;
+        return $this;
+    }
+
+    /**
+     * @param string $notifiedDate
+     * @return Lpa
+     */
+    public function setNotifiedDateString($notifiedDate)
+    {
+        if (empty($notifiedDate)) {
+            $notifiedDate = null;
+        }
+        return $this->setNotifiedDate(new \DateTime($notifiedDate));
+    }
+
+    /**
+     * @return \DateTime $notifiedDate
      */
     public function getNotifiedDate()
     {
@@ -39,13 +67,15 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     }
 
     /**
-     * @param string $notifiedDate
-     * @return NotifiedPerson
+     * @return string
      */
-    public function setNotifiedDate($notifiedDate)
+    public function getNotifiedDateString()
     {
-        $this->notifiedDate = $notifiedDate;
-        return $this;
+        if (!empty($this->notifiedDate)) {
+            return $this->notifiedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
