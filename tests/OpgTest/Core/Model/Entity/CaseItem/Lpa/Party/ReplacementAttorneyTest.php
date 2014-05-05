@@ -2,8 +2,8 @@
 
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
-
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,12 +31,26 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaPartCSignatureDate()
     {
-        $expected = date('Y-m-d h:i:s');
+        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
 
-        $this->attorney->setLpaPartCSignatureDate($expected);
-        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetLpaPartCSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->attorney->getLpaPartCSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
     }
 
 }
