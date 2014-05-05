@@ -352,7 +352,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getNoticeGivenDate",setter="setNoticeGivenDate")
+     * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
      */
     protected $noticeGivenDate;
 
