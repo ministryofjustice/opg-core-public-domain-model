@@ -2,7 +2,7 @@
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
-
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 /**
  * ToArray test case.
  */
@@ -101,12 +101,47 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetSignatureDate()
     {
-        $expected = '2014-20-01';
+        $expectedDate = new \DateTime();
 
-        $this->donor->setSignatureDate($expected);
+        $this->assertEmpty($this->donor->getSignatureDate());
+        $this->assertEmpty($this->donor->getSignatureDateString());
+        $this->donor->setSignatureDate($expectedDate);
+
         $this->assertEquals(
-            $expected,
+            $expectedDate,
             $this->donor->getSignatureDate()
+        );
+    }
+
+    public function testSetGetSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->donor->getSignatureDate());
+        $this->donor->setSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->donor->getSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testSetGetSignatureDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->donor->getSignatureDateString());
+        $this->donor->setSignatureDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->donor->getSignatureDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
         );
     }
 
