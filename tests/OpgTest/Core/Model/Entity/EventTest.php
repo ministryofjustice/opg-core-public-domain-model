@@ -3,6 +3,7 @@ namespace OpgTest\Core\Model\Entity\Event;
 
 use Opg\Core\Model\Entity\Event;
 use Opg\Core\Model\Entity\User\User;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Event test case.
@@ -80,13 +81,44 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedOn()
     {
-        $expected = new \DateTime();
+        $expectedDate = new \DateTime();
 
-        $this->event->setCreatedOn($expected);
+        $this->assertEmpty($this->event->getCreatedOn());
+        $this->assertEmpty($this->event->getCreatedOnString());
+
+        $this->event->setCreatedOn($expectedDate);
+        $this->assertEquals($expectedDate, $this->event->getCreatedOn());
+    }
+
+    public function testGetSetCreatedOnNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->event->getCreatedOn());
+        $this->event->setCreatedOn();
 
         $this->assertEquals(
-            $expected,
-            $this->event->getCreatedOn()
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->event->getCreatedOn()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetCreatedOnEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->event->getCreatedOnString());
+        $this->event->setCreatedOnString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->event->getCreatedOnString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
         );
     }
 
