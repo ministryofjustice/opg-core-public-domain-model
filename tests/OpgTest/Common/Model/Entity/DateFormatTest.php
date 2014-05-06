@@ -24,7 +24,13 @@ class DateFormatTest extends \PHPUnit_Framework_TestCase
     {
         $data = 'This is not a valid date';
 
-        $this->assertFalse(OPGDateFormat::createDateTime($data));
+
+        try {
+            OPGDateFormat::createDateTime($data);
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+        }
     }
 
     public function testCreateDateOnly()
