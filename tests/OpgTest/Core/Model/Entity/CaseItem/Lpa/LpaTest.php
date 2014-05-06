@@ -673,11 +673,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->lpa->getLpaCreatedDateString());
         $this->lpa->setLpaCreatedDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateTimeFormat(),
-                $this->lpa->getLpaCreatedDateString()
-            );
+        $returnedDate = $this->lpa->getLpaCreatedDate();
+
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
             $returnedDate->format(OPGDateFormat::getDateTimeFormat())
@@ -715,12 +712,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->lpa->getLpaReceiptDateString());
         $this->lpa->setLpaReceiptDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateTimeFormat(),
-                $this->lpa->getLpaReceiptDateString()
-            );
-
+        $returnedDate = $this->lpa->getLpaReceiptDate();
+        
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
             $returnedDate->format(OPGDateFormat::getDateFormat())
@@ -763,7 +756,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->setLifeSustainingTreatmentSignatureDateString('');
 
         $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
-
     }
 
     public function testValidatorInvalidNoCaseType()
