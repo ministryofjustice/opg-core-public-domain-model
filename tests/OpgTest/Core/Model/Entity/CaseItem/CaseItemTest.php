@@ -61,7 +61,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock->setDueDate($expected);
         $this->assertEquals($expected, $caseItemMock->getDueDate());
 
-        $expectedString = '2015-01-01';
+        $expectedString = '2014-09-25';
 
         $caseItemMock->setDueDateString($expectedString);
         $expected     = new \DateTime($expectedString);
@@ -350,7 +350,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock->setRegistrationDate($expected);
         $this->assertEquals($expected, $caseItemMock->getRegistrationDate());
 
-        $expectedString = '2015-01-01';
+        $expectedString = '2014-09-25';
 
         $caseItemMock->setRegistrationDateString($expectedString);
         $expected     = new \DateTime($expectedString);
@@ -384,22 +384,12 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     //remember date format for this one
     public function testGetSetClosedDateString()
     {
-        $expectedDate = new \DateTime();
         $caseItemMock = $this->getMockedClass();
 
         $this->assertEmpty($caseItemMock->getClosedDateString());
         $caseItemMock->setClosedDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $caseItemMock->getClosedDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($caseItemMock->getClosedDateString());
     }
 
 }
