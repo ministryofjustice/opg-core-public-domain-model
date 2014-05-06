@@ -243,10 +243,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime( $dueDate);
+            $dueDate = OPGDateFormat::createDateTime($dueDate);
 
             if ($dueDate) {
-                $this->setDueDate(new \DateTime($dueDate));
+                $this->setDueDate($dueDate);
             }
         }
         return $this;
@@ -607,9 +607,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function setClosedDateString($closedDate)
     {
-        if (empty($closedDate)) {
-
-            $closedDate = OPGDateFormat::createDateTime( $closedDate);
+        if (!empty($closedDate)) {
+            $closedDate = OPGDateFormat::createDateTime($closedDate);
 
             if ($closedDate) {
                 $this->setClosedDate($closedDate);
@@ -656,7 +655,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function setRegistrationDateString($registrationDate)
     {
-        if (empty($registrationDate)) {
+        if (!empty($registrationDate)) {
 
             $registrationDate = OPGDateFormat::createDateTime( $registrationDate);
 

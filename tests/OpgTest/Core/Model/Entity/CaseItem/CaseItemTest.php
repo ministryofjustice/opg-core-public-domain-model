@@ -71,6 +71,16 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetSetDueDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setDueDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getDueDateString());
+    }
+
     public function testSetGetAssignedUser()
     {
         $caseItemMock = $this->getMockedClass();
@@ -365,10 +375,15 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
-            $this->assertEquals("'' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+            $this->assertEquals("'2014-09-25' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
         $expected     = new \DateTime($expectedString);
         $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getRegistrationDateString());
+
+        $expectedString = date(OPGDateFormat::getDateFormat());
+        $caseItemMock->setRegistrationDateString($expectedString);
+        $this->assertEquals($expectedString, $caseItemMock->getRegistrationDateString());
+
     }
 
     public function testGetSetClosedDate()
@@ -395,8 +410,28 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    //remember date format for this one
     public function testGetSetClosedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setClosedDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
+    }
+
+    public function testGetSetClosedDateStringNull()
+    {
+        $expected = null;
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setClosedDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
+        $this->assertEmpty($caseItemMock->getClosedDateString());
+    }
+
+    public function testGetSetClosedDateStringInvalidDate()
     {
         $caseItemMock = $this->getMockedClass();
 
