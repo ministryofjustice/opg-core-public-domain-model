@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
@@ -65,9 +66,10 @@ class Task implements EntityInterface, \IteratorAggregate
     protected $priority;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getDueDateString",setter="setDueDateString")
      * @Groups("api-poa-list")
      */
     protected $dueDate;
@@ -114,6 +116,31 @@ class Task implements EntityInterface, \IteratorAggregate
     }
 
     /**
+     * @param \DateTime $dueDate
+     * @return Task
+     */
+    public function setDueDate(\DateTime $dueDate = null)
+    {
+        if (is_null($dueDate)) {
+            $dueDate = new \DateTime();
+        }
+        $this->dueDate = $dueDate;
+        return $this;
+    }
+
+    /**
+     * @param string $dueDate
+     * @return Task
+     */
+    public function setDueDateString($dueDate)
+    {
+        if (empty($dueDate)) {
+            $dueDate = null;
+        }
+        return $this->setDueDate(new \DateTime($dueDate));
+    }
+
+    /**
      * @return string $dueDate
      */
     public function getDueDate()
@@ -122,15 +149,15 @@ class Task implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $dueDate
-     *
-     * @return Task
+     * @return string
      */
-    public function setDueDate($dueDate)
+    public function getDueDateString()
     {
-        $this->dueDate = $dueDate;
+        if (!empty($this->dueDate)) {
+            return $this->dueDate->format(OPGDateFormat::getDateFormat());
+        }
 
-        return $this;
+        return '';
     }
 
     /**
@@ -300,10 +327,6 @@ class Task implements EntityInterface, \IteratorAggregate
                     array(
                         'name'       => 'dueDate',
                         'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
                         'validators' => array(
                             array(
                                 'name' => 'Date'
@@ -315,10 +338,8 @@ class Task implements EntityInterface, \IteratorAggregate
                                         \Zend\Validator\Callback::INVALID_VALUE => 'The due date cannot be in the past',
                                     ),
                                     'callback' => function ($value, $context = array()) {
-
-                                            $dueDate = \DateTime::createFromFormat('Y-m-d', $value);
+                                            $dueDate = $value;
                                             $now     = new \DateTime();
-
                                             return $now <= $dueDate;
                                         }
                                 )
