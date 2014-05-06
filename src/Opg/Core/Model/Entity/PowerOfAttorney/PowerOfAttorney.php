@@ -427,10 +427,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setRegistrationDueDateString($registrationDueDate)
     {
-        if (empty($registrationDueDate)) {
-            $registrationDueDate = null;
+        if (!empty($registrationDueDate)) {
+            $registrationDueDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $registrationDueDate);
+
+            if ($registrationDueDate) {
+                $this->setRegistrationDueDate(new \DateTime($registrationDueDate));
+            }
         }
-        return $this->setRegistrationDueDate(new \DateTime($registrationDueDate));
+
+        return $this;
     }
 
     /**
@@ -675,10 +680,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setPaymentDateString($paymentDate)
     {
-        if (empty($paymentDate)) {
-            $paymentDate = null;
+        if (!empty($paymentDate)) {
+            $paymentDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $paymentDate);
+
+            if ($paymentDate) {
+                $this->setPaymentDate(new \DateTime($paymentDate));
+            }
         }
-        return $this->setPaymentDate(new \DateTime($paymentDate));
+
+        return $this;
     }
 
     /**
@@ -995,10 +1005,16 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setAttorneyDeclarationSignatureDateString($attorneyDeclarationSignatureDate)
     {
-        if (empty($attorneyDeclarationSignatureDate)) {
-            $attorneyDeclarationSignatureDate = null;
+        if (!empty($attorneyDeclarationSignatureDate)) {
+            $attorneyDeclarationSignatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat()
+                , $attorneyDeclarationSignatureDate);
+
+            if ($attorneyDeclarationSignatureDate) {
+                $this->setAttorneyDeclarationSignatureDate(new \DateTime($attorneyDeclarationSignatureDate));
+            }
         }
-        return $this->setAttorneyDeclarationSignatureDate(new \DateTime($attorneyDeclarationSignatureDate));
+
+        return $this;
     }
 
     /**
@@ -1253,10 +1269,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setDispatchDateString($dispatchDate)
     {
-        if (empty($dispatchDate)) {
-            $dispatchDate = null;
+        if (!empty($dispatchDate)) {
+            $dispatchDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dispatchDate);
+
+            if ($dispatchDate) {
+                $this->setDispatchDate(new \DateTime($dispatchDate));
+            }
         }
-        return $this->setDispatchDate(new \DateTime($dispatchDate));
+
+        return $this;
     }
 
     /**
@@ -1298,10 +1319,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setNoticeGivenDateString($noticeGivenDate)
     {
-        if (empty($noticeGivenDate)) {
-            $noticeGivenDate = null;
+        if (!empty($noticeGivenDate)) {
+            $noticeGivenDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $noticeGivenDate);
+
+            if ($noticeGivenDate) {
+                $this->setNoticeGivenDate(new \DateTime($noticeGivenDate));
+            }
         }
-        return $this->setNoticeGivenDate(new \DateTime($noticeGivenDate));
+
+        return $this;
     }
 
     /**
@@ -1343,10 +1369,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function setNotificationDateString($notificationDate)
     {
-        if (empty($notificationDate)) {
-            $notificationDate = null;
+        if (!empty($notificationDate)) {
+            $notificationDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $notificationDate);
+
+            if ($notificationDate) {
+                $this->setNotificationDate(new \DateTime($notificationDate));
+            }
         }
-        return $this->setNotificationDate(new \DateTime($notificationDate));
+
+        return $this;
     }
 
     /**

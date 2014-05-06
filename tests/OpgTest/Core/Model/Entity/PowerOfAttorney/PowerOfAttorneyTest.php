@@ -216,21 +216,11 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetPaymentDateEmptyString()
     {
-        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->poa->getPaymentDate());
         $this->poa->setPaymentDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getPaymentDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->poa->getPaymentDate());
     }
 
     public function testGetSetAttorneyApplicationDeclarations()
@@ -264,21 +254,11 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetAttorneyApplicationDateString()
     {
-        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
         $this->poa->setAttorneyDeclarationSignatureDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getAttorneyDeclarationSignatureDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
     }
 
     public function testGetSetNotificationDate()
@@ -307,21 +287,10 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetNotificationDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->poa->getNotificationDateString());
         $this->poa->setNotificationDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getNotificationDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->poa->getNotificationDateString());
     }
 
     public function testGetSetNoticeGivenDate()
@@ -350,21 +319,10 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetNoticeGivenDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->poa->getNoticeGivenDateString());
         $this->poa->setNoticeGivenDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getNoticeGivenDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->poa->getNoticeGivenDateString());
     }
 
     public function testGetSetDispatchDate()
@@ -393,21 +351,11 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetDispatchDateEmptyString()
     {
-        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->poa->getDispatchDateString());
         $this->poa->setDispatchDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getDispatchDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->poa->getDispatchDateString());
     }
 
     public function testGetSetRegistrationDueDate()
@@ -436,21 +384,11 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetSetLpaReceiptDateEmptyString()
     {
-        $expectedDate = new \DateTime();
+        $this->assertEmpty($this->poa->getRegistrationDueDateString());
+        $this->poa->setRegistrationDueDateString('asddasdsdas');
 
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
-        $this->poa->setRegistrationDueDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->poa->getRegistrationDueDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
 
