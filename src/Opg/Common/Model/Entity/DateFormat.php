@@ -9,6 +9,9 @@ namespace Opg\Common\Model\Entity;
  *
  * A standard definition on our dateTime formats as strings
  */
+
+use Opg\Common\Model\Entity\Exception\InvalidDateFormatException;
+
 final class DateFormat
 {
     const REGEXP_DATE_ONLY = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/';
@@ -43,7 +46,8 @@ final class DateFormat
 
     /**
      * @param $strDateTime
-     * @return bool|\DateTime
+     * @return \DateTime
+     * @throws Exception\InvalidDateFormatException
      */
     public static function createDateTime($strDateTime)
     {
@@ -54,6 +58,8 @@ final class DateFormat
         if (preg_match(self::REGEXP_DATE_TIME, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getDateTimeFormat(), $strDateTime);
         }
-        return false;
+
+        throw new InvalidDateFormatException("'{$strDateTime}' was not in the expected format "
+            . self::getDateTimeFormat());
     }
 }
