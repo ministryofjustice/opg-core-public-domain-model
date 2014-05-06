@@ -302,7 +302,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function setDobString($dob)
     {
         if (!empty($dob)) {
-            $result = \DateTime::createFromFormat(OPGDateFormat::getDateFormat(), $dob);
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dob);
             if ($result) {
                 return $this->setDob($result);
             }
@@ -336,9 +336,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function setDateOfDeath(\DateTime $dateOfDeath = null)
     {
-        if (is_null($dateOfDeath)) {
-            $dateOfDeath = new \DateTime();
-        }
         $this->dateOfDeath = $dateOfDeath;
         return $this;
     }
@@ -349,10 +346,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function setDateOfDeathString($dateOfDeath)
     {
-        if (empty($dateOfDeath)) {
-            $dateOfDeath = null;
+        if (!empty($dateOfDeath)) {
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dateOfDeath);
+            if ($result) {
+                return $this->setDob($result);
+            }
         }
-        return $this->setDateOfDeath(new \DateTime($dateOfDeath));
+        return $this;
     }
 
     /**

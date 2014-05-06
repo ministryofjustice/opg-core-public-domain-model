@@ -130,9 +130,6 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     public function setLpa002SignatureDate(\DateTime $lpa002SignatureDate = null)
     {
-        if (is_null($lpa002SignatureDate)) {
-            $lpa002SignatureDate = new \DateTime();
-        }
         $this->lpa002SignatureDate = $lpa002SignatureDate;
         return $this;
     }
@@ -143,10 +140,13 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     public function setLpa002SignatureDateString($lpa002SignatureDate)
     {
-        if (empty($lpa002SignatureDate)) {
-            $lpa002SignatureDate = null;
+        if (!empty($lpa002SignatureDate)) {
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpa002SignatureDate);
+            if ($result) {
+                return $this->setLpa002SignatureDate($result);
+            }
         }
-        return $this->setLpa002SignatureDate(new \DateTime($lpa002SignatureDate));
+        return $this;
     }
 
     /**
@@ -175,9 +175,6 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
     {
-        if (is_null($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = new \DateTime();
-        }
         $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
         return $this;
     }
@@ -188,10 +185,13 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      */
     public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
     {
-        if (empty($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = null;
+        if (!empty($lpaPartCSignatureDate)) {
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaPartCSignatureDate);
+            if ($result) {
+                return $this->setLpa002SignatureDate($result);
+            }
         }
-        return $this->setLpaPartCSignatureDate(new \DateTime($lpaPartCSignatureDate));
+        return $this;
     }
 
     /**

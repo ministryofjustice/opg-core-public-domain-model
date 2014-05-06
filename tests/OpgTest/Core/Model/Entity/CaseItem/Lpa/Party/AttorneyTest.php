@@ -90,34 +90,16 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpa002SignatureDateNulls()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->attorney->getLpa002SignatureDate());
         $this->attorney->setLpa002SignatureDate();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->attorney->getLpa002SignatureDate()->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
     }
 
-    public function testGetSetLpa002SignatureDateString()
+    public function testGetSetLpa002SignatureInvalidString()
     {
-        $expectedDate = new \DateTime();
-
+        $this->attorney->setLpa002SignatureDateString('asdfadsfsa');
         $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
-        $this->attorney->setLpa002SignatureDateString('');
-
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->attorney->getLpa002SignatureDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testGetSetLpaPartCSignatureDate()
@@ -133,34 +115,16 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaPartCSignatureDateNulls()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
         $this->attorney->setLpaPartCSignatureDate();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->attorney->getLpaPartCSignatureDate()->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
     }
 
-    public function testGetSetLpaPartCSignatureDateString()
+    public function testGetSetLpaPartCSignatureInvalidString()
     {
-        $expectedDate = new \DateTime();
-
+        $this->attorney->setLpaPartCSignatureDateString('asdfadsfsa');
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
-        $this->attorney->setLpaPartCSignatureDateString('');
-
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->attorney->getLpaPartCSignatureDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testGetSetIsAttorneyApplyingToRegister()

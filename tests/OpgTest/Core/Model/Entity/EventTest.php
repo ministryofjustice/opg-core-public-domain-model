@@ -92,34 +92,16 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedOnNulls()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->event->getCreatedOn());
         $this->event->setCreatedOn();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->event->getCreatedOn()->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->event->getCreatedOn());
     }
 
-    public function testGetSetCreatedOnEmptyString()
+    public function testGetSetCreatedOnInvalidString()
     {
-        $expectedDate = new \DateTime();
-
+        $this->event->setCreatedOnString('asdfadsfsa');
         $this->assertEmpty($this->event->getCreatedOnString());
-        $this->event->setCreatedOnString('');
-
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->event->getCreatedOnString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testSetGetCreatedByUser()
