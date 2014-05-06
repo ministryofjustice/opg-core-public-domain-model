@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Person\Person;
 use \Exception;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Person test case.
@@ -44,15 +45,47 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->person->getId());
     }
 
-    public function testSetGetDob ()
+    public function testSetGetDob()
     {
-        $expected = new \DateTime();
-        $expectedString = $expected->format('d-m-Y H:i:s');
+        $expectedDate = new \DateTime();
 
-        $this->person->setDob($expectedString);
-        $returnDOB = $this->person->getDob();
+        $this->assertEmpty($this->person->getDob());
+        $this->assertEmpty($this->person->getDobString());
 
-        $this->assertEquals($expectedString, $returnDOB);
+        $this->person->setDob($expectedDate);
+        $this->assertEquals($expectedDate, $this->person->getDob());
+    }
+
+    public function testSetGetDobNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getDob());
+        $this->person->setDob();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->person->getDob()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testSetGetDobEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getDobString());
+        $this->person->setDobString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->person->getDobString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
     public function testSetGetTitle ()
@@ -230,11 +263,43 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->person->getDateOfDeath());
         $this->assertFalse($this->person->isDeceased());
 
-        $expectedDate = date('d/m/Y');
+        $expectedDate = new \DateTime();
         $this->person->setDateOfDeath($expectedDate);
         $this->assertNotNull($this->person->getDateOfDeath());
         $this->assertEquals($expectedDate, $this->person->getDateOfDeath());
         $this->assertTrue($this->person->isDeceased());
+    }
+
+    public function testDateOfDeathNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getDateOfDeath());
+        $this->person->setDateOfDeath();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->person->getDateOfDeath()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testDateOfDeathEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getDateOfDeathString());
+        $this->person->setDateOfDeathString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                $this->person->getDateOfDeathString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
     }
 
   }
