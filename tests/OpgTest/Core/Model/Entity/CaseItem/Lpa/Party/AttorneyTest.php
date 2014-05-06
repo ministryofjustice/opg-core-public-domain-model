@@ -61,21 +61,6 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attorneyArray, $attorney2->toArray());
     }
 
-    public function testIsValid()
-    {
-        $this->markTestSkipped('Validation has been removed');
-
-        $this->assertFalse($this->attorney->isValid());
-
-        $errors = $this->attorney->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->attorney->addCase(new Lpa());
-        $this->attorney->setSurname('Test-Surname');
-        $this->assertTrue($this->attorney->isValid());
-    }
-
     public function testGetSetLpa002SignatureDate()
     {
         $expectedDate = new \DateTime();
