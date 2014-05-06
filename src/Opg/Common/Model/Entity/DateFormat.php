@@ -11,6 +11,10 @@ namespace Opg\Common\Model\Entity;
  */
 final class DateFormat
 {
+    const REGEXP_DATE_ONLY = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/';
+
+    const REGEXP_DATE_TIME = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
+
     /**
      * @var string
      */
@@ -43,11 +47,11 @@ final class DateFormat
      */
     public static function createDateTime($strDateTime)
     {
-        if (preg_match('/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/', trim($strDateTime))) {
+        if (preg_match(self::REGEXP_DATE_ONLY, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getDateFormat(), $strDateTime);
         }
 
-        if (preg_match('/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/', trim($strDateTime))) {
+        if (preg_match(self::REGEXP_DATE_TIME, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getDateTimeFormat(), $strDateTime);
         }
         return false;
