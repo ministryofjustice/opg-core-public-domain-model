@@ -99,9 +99,11 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
+                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
                                             return $this->hasAttachedCase();
                                         }
+                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )
@@ -188,7 +190,7 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
         if (!empty($lpaPartCSignatureDate)) {
             $result = OPGDateFormat::createDateTime( $lpaPartCSignatureDate);
             if ($result) {
-                return $this->setLpa002SignatureDate($result);
+                return $this->setLpaPartCSignatureDate($result);
             }
         }
         return $this;

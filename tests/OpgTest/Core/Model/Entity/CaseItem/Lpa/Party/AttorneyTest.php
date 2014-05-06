@@ -93,6 +93,19 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
     }
 
+    public function testGetSetLpa002SignatureString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpa002SignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDateString());
+    }
+
+    public function testGetSetLpa002SignatureEmptyString()
+    {
+        $this->attorney->setLpa002SignatureDateString('');
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+    }
+
     public function testGetSetLpaPartCSignatureDate()
     {
         $expectedDate = new \DateTime();
@@ -124,6 +137,13 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
     }
 
+    public function testGetSetLpaPartCSignatureString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpaPartCSignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
+    }
+
     public function testGetSetIsAttorneyApplyingToRegister()
     {
         $this->assertEquals(Attorney::OPTION_NOT_SET, $this->attorney->getIsAttorneyApplyingToRegister());
@@ -132,4 +152,10 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Attorney::OPTION_FALSE, $this->attorney->getIsAttorneyApplyingToRegister());
         $this->assertNotEquals(Attorney::OPTION_TRUE, $this->attorney->getIsAttorneyApplyingToRegister());
     }
+
+    public function testGetInputFilter()
+    {
+        $this->assertTrue($this->attorney->getInputFilter() instanceof \Zend\InputFilter\InputFilter);
+    }
+
 }
