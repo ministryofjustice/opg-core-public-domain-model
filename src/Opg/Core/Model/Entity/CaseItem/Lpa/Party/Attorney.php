@@ -141,7 +141,7 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     public function setLpa002SignatureDateString($lpa002SignatureDate)
     {
         if (!empty($lpa002SignatureDate)) {
-            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpa002SignatureDate);
+            $result = OPGDateFormat::createDateTime( $lpa002SignatureDate);
             if ($result) {
                 return $this->setLpa002SignatureDate($result);
             }
@@ -186,7 +186,7 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
     {
         if (!empty($lpaPartCSignatureDate)) {
-            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaPartCSignatureDate);
+            $result = OPGDateFormat::createDateTime( $lpaPartCSignatureDate);
             if ($result) {
                 return $this->setLpa002SignatureDate($result);
             }

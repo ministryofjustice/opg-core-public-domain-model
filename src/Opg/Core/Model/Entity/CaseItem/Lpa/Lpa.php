@@ -162,7 +162,7 @@ class Lpa extends PowerOfAttorney
     public function setLpaDonorSignatureDateString($signatureDate)
     {
         if (!empty($signatureDate)) {
-            $signatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $signatureDate);
+            $signatureDate = OPGDateFormat::createDateTime( $signatureDate);
 
             if ($signatureDate) {
                 $this->setLpaDonorSignatureDate($signatureDate);
@@ -230,7 +230,7 @@ class Lpa extends PowerOfAttorney
     public function setDonorDeclarationSignatureDateString($signatureDate)
     {
         if (!empty($signatureDate)) {
-            $signatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $signatureDate);
+            $signatureDate = OPGDateFormat::createDateTime( $signatureDate);
 
             if ($signatureDate) {
                 $this->setDonorDeclarationSignatureDate($signatureDate);
@@ -375,7 +375,7 @@ class Lpa extends PowerOfAttorney
     public function setLpaCreatedDateString($lpaCreatedDate)
     {
         if (!empty($lpaCreatedDate)) {
-            $lpaCreatedDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaCreatedDate);
+            $lpaCreatedDate = OPGDateFormat::createDateTime( $lpaCreatedDate);
 
             if ($lpaCreatedDate) {
                 return $this->setLpaCreatedDate($lpaCreatedDate);
@@ -424,7 +424,7 @@ class Lpa extends PowerOfAttorney
     public function setLpaReceiptDateString($lpaReceiptDate)
     {
         if (!empty($lpaReceiptDate)) {
-            $lpaReceiptDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaReceiptDate);
+            $lpaReceiptDate = OPGDateFormat::createDateTime( $lpaReceiptDate);
 
             if ($lpaReceiptDate) {
                 return $this->setLpaReceiptDate($lpaReceiptDate);
@@ -500,7 +500,7 @@ class Lpa extends PowerOfAttorney
     public function setLifeSustainingTreatmentSignatureDateString($lifeSustainingTreatmentSignatureDate)
     {
         if (!empty($lifeSustainingTreatmentSignatureDate)) {
-            $lifeSustainingTreatmentSignatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(),
+            $lifeSustainingTreatmentSignatureDate = OPGDateFormat::createDateTime(
                 $lifeSustainingTreatmentSignatureDate);
 
             if ($lifeSustainingTreatmentSignatureDate) {

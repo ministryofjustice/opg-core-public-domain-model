@@ -428,7 +428,7 @@ abstract class PowerOfAttorney extends CaseItem
     public function setRegistrationDueDateString($registrationDueDate)
     {
         if (!empty($registrationDueDate)) {
-            $registrationDueDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $registrationDueDate);
+            $registrationDueDate = OPGDateFormat::createDateTime( $registrationDueDate);
 
             if ($registrationDueDate) {
                 $this->setRegistrationDueDate(new \DateTime($registrationDueDate));
@@ -681,7 +681,7 @@ abstract class PowerOfAttorney extends CaseItem
     public function setPaymentDateString($paymentDate)
     {
         if (!empty($paymentDate)) {
-            $paymentDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $paymentDate);
+            $paymentDate = OPGDateFormat::createDateTime( $paymentDate);
 
             if ($paymentDate) {
                 $this->setPaymentDate(new \DateTime($paymentDate));
@@ -1270,7 +1270,7 @@ abstract class PowerOfAttorney extends CaseItem
     public function setDispatchDateString($dispatchDate)
     {
         if (!empty($dispatchDate)) {
-            $dispatchDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dispatchDate);
+            $dispatchDate = OPGDateFormat::createDateTime( $dispatchDate);
 
             if ($dispatchDate) {
                 $this->setDispatchDate(new \DateTime($dispatchDate));
@@ -1320,7 +1320,7 @@ abstract class PowerOfAttorney extends CaseItem
     public function setNoticeGivenDateString($noticeGivenDate)
     {
         if (!empty($noticeGivenDate)) {
-            $noticeGivenDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $noticeGivenDate);
+            $noticeGivenDate = OPGDateFormat::createDateTime( $noticeGivenDate);
 
             if ($noticeGivenDate) {
                 $this->setNoticeGivenDate(new \DateTime($noticeGivenDate));
@@ -1370,7 +1370,7 @@ abstract class PowerOfAttorney extends CaseItem
     public function setNotificationDateString($notificationDate)
     {
         if (!empty($notificationDate)) {
-            $notificationDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $notificationDate);
+            $notificationDate = OPGDateFormat::createDateTime( $notificationDate);
 
             if ($notificationDate) {
                 $this->setNotificationDate(new \DateTime($notificationDate));

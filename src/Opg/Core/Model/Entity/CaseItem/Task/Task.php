@@ -135,7 +135,7 @@ class Task implements EntityInterface, \IteratorAggregate
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dueDate);
+            $dueDate = OPGDateFormat::createDateTime( $dueDate);
 
             if ($dueDate) {
                 $this->setDueDate($dueDate);

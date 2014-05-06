@@ -83,7 +83,7 @@ class ReplacementAttorney extends AttorneyAbstract
     public function setLpaCreatedDateString($lpaPartCSignatureDate)
     {
         if (!empty($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaPartCSignatureDate);
+            $lpaPartCSignatureDate = OPGDateFormat::createDateTime( $lpaPartCSignatureDate);
 
             if ($lpaPartCSignatureDate) {
                 $this->setLpaPartCSignatureDate($lpaPartCSignatureDate);
