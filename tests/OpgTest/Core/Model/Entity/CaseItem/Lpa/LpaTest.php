@@ -582,21 +582,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetSetDonorDeclarationDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
         $this->lpa->setDonorDeclarationSignatureDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->lpa->getDonorDeclarationSignatureDateString()
-            );
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testGetSetDonorSignature()
@@ -627,21 +617,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaDonorSignatureDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
         $this->lpa->setLpaDonorSignatureDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->lpa->getLpaDonorSignatureDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
     }
 
     public function testGetSetPreviousLpa()
@@ -780,21 +759,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLifeSustainingTreatmentDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
         $this->lpa->setLifeSustainingTreatmentSignatureDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->lpa->getLifeSustainingTreatmentSignatureDateString()
-            );
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testValidatorInvalidNoCaseType()
