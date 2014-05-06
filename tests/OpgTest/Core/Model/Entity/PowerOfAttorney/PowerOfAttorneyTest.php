@@ -385,7 +385,13 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
     public function testGetSetLpaReceiptDateEmptyString()
     {
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
-        $this->poa->setRegistrationDueDateString('asddasdsdas');
+        try {
+            $this->poa->setRegistrationDueDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }#
 
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
 
