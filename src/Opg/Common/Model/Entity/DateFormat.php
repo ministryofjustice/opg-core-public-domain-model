@@ -43,7 +43,7 @@ final class DateFormat
      */
     public static function createDateTime($strDateTime)
     {
-        if (preg_match('/^[0-9]{1,2}\/[0-9]{4}\/[0-9]{1,2}$/', trim($strDateTime))) {
+        if (preg_match('/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/', trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getDateFormat(), $strDateTime);
         }
 
