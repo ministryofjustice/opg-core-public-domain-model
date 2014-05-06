@@ -66,7 +66,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetDobInvalidString()
     {
-        $this->person->setDobString('asdfadsfsa');
+        try {
+            $this->person->setDobString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
         $this->assertEmpty($this->person->getDobString());
     }
 
@@ -262,7 +268,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testDateOfDeathEmptyString()
     {
-        $this->person->setDateOfDeathString('invalid_date');
+        try {
+            $this->person->setDateOfDeathString('invalid_date');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'invalid_date' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
         $this->assertEmpty($this->person->getDateOfDeathString());
     }
 
