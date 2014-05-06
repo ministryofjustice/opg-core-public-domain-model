@@ -224,11 +224,15 @@ class Donor extends BasePerson implements PartyInterface
      */
     public function setSignatureDateString($signatureDate)
     {
-        if (empty($signatureDate)) {
-            $signatureDate = null;
-        }
-        return $this->setSignatureDate(new \DateTime($signatureDate));
+        if (!empty($signatureDate)) {
+            $signatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $signatureDate);
 
+            if ($signatureDate) {
+                $this->setSignatureDate($signatureDate);
+            }
+        }
+
+        return $this;
     }
 
     /**

@@ -128,21 +128,11 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetSignatureDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->donor->getSignatureDateString());
         $this->donor->setSignatureDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->donor->getSignatureDateString()
-            );
+        $this->assertEmpty($this->donor->getSignatureDateString());
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testSetGetNotesForPreviousLpa()
