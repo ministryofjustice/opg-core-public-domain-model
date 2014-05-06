@@ -28,7 +28,7 @@ class ReplacementAttorney extends AttorneyAbstract
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLpaPartCSignatureDate",setter="setLpaPartCSignatureDate")
+     * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
      */
     protected $lpaPartCSignatureDate;
 
@@ -82,10 +82,15 @@ class ReplacementAttorney extends AttorneyAbstract
      */
     public function setLpaCreatedDateString($lpaPartCSignatureDate)
     {
-        if (empty($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = null;
+        if (!empty($lpaPartCSignatureDate)) {
+            $lpaPartCSignatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $lpaPartCSignatureDate);
+
+            if ($lpaPartCSignatureDate) {
+                $this->setLpaPartCSignatureDate($lpaPartCSignatureDate);
+            }
         }
-        return $this->setLpaCreatedDate(new \DateTime($lpaPartCSignatureDate));
+
+        return $this;
     }
 
     /**
