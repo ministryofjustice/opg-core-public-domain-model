@@ -112,9 +112,6 @@ class Event implements EntityInterface
      */
     public function setCreatedOn(\DateTime $createdOn = null)
     {
-        if (is_null($createdOn)) {
-            $createdOn = new \DateTime();
-        }
         $this->createdOn = $createdOn;
         return $this;
     }
@@ -125,10 +122,13 @@ class Event implements EntityInterface
      */
     public function setCreatedOnString($createdOn)
     {
-        if (empty($createdOn)) {
-            $createdOn = null;
+        if (!empty($createdOn)) {
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $createdOn);
+            if ($result) {
+                return $this->setDob($result);
+            }
         }
-        return $this->setCreatedOn(new \DateTime($createdOn));
+        return $this;
     }
 
     /**
