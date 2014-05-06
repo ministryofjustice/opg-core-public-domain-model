@@ -83,7 +83,13 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpa002SignatureInvalidString()
     {
-        $this->attorney->setLpa002SignatureDateString('asdfadsfsa');
+        try {
+            $this->attorney->setLpa002SignatureDateString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
         $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
     }
 
@@ -108,7 +114,13 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaPartCSignatureInvalidString()
     {
-        $this->attorney->setLpaPartCSignatureDateString('asdfadsfsa');
+        try {
+            $this->attorney->setLpaPartCSignatureDateString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
     }
 
