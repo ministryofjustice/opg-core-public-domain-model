@@ -347,10 +347,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function setDateOfDeathString($dateOfDeath)
     {
         if (!empty($dateOfDeath)) {
+
             $result = OPGDateFormat::createDateTime($dateOfDeath);
+
             if ($result) {
-                return $this->setDob($result);
+                return $this->setDateOfDeath($result);
             }
+
         }
         return $this;
     }

@@ -64,6 +64,12 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->person->getDob());
     }
 
+    public function testGetSetDobEmptyString()
+    {
+        $this->person->setDobString('');
+        $this->assertEmpty($this->person->getDobString());
+    }
+
     public function testSetGetDobInvalidString()
     {
         try {
@@ -74,6 +80,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
         $this->assertEmpty($this->person->getDobString());
+    }
+
+    public function testGetSetDobString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->person->setDobString($expected);
+        $this->assertEquals($expected, $this->person->getDobString());
     }
 
     public function testSetGetTitle ()
@@ -266,7 +279,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->person->getDateOfDeath());
     }
 
-    public function testDateOfDeathEmptyString()
+    public function testDateOfDeathInvalidString()
     {
         try {
             $this->person->setDateOfDeathString('invalid_date');
@@ -276,6 +289,20 @@ class PersonTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals("'invalid_date' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
         $this->assertEmpty($this->person->getDateOfDeathString());
+    }
+
+    public function testDateOfDeathEmptyString()
+    {
+        $this->person->setDateOfDeathString('');
+        $this->assertEmpty($this->person->getDateOfDeathString());
+    }
+
+    public function testGetSetDateOfDeathValidString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->person->setDateOfDeathString($expected);
+        $this->assertEquals($expected, $this->person->getDateOfDeathString());
     }
 
   }
