@@ -92,16 +92,16 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedOnNulls()
     {
-        $this->assertEmpty($this->person->getCreatedOn());
-        $this->person->setCreatedOn();
+        $this->assertEmpty($this->event->getCreatedOn());
+        $this->event->setCreatedOn();
 
-        $this->assertEmpty($this->person->getCreatedOn());
+        $this->assertEmpty($this->event->getCreatedOn());
     }
 
-    public function testGetSetCreatedOnEmptyString()
+    public function testGetSetCreatedOnInvalidString()
     {
-        $this->person->setCreatedOnString('asdfadsfsa');
-        $this->assertEmpty($this->person->getCreatedOnString());
+        $this->event->setCreatedOnString('asdfadsfsa');
+        $this->assertEmpty($this->event->getCreatedOnString());
     }
 
     public function testSetGetCreatedByUser()
