@@ -58,34 +58,16 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetDobNulls()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->person->getDob());
         $this->person->setDob();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->person->getDob()->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->person->getDob());
     }
 
-    public function testSetGetDobEmptyString()
+    public function testSetGetDobInvalidString()
     {
-        $expectedDate = new \DateTime();
-
+        $this->person->setDobString('asdfadsfsa');
         $this->assertEmpty($this->person->getDobString());
-        $this->person->setDobString('');
-
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->person->getDobString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
     public function testSetGetTitle ()

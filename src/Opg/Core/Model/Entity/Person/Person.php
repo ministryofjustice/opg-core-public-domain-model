@@ -291,9 +291,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function setDob(\DateTime $dob = null)
     {
-        if (is_null($dob)) {
-            $dob = new \DateTime();
-        }
         $this->dob = $dob;
         return $this;
     }
@@ -304,10 +301,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function setDobString($dob)
     {
-        if (empty($dob)) {
-            $dob = null;
+        if (!empty($dob)) {
+            $result = \DateTime::createFromFormat(OPGDateFormat::getDateFormat(), $dob);
+            if ($result) {
+                return $this->setDob($result);
+            }
         }
-        return $this->setDob(new \DateTime($dob));
+        return $this;
     }
 
     /**
