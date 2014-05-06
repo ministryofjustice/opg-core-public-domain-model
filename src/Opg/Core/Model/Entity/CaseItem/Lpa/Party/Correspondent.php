@@ -40,6 +40,7 @@ class Correspondent extends BasePerson implements PartyInterface, EntityInterfac
 
     /**
      * @return void|InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

@@ -114,6 +114,7 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
     /**
      * @return void|InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

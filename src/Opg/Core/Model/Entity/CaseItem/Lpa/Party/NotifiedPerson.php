@@ -96,6 +96,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
 
     /**
      * @return void|InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {
