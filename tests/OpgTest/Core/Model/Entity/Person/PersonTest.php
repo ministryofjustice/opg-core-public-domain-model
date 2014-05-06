@@ -254,34 +254,16 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testDateOfDeathNulls()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->person->getDateOfDeath());
         $this->person->setDateOfDeath();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->person->getDateOfDeath()->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->person->getDateOfDeath());
     }
 
     public function testDateOfDeathEmptyString()
     {
-        $expectedDate = new \DateTime();
-
+        $this->person->setDateOfDeathString('invalid_date');
         $this->assertEmpty($this->person->getDateOfDeathString());
-        $this->person->setDateOfDeathString('');
-
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->person->getDateOfDeathString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
     }
 
   }
