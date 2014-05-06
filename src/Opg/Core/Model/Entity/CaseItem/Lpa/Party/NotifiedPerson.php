@@ -53,10 +53,15 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
      */
     public function setNotifiedDateString($notifiedDate)
     {
-        if (empty($notifiedDate)) {
-            $notifiedDate = null;
+        if (!empty($notifiedDate)) {
+            $notifiedDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $notifiedDate);
+
+            if ($notifiedDate) {
+                $this->setNotifiedDate($notifiedDate);
+            }
         }
-        return $this->setNotifiedDate(new \DateTime($notifiedDate));
+
+        return $this;
     }
 
     /**

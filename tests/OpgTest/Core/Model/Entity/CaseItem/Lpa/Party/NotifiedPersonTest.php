@@ -47,21 +47,10 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
     //remember date format for this one
     public function testSetGetNotifiedDateEmptyString()
     {
-        $expectedDate = new \DateTime();
-
         $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
         $this->notifiedPerson->setNotifiedDateString('');
 
-        $returnedDate =
-            \DateTime::createFromFormat(
-                OPGDateFormat::getDateFormat(),
-                $this->notifiedPerson->getNotifiedDateString()
-            );
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
     }
 
     public function testToArrayExchangeArray()
@@ -80,20 +69,6 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($notifiedPerson2), $notifiedPerson['className']);
         $this->assertEquals($this->notifiedPerson, $notifiedPerson2);
         $this->assertEquals($notifiedPerson, $notifiedPerson2->toArray());
-    }
-
-    public function testIsValid()
-    {
-        $this->markTestSkipped('Validation has been removed');
-        $this->assertFalse($this->notifiedPerson->isValid());
-
-        $errors = $this->notifiedPerson->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->notifiedPerson->addCase(new Lpa());
-        $this->notifiedPerson->setSurname('Test-Surname');
-        $this->assertTrue($this->notifiedPerson->isValid());
     }
 
     public function testGetSetRelationshipToDonor()
