@@ -36,4 +36,20 @@ final class DateFormat
     {
        return self::$DateTimeFormat;
     }
+
+    /**
+     * @param $strDateTime
+     * @return bool|\DateTime
+     */
+    public static function createDateTime($strDateTime)
+    {
+        if (preg_match('^\d+/\d+/\d+$', trim($strDateTime))) {
+            return \DateTime::createFromFormat(self::getDateFormat(), $strDateTime);
+        }
+
+        if (preg_match('^[0-9]{1,2}/[0-9]{1,2}\[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$', trim($strDateTime))) {
+            return \DateTime::createFromFormat(self::getDateTimeFormat(), $strDateTime);
+        }
+        return false;
+    }
 }

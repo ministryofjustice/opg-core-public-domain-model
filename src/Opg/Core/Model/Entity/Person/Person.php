@@ -302,7 +302,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function setDobString($dob)
     {
         if (!empty($dob)) {
-            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $dob);
+            $result = OPGDateFormat::createDateTime($dob);
             if ($result) {
                 return $this->setDob($result);
             }
