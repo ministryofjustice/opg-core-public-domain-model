@@ -19,7 +19,7 @@ final class DateFormat
     /**
      * @var string
      */
-    protected static $DateTimeFormat = 'd/m/Y h:i:s';
+    protected static $DateTimeFormat = 'd/m/Y H:i:s';
 
     /**
      * @return string

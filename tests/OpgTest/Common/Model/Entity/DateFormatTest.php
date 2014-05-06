@@ -15,7 +15,7 @@ class DateFormatTest extends \PHPUnit_Framework_TestCase
 
     public function testDateTimeFormat()
     {
-        $expected = 'd/m/Y h:i:s';
+        $expected = 'd/m/Y H:i:s';
 
         $this->assertEquals($expected, OPGDateFormat::getDateTimeFormat());
     }
