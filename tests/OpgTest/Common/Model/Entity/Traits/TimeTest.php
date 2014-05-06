@@ -71,4 +71,18 @@ class TimeTest extends \PHPUnit_Framework_TestCase
             $this->getCreatedTimeString()
         );
     }
+
+    public function testSetCreatedTimeStringWithEmpty()
+    {
+        $expected = new \DateTime();
+
+        $this->assertEmpty($this->getCreatedTimeString());
+        
+        $this->setCreatedTimeString(null);
+
+        $this->assertEquals(
+            $this->getCreatedTimeString(),
+            $expected->format(DateFormat::getDateTimeFormat())
+        );
+    }
 }
