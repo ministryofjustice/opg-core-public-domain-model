@@ -38,7 +38,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
      * @param \DateTime $notifiedDate
      * @return Lpa
      */
-    public function setNotifiedDate($notifiedDate)
+    public function setNotifiedDate(\DateTime $notifiedDate = null)
     {
         if (is_null($notifiedDate)) {
             $notifiedDate = new \DateTime();
@@ -96,7 +96,6 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
 
     /**
      * @return void|InputFilterInterface
-     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {
@@ -119,9 +118,11 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
+                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
-                                            return $this->hasAttachedCase();
-                                        }
+                                        return $this->hasAttachedCase();
+                                    }
+                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )

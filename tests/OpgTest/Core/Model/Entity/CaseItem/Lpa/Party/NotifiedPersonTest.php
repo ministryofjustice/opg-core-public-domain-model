@@ -36,7 +36,7 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
-        $this->notifiedPerson->setNotifiedDate($expectedDate);
+        $this->notifiedPerson->setNotifiedDate();
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
@@ -51,6 +51,31 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->notifiedPerson->setNotifiedDateString('');
 
         $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+    }
+
+    public function testSetGetNotifiedDateInvalidString()
+    {
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        try {
+            $this->notifiedPerson->setNotifiedDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testSetGetNotifiedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->notifiedPerson->setNotifiedDateString($expected);
+        $this->assertEquals($expected, $this->notifiedPerson->getNotifiedDateString());
+
+    }
+
+    public function testGetInputFilter()
+    {
+        $this->assertTrue($this->notifiedPerson->getInputFilter() instanceof InputFilter);
     }
 
     public function testToArrayExchangeArray()
