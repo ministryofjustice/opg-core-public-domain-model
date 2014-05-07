@@ -123,9 +123,9 @@ class Event implements EntityInterface
     public function setCreatedOnString($createdOn)
     {
         if (!empty($createdOn)) {
-            $result = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat(), $createdOn);
+            $result = OPGDateFormat::createDateTime($createdOn);
             if ($result) {
-                return $this->setDob($result);
+                return $this->setCreatedOn($result);
             }
         }
         return $this;

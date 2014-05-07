@@ -98,10 +98,30 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->event->getCreatedOn());
     }
 
+    public function testGetSetCreatedOnEmptyString()
+    {
+        $this->assertEmpty($this->event->getCreatedOnString());
+        $this->event->setCreatedOnString('');
+        $this->assertEmpty($this->event->getCreatedOnString());
+    }
+
     public function testGetSetCreatedOnInvalidString()
     {
-        $this->event->setCreatedOnString('asdfadsfsa');
         $this->assertEmpty($this->event->getCreatedOnString());
+        try {
+            $this->event->setCreatedOnString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetCreatedOnString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->event->setCreatedOnString($expected);
+        $this->assertEquals($expected, $this->event->getCreatedOnString());
     }
 
     public function testSetGetCreatedByUser()
