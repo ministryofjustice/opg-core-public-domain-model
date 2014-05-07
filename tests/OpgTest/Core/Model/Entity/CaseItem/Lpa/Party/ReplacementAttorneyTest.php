@@ -53,4 +53,32 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSetGetNotifiedDateEmptyString()
+    {
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        $this->attorney->setLpaPartCSignatureDateString('');
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+    }
+
+    public function testSetGetNotifiedDateInvalidString()
+    {
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        try {
+            $this->attorney->setLpaPartCSignatureDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testSetGetNotifiedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpaPartCSignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
+
+    }
+
 }
