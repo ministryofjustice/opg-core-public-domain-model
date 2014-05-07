@@ -31,29 +31,6 @@ class Donor extends BasePerson implements PartyInterface
             $inputFilter = parent::getInputFilter();
             $factory     = new InputFactory();
 
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'firstname',
-                        'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 2,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
-
             $this->inputFilter = $inputFilter;
         }
 

@@ -62,6 +62,8 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValid()
     {
+        $this->markTestSkipped('Validation has been removed');
+
         $this->assertFalse($this->attorney->isValid());
 
         $errors = $this->attorney->getErrorMessages();

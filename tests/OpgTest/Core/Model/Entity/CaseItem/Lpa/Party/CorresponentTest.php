@@ -46,6 +46,8 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValid()
     {
+        $this->markTestSkipped('Validation has been removed');
+
         $this->assertFalse($this->correspondent->isValid());
 
         $errors = $this->correspondent->getErrorMessages();

@@ -16,10 +16,12 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
     private $data = array(
         'id'            => '123',
         'type'          => null,
-        'filename'       => null,
+        'filename'      => null,
         'case'          => null,
         'person'        => null,
-        'errorMessages' => array()
+        'errorMessages' => array(),
+        'recipientName' => null,
+        'address'       => null
     );
 
     public function setUp()
@@ -78,14 +80,14 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->correspondence->setId('10');
         $this->correspondence->setFilename('document');
         $expectedOutput = '10_document';
-        $this->assertEquals($expectedOutput,$this->correspondence->getDocumentStoreFilename());
+        $this->assertEquals($expectedOutput, $this->correspondence->getDocumentStoreFilename());
     }
 
     public function testExchangeArray()
     {
-        $data = array (
-            'id'    => 123,
-            'type'  => 'unknown document'
+        $data = array(
+            'id'   => 123,
+            'type' => 'unknown document'
         );
 
         $this->correspondence->exchangeArray($data);

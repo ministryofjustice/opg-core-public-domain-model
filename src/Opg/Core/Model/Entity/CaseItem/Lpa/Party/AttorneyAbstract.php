@@ -29,6 +29,7 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Type("string")
      */
     protected $dxExchange;
 
@@ -77,29 +78,6 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
             $inputFilter = parent::getInputFilter();
 
             $factory = new InputFactory();
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'email',
-                        'required'   => false,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
 
             $this->inputFilter = $inputFilter;
         }
