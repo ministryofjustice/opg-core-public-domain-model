@@ -431,7 +431,7 @@ abstract class PowerOfAttorney extends CaseItem
             $registrationDueDate = OPGDateFormat::createDateTime( $registrationDueDate);
 
             if ($registrationDueDate) {
-                $this->setRegistrationDueDate(new \DateTime($registrationDueDate));
+                $this->setRegistrationDueDate($registrationDueDate);
             }
         }
 
@@ -684,7 +684,7 @@ abstract class PowerOfAttorney extends CaseItem
             $paymentDate = OPGDateFormat::createDateTime( $paymentDate);
 
             if ($paymentDate) {
-                $this->setPaymentDate(new \DateTime($paymentDate));
+                $this->setPaymentDate($paymentDate);
             }
         }
 
@@ -1006,11 +1006,10 @@ abstract class PowerOfAttorney extends CaseItem
     public function setAttorneyDeclarationSignatureDateString($attorneyDeclarationSignatureDate)
     {
         if (!empty($attorneyDeclarationSignatureDate)) {
-            $attorneyDeclarationSignatureDate = \DateTime::createFromFormat(OPGDateFormat::getDateTimeFormat()
-                , $attorneyDeclarationSignatureDate);
+            $attorneyDeclarationSignatureDate = OPGDateFormat::createDateTime($attorneyDeclarationSignatureDate);
 
             if ($attorneyDeclarationSignatureDate) {
-                $this->setAttorneyDeclarationSignatureDate(new \DateTime($attorneyDeclarationSignatureDate));
+                $this->setAttorneyDeclarationSignatureDate($attorneyDeclarationSignatureDate);
             }
         }
 
@@ -1273,7 +1272,7 @@ abstract class PowerOfAttorney extends CaseItem
             $dispatchDate = OPGDateFormat::createDateTime( $dispatchDate);
 
             if ($dispatchDate) {
-                $this->setDispatchDate(new \DateTime($dispatchDate));
+                $this->setDispatchDate($dispatchDate);
             }
         }
 
@@ -1323,7 +1322,7 @@ abstract class PowerOfAttorney extends CaseItem
             $noticeGivenDate = OPGDateFormat::createDateTime( $noticeGivenDate);
 
             if ($noticeGivenDate) {
-                $this->setNoticeGivenDate(new \DateTime($noticeGivenDate));
+                $this->setNoticeGivenDate($noticeGivenDate);
             }
         }
 
@@ -1373,7 +1372,7 @@ abstract class PowerOfAttorney extends CaseItem
             $notificationDate = OPGDateFormat::createDateTime( $notificationDate);
 
             if ($notificationDate) {
-                $this->setNotificationDate(new \DateTime($notificationDate));
+                $this->setNotificationDate($notificationDate);
             }
         }
 

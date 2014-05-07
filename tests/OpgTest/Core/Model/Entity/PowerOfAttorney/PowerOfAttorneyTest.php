@@ -223,6 +223,30 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($this->poa->getPaymentDate());
     }
 
+    public function testGetSetPaymentDateInvalidString()
+    {
+        $this->assertEmpty($this->poa->getPaymentDateString());
+        try {
+            $this->poa->setPaymentDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+
+        $this->assertEmpty($this->poa->getPaymentDateString());
+
+    }
+
+    public function testGetSetPaymentDateValidString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->poa->setPaymentDateString($expected);
+
+        $this->assertEquals($expected, $this->poa->getPaymentDateString());
+    }
+
     public function testGetSetAttorneyApplicationDeclarations()
     {
         $expectedDate = new \DateTime();
@@ -252,13 +276,34 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testGetSetAttorneyApplicationDateString()
+    public function testGetSetAttorneyApplicationDateEmptyString()
     {
-
         $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
         $this->poa->setAttorneyDeclarationSignatureDateString('');
 
         $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
+    }
+
+    public function testGetSetAttorneyApplicationDateInvalidString()
+    {
+        $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
+        try {
+            $this->poa->setAttorneyDeclarationSignatureDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+
+
+        $this->assertEmpty($this->poa->getAttorneyDeclarationSignatureDateString());
+    }
+
+    public function testGetSetAttorneyApplicationDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->poa->setAttorneyDeclarationSignatureDateString($expected);
+        $this->assertEquals($expected, $this->poa->getAttorneyDeclarationSignatureDateString());
     }
 
     public function testGetSetNotificationDate()
@@ -289,8 +334,26 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
     {
         $this->assertEmpty($this->poa->getNotificationDateString());
         $this->poa->setNotificationDateString('');
-
         $this->assertEmpty($this->poa->getNotificationDateString());
+    }
+
+    public function testGetSetNotificationDateInvalidString()
+    {
+        $this->assertEmpty($this->poa->getNotificationDateString());
+        try {
+            $this->poa->setNotificationDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetNotificationDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->poa->setNotificationDateString($expected);
+        $this->assertEquals($expected, $this->poa->getNotificationDateString());
     }
 
     public function testGetSetNoticeGivenDate()
@@ -321,8 +384,26 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
     {
         $this->assertEmpty($this->poa->getNoticeGivenDateString());
         $this->poa->setNoticeGivenDateString('');
-
         $this->assertEmpty($this->poa->getNoticeGivenDateString());
+    }
+
+    public function testGetSetNoticeGivenDateInvalidString()
+    {
+        $this->assertEmpty($this->poa->getNoticeGivenDateString());
+        try {
+            $this->poa->setNoticeGivenDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetNoticeGivenDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->poa->setNoticeGivenDateString($expected);
+        $this->assertEquals($expected, $this->poa->getNoticeGivenDateString());
     }
 
     public function testGetSetDispatchDate()
@@ -358,6 +439,25 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($this->poa->getDispatchDateString());
     }
 
+    public function testGetSetDispatchDateInvalidString()
+    {
+        $this->assertEmpty($this->poa->getDispatchDateString());
+        try {
+            $this->poa->setDispatchDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetDispatchDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->poa->setDispatchDateString($expected);
+        $this->assertEquals($expected, $this->poa->getDispatchDateString());
+    }
+
     public function testGetSetRegistrationDueDate()
     {
         $expectedDate = new \DateTime();
@@ -382,7 +482,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testGetSetLpaReceiptDateEmptyString()
+    public function testGetSetRegistrationDueDateInvalidString()
     {
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
         try {
@@ -391,10 +491,25 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
             $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
-        }#
+        }
 
         $this->assertEmpty($this->poa->getRegistrationDueDateString());
 
+    }
+
+    public function testGetSetRegistrationDueDateNullString()
+    {
+        $this->assertEmpty($this->poa->getRegistrationDueDateString());
+        $this->poa->setRegistrationDueDateString(null);
+        $this->assertEmpty($this->poa->getRegistrationDueDateString());
+
+    }
+
+    public function testGetSetRegistrationDueDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->poa->setRegistrationDueDateString($expected);
+        $this->assertEquals($expected, $this->poa->getRegistrationDueDateString());
     }
 
 
