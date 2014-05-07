@@ -29,7 +29,6 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $dxExchange;
 

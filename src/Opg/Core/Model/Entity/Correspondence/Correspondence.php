@@ -45,14 +45,12 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @type("string")
      */
     protected $recipientName;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @type("string")
      */
     protected $address;
 
