@@ -9,6 +9,8 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -76,8 +78,10 @@ class Donor extends BasePerson implements PartyInterface
     protected $hasLowIncome;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
      */
     protected $signatureDate;
 
@@ -202,7 +206,37 @@ class Donor extends BasePerson implements PartyInterface
     }
 
     /**
-     * @return string $signatureDate
+     * @param \DateTime $signatureDate
+     * @return Donor
+     */
+    public function setSignatureDate(\DateTime $signatureDate = null)
+    {
+        if (is_null($signatureDate)) {
+            $signatureDate = new \DateTime();
+        }
+        $this->signatureDate = $signatureDate;
+        return $this;
+    }
+
+    /**
+     * @param string $signatureDate
+     * @return Lpa
+     */
+    public function setSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            $signatureDate = OPGDateFormat::createDateTime( $signatureDate);
+
+            if ($signatureDate) {
+                $this->setSignatureDate($signatureDate);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime $signatureDate
      */
     public function getSignatureDate()
     {
@@ -210,13 +244,15 @@ class Donor extends BasePerson implements PartyInterface
     }
 
     /**
-     * @param string $signatureDate
-     * @return Donor
+     * @return string
      */
-    public function setSignatureDate($signatureDate)
+    public function getSignatureDateString()
     {
-        $this->signatureDate = $signatureDate;
-        return $this;
+        if (!empty($this->signatureDate)) {
+            return $this->signatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**

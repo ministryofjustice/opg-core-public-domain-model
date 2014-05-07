@@ -1,6 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -44,12 +45,12 @@ class Lpa extends PowerOfAttorney
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLpaDonorSignatureDateString",setter="setLpaDonorSignatureDateString")
      */
     protected $lpaDonorSignatureDate;
-
 
     /**
      * @ORM\Column(type = "string")
@@ -73,9 +74,10 @@ class Lpa extends PowerOfAttorney
     protected $previousLpaInfo;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getDonorDeclarationSignatureDateString", setter="setDonorDeclarationSignatureDateString")
      */
     protected $lpaDonorDeclarationSignatureDate;
 
@@ -87,16 +89,18 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorDeclarationSignatoryFullName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLpaCreatedDateString",setter="setLpaCreatedDateString")
      */
     protected $lpaCreatedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLpaReceiptDateString",setter="setLpaReceiptDateString")
      */
     protected $lpaReceiptDate;
 
@@ -108,9 +112,10 @@ class Lpa extends PowerOfAttorney
     protected $lifeSustainingTreatment;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getLifeSustainingTreatmentSignatureDateString",setter="setLifeSustainingTreatmentSignatureDateString")
      */
     protected $lifeSustainingTreatmentSignatureDate;
 
@@ -124,6 +129,7 @@ class Lpa extends PowerOfAttorney
             ($signedBy === 'I') ?
                 self::PERMISSION_GIVEN_SINGULAR :
                 self::PERMISSION_GIVEN_PLURAL;
+
         return $this;
     }
 
@@ -138,21 +144,54 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $signatureDate
+     * @param \DateTime $signatureDate
      * @return $this
      */
-    public function setDonorSignatureDate($signatureDate)
+    public function setLpaDonorSignatureDate(\DateTime $signatureDate = null)
     {
+        if (is_null($signatureDate)) {
+            $signatureDate = new \DateTime();
+        }
         $this->lpaDonorSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $signatureDate
+     * @return Lpa
+     */
+    public function setLpaDonorSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
+
+            if ($signatureDate) {
+                $this->setLpaDonorSignatureDate($signatureDate);
+            }
+        }
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getDonorSignatureDate()
+    public function getLpaDonorSignatureDate()
     {
         return $this->lpaDonorSignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLpaDonorSignatureDateString()
+    {
+        if (!empty($this->lpaDonorSignatureDate)) {
+            return $this->lpaDonorSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -162,6 +201,7 @@ class Lpa extends PowerOfAttorney
     public function setDonorLpaSignatoryFullName($fullName)
     {
         $this->lpaDonorSignatoryFullName = $fullName;
+
         return $this;
     }
 
@@ -174,12 +214,33 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $signatureDate
+     * @param \DateTime $signatureDate
      * @return $this
      */
-    public function setDonorDeclarationSignatureDate($signatureDate)
+    public function setDonorDeclarationSignatureDate(\DateTime $signatureDate = null)
     {
+        if (is_null($signatureDate)) {
+            $signatureDate = new \DateTime();
+        }
         $this->lpaDonorDeclarationSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $signatureDate
+     * @return Lpa
+     */
+    public function setDonorDeclarationSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
+
+            if ($signatureDate) {
+                $this->setDonorDeclarationSignatureDate($signatureDate);
+            }
+        }
+
         return $this;
     }
 
@@ -192,12 +253,25 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
+     * @return string
+     */
+    public function getDonorDeclarationSignatureDateString()
+    {
+        if (!empty($this->lpaDonorDeclarationSignatureDate)) {
+            return $this->lpaDonorDeclarationSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
      * @param  string $fullName
      * @return Lpa
      */
     public function setDonorDeclarationLpaSignatoryFullName($fullName)
     {
         $this->lpaDonorDeclarationSignatoryFullName = $fullName;
+
         return $this;
     }
 
@@ -216,6 +290,7 @@ class Lpa extends PowerOfAttorney
     public function setDonorHasPreviousLpas($previousLpas)
     {
         $this->donorHasPreviousLpas = (bool)$previousLpas;
+
         return $this;
     }
 
@@ -243,6 +318,7 @@ class Lpa extends PowerOfAttorney
     public function setPreviousLpaInfo($lpaInfo)
     {
         $this->previousLpaInfo = $lpaInfo;
+
         return $this;
     }
 
@@ -283,6 +359,21 @@ class Lpa extends PowerOfAttorney
         } else {
             throw new \LogicException(__CLASS__ . ' does not support a person of type ' . get_class($person));
         }
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $lpaCreatedDate
+     * @return Lpa
+     */
+    public function setLpaCreatedDate(\DateTime $lpaCreatedDate = null)
+    {
+        if (is_null($lpaCreatedDate)) {
+            $lpaCreatedDate = new \DateTime();
+        }
+        $this->lpaCreatedDate = $lpaCreatedDate;
+
         return $this;
     }
 
@@ -290,11 +381,18 @@ class Lpa extends PowerOfAttorney
      * @param string $lpaCreatedDate
      * @return Lpa
      */
-    public function setLpaCreatedDate($lpaCreatedDate = null)
+    public function setLpaCreatedDateString($lpaCreatedDate)
     {
-        $this->lpaCreatedDate =
-            (null === $lpaCreatedDate) ? date('Y-m-d H:i:s') : $lpaCreatedDate;
-        return $this;
+        if (!empty($lpaCreatedDate)) {
+            $lpaCreatedDate = OPGDateFormat::createDateTime($lpaCreatedDate);
+
+            if ($lpaCreatedDate) {
+                return $this->setLpaCreatedDate($lpaCreatedDate);
+            }
+
+        }
+
+        return $this->setLpaCreatedDate(new \DateTime());
     }
 
     /**
@@ -306,21 +404,66 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
+     * @return string
+     */
+    public function getLpaCreatedDateString()
+    {
+        if (!empty($this->lpaCreatedDate)) {
+            return $this->lpaCreatedDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $lpaReceiptDate
+     * @return Lpa
+     */
+    public function setLpaReceiptDate(\DateTime $lpaReceiptDate = null)
+    {
+        if (is_null($lpaReceiptDate)) {
+            $lpaReceiptDate = new \DateTime();
+        }
+        $this->lpaReceiptDate = $lpaReceiptDate;
+
+        return $this;
+    }
+
+    /**
      * @param string $lpaReceiptDate
      * @return Lpa
      */
-    public function setLpaReceiptDate($lpaReceiptDate)
+    public function setLpaReceiptDateString($lpaReceiptDate)
     {
-        $this->lpaReceiptDate = $lpaReceiptDate;
-        return $this;
+        if (!empty($lpaReceiptDate)) {
+            $lpaReceiptDate = OPGDateFormat::createDateTime($lpaReceiptDate);
+
+            if ($lpaReceiptDate) {
+                return $this->setLpaReceiptDate($lpaReceiptDate);
+            }
+        }
+
+        return $this->setLpaReceiptDate(new \DateTime($lpaReceiptDate));
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaReceiptDate()
+    {
+        return $this->lpaReceiptDate;
     }
 
     /**
      * @return string
      */
-    public function getLpaReceiptDate()
+    public function getLpaReceiptDateString()
     {
-        return $this->lpaReceiptDate;
+        if (!empty($this->lpaReceiptDate)) {
+            return $this->lpaReceiptDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -330,6 +473,7 @@ class Lpa extends PowerOfAttorney
     public function setLifeSustainingTreatment($lifeSustainingTreatment = '')
     {
         $this->lifeSustainingTreatment = $lifeSustainingTreatment;
+
         return $this;
     }
 
@@ -351,13 +495,37 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
+     * @param \DateTime $lifeSustainingTreatmentSignatureDate
+     * @return Lpa
+     */
+    public function setLifeSustainingTreatmentSignatureDate(\DateTime $lifeSustainingTreatmentSignatureDate = null)
+    {
+        if (is_null($lifeSustainingTreatmentSignatureDate)) {
+            $lifeSustainingTreatmentSignatureDate = new \DateTime();
+        }
+        $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
+
+        return $this;
+    }
+
+    /**
      * @param string $lifeSustainingTreatmentSignatureDate
      * @return Lpa
      */
-    public function setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate)
+    public function setLifeSustainingTreatmentSignatureDateString($lifeSustainingTreatmentSignatureDate)
     {
-        $this->lifeSustainingTreatmentSignatureDate = $lifeSustainingTreatmentSignatureDate;
+        if (!empty($lifeSustainingTreatmentSignatureDate)) {
+            $lifeSustainingTreatmentSignatureDate = OPGDateFormat::createDateTime(
+                $lifeSustainingTreatmentSignatureDate
+            );
+
+            if ($lifeSustainingTreatmentSignatureDate) {
+                $this->setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate);
+            }
+        }
+
         return $this;
+
     }
 
     /**
@@ -368,6 +536,16 @@ class Lpa extends PowerOfAttorney
         return $this->lifeSustainingTreatmentSignatureDate;
     }
 
+    /**
+     * @return string
+     */
+    public function getLifeSustainingTreatmentSignatureDateString()
+    {
+        if (!empty($this->lifeSustainingTreatmentSignatureDate)) {
+            return $this->lifeSustainingTreatmentSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
 
+        return '';
+    }
 
 }

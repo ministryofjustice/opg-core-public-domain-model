@@ -61,21 +61,6 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($certificateProvider, $certificateProvider2->toArray());
     }
 
-    public function testIsValid()
-    {
-        $this->markTestSkipped('Validation has been removed');
-
-        $this->assertFalse($this->certificateProvider->isValid());
-
-        $errors = $this->certificateProvider->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->certificateProvider->addCase(new Lpa());
-        $this->certificateProvider->setSurname('Test-Surname');
-        $this->assertTrue($this->certificateProvider->isValid());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
         $expectedRelationship = 'Doctor';

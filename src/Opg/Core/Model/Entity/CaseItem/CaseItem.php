@@ -30,6 +30,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\MappedSuperclass
@@ -106,26 +107,29 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $caseSubtype;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type = "datetime", nullable = true)
+     * @var \DateTime
      * @Type("string")
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="getDueDateString", setter="setDueDateString")
      */
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="getRegistrationDateString", setter="setRegistrationDateString")
      */
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="getClosedDateString", setter="setClosedDateString")
      */
     protected $closedDate;
 
@@ -204,7 +208,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return string $dueDate
+     * @return \DateTime $dueDate
      */
     public function getDueDate()
     {
@@ -212,11 +216,40 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $dueDate
+     * @return string
      */
-    public function setDueDate($dueDate)
+    public function getDueDateString()
+    {
+        if (!empty($this->dueDate)) {
+            return $this->dueDate->format(OPGDateFormat::getDateFormat());
+        }
+        return '';
+    }
+
+    /**
+     * @param \DateTime $dueDate
+     * @return CaseItem
+     */
+    public function setDueDate(\DateTime $dueDate)
     {
         $this->dueDate = $dueDate;
+        return $this;
+    }
+
+    /**
+     * @param $dueDate
+     * @return $this
+     */
+    public function setDueDateString($dueDate)
+    {
+        if (!empty($dueDate)) {
+            $dueDate = OPGDateFormat::createDateTime($dueDate);
+
+            if ($dueDate) {
+                $this->setDueDate($dueDate);
+            }
+        }
+        return $this;
     }
 
     /**
@@ -557,12 +590,32 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $closedDate
+     * @param  \DateTime $closedDate
      * @return CaseItem
      */
-    public function setClosedDate($closedDate)
+    public function setClosedDate(\DateTime $closedDate = null)
     {
+        if (is_null($closedDate)) {
+            $closedDate = new \DateTime();
+        }
         $this->closedDate = $closedDate;
+    }
+
+    /**
+     * @param string $closedDate
+     * @return Lpa
+     */
+    public function setClosedDateString($closedDate)
+    {
+        if (!empty($closedDate)) {
+            $closedDate = OPGDateFormat::createDateTime($closedDate);
+
+            if ($closedDate) {
+                $this->setClosedDate($closedDate);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -574,23 +627,64 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $registrationDate
+     * @return string
+     */
+    public function getClosedDateString()
+    {
+        if (!empty($this->closedDate)) {
+            return $this->closedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param  \DateTime  $registrationDate
      * @return CaseItem
      */
-    public function setRegistrationDate($registrationDate = null)
+    public function setRegistrationDate(\DateTime $registrationDate)
     {
-        $this->registrationDate =
-            (null === $registrationDate) ? date('d/m/Y') : $registrationDate;
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @param string $registrationDate
+     * @return CaseItem
+     */
+    public function setRegistrationDateString($registrationDate)
+    {
+        if (!empty($registrationDate)) {
+
+            $registrationDate = OPGDateFormat::createDateTime( $registrationDate);
+
+            if ($registrationDate) {
+                $this->setRegistrationDate($registrationDate);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getRegistrationDate()
     {
         return $this->registrationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegistrationDateString()
+    {
+        if (!empty($this->registrationDate)) {
+            return $this->registrationDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
 }

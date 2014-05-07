@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Person\Person;
 use \Exception;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Person test case.
@@ -44,15 +45,48 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->person->getId());
     }
 
-    public function testSetGetDob ()
+    public function testSetGetDob()
     {
-        $expected = new \DateTime();
-        $expectedString = $expected->format('d-m-Y H:i:s');
+        $expectedDate = new \DateTime();
 
-        $this->person->setDob($expectedString);
-        $returnDOB = $this->person->getDob();
+        $this->assertEmpty($this->person->getDob());
+        $this->assertEmpty($this->person->getDobString());
 
-        $this->assertEquals($expectedString, $returnDOB);
+        $this->person->setDob($expectedDate);
+        $this->assertEquals($expectedDate, $this->person->getDob());
+    }
+
+    public function testSetGetDobNulls()
+    {
+        $this->assertEmpty($this->person->getDob());
+        $this->person->setDob();
+
+        $this->assertEmpty($this->person->getDob());
+    }
+
+    public function testGetSetDobEmptyString()
+    {
+        $this->person->setDobString('');
+        $this->assertEmpty($this->person->getDobString());
+    }
+
+    public function testSetGetDobInvalidString()
+    {
+        try {
+            $this->person->setDobString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        $this->assertEmpty($this->person->getDobString());
+    }
+
+    public function testGetSetDobString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->person->setDobString($expected);
+        $this->assertEquals($expected, $this->person->getDobString());
     }
 
     public function testSetGetTitle ()
@@ -230,11 +264,45 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->person->getDateOfDeath());
         $this->assertFalse($this->person->isDeceased());
 
-        $expectedDate = date('d/m/Y');
+        $expectedDate = new \DateTime();
         $this->person->setDateOfDeath($expectedDate);
         $this->assertNotNull($this->person->getDateOfDeath());
         $this->assertEquals($expectedDate, $this->person->getDateOfDeath());
         $this->assertTrue($this->person->isDeceased());
+    }
+
+    public function testDateOfDeathNulls()
+    {
+        $this->assertEmpty($this->person->getDateOfDeath());
+        $this->person->setDateOfDeath();
+
+        $this->assertEmpty($this->person->getDateOfDeath());
+    }
+
+    public function testDateOfDeathInvalidString()
+    {
+        try {
+            $this->person->setDateOfDeathString('invalid_date');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'invalid_date' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        $this->assertEmpty($this->person->getDateOfDeathString());
+    }
+
+    public function testDateOfDeathEmptyString()
+    {
+        $this->person->setDateOfDeathString('');
+        $this->assertEmpty($this->person->getDateOfDeathString());
+    }
+
+    public function testGetSetDateOfDeathValidString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->person->setDateOfDeathString($expected);
+        $this->assertEquals($expected, $this->person->getDateOfDeathString());
     }
 
   }

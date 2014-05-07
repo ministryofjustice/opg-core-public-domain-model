@@ -7,6 +7,7 @@ use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class AttorneyTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,39 +61,87 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attorneyArray, $attorney2->toArray());
     }
 
-    public function testIsValid()
+    public function testGetSetLpa002SignatureDate()
     {
-        $this->markTestSkipped('Validation has been removed');
+        $expectedDate = new \DateTime();
 
-        $this->assertFalse($this->attorney->isValid());
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
 
-        $errors = $this->attorney->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
+        $this->attorney->setLpa002SignatureDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->attorney->getLpa002SignatureDate());
 
-        $this->attorney->addCase(new Lpa());
-        $this->attorney->setSurname('Test-Surname');
-        $this->assertTrue($this->attorney->isValid());
     }
 
-    public function testGetLpa002SignatureDate()
+    public function testGetSetLpa002SignatureDateNulls()
     {
-        $expected = date('Y-m-d');
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
+        $this->attorney->setLpa002SignatureDate();
 
-        $this->assertNull($this->attorney->getLpa002SignatureDate());
-        $this->attorney->setLpa002SignatureDate($expected);
+        $this->assertEmpty($this->attorney->getLpa002SignatureDate());
+    }
 
-        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDate());
+    public function testGetSetLpa002SignatureInvalidString()
+    {
+        try {
+            $this->attorney->setLpa002SignatureDateString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+    }
+
+    public function testGetSetLpa002SignatureString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpa002SignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDateString());
+    }
+
+    public function testGetSetLpa002SignatureEmptyString()
+    {
+        $this->attorney->setLpa002SignatureDateString('');
+        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
     }
 
     public function testGetSetLpaPartCSignatureDate()
     {
-        $expected = date('Y-m-d');
+        $expectedDate = new \DateTime();
 
-        $this->assertNull($this->attorney->getLpaPartCSignatureDate());
-        $this->attorney->setLpaPartCSignatureDate($expected);
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        $this->attorney->setLpaPartCSignatureDate($expectedDate);
 
-        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+        $this->assertEquals($expectedDate, $this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetLpaPartCSignatureDateNulls()
+    {
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate();
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetLpaPartCSignatureInvalidString()
+    {
+        try {
+            $this->attorney->setLpaPartCSignatureDateString('asdfadsfsa');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+    }
+
+    public function testGetSetLpaPartCSignatureString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpaPartCSignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
     }
 
     public function testGetSetIsAttorneyApplyingToRegister()
@@ -103,4 +152,10 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Attorney::OPTION_FALSE, $this->attorney->getIsAttorneyApplyingToRegister());
         $this->assertNotEquals(Attorney::OPTION_TRUE, $this->attorney->getIsAttorneyApplyingToRegister());
     }
+
+    public function testGetInputFilter()
+    {
+        $this->assertTrue($this->attorney->getInputFilter() instanceof \Zend\InputFilter\InputFilter);
+    }
+
 }

@@ -9,6 +9,8 @@ use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -50,8 +52,10 @@ class Event implements EntityInterface
     protected $user;
 
     /**
-     * @ORM\Column(type = "datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCreatedOnString",setter="setCreatedOnString")
      */
     protected $createdOn;
 
@@ -104,13 +108,26 @@ class Event implements EntityInterface
 
     /**
      * @param \DateTime $createdOn
-     *
      * @return Event
      */
-    public function setCreatedOn(\DateTime $createdOn)
+    public function setCreatedOn(\DateTime $createdOn = null)
     {
         $this->createdOn = $createdOn;
+        return $this;
+    }
 
+    /**
+     * @param string $createdOn
+     * @return Event
+     */
+    public function setCreatedOnString($createdOn)
+    {
+        if (!empty($createdOn)) {
+            $result = OPGDateFormat::createDateTime($createdOn);
+            if ($result) {
+                return $this->setCreatedOn($result);
+            }
+        }
         return $this;
     }
 
@@ -120,6 +137,18 @@ class Event implements EntityInterface
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedOnString()
+    {
+        if (!empty($this->createdOn)) {
+            return $this->createdOn->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**

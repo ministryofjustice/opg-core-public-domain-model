@@ -26,6 +26,7 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -128,17 +129,19 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $correspondence;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getDobString",setter="setDobString")
      * @Groups("api-poa-list")
      */
     protected $dob;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Groups("api-poa-list")
      */
     protected $dateOfDeath;
@@ -283,6 +286,31 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
+     * @param \DateTime $dob
+     * @return Person
+     */
+    public function setDob(\DateTime $dob = null)
+    {
+        $this->dob = $dob;
+        return $this;
+    }
+
+    /**
+     * @param string $dob
+     * @return Person
+     */
+    public function setDobString($dob)
+    {
+        if (!empty($dob)) {
+            $result = OPGDateFormat::createDateTime($dob);
+            if ($result) {
+                return $this->setDob($result);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @return string $dob
      */
     public function getDob()
@@ -291,33 +319,63 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @return string
      */
-    public function setDob($dob)
+    public function getDobString()
     {
-        $this->dob = $dob;
+        if (!empty($this->dob)) {
+            return $this->dob->format(OPGDateFormat::getDateFormat());
+        }
 
+        return '';
+    }
+
+    /**
+     * @param \DateTime $dateOfDeath
+     * @return Person
+     */
+    public function setDateOfDeath(\DateTime $dateOfDeath = null)
+    {
+        $this->dateOfDeath = $dateOfDeath;
         return $this;
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @param string $dateOfDeath
+     * @return Person
      */
-    public function setDateOfDeath($dateOfDeath)
+    public function setDateOfDeathString($dateOfDeath)
     {
-        $this->dateOfDeath = $dateOfDeath;
+        if (!empty($dateOfDeath)) {
 
+            $result = OPGDateFormat::createDateTime($dateOfDeath);
+
+            if ($result) {
+                return $this->setDateOfDeath($result);
+            }
+
+        }
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfDeath()
+    {
+        return $this->dateOfDeath;
     }
 
     /**
      * @return string
      */
-    public function getDateOfDeath()
+    public function getDateOfDeathString()
     {
-        return $this->dateOfDeath;
+        if (!empty($this->dateOfDeath)) {
+            return $this->dateOfDeath->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**

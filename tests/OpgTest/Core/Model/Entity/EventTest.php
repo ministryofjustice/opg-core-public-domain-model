@@ -3,6 +3,7 @@ namespace OpgTest\Core\Model\Entity\Event;
 
 use Opg\Core\Model\Entity\Event;
 use Opg\Core\Model\Entity\User\User;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Event test case.
@@ -80,14 +81,47 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedOn()
     {
-        $expected = new \DateTime();
+        $expectedDate = new \DateTime();
 
-        $this->event->setCreatedOn($expected);
+        $this->assertEmpty($this->event->getCreatedOn());
+        $this->assertEmpty($this->event->getCreatedOnString());
 
-        $this->assertEquals(
-            $expected,
-            $this->event->getCreatedOn()
-        );
+        $this->event->setCreatedOn($expectedDate);
+        $this->assertEquals($expectedDate, $this->event->getCreatedOn());
+    }
+
+    public function testGetSetCreatedOnNulls()
+    {
+        $this->assertEmpty($this->event->getCreatedOn());
+        $this->event->setCreatedOn();
+
+        $this->assertEmpty($this->event->getCreatedOn());
+    }
+
+    public function testGetSetCreatedOnEmptyString()
+    {
+        $this->assertEmpty($this->event->getCreatedOnString());
+        $this->event->setCreatedOnString('');
+        $this->assertEmpty($this->event->getCreatedOnString());
+    }
+
+    public function testGetSetCreatedOnInvalidString()
+    {
+        $this->assertEmpty($this->event->getCreatedOnString());
+        try {
+            $this->event->setCreatedOnString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetCreatedOnString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->event->setCreatedOnString($expected);
+        $this->assertEquals($expected, $this->event->getCreatedOnString());
     }
 
     public function testSetGetCreatedByUser()
