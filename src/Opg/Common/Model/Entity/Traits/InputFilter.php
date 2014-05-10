@@ -44,6 +44,7 @@ trait InputFilter
      * 2. $entity->isValid(array('firstname')) // only 'firstname' is validated
      *
      * @param array $validations
+     *
      * @return bool
      */
     public function isValid(array $validations = null)
@@ -71,9 +72,10 @@ trait InputFilter
     }
 
     /**
-     * @param string $property Name of the object property which the error is being logged against. Must exist in $this.
-     * @param string $errorName The type of error being logged e.g. InvalidFormatError.
+     * @param string $property     Name of the object property which the error is being logged against. Must exist in $this.
+     * @param string $errorName    The type of error being logged e.g. InvalidFormatError.
      * @param string $errorMessage The error message body.
+     *
      * @return object $this
      * @throws \InvalidArgumentException
      */
@@ -85,7 +87,7 @@ trait InputFilter
             throw new \InvalidArgumentException('Invalid Property: ' . $property . ' does not exist in class ' . $fullClassName);
         }
 
-        $errorArray = [ $property => [$errorName => $errorMessage]];
+        $errorArray = [$property => [$errorName => $errorMessage]];
 
         $this->errorMessages = array_merge_recursive($this->errorMessages, $errorArray);
 

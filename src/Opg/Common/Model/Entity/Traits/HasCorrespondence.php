@@ -18,21 +18,27 @@ use Opg\Core\Model\Entity\Correspondence\Correspondence as CorrespondenceEntity;
  * You will also need to initialise $correspondence to be an empty ArrayCollection in your constructor.
  * See the Person or CaseItem objects for examples.
  *
+ * Class HasCorrespondence
+ * @package Opg\Common\Model\Entity\Traits
  */
-trait HasCorrespondence {
+trait HasCorrespondence
+{
 
     /**
      * @return ArrayCollection|null
      */
-    public function getCorrespondence() {
+    public function getCorrespondence()
+    {
         return $this->correspondence;
     }
 
     /**
      * @param ArrayCollection $correspondence
+     *
      * @return $this
      */
-    public function setCorrespondence(ArrayCollection $correspondence) {
+    public function setCorrespondence(ArrayCollection $correspondence)
+    {
         $this->correspondence = $correspondence;
 
         return $this;
@@ -40,22 +46,21 @@ trait HasCorrespondence {
 
     /**
      * @param CorrespondenceEntity $correspondence
+     *
      * @return $this
      */
-    public function addCorrespondence(CorrespondenceEntity $correspondence) {
+    public function addCorrespondence(CorrespondenceEntity $correspondence)
+    {
         // @codeCoverageIgnoreStart
         if (is_null($this->correspondence)) {
             $this->correspondence = new ArrayCollection();
         }
         // @codeCoverageIgnoreEnd
 
-        if(!$this->correspondence->contains($correspondence)) {
+        if (!$this->correspondence->contains($correspondence)) {
             $this->correspondence->add($correspondence);
         }
 
         return $this;
     }
-
-
-
 }
