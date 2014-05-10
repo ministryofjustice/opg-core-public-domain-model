@@ -19,7 +19,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationshipToDonor
 {
     use ToArray {
         toArray as traitToArray;
@@ -67,11 +67,13 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
 
     /**
      * @param string $occupation
+     *
      * @return Attorney
      */
     public function setOccupation($occupation)
     {
         $this->occupation = $occupation;
+
         return $this;
     }
 
@@ -122,32 +124,37 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
      *
      * @return array
      */
-    public function toArray($exposeClassname = TRUE) {
+    public function toArray($exposeClassname = true)
+    {
         return $this->traitToArray($exposeClassname);
     }
 
     /**
      * @param \DateTime $lpa002SignatureDate
+     *
      * @return Attorney
      */
     public function setLpa002SignatureDate(\DateTime $lpa002SignatureDate = null)
     {
         $this->lpa002SignatureDate = $lpa002SignatureDate;
+
         return $this;
     }
 
     /**
      * @param string $lpa002SignatureDate
+     *
      * @return Attorney
      */
     public function setLpa002SignatureDateString($lpa002SignatureDate)
     {
         if (!empty($lpa002SignatureDate)) {
-            $result = OPGDateFormat::createDateTime( $lpa002SignatureDate);
+            $result = OPGDateFormat::createDateTime($lpa002SignatureDate);
             if ($result) {
                 return $this->setLpa002SignatureDate($result);
             }
         }
+
         return $this;
     }
 
@@ -173,26 +180,30 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
 
     /**
      * @param \DateTime $lpaPartCSignatureDate
+     *
      * @return Attorney
      */
     public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
     {
         $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
+
         return $this;
     }
 
     /**
      * @param string $lpaPartCSignatureDate
+     *
      * @return Lpa
      */
     public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
     {
         if (!empty($lpaPartCSignatureDate)) {
-            $result = OPGDateFormat::createDateTime( $lpaPartCSignatureDate);
+            $result = OPGDateFormat::createDateTime($lpaPartCSignatureDate);
             if ($result) {
                 return $this->setLpaPartCSignatureDate($result);
             }
         }
+
         return $this;
     }
 
@@ -218,11 +229,13 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
 
     /**
      * @param int $isAttorneyApplyingToRegister
+     *
      * @return Attorney
      */
     public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = self::OPTION_FALSE)
     {
         $this->isAttorneyApplyingToRegister = $isAttorneyApplyingToRegister;
+
         return $this;
     }
 
@@ -233,6 +246,4 @@ class Attorney extends AttorneyAbstract implements  PartyInterface, HasRelations
     {
         return $this->isAttorneyApplyingToRegister;
     }
-
-
 }

@@ -1,8 +1,5 @@
 <?php
-
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
-
 
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -20,7 +17,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 class ReplacementAttorney extends AttorneyAbstract
 {
     use ExchangeArray;
-    use ToArray{
+    use ToArray {
         toArray as traitToArray;
     }
 
@@ -55,16 +52,19 @@ class ReplacementAttorney extends AttorneyAbstract
 
     /**
      * @param boolean $isReplacementAttorney
+     *
      * @return Attorney
      */
     public function setIsReplacementAttorney($isReplacementAttorney)
     {
         $this->isReplacementAttorney = $isReplacementAttorney;
+
         return $this;
     }
 
     /**
      * @param \DateTime $lpaPartCSignatureDate
+     *
      * @return Lpa
      */
     public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
@@ -73,17 +73,19 @@ class ReplacementAttorney extends AttorneyAbstract
             $lpaPartCSignatureDate = new \DateTime();
         }
         $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
+
         return $this;
     }
 
     /**
      * @param string $lpaPartCSignatureDate
+     *
      * @return Lpa
      */
     public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
     {
         if (!empty($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = OPGDateFormat::createDateTime( $lpaPartCSignatureDate);
+            $lpaPartCSignatureDate = OPGDateFormat::createDateTime($lpaPartCSignatureDate);
 
             if ($lpaPartCSignatureDate) {
                 $this->setLpaPartCSignatureDate($lpaPartCSignatureDate);
@@ -112,5 +114,4 @@ class ReplacementAttorney extends AttorneyAbstract
 
         return '';
     }
-
 }

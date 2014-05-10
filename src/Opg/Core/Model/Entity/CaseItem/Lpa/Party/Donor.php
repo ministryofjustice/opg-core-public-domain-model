@@ -107,11 +107,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param string $previousNames
+     *
      * @return Donor
      */
     public function setPreviousNames($previousNames)
     {
         $this->previousNames = $previousNames;
+
         return $this;
     }
 
@@ -125,11 +127,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $cannotSignForm
+     *
      * @return Donor
      */
     public function setCannotSignForm($cannotSignForm)
     {
         $this->cannotSignForm = $cannotSignForm;
+
         return $this;
     }
 
@@ -143,11 +147,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $applyingForFeeRemission
+     *
      * @return Donor
      */
     public function setApplyingForFeeRemission($applyingForFeeRemission)
     {
         $this->applyingForFeeRemission = $applyingForFeeRemission;
+
         return $this;
     }
 
@@ -161,11 +167,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $receivingBenefits
+     *
      * @return Donor
      */
     public function setReceivingBenefits($receivingBenefits)
     {
         $this->receivingBenefits = $receivingBenefits;
+
         return $this;
     }
 
@@ -179,11 +187,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $receivedDamageAward
+     *
      * @return Donor
      */
     public function setReceivedDamageAward($receivedDamageAward)
     {
         $this->receivedDamageAward = $receivedDamageAward;
+
         return $this;
     }
 
@@ -197,16 +207,19 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $hasLowIncome
+     *
      * @return Donor
      */
     public function setHasLowIncome($hasLowIncome)
     {
         $this->hasLowIncome = $hasLowIncome;
+
         return $this;
     }
 
     /**
      * @param \DateTime $signatureDate
+     *
      * @return Donor
      */
     public function setSignatureDate(\DateTime $signatureDate = null)
@@ -215,17 +228,19 @@ class Donor extends BasePerson implements PartyInterface
             $signatureDate = new \DateTime();
         }
         $this->signatureDate = $signatureDate;
+
         return $this;
     }
 
     /**
      * @param string $signatureDate
+     *
      * @return Lpa
      */
     public function setSignatureDateString($signatureDate)
     {
         if (!empty($signatureDate)) {
-            $signatureDate = OPGDateFormat::createDateTime( $signatureDate);
+            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
 
             if ($signatureDate) {
                 $this->setSignatureDate($signatureDate);
@@ -265,11 +280,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $hasPreviousLpa
+     *
      * @return Donor
      */
     public function setHasPreviousLpa($hasPreviousLpa)
     {
         $this->hasPreviousLpa = $hasPreviousLpa;
+
         return $this;
     }
 
@@ -283,11 +300,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param string $notesForPreviousLpa
+     *
      * @return Donor
      */
     public function setNotesForPreviousLpa($notesForPreviousLpa)
     {
         $this->notesForPreviousLpa = $notesForPreviousLpa;
+
         return $this;
     }
 
@@ -296,7 +315,8 @@ class Donor extends BasePerson implements PartyInterface
      *
      * @return array
      */
-    public function toArray($exposeClassname = TRUE) {
+    public function toArray($exposeClassname = true)
+    {
         return $this->traitToArray($exposeClassname);
     }
 }

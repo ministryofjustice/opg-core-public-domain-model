@@ -36,6 +36,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
 
     /**
      * @param \DateTime $notifiedDate
+     *
      * @return Lpa
      */
     public function setNotifiedDate(\DateTime $notifiedDate = null)
@@ -44,17 +45,19 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
             $notifiedDate = new \DateTime();
         }
         $this->notifiedDate = $notifiedDate;
+
         return $this;
     }
 
     /**
      * @param string $notifiedDate
+     *
      * @return Lpa
      */
     public function setNotifiedDateString($notifiedDate)
     {
         if (!empty($notifiedDate)) {
-            $notifiedDate = OPGDateFormat::createDateTime( $notifiedDate);
+            $notifiedDate = OPGDateFormat::createDateTime($notifiedDate);
 
             if ($notifiedDate) {
                 $this->setNotifiedDate($notifiedDate);
@@ -89,13 +92,13 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
      */
     public function getInputFilter()
     {
@@ -120,8 +123,8 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
                                     ),
                                     // @codeCoverageIgnoreStart
                                     'callback' => function () {
-                                        return $this->hasAttachedCase();
-                                    }
+                                            return $this->hasAttachedCase();
+                                        }
                                     // @codeCoverageIgnoreEnd
                                 )
                             )
