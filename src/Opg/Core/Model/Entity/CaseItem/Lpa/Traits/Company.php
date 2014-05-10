@@ -1,13 +1,12 @@
 <?php
-
-/**
- * @package Opg Core Domain Model
- */
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Company
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Traits
+ */
 trait Company
 {
     /**
@@ -34,11 +33,13 @@ trait Company
 
     /**
      * @param string $companyName
+     *
      * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
      */
     public function setCompanyName($companyName)
     {
         $this->companyName = $companyName;
+
         return $this;
     }
 
@@ -52,11 +53,13 @@ trait Company
 
     /**
      * @param string $companyNumber
+     *
      * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
      */
     public function setCompanyNumber($companyNumber)
     {
         $this->companyNumber = $companyNumber;
+
         return $this;
     }
 }
