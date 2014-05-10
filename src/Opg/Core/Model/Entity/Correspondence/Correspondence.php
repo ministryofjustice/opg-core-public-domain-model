@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Model\Entity\Correspondence;
 
 use Zend\InputFilter\InputFilter;
