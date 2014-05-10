@@ -5,6 +5,10 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 
 use Opg\Common\Exception\UnusedException;
 
+/**
+ * Class PowerOfAttorneyFactory
+ * @package Opg\Core\Model\Entity\PowerOfAttorney
+ */
 class PowerOfAttorneyFactory
 {
     /**
@@ -34,4 +38,3 @@ class PowerOfAttorneyFactory
         return $poa;
     }
 }
-
