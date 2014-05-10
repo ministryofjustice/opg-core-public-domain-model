@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Listener;
 
 use Doctrine\Common\EventSubscriber;
@@ -18,6 +17,10 @@ use Opg\Common\Model\Entity\HasUidInterface;
  */
 class UidSettingListener implements EventSubscriber
 {
+
+    /**
+     * @return array
+     */
     public function getSubscribedEvents()
     {
         return array(
@@ -26,6 +29,9 @@ class UidSettingListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $event
+     */
     public function prePersist(LifecycleEventArgs $event)
     {
         $entity = $event->getEntity();
@@ -35,6 +41,12 @@ class UidSettingListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param Connection $con
+     *
+     * @return int
+     * @throws \LogicException
+     */
     private function nextId(Connection $con)
     {
         $con->executeQuery("INSERT INTO uids () VALUES ()");
@@ -48,9 +60,12 @@ class UidSettingListener implements EventSubscriber
             throw new \LogicException('The maximum number of UIDs has been reached.');
         }
 
-        return 700000000000 + (integer) $uid;
+        return 700000000000 + (integer)$uid;
     }
 
+    /**
+     * @param GenerateSchemaEventArgs $event
+     */
     public function postGenerateSchema(GenerateSchemaEventArgs $event)
     {
         $schema = $event->getSchema();
