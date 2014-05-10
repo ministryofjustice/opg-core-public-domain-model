@@ -91,9 +91,9 @@ class Event implements EntityInterface
 
     public function __construct($owningEntityId = null, $owningEntityClass = null, array $changeset = null)
     {
-        $this->owningEntityId = $owningEntityId;
+        $this->owningEntityId    = $owningEntityId;
         $this->owningEntityClass = $owningEntityClass;
-        $this->changeset = $changeset;
+        $this->changeset         = $changeset;
     }
 
     public function getOwningEntityId()
@@ -108,16 +108,19 @@ class Event implements EntityInterface
 
     /**
      * @param \DateTime $createdOn
+     *
      * @return Event
      */
     public function setCreatedOn(\DateTime $createdOn = null)
     {
         $this->createdOn = $createdOn;
+
         return $this;
     }
 
     /**
      * @param string $createdOn
+     *
      * @return Event
      */
     public function setCreatedOnString($createdOn)
@@ -128,6 +131,7 @@ class Event implements EntityInterface
                 return $this->setCreatedOn($result);
             }
         }
+
         return $this;
     }
 
@@ -178,7 +182,7 @@ class Event implements EntityInterface
 
     public function hasChangeset()
     {
-        return ! empty($this->changeset);
+        return !empty($this->changeset);
     }
 
     /**
@@ -223,7 +227,7 @@ class Event implements EntityInterface
 
     /**
      * @return string
-    */
+     */
     public function getSourceTable()
     {
         return $this->sourceTable;
@@ -286,15 +290,8 @@ class Event implements EntityInterface
         throw new \Exception('Not used yet');
     }
 
-//    public function setEntity($entity)
-//    {
-//        $this->entity = $entity->toArray(!false);
-//        return $this;
-//    }
-//
     public function getEntity()
     {
         return $this->entity;
     }
-
 }
