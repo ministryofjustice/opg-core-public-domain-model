@@ -117,6 +117,7 @@ class Task implements EntityInterface, \IteratorAggregate
 
     /**
      * @param \DateTime $dueDate
+     *
      * @return Task
      */
     public function setDueDate(\DateTime $dueDate = null)
@@ -125,17 +126,19 @@ class Task implements EntityInterface, \IteratorAggregate
             $dueDate = new \DateTime();
         }
         $this->dueDate = $dueDate;
+
         return $this;
     }
 
     /**
      * @param string $dueDate
+     *
      * @return Task
      */
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime( $dueDate);
+            $dueDate = OPGDateFormat::createDateTime($dueDate);
 
             if ($dueDate) {
                 $this->setDueDate($dueDate);
@@ -345,6 +348,7 @@ class Task implements EntityInterface, \IteratorAggregate
                                     'callback' => function ($value, $context = array()) {
                                             $dueDate = $value;
                                             $now     = new \DateTime();
+
                                             return $now <= $dueDate;
                                         }
                                 )
@@ -374,6 +378,11 @@ class Task implements EntityInterface, \IteratorAggregate
         return $this->inputFilter;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return $this|EntityInterface
+     */
     public function exchangeArray(array $data)
     {
         if (!empty($data['id'])) {

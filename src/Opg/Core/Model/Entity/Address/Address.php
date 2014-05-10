@@ -163,6 +163,7 @@ class Address implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $addressLine
+     *
      * @return Address
      */
     public function setAddressLine($addressLine)
@@ -254,6 +255,7 @@ class Address implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $type
+     *
      * @return Address
      */
     public function setType($type)
@@ -273,6 +275,7 @@ class Address implements EntityInterface, \IteratorAggregate
 
     /**
      * @param int $id
+     *
      * @return Address
      */
     public function setId($id)
@@ -318,6 +321,7 @@ class Address implements EntityInterface, \IteratorAggregate
      * @param string $delim
      * @param int    $showPerson
      * @param int    $personFormat
+     *
      * @return string
      */
     public function toString($delim = "\n", $showPerson = self::EXCLUDE_PERSON, $personFormat = self::DEFAULT_FORMAT)
@@ -344,13 +348,13 @@ class Address implements EntityInterface, \IteratorAggregate
         }
 
         // Tidy lines, disregard empty ones.
-        $trimmedLines = array_map('trim', $this->getAddressLines());
+        $trimmedLines   = array_map('trim', $this->getAddressLines());
         $trimmedLines[] = trim($this->getTown());
         $trimmedLines[] = trim($this->getCounty());
         $trimmedLines[] = trim($this->getPostcode());
         $trimmedLines[] = trim($this->getCountry());
 
-        foreach($trimmedLines as $line) {
+        foreach ($trimmedLines as $line) {
             if (!empty($line)) {
                 $address[] = $line;
             }

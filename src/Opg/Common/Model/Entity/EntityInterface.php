@@ -11,12 +11,14 @@ interface EntityInterface extends InputFilterAwareInterface
 {
     /**
      * @param bool exposeClassname
+     *
      * @return array
      */
-    public function toArray($exposeClassname = FALSE);
+    public function toArray($exposeClassname = false);
 
     /**
      * @param array $data
+     *
      * @return EntityInterface
      */
     public function exchangeArray(array $data);

@@ -4,28 +4,37 @@ namespace Opg\Common\Model\Entity\Traits;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
 
-// Companion trait to the HasNotesInterface
-trait HasNotes {
-
-    // Note that this trait does not define "protected $notes;"
-    // This is because each class which implements HasNotesInterface requires it's
-    // own doctrine annotation to define the join table.
-    // You will also need to initialise $notes to be an empty ArrayCollection in your constructor.
-    // See the Person or CaseItem objects for examples.
-
+/**
+ * Class HasNotes
+ *
+ * Companion trait to the HasNotesInterface
+ *
+ * Note that this trait does not define "protected $notes;"
+ * This is because each class which implements HasNotesInterface requires it's
+ * own doctrine annotation to define the join table.
+ * You will also need to initialise $notes to be an empty ArrayCollection in your constructor.
+ *s See the Person or CaseItem objects for examples.
+ *
+ * @package Opg\Common\Model\Entity\Traits
+ */
+trait HasNotes
+{
 
     /**
      * @return ArrayCollection|null
      */
-    public function getNotes() {
+    public function getNotes()
+    {
         return $this->notes;
     }
 
     /**
      * @param  ArrayCollection $notes
+     *
      * @return ArrayCollection|null
      */
-    public function setNotes(ArrayCollection $notes) {
+    public function setNotes(ArrayCollection $notes)
+    {
         $this->notes = $notes;
 
         return $this;
@@ -33,14 +42,16 @@ trait HasNotes {
 
     /**
      * @param NoteEntity $note
+     *
      * @return $this
      */
-    public function addNote(NoteEntity $note) {
+    public function addNote(NoteEntity $note)
+    {
         if (is_null($this->notes)) {
             $this->notes = new ArrayCollection();
         }
 
-        if(!$this->notes->contains($note)) {
+        if (!$this->notes->contains($note)) {
             $this->notes->add($note);
         }
 
@@ -49,9 +60,11 @@ trait HasNotes {
 
     /**
      * @param ArrayCollection $notes
+     *
      * @return $this
      */
-    public function addNotes(ArrayCollection $notes) {
+    public function addNotes(ArrayCollection $notes)
+    {
         foreach ($notes as $note) {
             $this->addNote($note);
         }

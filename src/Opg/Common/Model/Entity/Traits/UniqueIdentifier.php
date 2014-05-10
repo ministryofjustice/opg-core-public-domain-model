@@ -1,10 +1,16 @@
 <?php
 namespace Opg\Common\Model\Entity\Traits;
+
 use JMS\Serializer\Annotation\Type;
 
-trait UniqueIdentifier {
+/**
+ * Class UniqueIdentifier
+ * @package Opg\Common\Model\Entity\Traits
+ */
+trait UniqueIdentifier
+{
 
-     /**
+    /**
      * This is a 12 digit integer unique within the entire system & starts with a 7
      *
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
@@ -21,6 +27,7 @@ trait UniqueIdentifier {
     public function setUid($uid)
     {
         $this->uId = $uid;
+
         return $this;
     }
 

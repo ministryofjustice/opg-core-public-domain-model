@@ -6,11 +6,11 @@ use Zend\Validator\AbstractValidator;
 /**
  * Class CaseItems
  * @package Opg\Core\Model\Entity\CaseItem\Validation\Validator
- * @todo Figure out where to put this, currently is validating in CaseItem.php
+ * @todo    Figure out where to put this, currently is validating in CaseItem.php
  */
 class CaseItems extends AbstractValidator
 {
-    const NO_CASEITEMS_FOUND       = 'noCaseItemsFound';
+    const NO_CASEITEMS_FOUND = 'noCaseItemsFound';
 
     /**
      * @var array
@@ -35,6 +35,7 @@ class CaseItems extends AbstractValidator
 
         if ($caseItemCount == 0) {
             $this->error(self::NO_CASEITEMS_FOUND);
+
             return false;
         }
 

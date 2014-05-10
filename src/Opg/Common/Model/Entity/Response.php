@@ -27,21 +27,25 @@ class Response implements \IteratorAggregate
 
     /**
      * @param $data
+     *
      * @return Response
      */
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
     /**
      * @param $additionalData
+     *
      * @return Response
      */
     public function setAdditionalData($additionalData)
     {
         $this->additionalData = $additionalData;
+
         return $this;
     }
 
@@ -49,6 +53,7 @@ class Response implements \IteratorAggregate
     /**
      * @param string $data
      * @param string $additionalData
+     *
      * @return Response
      */
     public function setJsonData($data, $additionalData = null)
@@ -59,7 +64,7 @@ class Response implements \IteratorAggregate
 
         if (!is_null($additionalData)) {
             $this->setAdditionalData(
-              json_decode($additionalData)
+                json_decode($additionalData)
             );
         }
 
@@ -84,14 +89,14 @@ class Response implements \IteratorAggregate
 
     /**
      * @param array $data
+     *
      * @return Response
      */
     public function exchangeArray(array $data)
     {
-        empty($data['data'])?: $this->setData($data['data']);
-        empty($data['additionalData'])?: $this->setAdditionalData($data['additionalData']);
+        empty($data['data']) ? : $this->setData($data['data']);
+        empty($data['additionalData']) ? : $this->setAdditionalData($data['additionalData']);
 
         return $this;
     }
-
 }

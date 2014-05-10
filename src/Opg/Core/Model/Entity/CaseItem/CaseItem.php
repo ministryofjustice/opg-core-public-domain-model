@@ -1,8 +1,4 @@
 <?php
-
-/**
- * @package Opg Core Domain Model
- */
 namespace Opg\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,6 +30,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\MappedSuperclass
+ * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface, HasCorrespondenceInterface
 {
@@ -53,9 +50,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * Constants below are for payment types radio buttons, we use 0
      * as default
      */
-    const PAYMENT_OPTION_NOT_SET   = 0;
-    const PAYMENT_OPTION_FALSE     = 1;
-    const PAYMENT_OPTION_TRUE      = 2;
+    const PAYMENT_OPTION_NOT_SET = 0;
+    const PAYMENT_OPTION_FALSE   = 1;
+    const PAYMENT_OPTION_TRUE    = 2;
 
 
     /**
@@ -223,21 +220,25 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         if (!empty($this->dueDate)) {
             return $this->dueDate->format(OPGDateFormat::getDateFormat());
         }
+
         return '';
     }
 
     /**
      * @param \DateTime $dueDate
+     *
      * @return CaseItem
      */
     public function setDueDate(\DateTime $dueDate)
     {
         $this->dueDate = $dueDate;
+
         return $this;
     }
 
     /**
      * @param $dueDate
+     *
      * @return $this
      */
     public function setDueDateString($dueDate)
@@ -249,6 +250,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
                 $this->setDueDate($dueDate);
             }
         }
+
         return $this;
     }
 
@@ -335,7 +337,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  Task  $task
+     * @param  Task $task
+     *
      * @return $this
      */
     public function addTask(Task $task)
@@ -348,6 +351,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  Document $document
+     *
      * @return $this
      */
     public function addDocument(Document $document)
@@ -365,6 +369,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $tasks
+     *
      * @return CaseItem
      */
     public function setTasks(ArrayCollection $tasks)
@@ -378,6 +383,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $documents
+     *
      * @return CaseItem
      */
     public function setDocuments(ArrayCollection $documents)
@@ -392,7 +398,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @TODO is this still required?
      *
-     * @param  array    $data
+     * @param  array $data
+     *
      * @return CaseItem
      */
     public function exchangeArray(array $data)
@@ -425,7 +432,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             $this->documents = null;
             foreach ($data['documents'] as $documentData) {
                 $newDocument = new Document();
-                $this->addDocument(is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData));
+                $this->addDocument(
+                    is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData)
+                );
             }
         }
 
@@ -449,7 +458,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $title
+     * @param  string $title
+     *
      * @return CaseItem
      */
     public function setTitle($title)
@@ -460,7 +470,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  int   $id
+     * @param  int $id
+     *
      * @return CaseItem
      */
     public function setId($id)
@@ -488,6 +499,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $caseItems
+     *
      * @return CaseItem
      */
     public function setCaseItems(ArrayCollection $caseItems)
@@ -501,6 +513,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  CaseItem $item
+     *
      * @return CaseItem
      */
     public function addCaseItem(CaseItem $item)
@@ -531,20 +544,22 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  array    $taskStatus
+     * @param  array $taskStatus
+     *
      * @return CaseItem
      */
     public function setTaskStatus(array $taskStatus)
     {
         foreach ($taskStatus as $item) {
-            $this->taskStatus[str_replace(' ' ,'',$item['status'])] = $item['counter'];
+            $this->taskStatus[str_replace(' ', '', $item['status'])] = $item['counter'];
         }
 
         return $this;
     }
 
     /**
-     * @param  Person   $person
+     * @param  Person $person
+     *
      * @return CaseItem
      */
     abstract public function addPerson(Person $person);
@@ -559,6 +574,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param $oldCaseId
+     *
      * @return CaseItem
      */
     public function setOldCaseId($oldCaseId)
@@ -577,7 +593,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $applicationType
+     * @param  string $applicationType
+     *
      * @return CaseItem
      */
     public function setApplicationType($applicationType)
@@ -591,6 +608,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  \DateTime $closedDate
+     *
      * @return CaseItem
      */
     public function setClosedDate(\DateTime $closedDate = null)
@@ -603,6 +621,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $closedDate
+     *
      * @return Lpa
      */
     public function setClosedDateString($closedDate)
@@ -639,7 +658,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  \DateTime  $registrationDate
+     * @param  \DateTime $registrationDate
+     *
      * @return CaseItem
      */
     public function setRegistrationDate(\DateTime $registrationDate)
@@ -651,13 +671,14 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $registrationDate
+     *
      * @return CaseItem
      */
     public function setRegistrationDateString($registrationDate)
     {
         if (!empty($registrationDate)) {
 
-            $registrationDate = OPGDateFormat::createDateTime( $registrationDate);
+            $registrationDate = OPGDateFormat::createDateTime($registrationDate);
 
             if ($registrationDate) {
                 $this->setRegistrationDate($registrationDate);
@@ -686,5 +707,4 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
         return '';
     }
-
 }

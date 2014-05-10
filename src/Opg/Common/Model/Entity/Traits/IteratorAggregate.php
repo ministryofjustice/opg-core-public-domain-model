@@ -4,7 +4,7 @@ namespace Opg\Common\Model\Entity\Traits;
 /**
  * Class IteratorAggregate
  *
- * @see ToArray
+ * @see     ToArray
  *
  * @package Opg\Common\Model\Entity\Traits
  */

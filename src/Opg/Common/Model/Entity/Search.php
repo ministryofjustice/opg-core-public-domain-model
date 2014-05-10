@@ -26,11 +26,12 @@ class Search implements EntityInterface, \IteratorAggregate
 
     /**
      * @param array $data
+     *
      * @return Search
      */
     public function exchangeArray(array $data)
     {
-        empty($data['query'])?: $this->setQuery($data['query']);
+        empty($data['query']) ? : $this->setQuery($data['query']);
 
         return $this;
     }
@@ -83,6 +84,7 @@ class Search implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $query
+     *
      * @return Search
      */
     public function setQuery($query)

@@ -57,9 +57,9 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * Constants below are for yes/no radio buttons, we use 0
      * as default
      */
-    const OPTION_NOT_SET   = 0;
-    const OPTION_FALSE     = 1;
-    const OPTION_TRUE      = 2;
+    const OPTION_NOT_SET = 0;
+    const OPTION_FALSE   = 1;
+    const OPTION_TRUE    = 2;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -204,6 +204,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  \Opg\Core\Model\Entity\Address\Address $address
+     *
      * @return Person
      */
     public function addAddress(Address $address = null)
@@ -216,11 +217,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $addresses
+     *
      * @return Person
      */
     public function setAddresses(ArrayCollection $addresses)
     {
-        $this->addresses =  $addresses;
+        $this->addresses = $addresses;
 
         return $this;
     }
@@ -254,7 +256,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $email
+     * @param  string $email
+     *
      * @return PartyInterface
      */
     public function setEmail($email)
@@ -275,7 +278,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $id
+     * @param  string $id
+     *
      * @return PartyInterface
      */
     public function setId($id)
@@ -287,16 +291,19 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param \DateTime $dob
+     *
      * @return Person
      */
     public function setDob(\DateTime $dob = null)
     {
         $this->dob = $dob;
+
         return $this;
     }
 
     /**
      * @param string $dob
+     *
      * @return Person
      */
     public function setDobString($dob)
@@ -307,6 +314,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
                 return $this->setDob($result);
             }
         }
+
         return $this;
     }
 
@@ -332,16 +340,19 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param \DateTime $dateOfDeath
+     *
      * @return Person
      */
     public function setDateOfDeath(\DateTime $dateOfDeath = null)
     {
         $this->dateOfDeath = $dateOfDeath;
+
         return $this;
     }
 
     /**
      * @param string $dateOfDeath
+     *
      * @return Person
      */
     public function setDateOfDeathString($dateOfDeath)
@@ -355,6 +366,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             }
 
         }
+
         return $this;
     }
 
@@ -397,7 +409,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $salutation
+     * @param  string $salutation
+     *
      * @return PartyInterface
      */
     public function setTitle($salutation)
@@ -418,7 +431,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $salutation
+     * @param  string $salutation
+     *
      * @return PartyInterface
      */
     public function setSalutation($salutation)
@@ -439,7 +453,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $firstname
+     * @param  string $firstname
+     *
      * @return PartyInterface
      */
     public function setFirstname($firstname)
@@ -460,7 +475,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $middlenames
+     * @param  string $middlenames
+     *
      * @return PartyInterface
      */
     public function setMiddlename($middlenames)
@@ -481,6 +497,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param string
+     *
      * @return PartyInterface
      */
     public function setSurname($surname)
@@ -493,6 +510,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      *
      * @param  \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
+     *
      * @throws Exception
      * @return Person
      */
@@ -506,7 +524,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             }
             // @codeCoverageIgnoreEnd
             if (!$this->powerOfAttorneys->contains($case)) {
-               $this->powerOfAttorneys->add($case);
+                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
             // @codeCoverageIgnoreStart
@@ -535,23 +553,26 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->powerOfAttorneys)) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->powerOfAttorneys;
     }
 
     public function getCases()
     {
-        return array ($this->getPowerOfAttorneys(), $this->getDeputyships());
+        return array($this->getPowerOfAttorneys(), $this->getDeputyships());
     }
+
     /**
      * @param  ArrayCollection $cases
+     *
      * @return PartyInterface
      */
     public function setCases(ArrayCollection $cases)
     {
-       foreach ($cases as $case) {
-           $this->addCase($case);
-       }
+        foreach ($cases as $case) {
+            $this->addCase($case);
+        }
     }
 
     /**
@@ -564,12 +585,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->deputyships)) {
             $this->deputyships = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->deputyships;
     }
 
     /**
      * @param  PhoneNumber $phoneNumber
+     *
      * @return $this
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber)
@@ -582,6 +605,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $phoneNumbers
+     *
      * @return $this
      */
     public function setPhoneNumbers(ArrayCollection $phoneNumbers)
@@ -611,6 +635,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  InputFilterInterface $inputFilter
+     *
      * @return return               Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -650,7 +675,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function hasAttachedCase()
     {
         return
-            (bool) (
+            (bool)(
                 ($this->getPowerOfAttorneys()->count() > 0)
                 |
                 ($this->getDeputyships()->count() > 0)

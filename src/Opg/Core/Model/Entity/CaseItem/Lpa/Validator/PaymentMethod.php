@@ -13,11 +13,13 @@ class PaymentMethod extends InArray
     public function __construct()
     {
         $this->setStrict(InArray::COMPARE_STRICT);
-        
-        $this->setHaystack([
-            'CARD',
-            'CHEQUE',
-            'BACS',
-        ]);
+
+        $this->setHaystack(
+            [
+                'CARD',
+                'CHEQUE',
+                'BACS',
+            ]
+        );
     }
 }

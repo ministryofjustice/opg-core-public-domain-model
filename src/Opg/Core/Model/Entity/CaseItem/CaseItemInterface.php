@@ -6,6 +6,10 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use \Opg\Core\Model\Entity\User\User;
 
+/**
+ * Interface CaseItemInterface
+ * @package Opg\Core\Model\Entity\CaseItem
+ */
 interface CaseItemInterface
 {
     /**
@@ -93,5 +97,4 @@ interface CaseItemInterface
      * @param Document $document
      */
     public function addDocument(Document $document);
-
 }

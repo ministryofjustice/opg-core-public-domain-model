@@ -12,6 +12,8 @@ use \Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
  * This is currently best guess so we need to ensure we have a unique way of identifying each
  * applicant type
  *
+ * Class ApplicantFactory
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
  */
 class ApplicantFactory
 {
@@ -24,35 +26,30 @@ class ApplicantFactory
      */
     public static function createApplicant(array $data)
     {
-        $applicant = null;
+        $applicant     = null;
         $applicantType = null;
 
-        if(!empty($data['className'])) {
-            if($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor") {
+        if (!empty($data['className'])) {
+            if ($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor") {
                 $applicantType = new Donor();
-                $applicant = $applicantType->exchangeArray($data);
-            }
-            elseif($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney") {
+                $applicant     = $applicantType->exchangeArray($data);
+            } elseif ($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney") {
                 $applicantType = new Attorney();
-                $applicant = $applicantType->exchangeArray($data);
-            }
-            elseif($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider") {
+                $applicant     = $applicantType->exchangeArray($data);
+            } elseif ($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider") {
                 $applicantType = new CertificateProvider();
-                $applicant = $applicantType->exchangeArray($data);
-            }
-            elseif($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\NotifiedPerson") {
+                $applicant     = $applicantType->exchangeArray($data);
+            } elseif ($data['className'] === "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\NotifiedPerson") {
                 $applicantType = new NotifiedPerson();
-                $applicant = $applicantType->exchangeArray($data);
-            }
-            else {
+                $applicant     = $applicantType->exchangeArray($data);
+            } else {
                 $applicantType = new Correspondent();
-                $applicant = $applicantType->exchangeArray($data);
+                $applicant     = $applicantType->exchangeArray($data);
             }
-        }
-        else {
+        } else {
             throw new \Exception('Cannot build unknown person type.');
         }
+
         return $applicant;
     }
 }
-
