@@ -52,7 +52,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor", fetch = "EAGER")
      * @var Donor
      * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
      */
     protected $donor;

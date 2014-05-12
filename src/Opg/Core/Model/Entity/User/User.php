@@ -38,7 +38,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Type("integer")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
@@ -46,7 +46,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
 
@@ -54,7 +54,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string");
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
 
@@ -62,7 +62,7 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
 
@@ -117,12 +117,14 @@ class User implements EntityInterface, \IteratorAggregate
      * @var string
      * @Exclude
      * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $token;
 
     /**
      * @var boolean
      * @Type("boolean")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $locked;
 
