@@ -15,6 +15,7 @@ final class DateFormat
 
     const REGEXP_DATE_TIME = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
 
+    const REGEXP_MYSQL_DATE_TIME = '/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
     /**
      * @var string
      */
@@ -24,6 +25,11 @@ final class DateFormat
      * @var string
      */
     protected static $DateTimeFormat = 'd/m/Y H:i:s';
+
+    /**
+     * @var string
+     */
+    protected static $DateTimeMysqlExport = 'Y-d-m H:i:s';
 
     /**
      * @return string
@@ -55,6 +61,10 @@ final class DateFormat
 
         if (preg_match(self::REGEXP_DATE_TIME, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getDateTimeFormat(), $strDateTime);
+        }
+
+        if (preg_match(self::REGEXP_MYSQL_DATE_TIME, trim($strDateTime))) {
+            return \DateTime::createFromFormat(self::$DateTimeMysqlExport, $strDateTime);
         }
 
         throw new InvalidDateFormatException(
