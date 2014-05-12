@@ -1,6 +1,6 @@
 <?php
-
 namespace Opg\Core\Listener;
+
 use Opg\Core\Model\Entity\User\User;
 
 /**

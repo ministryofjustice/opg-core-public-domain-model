@@ -1,9 +1,10 @@
 <?php
-
-
 namespace Opg\Common\Exception;
 
-
+/**
+ * Class InvalidParameterValueException
+ * @package Opg\Common\Exception
+ */
 class InvalidParameterValueException extends \Exception
 {
     /**
@@ -12,15 +13,15 @@ class InvalidParameterValueException extends \Exception
     protected $attributeName;
 
     /**
-     * @param string     $entity
-     * @param string     $identifier
-     * @param int        $code
-     * @param string     $attribute
+     * @param string $entity
+     * @param string $identifier
+     * @param int    $code
+     * @param string $attribute
      */
     public function __construct($entity, $identifier, $code, $attribute)
     {
         $this->attributeName = $attribute;
-        parent::__construct( sprintf( "Unable to load %s with identifier: %d", $entity, $identifier ), $code);
+        parent::__construct(sprintf("Unable to load %s with identifier: %d", $entity, $identifier), $code);
     }
 
     /**

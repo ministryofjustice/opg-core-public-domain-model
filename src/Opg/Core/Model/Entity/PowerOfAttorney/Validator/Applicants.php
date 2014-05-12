@@ -19,11 +19,11 @@ class Applicants extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::INVALID_PARTY_TYPE =>
+        self::INVALID_PARTY_TYPE        =>
             'Only donors or attorneys are allowed as applicants',
         self::INVALID_PARTY_COMBINATION =>
             'An applicant collection must be either (a) a donor, or (b) one or more attorneys',
-        self::NO_APPLICANTS_FOUND =>
+        self::NO_APPLICANTS_FOUND       =>
             'There must be at least one applicant'
     );
 
@@ -44,23 +44,25 @@ class Applicants extends AbstractValidator
 
         $applicantCount = count($applicants);
 
-        $donorCount = 0;
+        $donorCount    = 0;
         $attorneyCount = 0;
 
         foreach ($applicants as $applicant) {
 
             if ($applicant instanceof \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor) {
-                $donorCount ++;
+                $donorCount++;
             } elseif ($applicant instanceof \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney) {
-                $attorneyCount ++;
+                $attorneyCount++;
             } else {
                 $this->error(self::INVALID_PARTY_TYPE);
+
                 return false;
             }
         }
 
         if ($donorCount >= 1 && $applicantCount > 1) {
             $this->error(self::INVALID_PARTY_COMBINATION);
+
             return false;
         }
 

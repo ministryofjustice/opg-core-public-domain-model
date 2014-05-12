@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Common\Model\Entity;
 
 /**
@@ -16,6 +15,7 @@ interface HasSystemStatusInterface
 
     /**
      * @param boolean $active
+     *
      * @return HasSystemStatusInterface
      */
     public function setSystemStatus($active);

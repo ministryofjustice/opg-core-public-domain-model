@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Listener;
 
 use Doctrine\Common\EventSubscriber;
@@ -34,9 +33,13 @@ class ElasticSynchronizationListener implements EventSubscriber
     private $caseIndex;
     private $serviceLocator;
 
+    /**
+     * @param Client $client
+     * @param        $caseIndex
+     */
     public function __construct(Client $client, $caseIndex)
     {
-        $this->client = $client;
+        $this->client    = $client;
         $this->caseIndex = $caseIndex;
     }
 
@@ -44,6 +47,7 @@ class ElasticSynchronizationListener implements EventSubscriber
      * Set serviceManager instance
      *
      * @param  ServiceLocatorInterface $serviceLocator
+     *
      * @return ElasticSynchronizationListener
      */
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
@@ -70,6 +74,9 @@ class ElasticSynchronizationListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param OnFlushEventArgs $event
+     */
     public function onFlush(OnFlushEventArgs $event)
     {
         $changedCases = $this->collectChangedCases($event);
@@ -82,8 +89,7 @@ class ElasticSynchronizationListener implements EventSubscriber
 
             try {
                 $this->client->delete($params);
-            }
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->getServiceLocator()
                     ->get('Logger')
                     ->warn(
@@ -103,7 +109,9 @@ class ElasticSynchronizationListener implements EventSubscriber
                                     'json',
                                     SerializationContext::create()->enableMaxDepthChecks()
                                 )
-                            , true)
+                            ,
+                            true
+                        )
                     ),
                     $params
                 )
@@ -112,7 +120,9 @@ class ElasticSynchronizationListener implements EventSubscriber
     }
 
     /**
-     * @return CaseItem[]
+     * @param OnFlushEventArgs $event
+     *
+     * @return array
      */
     private function collectChangedCases(OnFlushEventArgs $event)
     {
@@ -126,6 +136,11 @@ class ElasticSynchronizationListener implements EventSubscriber
         return $changedCases;
     }
 
+    /**
+     * @param UnitOfWork $uow
+     *
+     * @return array
+     */
     private function computeDirtyEntities(UnitOfWork $uow)
     {
         $dirtyEntities = array_merge(
@@ -134,8 +149,11 @@ class ElasticSynchronizationListener implements EventSubscriber
             $uow->getScheduledEntityDeletions()
         );
 
-        foreach (array_merge($uow->getScheduledCollectionUpdates(), $uow->getScheduledCollectionDeletions()) as $collection) {
-            if ( ! $collection instanceof PersistentCollection) {
+        foreach (array_merge(
+                     $uow->getScheduledCollectionUpdates(),
+                     $uow->getScheduledCollectionDeletions()
+                 ) as $collection) {
+            if (!$collection instanceof PersistentCollection) {
                 continue;
             }
 
@@ -149,6 +167,12 @@ class ElasticSynchronizationListener implements EventSubscriber
         return $dirtyEntities;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     *
+     * @return array
+     */
     private function getCasesForEntity(EntityManager $em, $entity)
     {
         if ($entity instanceof CaseItem) {
@@ -168,6 +192,11 @@ class ElasticSynchronizationListener implements EventSubscriber
         return array();
     }
 
+    /**
+     * @param Person $person
+     *
+     * @return array
+     */
     private function getCasesForPerson(Person $person)
     {
         $cases = array_merge(
@@ -178,26 +207,57 @@ class ElasticSynchronizationListener implements EventSubscriber
         return $cases;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Page          $page
+     *
+     * @return array
+     */
     private function getCasesForPage(EntityManager $em, Page $page)
     {
         return $this->getCasesForDocument($em, $page->getDocument());
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Document      $document
+     *
+     * @return array
+     */
     private function getCasesForDocument(EntityManager $em, Document $document)
     {
         return $this->getCasesByAssociationMembership($em, $document, 'documents');
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Note          $note
+     *
+     * @return array
+     */
     private function getCasesForNote(EntityManager $em, Note $note)
     {
         return $this->getCasesByAssociationMembership($em, $note, 'notes');
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Task          $task
+     *
+     * @return array
+     */
     private function getCasesForTask(EntityManager $em, Task $task)
     {
         return $this->getCasesByAssociationMembership($em, $task, 'tasks');
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     * @param               $associationName
+     *
+     * @return array
+     */
     private function getCasesByAssociationMembership(EntityManager $em, $entity, $associationName)
     {
         // If the entity has not been inserted into the database just yet, we cannot determine
@@ -208,17 +268,25 @@ class ElasticSynchronizationListener implements EventSubscriber
             return array();
         }
 
-        $pas = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE :entity MEMBER OF c.".$associationName)
+        $pas = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney c WHERE :entity MEMBER OF c." . $associationName
+        )
             ->setParameter('entity', $entity)
             ->getResult();
 
-        $deputyships = $em->createQuery("SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE :entity MEMBER OF c.".$associationName)
+        $deputyships = $em->createQuery(
+            "SELECT c FROM Opg\Core\Model\Entity\Deputyship\Deputyship c WHERE :entity MEMBER OF c." . $associationName
+        )
             ->setParameter('entity', $entity)
             ->getResult();
 
         return array_merge($pas, $deputyships);
     }
 
+    /**
+     * @param array $cases
+     * @param array $caseItems
+     */
     private function addCases(array &$cases, array $caseItems)
     {
         foreach ($caseItems as $item) {

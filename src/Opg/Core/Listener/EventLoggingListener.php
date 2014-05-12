@@ -46,6 +46,10 @@ class EventLoggingListener implements EventSubscriber
      */
     private $userIdentityProvider;
 
+    /**
+     * @param UserIdentityProvider $identityProvider
+     * @param array                $config
+     */
     public function __construct(UserIdentityProvider $identityProvider, array $config = null)
     {
         $this->userIdentityProvider = $identityProvider;
@@ -71,6 +75,9 @@ class EventLoggingListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $event
+     */
     public function postLoad(LifecycleEventArgs $event)
     {
         if (in_array('READ', $this->config['events'])) {
@@ -78,11 +85,17 @@ class EventLoggingListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $event
+     */
     public function postPersist(LifecycleEventArgs $event)
     {
         $this->persistedEntities[] = $event->getEntity();
     }
 
+    /**
+     * @param PostFlushEventArgs $event
+     */
     public function postFlush(PostFlushEventArgs $event)
     {
         if (in_array('INS', $this->config['events'])) {
@@ -95,6 +108,9 @@ class EventLoggingListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param PreUpdateEventArgs $event
+     */
     public function preUpdate(PreUpdateEventArgs $event)
     {
         if (in_array('UPD', $this->config['events'])) {
@@ -103,6 +119,9 @@ class EventLoggingListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $event
+     */
     public function preRemove(LifecycleEventArgs $event)
     {
         if (in_array('DEL', $this->config['events'])) {
@@ -110,6 +129,12 @@ class EventLoggingListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param EntityManager $em
+     * @param array         $changeset
+     *
+     * @return array
+     */
     private function prepareChangeset(EntityManager $em, array $changeset)
     {
         $simpleChangeset = array();
@@ -125,6 +150,12 @@ class EventLoggingListener implements EventSubscriber
         return $simpleChangeset;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $value
+     *
+     * @return array
+     */
     private function simplifyValue(EntityManager $em, $value)
     {
         if (is_object($value) && $em->contains($value)) {
@@ -139,6 +170,12 @@ class EventLoggingListener implements EventSubscriber
         return $value;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     * @param               $type
+     * @param array         $entityChangeset
+     */
     private function recordEvent(EntityManager $em, $entity, $type, array $entityChangeset = null)
     {
         $currentUser  = $this->userIdentityProvider->getUserIdentity();
@@ -165,6 +202,12 @@ class EventLoggingListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     *
+     * @return mixed|null
+     */
     private function findOwningEntity(EntityManager $em, $entity)
     {
         //@TODO move to a 'switch'
@@ -197,6 +240,14 @@ class EventLoggingListener implements EventSubscriber
         return null;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     * @param               $attributeName
+     *
+     * @return mixed
+     * @throws \LogicException
+     */
     private function getAssociatedPerson(EntityManager $em, $entity, $attributeName)
     {
         $personObject = $em->createQuery(
@@ -212,11 +263,24 @@ class EventLoggingListener implements EventSubscriber
         throw new \LogicException('Could not find the person this entity was attached to ' . $attributeName);
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Task          $task
+     *
+     * @return mixed
+     */
     private function findOwningEntityForTask(EntityManager $em, Task $task)
     {
         return $this->getCaseByAssociationMembership($em, $task, 'tasks');
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Note          $note
+     *
+     * @return mixed|null
+     * @throws \LogicException
+     */
     private function findOwningEntityForNote(EntityManager $em, Note $note)
     {
         $return = null;
@@ -241,6 +305,12 @@ class EventLoggingListener implements EventSubscriber
         return $return;
     }
 
+    /**
+     * @param EntityManager $em
+     * @param Document      $document
+     *
+     * @return mixed
+     */
     private function findOwningEntityForDocument(EntityManager $em, Document $document)
     {
         return $this->getCaseByAssociationMembership($em, $document, 'documents');
@@ -269,6 +339,14 @@ class EventLoggingListener implements EventSubscriber
         throw new \LogicException(sprintf('Could not find case entity for class "%s".', ClassUtils::getClass($entity)));
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     * @param               $associationName
+     *
+     * @return mixed
+     * @throws \LogicException
+     */
     private function getCaseByAssociationMembership(EntityManager $em, $entity, $associationName)
     {
         $poa = $em->createQuery(
@@ -292,6 +370,13 @@ class EventLoggingListener implements EventSubscriber
         throw new \LogicException(sprintf('Could not find case entity for class "%s".', ClassUtils::getClass($entity)));
     }
 
+    /**
+     * @param EntityManager $em
+     * @param               $entity
+     *
+     * @return int
+     * @throws \LogicException
+     */
     private function getIdentifier(EntityManager $em, $entity)
     {
         $compositeIdentifier = $em->getMetadataFactory()->getMetadataFor(
@@ -309,6 +394,13 @@ class EventLoggingListener implements EventSubscriber
         return (integer)$id;
     }
 
+    /**
+     * @param EntityManager  $em
+     * @param Correspondence $correspondence
+     *
+     * @return mixed|null
+     * @throws \LogicException
+     */
     private function findOwningEntityForCorrespondence(EntityManager $em, Correspondence $correspondence)
     {
         $return = null;

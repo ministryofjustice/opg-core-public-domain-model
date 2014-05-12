@@ -36,7 +36,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
      * @Type("integer")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
@@ -45,7 +45,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
      * @Type("Opg\Core\Model\Entity\User\User")
-     * @Serializer\Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $assignedUser;
 
@@ -53,7 +53,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
 
@@ -61,7 +61,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $priority;
 
@@ -70,7 +70,7 @@ class Task implements EntityInterface, \IteratorAggregate
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDueDateString",setter="setDueDateString")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dueDate;
 
@@ -78,13 +78,14 @@ class Task implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $name;
 
     /**
      * Non persistable entity, used for validation of create
      * @var CaseItem case
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $case;
 
@@ -117,6 +118,7 @@ class Task implements EntityInterface, \IteratorAggregate
 
     /**
      * @param \DateTime $dueDate
+     *
      * @return Task
      */
     public function setDueDate(\DateTime $dueDate = null)
@@ -125,17 +127,19 @@ class Task implements EntityInterface, \IteratorAggregate
             $dueDate = new \DateTime();
         }
         $this->dueDate = $dueDate;
+
         return $this;
     }
 
     /**
      * @param string $dueDate
+     *
      * @return Task
      */
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime( $dueDate);
+            $dueDate = OPGDateFormat::createDateTime($dueDate);
 
             if ($dueDate) {
                 $this->setDueDate($dueDate);
@@ -345,6 +349,7 @@ class Task implements EntityInterface, \IteratorAggregate
                                     'callback' => function ($value, $context = array()) {
                                             $dueDate = $value;
                                             $now     = new \DateTime();
+
                                             return $now <= $dueDate;
                                         }
                                 )
@@ -374,6 +379,11 @@ class Task implements EntityInterface, \IteratorAggregate
         return $this->inputFilter;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return $this|EntityInterface
+     */
     public function exchangeArray(array $data)
     {
         if (!empty($data['id'])) {

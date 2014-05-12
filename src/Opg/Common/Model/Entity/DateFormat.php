@@ -1,7 +1,7 @@
 <?php
-
-
 namespace Opg\Common\Model\Entity;
+
+use Opg\Common\Model\Entity\Exception\InvalidDateFormatException;
 
 /**
  * Class DateFormat
@@ -9,9 +9,6 @@ namespace Opg\Common\Model\Entity;
  *
  * A standard definition on our dateTime formats as strings
  */
-
-use Opg\Common\Model\Entity\Exception\InvalidDateFormatException;
-
 final class DateFormat
 {
     const REGEXP_DATE_ONLY = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/';
@@ -41,11 +38,12 @@ final class DateFormat
      */
     public static function getDateTimeFormat()
     {
-       return self::$DateTimeFormat;
+        return self::$DateTimeFormat;
     }
 
     /**
      * @param $strDateTime
+     *
      * @return \DateTime
      * @throws Exception\InvalidDateFormatException
      */
@@ -59,7 +57,8 @@ final class DateFormat
             return \DateTime::createFromFormat(self::getDateTimeFormat(), $strDateTime);
         }
 
-        throw new InvalidDateFormatException("'{$strDateTime}' was not in the expected format "
-            . self::getDateTimeFormat());
+        throw new InvalidDateFormatException(
+            "'{$strDateTime}' was not in the expected format " . self::getDateTimeFormat()
+        );
     }
 }

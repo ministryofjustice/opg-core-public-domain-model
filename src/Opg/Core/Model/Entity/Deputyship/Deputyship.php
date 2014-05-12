@@ -1,5 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\Deputyship;
+
 use Opg\Common\Model\Entity\Traits\ToArray;
 
 use Opg\Common\Model\Entity\Traits\InputFilter;
@@ -30,4 +31,3 @@ abstract class Deputyship extends CaseItem
      */
     protected $notes;
 }
-

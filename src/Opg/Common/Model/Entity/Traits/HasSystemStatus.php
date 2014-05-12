@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +15,7 @@ trait HasSystemStatus
      * @var bool
      * @Type("boolean")
      */
-    protected $systemStatus =true;
+    protected $systemStatus = true;
 
     /**
      * @return bool
@@ -28,11 +27,13 @@ trait HasSystemStatus
 
     /**
      * @param bool $status
+     *
      * @return HasSystemStatusInterface
      */
     public function setSystemStatus($status)
     {
-        $this->systemStatus = (bool) $status;
+        $this->systemStatus = (bool)$status;
+
         return $this;
     }
 

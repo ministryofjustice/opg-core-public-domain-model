@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Defines an interface for reponsible parties declared
  * as part of a Lasting Power of Attorney registration
  *
- * @package Opg Core Domain Model
- *
+ * Interface PartyInterface
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
  */
 interface PartyInterface
 {
