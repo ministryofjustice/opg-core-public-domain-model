@@ -65,7 +65,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Type("integer")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
@@ -73,7 +73,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
 
@@ -133,7 +133,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDobString",setter="setDobString")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dob;
 
@@ -142,7 +142,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dateOfDeath;
 
@@ -150,7 +150,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
@@ -159,7 +159,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
 
@@ -167,7 +167,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $middlenames;
 
@@ -175,7 +175,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
 

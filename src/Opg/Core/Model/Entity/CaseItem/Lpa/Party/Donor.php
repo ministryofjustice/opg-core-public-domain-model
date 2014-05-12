@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -44,36 +45,42 @@ class Donor extends BasePerson implements PartyInterface
      * @ORM\Column(type = "string")
      * @var string
      * @Type("string")
+     * @Groups("api-task-list")
      */
     protected $previousNames;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $cannotSignForm;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $applyingForFeeRemission;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $receivingBenefits;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $receivedDamageAward;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $hasLowIncome;
 
@@ -82,18 +89,21 @@ class Donor extends BasePerson implements PartyInterface
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
+     * @Groups("api-task-list")
      */
     protected $signatureDate;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $hasPreviousLpa;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-task-list")
      */
     protected $notesForPreviousLpa;
 
