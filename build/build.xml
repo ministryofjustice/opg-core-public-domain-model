@@ -2,7 +2,7 @@
 
 <project name="opg-core-back-end" default="build">
 
-    <target name="build" depends="clean,prepare,lint,phpunit,phpmd-ci,phpcs-ci,phpcpd,phpcb,phpdocs"/>
+    <target name="build" depends="clean,prepare,lint,phpunit,phpmd-ci,phpcs-ci,phpcpd,phpcb"/>
 
     <target name="clean">
         <delete dir="${basedir}/output"/>
