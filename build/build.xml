@@ -128,13 +128,4 @@
         </exec>
     </target>
 
-    <!--    <target name="phpdocs">
-            <exec executable="${basedir}/../vendor/bin/phpdoc.php" failonerror="false">
-                <arg line="--log '${basedir}/output/logs/phpdocs.log'
-                     -t '${basedir}/output/phpdocs'
-                     -d '${basedir}/../src'" />
-            </exec>
-        </target> -->
-
-
     </project>
