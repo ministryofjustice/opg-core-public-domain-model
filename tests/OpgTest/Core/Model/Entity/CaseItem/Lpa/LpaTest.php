@@ -481,10 +481,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'attorneyDeclarationSignatoryFullName'      => null,
                 'correspondentComplianceAssertion'          => 1,
                 'certificateProviders'                      => array(),
-                'paymentByDebitCreditCard'                  => false,
-                'paymentByCheque'                           => false,
-                'feeExemptionAppliedFor'                    => false,
-                'feeRemissionAppliedFor'                    => false,
+                'paymentByDebitCreditCard'                  => 0,
+                'paymentByCheque'                           => 0,
+                'feeExemptionAppliedFor'                    => 0,
+                'feeRemissionAppliedFor'                    => 0,
                 'caseAttorneySingular'                      => false,
                 'caseAttorneyJointlyAndSeverally'           => false,
                 'caseAttorneyJointly'                       => false,
@@ -495,12 +495,14 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'applicationType'                           => 0,
                 'registrationDate'                          => null,
                 'closedDate'                                => null,
-                'lifeSustainingTreatment'                   => false,
+                'lifeSustainingTreatment'                   => null,
                 'lifeSustainingTreatmentSignatureDate'      => null,
                 'notificationDate'                          => null,
                 'dispatchDate'                              => null,
                 'noticeGivenDate'                           => null,
-                'correspondence'                            => null
+                'correspondence'                            => null,
+                'ragRating'                                 => null,
+                'ragTotal'                                  => null
             ),
             $lpa->toArrayRecursive()
         );

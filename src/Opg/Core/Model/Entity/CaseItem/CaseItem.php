@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasCorrespondenceInterface;
+use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
@@ -32,7 +33,8 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\MappedSuperclass
  * @package Opg\Core\Model\Entity\CaseItem
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface, HasCorrespondenceInterface
+abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
+    HasNotesInterface, HasCorrespondenceInterface, HasRagRating
 {
     use ToArray;
     use HasNotes;
@@ -195,6 +197,22 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ReadOnly
      */
     protected $taskStatus = [];
+
+    /**
+     * Non persistable entity
+     * @var int
+     * @ReadOnly
+     * @Accessor(getter="getRagRating")
+     */
+    protected $ragRating;
+
+    /**
+     * Non persistable entity
+     * @var int
+     * @ReadOnly
+     * @Accessor(getter="getRagTotal")
+     */
+    protected $ragTotal;
 
     public function __construct()
     {
@@ -706,5 +724,44 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return '';
+    }
+
+    /**
+     * @return int
+     */
+    public function getRagRating()
+    {
+        $rag = array(
+            '1' => 0,
+            '2' => 0,
+            '3' => 0
+        );
+
+        foreach ($this->tasks as $taskItem) {
+            $rag[$taskItem->getRagRating()]++;
+        }
+
+        //Apply rules
+        if (($rag['3'] >= 1) || $rag['2'] > 2) {
+            return 3;
+        }
+        elseif ($rag['2'] >= 1) {
+            return 2;
+        }
+        return 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRagTotal()
+    {
+       $total = 0;
+
+        foreach ($this->tasks as $taskItem) {
+            $total += $taskItem->getRagRating();
+        }
+
+        return $total;
     }
 }

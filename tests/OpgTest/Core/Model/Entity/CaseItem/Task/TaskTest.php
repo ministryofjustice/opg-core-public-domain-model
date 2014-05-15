@@ -27,7 +27,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         'assignedUser'  => null,
         'priority'      => 'high',
         'errorMessages' => array(),
-        'case'          => null
+        'case'          => null,
+        'ragRating'     => null
     );
 
     /**
