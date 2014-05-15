@@ -679,7 +679,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaCreatedDateString()
     {
-        $expected = date(OPGDateFormat::getDateTimeFormat());
+        $expected = date(OPGDateFormat::getDateFormat());
 
         $this->assertEmpty($this->lpa->getLpaCreatedDateString());
         $this->lpa->setLpaCreatedDateString($expected);
