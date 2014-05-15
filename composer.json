@@ -20,7 +20,14 @@
 		"phpunit/phpunit": "3.7.*",
 		"mockery/mockery" : "0.8.0",
 		"phpdocumentor/phpdocumentor" : "2.*",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "phpmd/phpmd" : "1.4.*",
+        "pdepend/pdepend" : "1.1.0",
+        "phploc/phploc"   : "2.0.5",
+        "squizlabs/php_codesniffer": "1.5.3",
+        "sebastian/phpdcd": "1.0.2",
+        "sebastian/phpcpd": "2.0.1",
+        "mayflower/php-codebrowser": "1.1.0"
 	},
 	"autoload" : {
 		"psr-0" : {
