@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Task;
 
+use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\User\User;
@@ -12,6 +13,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\ReadOnly;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -26,7 +28,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @author  Chris Moreton
  *
  */
-class Task implements EntityInterface, \IteratorAggregate
+class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 {
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
@@ -89,9 +91,17 @@ class Task implements EntityInterface, \IteratorAggregate
      */
     protected $case;
 
+    /**
+     * Non persistable entity
+     * @var int
+     * @Groups({"api-poa-list","api-task-list"})
+     * @ReadOnly
+     * @Accessor(getter="getRagRating")
+     */
+    protected $ragRating;
+
     public function __construct()
     {
-        $now = new \DateTime();
         $this->setCreatedTime();
     }
 
@@ -150,7 +160,7 @@ class Task implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return string $dueDate
+     * @return \DateTime $dueDate
      */
     public function getDueDate()
     {
@@ -429,5 +439,26 @@ class Task implements EntityInterface, \IteratorAggregate
         $this->case = $case;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRagRating()
+    {
+        $dateDiff = $this->getDueDate()->diff(new \DateTime);
+
+        $daysOffset = $dateDiff->days;
+        if($dateDiff->invert == 1) {
+            $daysOffset *= -1;
+        }
+
+        if ($daysOffset > 0) {
+            return 3;
+        }
+        elseif ($daysOffset < 0) {
+            return 1;
+        }
+        return 2;
     }
 }
