@@ -29,7 +29,7 @@ final class DateFormat
     /**
      * @var string
      */
-    protected static $DateTimeMysqlExport = 'Y-d-m H:i:s';
+    protected static $DateTimeMysqlExport = 'Y-m-d H:i:s';
 
     /**
      * @return string
