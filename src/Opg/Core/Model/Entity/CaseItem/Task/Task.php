@@ -173,7 +173,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function getDueDateString()
     {
         if (!empty($this->dueDate)) {
-            return $this->dueDate->format(OPGDateFormat::getDateFormat());
+            return $this->getDueDate()->format(OPGDateFormat::getDateFormat());
         }
 
         return '';
