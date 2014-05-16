@@ -434,7 +434,7 @@ class Lpa extends PowerOfAttorney
     public function getLpaCreatedDateString()
     {
         if (!empty($this->lpaCreatedDate)) {
-            return $this->lpaCreatedDate->format(OPGDateFormat::getDateTimeFormat());
+            return $this->lpaCreatedDate->format(OPGDateFormat::getDateFormat());
         }
 
         return '';

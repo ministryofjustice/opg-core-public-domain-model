@@ -2,7 +2,7 @@
 
 <project name="opg-core-back-end" default="build">
 
-    <target name="build" depends="clean,prepare,phpunit,phpmd-ci,phpcs-ci,phpcpd,phpcb,phpdocs"/>
+    <target name="build" depends="clean,prepare,phpunit,phpmd-ci,phpcs-ci,phpcpd,phpcb"/>
 
     <target name="clean">
         <delete dir="${basedir}/output"/>
@@ -41,7 +41,7 @@
     </target>
 
     <target name="phpunit">
-        <exec executable="phpunit" failonerror="true">
+        <exec executable="${basedir}/../vendor/bin/phpunit" failonerror="true">
             <arg line="--configuration '${basedir}/../tests/phpunit.xml'
                --log-junit '${basedir}/output/logs/junit.xml'
                --coverage-clover '${basedir}/output/coverage/clover.xml'
@@ -67,8 +67,8 @@
     </target>
     
     <target name="phpmd">
-        <exec executable="phpmd" failonerror="false">
-            <arg line="'${basedir}/../src/Application'
+        <exec executable="${basedir}/../vendor/bin/phpmd" failonerror="false">
+            <arg line="'${basedir}/../src/OPG'
               text
               --reportfile 
               '${basedir}/output/phpmd/phpmd-report.txt'
@@ -77,8 +77,8 @@
     </target>
     
     <target name="phpmd-ci">
-        <exec executable="phpmd" failonerror="false" output="/dev/null">
-            <arg line="'${basedir}/../src/Application'
+        <exec executable="${basedir}/../vendor/bin/phpmd" failonerror="false" output="/dev/null">
+            <arg line="'${basedir}/../src/OPG'
             '${basedir}/../src/Opg'
               xml
               '${basedir}/phpmd.xml'
@@ -88,7 +88,7 @@
     </target> 
     
     <target name="phpdcd">
-        <exec executable="phpdcd" failonerror="false">
+        <exec executable="${basedir}/../vendor/bin/phpdcd" failonerror="false">
             <arg line="'${basedir}/../src/'
             --reportfile
             '${basedir}/output/phpdcd/phpdcd.txt'" />
@@ -96,7 +96,7 @@
     </target>
     
     <target name="phpcs">
-        <exec executable="phpcs" failonerror="false">
+        <exec executable="${basedir}/../vendor/bin/phpcs" failonerror="false">
             <arg line="--standard='${basedir}/phpcs.xml'
             --report=full
             --report-file='${basedir}/output/phpcs/checkstyle.txt'
@@ -105,7 +105,7 @@
     </target>
     
     <target name="phpcs-ci">
-        <exec executable="phpcs" failonerror="false" output="/dev/null">
+        <exec executable="${basedir}/../vendor/bin/phpcs" failonerror="false" output="/dev/null">
             <arg line="--report=checkstyle
               --report-file='${basedir}/output/phpcs/checkstyle.xml'
               --standard='${basedir}/phpcs.xml'
@@ -114,27 +114,18 @@
     </target>   
     
     <target name="phpcpd">
-        <exec executable="phpcpd" failonerror="false">
+        <exec executable="${basedir}/../vendor/bin/phpcpd" failonerror="false">
             <arg line="--log-pmd '${basedir}/output/phpcpd/php-cpd.xml'
               '${basedir}/../src/'" />
         </exec>
     </target>
 
     <target name="phpcb">
-        <exec executable="phpcb" failonerror="false">
+        <exec executable="${basedir}/../vendor/bin/phpcb" failonerror="false">
             <arg line="
                  --output '${basedir}/output/code-browser'
                  --source '${basedir}/../src'" />
         </exec>
     </target>
-    
-    <target name="phpdocs">
-        <exec executable="${basedir}/../vendor/bin/phpdoc.php" failonerror="false">
-            <arg line="--log '${basedir}/output/logs/phpdocs.log'
-                 -t '${basedir}/output/phpdocs'
-                 -d '${basedir}/../src'" />
-        </exec>
-    </target>
-    
-    
-</project>
+
+    </project>

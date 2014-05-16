@@ -203,6 +203,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagRating")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragRating;
 
@@ -211,6 +212,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagTotal")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragTotal;
 
@@ -737,8 +739,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             '3' => 0
         );
 
-        foreach ($this->tasks as $taskItem) {
-            $rag[$taskItem->getRagRating()]++;
+        if(!empty($tasks)) {
+            foreach ($this->tasks as $taskItem) {
+                $rag[$taskItem->getRagRating()]++;
+            }
         }
 
         //Apply rules
@@ -756,10 +760,12 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getRagTotal()
     {
-       $total = 0;
+        $total = 0;
 
-        foreach ($this->tasks as $taskItem) {
-            $total += $taskItem->getRagRating();
+        if(!empty($tasks)) {
+            foreach ($this->tasks as $taskItem) {
+                $total += $taskItem->getRagRating();
+            }
         }
 
         return $total;
