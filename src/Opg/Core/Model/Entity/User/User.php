@@ -107,21 +107,18 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $token;
 
     /**
      * @var boolean
-     * @Type("boolean")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $locked;
 
     /**
      * @param boolean $locked
-     *
      * @return User
      */
     public function setLocked($locked)

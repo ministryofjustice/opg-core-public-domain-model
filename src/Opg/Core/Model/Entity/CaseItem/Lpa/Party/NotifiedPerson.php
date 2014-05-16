@@ -28,7 +28,6 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
      */
     protected $notifiedDate;

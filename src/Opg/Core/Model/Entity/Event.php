@@ -53,7 +53,6 @@ class Event implements EntityInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getCreatedOnString",setter="setCreatedOnString")
      */
     protected $createdOn;
