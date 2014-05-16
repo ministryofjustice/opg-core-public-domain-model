@@ -82,7 +82,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string description
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $description;
