@@ -57,7 +57,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
 
     /**
-     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Id
+     * @Type("integer")
      * @var int autoincrementID
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
@@ -66,6 +68,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
+     * @Type("integer")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $oldCaseId;
@@ -73,6 +76,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
+     * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
@@ -80,6 +84,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
+     * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $title;
@@ -87,6 +92,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $caseType;
@@ -94,6 +100,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $caseSubtype;
@@ -128,6 +135,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
@@ -136,6 +144,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\MaxDepth(1)
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
      * @var User
+     * @Type("Opg\Core\Model\Entity\User\User")
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */
