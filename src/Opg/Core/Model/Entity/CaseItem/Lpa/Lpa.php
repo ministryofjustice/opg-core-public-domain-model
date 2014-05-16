@@ -11,10 +11,10 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -33,7 +33,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $caseType = CaseTypeValidator::CASE_TYPE_LPA;
@@ -41,7 +40,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "integer",options={"default":1}, name="ascertained_by")
      * @var integer
-     * @Type("string")
      * @Accessor(getter="getLpaAccuracyAscertainedBy",setter="setLPaAccuracyAscertainedBy")
      * @Groups("api-task-list")
      */
@@ -50,8 +48,8 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getLpaDonorSignatureDateString",setter="setLpaDonorSignatureDateString")
+     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $lpaDonorSignatureDate;
@@ -59,7 +57,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $lpaDonorSignatoryFullName;
@@ -67,7 +64,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var bool
-     * @Type("boolean")
      * @Groups("api-task-list")
      */
     protected $donorHasPreviousLpas = false;
@@ -75,7 +71,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $previousLpaInfo;
@@ -92,7 +87,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $lpaDonorDeclarationSignatoryFullName;
@@ -118,7 +112,6 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $lifeSustainingTreatment;

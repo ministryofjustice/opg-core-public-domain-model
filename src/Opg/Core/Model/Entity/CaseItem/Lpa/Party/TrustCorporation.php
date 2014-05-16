@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 
@@ -23,7 +22,6 @@ class TrustCorporation extends AttorneyAbstract
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $trustCorporationAppointedAs;
 

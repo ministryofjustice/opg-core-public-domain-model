@@ -18,11 +18,11 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
@@ -64,7 +64,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
@@ -72,7 +71,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
@@ -86,7 +84,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @var ArrayCollection
      * @MaxDepth(5)
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Lpa>")
      * @ReadOnly
      */
     protected $powerOfAttorneys;
@@ -99,7 +96,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @MaxDepth(5)
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Deputyship\Deputyship>")
      * @ReadOnly
      */
     protected $deputyships;
@@ -111,7 +107,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      * @ReadOnly
      */
     protected $notes;
@@ -123,7 +118,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
      * @ReadOnly
      */
     protected $correspondence;
@@ -131,8 +125,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getDobString",setter="setDobString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dob;
@@ -140,8 +134,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dateOfDeath;
@@ -149,7 +143,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
@@ -158,7 +151,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
@@ -166,7 +158,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $middlenames;
@@ -174,7 +165,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
@@ -182,14 +172,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Address\Address>")
      */
     protected $addresses;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\PhoneNumber\PhoneNumber>")
      */
     protected $phoneNumbers;
 

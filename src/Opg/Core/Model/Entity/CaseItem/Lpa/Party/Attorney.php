@@ -9,8 +9,8 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -30,7 +30,6 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      */
     protected $occupation;
 
@@ -53,7 +52,6 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type = "integer", nullable = true)
      * @var int
-     * @Type("integer")
      */
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 

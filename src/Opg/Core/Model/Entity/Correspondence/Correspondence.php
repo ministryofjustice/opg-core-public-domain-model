@@ -5,7 +5,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -45,28 +44,24 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @type("string")
      */
     protected $recipientName;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @type("string")
      */
     protected $address;
 
     /**
      * Don't persist this
      * @var CaseItem $case
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Lpa")
      */
     protected $case;
 
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      */
     protected $person;
 

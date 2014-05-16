@@ -8,7 +8,6 @@ use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -30,7 +29,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      */
     protected $id;
 
@@ -38,28 +36,24 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
     /**
      * @ORM\Column(type = "string", name="phone_number")
      * @var string
-     * @Type("string")
      */
     protected $phoneNumber;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $type = 'Work';
 
     /**
      * @ORM\Column(type = "boolean", name="is_default")
      * @var boolean
-     * @Type("boolean")
      */
     protected $default = false;
 

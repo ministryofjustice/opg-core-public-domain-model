@@ -9,11 +9,11 @@ use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -37,7 +37,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
-     * @Type("integer")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
@@ -46,7 +45,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      * @Serializer\MaxDepth(2)
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $assignedUser;
@@ -54,7 +52,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
@@ -62,7 +59,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $priority;
@@ -70,8 +66,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getDueDateString",setter="setDueDateString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dueDate;
@@ -79,7 +75,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $name;
@@ -87,7 +82,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string description
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $description;
