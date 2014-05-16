@@ -80,7 +80,16 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $name;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string description
+     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $description;
+
+    /**
      * Non persistable entity, used for validation of create
+     *
      * @var CaseItem case
      * @Groups({"api-poa-list","api-task-list"})
      */
@@ -88,6 +97,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * Non persistable entity
+     *
      * @var int
      * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
@@ -399,6 +409,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
             $this->setName($data['name']);
         }
 
+        if (!empty($data['description'])) {
+            $this->setDescription($data['description']);
+        }
+
         if (!empty($data['dueDate'])) {
             $this->setDueDate($data['dueDate']);
         }
@@ -444,16 +458,32 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
         $dateDiff = $this->getDueDate()->diff(new \DateTime);
 
         $daysOffset = $dateDiff->days;
-        if($dateDiff->invert == 1) {
+        if ($dateDiff->invert == 1) {
             $daysOffset *= -1;
         }
 
         if ($daysOffset > 0) {
             return 3;
-        }
-        elseif ($daysOffset < 0) {
+        } elseif ($daysOffset < 0) {
             return 1;
         }
+
         return 2;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

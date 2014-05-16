@@ -24,6 +24,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         'id'            => '123',
         'status'        => 'Registered',
         'name'          => 'Test name',
+        'description'   => 'Test Description',
         'assignedUser'  => null,
         'priority'      => 'high',
         'errorMessages' => array(),
@@ -193,6 +194,18 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $taskname,
             $this->task->getName()
+        );
+    }
+
+    public function testGetSetDescription()
+    {
+        $taskdesc = 'Test Description';
+
+        $this->task->setDescription($taskdesc);
+
+        $this->assertEquals(
+            $taskdesc,
+            $this->task->getDescription()
         );
     }
 
