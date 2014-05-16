@@ -6,6 +6,10 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use \Opg\Core\Model\Entity\User\User;
 
+/**
+ * Interface CaseItemInterface
+ * @package Opg\Core\Model\Entity\CaseItem
+ */
 interface CaseItemInterface
 {
     /**
@@ -14,9 +18,9 @@ interface CaseItemInterface
     public function getDueDate();
 
     /**
-     * @param string $dueDate
+     * @param \DateTime $dueDate
      */
-    public function setDueDate($dueDate);
+    public function setDueDate(\DateTime $dueDate);
 
     /**
      * @return string $caseType
@@ -93,5 +97,4 @@ interface CaseItemInterface
      * @param Document $document
      */
     public function addDocument(Document $document);
-
 }

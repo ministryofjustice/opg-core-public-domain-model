@@ -17,11 +17,11 @@ class PersonFactory
         //@Todo once we have implemented this properly, remove this failsafe
         $data['personType'] = (isset($data['personType'])) ? $data['personType'] : 'Donor';
 
-        if(!empty($data['personType'])) {
+        if (!empty($data['personType'])) {
             switch ($data['personType']) {
                 case "Attorney" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney";
-                     break;
+                    break;
                 case "ReplacementAttorney" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\ReplacementAttorney";
                     break;
@@ -41,8 +41,7 @@ class PersonFactory
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
                     break;
             }
-        }
-        else {
+        } else {
             throw new \Exception('Cannot build unknown person type.');
         }
 

@@ -1,9 +1,12 @@
 <?php
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class RelationshipToDonor
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\Traits
+ */
 trait RelationshipToDonor
 {
     /**
@@ -22,11 +25,13 @@ trait RelationshipToDonor
 
     /**
      * @param string
+     *
      * @return PartyInterface
      */
     public function setRelationshipToDonor($relationshipToDonor)
     {
         $this->relationshipToDonor = $relationshipToDonor;
+
         return $this;
     }
 }

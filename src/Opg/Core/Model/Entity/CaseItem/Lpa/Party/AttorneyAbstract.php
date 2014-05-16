@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
@@ -9,7 +7,6 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
-
 
 /**
  * Class AttorneyAbstract
@@ -34,11 +31,13 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
 
     /**
      * @param string $dxExchange
+     *
      * @return AttorneyAbstract
      */
     public function setDxExchange($dxExchange)
     {
         $this->dxExchange = $dxExchange;
+
         return $this;
     }
 
@@ -52,11 +51,13 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
 
     /**
      * @param string $dxNumber
+     *
      * @return AttorneyAbstract
      */
     public function setDxNumber($dxNumber)
     {
         $this->dxNumber = $dxNumber;
+
         return $this;
     }
 
@@ -69,7 +70,7 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
      */
     public function getInputFilter()
     {

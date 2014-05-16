@@ -9,6 +9,10 @@ use Opg\Core\Model\Entity\PowerOfAttorney\Validator\Applicants;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
+/**
+ * Class LpaFilter
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter
+ */
 class LpaFilter extends InputFilter
 {
     /**
@@ -129,7 +133,7 @@ class LpaFilter extends InputFilter
                     'required'   => true,
                     'validators' => array(
                         array(
-                            'name'    => 'NotEmpty'
+                            'name' => 'NotEmpty'
                         )
                     )
                 )

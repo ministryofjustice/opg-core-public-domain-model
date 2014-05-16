@@ -1,7 +1,6 @@
 <?php
-
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -17,8 +16,8 @@ class TrustCorporation extends AttorneyAbstract
     use ToArray;
     use ExchangeArray;
 
-    const AS_ATTORNEY               = 'Attorney';
-    const AS_REPLACEMENT_ATTORNEY   = 'Replacement Attorney';
+    const AS_ATTORNEY             = 'Attorney';
+    const AS_REPLACEMENT_ATTORNEY = 'Replacement Attorney';
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -28,11 +27,13 @@ class TrustCorporation extends AttorneyAbstract
 
     /**
      * @param string $trustCorporationAppointedAs
+     *
      * @return TrustCorporation
      */
     public function setTrustCorporationAppointedAs($trustCorporationAppointedAs)
     {
         $this->trustCorporationAppointedAs = $trustCorporationAppointedAs;
+
         return $this;
     }
 

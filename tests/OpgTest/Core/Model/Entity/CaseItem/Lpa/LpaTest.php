@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Lpa test case.
@@ -169,7 +170,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetRegistrationDueDate()
     {
-        $expected = '2014-09-25';
+        $expected = new \DateTime('2014-09-25');
+
+        $this->assertEmpty($this->lpa->getRegistrationDueDate());
+        $this->assertEmpty($this->lpa->getRegistrationDueDateString());
 
         $this->lpa->setRegistrationDueDate($expected);
 
@@ -311,18 +315,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetPaymentDate()
-    {
-        $expected = '2014-07-27';
-
-        $this->lpa->setPaymentDate($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getPaymentDate()
-        );
-    }
-
     public function testDonorValidation()
     {
         $this->assertFalse($this->lpa->isValid(['donor']));
@@ -381,7 +373,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $applicants->add(new Donor());
         $applicants->add(new Attorney());
 
-        $this->lpa->setApplicants(  $applicants);
+        $this->lpa->setApplicants($applicants);
 
         $this->assertFalse($this->lpa->isValid(['applicants']));
     }
@@ -393,7 +385,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $applicants->add(new Attorney());
         $applicants->add(new Correspondent());
 
-        $this->lpa->setApplicants(  $applicants);
+        $this->lpa->setApplicants($applicants);
 
         $this->assertFalse($this->lpa->isValid(['applicants']));
     }
@@ -437,88 +429,80 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $doc->addPage(new Page());
 
         $this->assertEquals(
-            array (
-                'donor' => array (
-                ),
-                'correspondent' => NULL,
-                'applicants' => array (
-                ),
-                'attorneys' => array (
-                ),
-                'notifiedPersons' => array (
-                ),
-                'certificateProviders' => array (
-                ),
-                'cardPaymentContact' => NULL,
-                'registrationDueDate' => NULL,
-                'howAttorneysAct' => NULL,
-                'howReplacementAttorneysAct' => NULL,
-                'attorneyActDecisions' => NULL,
-                'replacementAttorneyActDecisions' => NULL,
-                'replacementOrder' => NULL,
-                'restrictions' => NULL,
-                'guidance' => NULL,
-                'charges' => NULL,
-                'additionalInfo' => NULL,
-                'paymentId' => NULL,
-                'paymentAmount' => NULL,
-                'paymentDate' => NULL,
-                'id' => NULL,
-                'title' => NULL,
-                'caseType' => 'lpa',
-                'caseSubtype' => NULL,
-                'dueDate' => NULL,
-                'status' => NULL,
-                'assignedUser' => NULL,
-                'tasks' => array (
-                ),
-                'notes' => array (
-                ),
-                'documents' => array (
-                ),
-                'caseItems' => array (
-                ),
-                'uId' => NULL,
-                'inputFilter' => NULL,
-                'errorMessages' => array (
-                ),
-                'taskStatus'    => array(),
-                'lpaAccuracyAscertainedBy' => 1,
-                'lpaDonorSignatureDate' => null,
-                'lpaDonorSignatoryFullName' => null,
-                'donorHasPreviousLpas' => false,
-                'previousLpaInfo' => null,
-                'lpaDonorDeclarationSignatureDate' => null,
-                'lpaDonorDeclarationSignatoryFullName' => null,
-                'usesNotifiedPersons' => false,
-                'notifiedPersonPermissionBy' => 1,
-                'attorneyPartyDeclaration' => 1,
-                'attorneyApplicationAssertion' => 1,
-                'attorneyMentalActPermission' => 1,
-                'attorneyDeclarationSignatureDate' => null,
-                'attorneyDeclarationSignatoryFullName' => null,
-                'correspondentComplianceAssertion' => 1,
-                'certificateProviders' => array (),
-                'paymentByDebitCreditCard' => false,
-                'paymentByCheque' => false,
-                'feeExemptionAppliedFor' => false,
-                'feeRemissionAppliedFor' => false,
-                'caseAttorneySingular' => false,
-                'caseAttorneyJointlyAndSeverally' => false,
-                'caseAttorneyJointly' => false,
+            array(
+                'donor'                                     => array(),
+                'correspondent'                             => null,
+                'applicants'                                => array(),
+                'attorneys'                                 => array(),
+                'notifiedPersons'                           => array(),
+                'certificateProviders'                      => array(),
+                'cardPaymentContact'                        => null,
+                'registrationDueDate'                       => null,
+                'howAttorneysAct'                           => null,
+                'howReplacementAttorneysAct'                => null,
+                'attorneyActDecisions'                      => null,
+                'replacementAttorneyActDecisions'           => null,
+                'replacementOrder'                          => null,
+                'restrictions'                              => null,
+                'guidance'                                  => null,
+                'charges'                                   => null,
+                'additionalInfo'                            => null,
+                'paymentId'                                 => null,
+                'paymentAmount'                             => null,
+                'paymentDate'                               => null,
+                'id'                                        => null,
+                'title'                                     => null,
+                'caseType'                                  => 'lpa',
+                'caseSubtype'                               => null,
+                'dueDate'                                   => null,
+                'status'                                    => null,
+                'assignedUser'                              => null,
+                'tasks'                                     => array(),
+                'notes'                                     => array(),
+                'documents'                                 => array(),
+                'caseItems'                                 => array(),
+                'uId'                                       => null,
+                'inputFilter'                               => null,
+                'errorMessages'                             => array(),
+                'taskStatus'                                => array(),
+                'lpaAccuracyAscertainedBy'                  => 1,
+                'lpaDonorSignatureDate'                     => null,
+                'lpaDonorSignatoryFullName'                 => null,
+                'donorHasPreviousLpas'                      => false,
+                'previousLpaInfo'                           => null,
+                'lpaDonorDeclarationSignatureDate'          => null,
+                'lpaDonorDeclarationSignatoryFullName'      => null,
+                'usesNotifiedPersons'                       => false,
+                'notifiedPersonPermissionBy'                => 1,
+                'attorneyPartyDeclaration'                  => 1,
+                'attorneyApplicationAssertion'              => 1,
+                'attorneyMentalActPermission'               => 1,
+                'attorneyDeclarationSignatureDate'          => null,
+                'attorneyDeclarationSignatoryFullName'      => null,
+                'correspondentComplianceAssertion'          => 1,
+                'certificateProviders'                      => array(),
+                'paymentByDebitCreditCard'                  => 0,
+                'paymentByCheque'                           => 0,
+                'feeExemptionAppliedFor'                    => 0,
+                'feeRemissionAppliedFor'                    => 0,
+                'caseAttorneySingular'                      => false,
+                'caseAttorneyJointlyAndSeverally'           => false,
+                'caseAttorneyJointly'                       => false,
                 'caseAttorneyJointlyAndJointlyAndSeverally' => false,
-                'lpaCreatedDate'    => null,
-                'lpaReceiptDate'   => null,
-                'oldCaseId' => null,
-                'applicationType' => 0,
-                'registrationDate' => null,
-                'closedDate' => null,
-                'lifeSustainingTreatment' => false,
-                'lifeSustainingTreatmentSignatureDate' => null,
-                'notificationDate' => null,
-                'dispatchDate' => null,
-                'noticeGivenDate' => null,
-                'correspondence' => null
+                'lpaCreatedDate'                            => null,
+                'lpaReceiptDate'                            => null,
+                'oldCaseId'                                 => null,
+                'applicationType'                           => 0,
+                'registrationDate'                          => null,
+                'closedDate'                                => null,
+                'lifeSustainingTreatment'                   => null,
+                'lifeSustainingTreatmentSignatureDate'      => null,
+                'notificationDate'                          => null,
+                'dispatchDate'                              => null,
+                'noticeGivenDate'                           => null,
+                'correspondence'                            => null,
+                'ragRating'                                 => null,
+                'ragTotal'                                  => null
             ),
             $lpa->toArrayRecursive()
         );
@@ -529,35 +513,34 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $donor = new Donor();
         $donor->setId('1');
         $this->lpa->addPerson($donor);
-        $this->assertEquals($donor,$this->lpa->getDonor());
+        $this->assertEquals($donor, $this->lpa->getDonor());
 
         $attorney = new Attorney();
         $attorney->setId('1');
         $this->lpa->addPerson($attorney);
-        $this->assertEquals($attorney,$this->lpa->getAttorneys()[0]);
+        $this->assertEquals($attorney, $this->lpa->getAttorneys()[0]);
 
         $certificateProvider = new CertificateProvider();
         $certificateProvider->setId('1');
         $this->lpa->addPerson($certificateProvider);
-        $this->assertEquals($certificateProvider,$this->lpa->getCertificateProviders()[0]);
+        $this->assertEquals($certificateProvider, $this->lpa->getCertificateProviders()[0]);
 
         $notifiedPerson = new NotifiedPerson();
         $notifiedPerson->setId('1');
         $this->lpa->addPerson($notifiedPerson);
-        $this->assertEquals($notifiedPerson,$this->lpa->getNotifiedPersons()[0]);
+        $this->assertEquals($notifiedPerson, $this->lpa->getNotifiedPersons()[0]);
 
         $correspondent = new Correspondent();
         $correspondent->setId('1');
         $this->lpa->addPerson($correspondent);
-        $this->assertEquals($correspondent,$this->lpa->getCorrespondent());
+        $this->assertEquals($correspondent, $this->lpa->getCorrespondent());
 
         $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
         $person->setId('1');
 
         try {
             $this->lpa->addPerson($person);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertTrue($e instanceof \LogicException);
             $this->assertFalse($e instanceof UnusedException);
         }
@@ -565,7 +548,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetDonorDeclarations()
     {
-        $expectedDate = new \DateTime();
+        $expectedDate          = new \DateTime();
         $expectedDonorFullName = 'Mr Test Donor';
 
         $this->lpa->setDonorDeclarationSignatureDate($expectedDate);
@@ -575,22 +558,86 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorDeclarationLpaSignatoryFullName());
     }
 
-    public function testGetSetDonorSignature()
+    public function testGetSetSetDonorDeclarationDateNulls()
     {
         $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDate());
+        $this->lpa->setDonorDeclarationSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getDonorDeclarationSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetSetDonorDeclarationDateEmptyString()
+    {
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
+        $this->lpa->setDonorDeclarationSignatureDateString('');
+
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
+
+    }
+
+    public function testGetSetSetDonorDeclarationDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
+        $this->lpa->setDonorDeclarationSignatureDateString($expected);
+
+        $this->assertEquals($expected, $this->lpa->getDonorDeclarationSignatureDateString());
+    }
+
+    public function testGetSetDonorSignature()
+    {
+        $expectedDate          = new \DateTime();
         $expectedDonorFullName = 'Mr Test Donor';
 
-        $this->lpa->setDonorSignatureDate($expectedDate);
+        $this->lpa->setLpaDonorSignatureDate($expectedDate);
         $this->lpa->setDonorLpaSignatoryFullName($expectedDonorFullName);
 
-        $this->assertEquals($expectedDate, $this->lpa->getDonorSignatureDate());
+        $this->assertEquals($expectedDate, $this->lpa->getLpaDonorSignatureDate());
         $this->assertEquals($expectedDonorFullName, $this->lpa->getDonorLpaSignatoryFullName());
+
+    }
+
+    public function testGetSetLpaDonorSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDate());
+        $this->lpa->setLpaDonorSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLpaDonorSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaDonorSignatureDateEmptyString()
+    {
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
+        $this->lpa->setLpaDonorSignatureDateString('');
+
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
+    }
+
+    public function testGetSetLpaDonorSignatureDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->lpa->getLpaDonorSignatureDateString());
+        $this->lpa->setLpaDonorSignatureDateString($expected);
+
+        $this->assertEquals($expected, $this->lpa->getLpaDonorSignatureDateString());
     }
 
     public function testGetSetPreviousLpa()
     {
         $expectedPreviousLpas = true;
-        $expectedLpaInfo =  "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
+        $expectedLpaInfo      = "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
 
         $this->assertFalse($this->lpa->hasPreviousLpas());
 
@@ -611,34 +658,145 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaCreatedDate()
     {
-        $expectedDate = date('d/m/Y');
+        $expectedDate = new \DateTime();
         $this->assertNull($this->lpa->getLpaCreatedDate());
+
         $this->lpa->setLpaCreatedDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaCreatedDate());
 
     }
 
+    public function testGetSetLpaCreatedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertEmpty($this->lpa->getLpaCreatedDate());
+        $this->lpa->setLpaCreatedDate();
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLpaCreatedDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaCreatedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->lpa->getLpaCreatedDateString());
+        $this->lpa->setLpaCreatedDateString($expected);
+        $this->assertEquals($expected, $this->lpa->getLpaCreatedDateString());
+    }
+
+
+    public function testGetSetLpaCreatedDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaCreatedDateString());
+        $this->lpa->setLpaCreatedDateString(null);
+
+        $returnedDate = $this->lpa->getLpaCreatedDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
+        );
+    }
+
     public function testGetSetLpaReceiptDate()
     {
-        $expectedDate = date('d/m/Y');
-        $this->assertNull($this->lpa->getLpaReceiptDate());
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDate());
+        $this->assertEmpty($this->lpa->getLpaReceiptDateString());
+
         $this->lpa->setLpaReceiptDate($expectedDate);
         $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDate());
     }
 
+    public function testGetSetLpaReceiptDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDate());
+        $this->lpa->setLpaReceiptDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLpaReceiptDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaReceiptDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDateString());
+        $this->lpa->setLpaReceiptDateString('');
+
+        $returnedDate = $this->lpa->getLpaReceiptDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLpaReceiptDateString()
+    {
+        $expectedDate = date(OPGDateFormat::getDateTimeFormat());
+
+        $this->assertEmpty($this->lpa->getLpaReceiptDateString());
+        $this->lpa->setLpaReceiptDateString($expectedDate);
+
+        $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDateString());
+    }
+
     public function testGetSetLifeSustainingTreatment()
     {
-        $lstDate = date('d/m/Y');
+        $lstDate = new \DateTime();
         $lstType = 'Option A';
 
         $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertEmpty($this->lpa->hasLifeSustainingTreatment());
 
-        $this->lpa->setLifeSustainingTreatment($lstType)->setLifeSustainingTreatmentSignatureDate($lstDate);
+        $this->lpa->setLifeSustainingTreatment($lstType);
+        $this->lpa->setLifeSustainingTreatmentSignatureDate($lstDate);
 
         $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
         $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
         $this->assertEquals($lstType, $this->lpa->getLifeSustainingTreatment());
+
+    }
+
+    public function testGetSetLifeSustainingTreatmentDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->lpa->setLifeSustainingTreatmentSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLifeSustainingTreatmentSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetLifeSustainingTreatmentDateEmptyString()
+    {
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateString('');
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
+    }
+
+    public function testGetSetLifeSustainingTreatmentDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateString($expected);
+
+        $this->assertEquals($expected, $this->lpa->getLifeSustainingTreatmentSignatureDateString());
     }
 
     public function testValidatorInvalidNoCaseType()
@@ -678,7 +836,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     public function testConstantsExist()
     {
         $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
-        $this->assertEquals($class::HW_FULLTEXTNAME,"Health and Welfare");
-        $this->assertEquals($class::PF_FULLTEXTNAME,"Personal Finance");
+        $this->assertEquals($class::HW_FULLTEXTNAME, "Health and Welfare");
+        $this->assertEquals($class::PF_FULLTEXTNAME, "Personal Finance");
     }
 }

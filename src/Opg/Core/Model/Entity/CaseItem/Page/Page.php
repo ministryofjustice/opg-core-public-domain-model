@@ -177,6 +177,7 @@ class Page implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $text
+     *
      * @return Page
      */
     public function setText($text)

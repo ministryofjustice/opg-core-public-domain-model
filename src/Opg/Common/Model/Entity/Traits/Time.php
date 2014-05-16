@@ -3,21 +3,25 @@ namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Class Time
  *
  */
-trait Time {
+trait Time
+{
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string createdTime
+     * @ORM\Column(type = "datetime", nullable = false)
+     * @var \DateTime $createdTime
+     * @Accessor(getter="getCreatedTimeString", setter="setCreatedTimeString")
      */
     private $createdTime;
 
     /**
-     * @return string $createdTime
+     * @return \DateTime $createdTime
      */
     public function getCreatedTime()
     {
@@ -25,13 +29,43 @@ trait Time {
     }
 
     /**
-     * @param string $createdTime A string that can be parsed by strtotime
+     * @param \DateTime $createdTime
+     *
+     * @return $this
      */
-    public function setCreatedTime($createdTime = 'Now')
+    public function setCreatedTime(\DateTime $createdTime = null)
     {
-        $timestamp = strtotime($createdTime);
+        if (is_null($createdTime)) {
+            $createdTime = new \DateTime();
+        }
+        $this->createdTime = $createdTime;
 
-        $this->createdTime = date('Y-m-d\TH:i:s', $timestamp);
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedTimeString()
+    {
+        if (!empty($this->createdTime)) {
+            return $this->createdTime->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param string $createdTime
+     *
+     * @return $this
+     */
+    public function setCreatedTimeString($createdTime)
+    {
+        if (empty($createdTime)) {
+            $createdTime = null;
+        }
+
+        return $this->setCreatedTime(new \DateTime($createdTime));
     }
 }

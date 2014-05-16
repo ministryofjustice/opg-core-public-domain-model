@@ -59,11 +59,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param boolean $default
+     *
      * @return PhoneNumber
      */
     public function setDefault($default = true)
     {
         $this->default = (bool)$default;
+
         return $this;
     }
 
@@ -77,11 +79,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param integer $id
+     *
      * @return PhoneNumber
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -105,6 +109,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
             throw new \LogicException('This phone number is already linked to a person');
         }
         $this->person = $person;
+
         return $this;
     }
 
@@ -118,11 +123,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $phoneNumber
+     *
      * @return PhoneNumber
      */
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
+
         return $this;
     }
 
@@ -136,11 +143,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $type
+     *
      * @return PhoneNumber
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 

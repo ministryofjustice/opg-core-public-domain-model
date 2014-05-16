@@ -8,6 +8,9 @@ use Zend\InputFilter\Factory as InputFactory;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -40,54 +43,65 @@ class Donor extends BasePerson implements PartyInterface
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-task-list")
      */
     protected $previousNames;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $cannotSignForm;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $applyingForFeeRemission;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $receivingBenefits;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $receivedDamageAward;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $hasLowIncome;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
+     * @Groups("api-task-list")
      */
     protected $signatureDate;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
+     * @Groups("api-task-list")
      */
     protected $hasPreviousLpa;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-task-list")
      */
     protected $notesForPreviousLpa;
 
@@ -101,11 +115,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param string $previousNames
+     *
      * @return Donor
      */
     public function setPreviousNames($previousNames)
     {
         $this->previousNames = $previousNames;
+
         return $this;
     }
 
@@ -119,11 +135,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $cannotSignForm
+     *
      * @return Donor
      */
     public function setCannotSignForm($cannotSignForm)
     {
         $this->cannotSignForm = $cannotSignForm;
+
         return $this;
     }
 
@@ -137,11 +155,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $applyingForFeeRemission
+     *
      * @return Donor
      */
     public function setApplyingForFeeRemission($applyingForFeeRemission)
     {
         $this->applyingForFeeRemission = $applyingForFeeRemission;
+
         return $this;
     }
 
@@ -155,11 +175,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $receivingBenefits
+     *
      * @return Donor
      */
     public function setReceivingBenefits($receivingBenefits)
     {
         $this->receivingBenefits = $receivingBenefits;
+
         return $this;
     }
 
@@ -173,11 +195,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $receivedDamageAward
+     *
      * @return Donor
      */
     public function setReceivedDamageAward($receivedDamageAward)
     {
         $this->receivedDamageAward = $receivedDamageAward;
+
         return $this;
     }
 
@@ -191,16 +215,51 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $hasLowIncome
+     *
      * @return Donor
      */
     public function setHasLowIncome($hasLowIncome)
     {
         $this->hasLowIncome = $hasLowIncome;
+
         return $this;
     }
 
     /**
-     * @return string $signatureDate
+     * @param \DateTime $signatureDate
+     *
+     * @return Donor
+     */
+    public function setSignatureDate(\DateTime $signatureDate = null)
+    {
+        if (is_null($signatureDate)) {
+            $signatureDate = new \DateTime();
+        }
+        $this->signatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $signatureDate
+     *
+     * @return Lpa
+     */
+    public function setSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
+
+            if ($signatureDate) {
+                $this->setSignatureDate($signatureDate);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime $signatureDate
      */
     public function getSignatureDate()
     {
@@ -208,13 +267,15 @@ class Donor extends BasePerson implements PartyInterface
     }
 
     /**
-     * @param string $signatureDate
-     * @return Donor
+     * @return string
      */
-    public function setSignatureDate($signatureDate)
+    public function getSignatureDateString()
     {
-        $this->signatureDate = $signatureDate;
-        return $this;
+        if (!empty($this->signatureDate)) {
+            return $this->signatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -227,11 +288,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param boolean $hasPreviousLpa
+     *
      * @return Donor
      */
     public function setHasPreviousLpa($hasPreviousLpa)
     {
         $this->hasPreviousLpa = $hasPreviousLpa;
+
         return $this;
     }
 
@@ -245,11 +308,13 @@ class Donor extends BasePerson implements PartyInterface
 
     /**
      * @param string $notesForPreviousLpa
+     *
      * @return Donor
      */
     public function setNotesForPreviousLpa($notesForPreviousLpa)
     {
         $this->notesForPreviousLpa = $notesForPreviousLpa;
+
         return $this;
     }
 
@@ -258,7 +323,8 @@ class Donor extends BasePerson implements PartyInterface
      *
      * @return array
      */
-    public function toArray($exposeClassname = TRUE) {
+    public function toArray($exposeClassname = true)
+    {
         return $this->traitToArray($exposeClassname);
     }
 }

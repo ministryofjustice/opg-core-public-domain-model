@@ -2,8 +2,8 @@
 
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
-
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,12 +31,54 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetLpaPartCSignatureDate()
     {
-        $expected = date('Y-m-d h:i:s');
+        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
 
-        $this->attorney->setLpaPartCSignatureDate($expected);
-        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->attorney->getLpaPartCSignatureDate());
+    }
+
+    public function testGetSetLpaPartCSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
+        $this->attorney->setLpaPartCSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->attorney->getLpaPartCSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testSetGetNotifiedDateEmptyString()
+    {
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        $this->attorney->setLpaPartCSignatureDateString('');
+
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+    }
+
+    public function testSetGetNotifiedDateInvalidString()
+    {
+        $this->assertEmpty($this->attorney->getLpaPartCSignatureDateString());
+        try {
+            $this->attorney->setLpaPartCSignatureDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testSetGetNotifiedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->attorney->setLpaPartCSignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
+
     }
 
 }

@@ -75,13 +75,13 @@ class Document implements EntityInterface, \IteratorAggregate
      * (non-PHPdoc)
      * @see \Opg\Common\Model\Entity\EntityInterface::toArray()
      */
-    public function toArray($exposeClassname = FALSE)
+    public function toArray($exposeClassname = false)
     {
         $data = $this->traitToArray($exposeClassname);
 
         $numberOfPages = 0;
 
-        if ( ! $this->pages->isEmpty()) {
+        if (!$this->pages->isEmpty()) {
             $data['pages'] = $this->getPages()->toArray();
             $numberOfPages = count($data['pages']);
         }
@@ -91,7 +91,7 @@ class Document implements EntityInterface, \IteratorAggregate
         $data['metadata']['filename'] = $data['filename'];
         unset($data['filename']);
 
-        $data['metadata']['documentType'] = $data['type'];
+        $data['metadata']['documentType']  = $data['type'];
         $data['metadata']['numberOfPages'] = $numberOfPages;
 
         return $data;
@@ -139,8 +139,8 @@ class Document implements EntityInterface, \IteratorAggregate
 
         if (!empty($data['pages'])) {
             $currentPage = new Page();
-            $pages = new ArrayCollection();
-            foreach($data['pages'] as $page) {
+            $pages       = new ArrayCollection();
+            foreach ($data['pages'] as $page) {
                 $pages->add((is_array($page)) ? $currentPage->exchangeArray($page) : $page);
             }
             $this->pages = $pages;
@@ -169,7 +169,7 @@ class Document implements EntityInterface, \IteratorAggregate
                         ),
                         'validators' => array(
                             array(
-                                'name'    => 'Digits'
+                                'name' => 'Digits'
                             )
                         )
                     )
@@ -183,13 +183,13 @@ class Document implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     *  @param string $id
+     * @param string $id
      *
      * @return Document
      */
     public function setId($id)
     {
-        $this->id = (string) $id;
+        $this->id = (string)$id;
 
         return $this;
     }
@@ -204,11 +204,12 @@ class Document implements EntityInterface, \IteratorAggregate
 
     /**
      * @param ArrayCollection $pages
+     *
      * @return Document
      */
     public function setPages(ArrayCollection $pages)
     {
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $this->addPage($page);
         }
 
@@ -225,6 +226,7 @@ class Document implements EntityInterface, \IteratorAggregate
 
     /**
      * @param Page $page
+     *
      * @return Document
      */
     public function addPage(Page $page)
@@ -245,7 +247,7 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     public function setSubtype($subtype)
     {
-        $this->subtype = (string) $subtype;
+        $this->subtype = (string)$subtype;
 
         return $this;
     }
@@ -265,7 +267,7 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     public function setTitle($title)
     {
-        $this->title = (string) $title;
+        $this->title = (string)$title;
 
         return $this;
     }
@@ -285,7 +287,7 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     public function setType($type)
     {
-        $this->type = (string) $type;
+        $this->type = (string)$type;
 
         return $this;
     }
@@ -298,7 +300,7 @@ class Document implements EntityInterface, \IteratorAggregate
         return $this->type;
     }
 
-	/**
+    /**
      * @return string $filename
      */
     public function getFilename()
@@ -314,6 +316,7 @@ class Document implements EntityInterface, \IteratorAggregate
     public function setFilename($filename)
     {
         $this->filename = $filename;
+
         return $this;
     }
 }

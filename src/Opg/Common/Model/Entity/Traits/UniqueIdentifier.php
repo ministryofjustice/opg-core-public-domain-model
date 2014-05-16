@@ -2,14 +2,19 @@
 namespace Opg\Common\Model\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
-trait UniqueIdentifier {
+/**
+ * Class UniqueIdentifier
+ * @package Opg\Common\Model\Entity\Traits
+ */
+trait UniqueIdentifier
+{
 
-     /**
+    /**
      * This is a 12 digit integer unique within the entire system & starts with a 7
      *
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $uId;
 
@@ -20,6 +25,7 @@ trait UniqueIdentifier {
     public function setUid($uid)
     {
         $this->uId = $uid;
+
         return $this;
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 
 use Application\Specification\Lpa\StatutoryWaitingPeriodSpecification;
@@ -25,15 +24,16 @@ class LpaListener
     /**
      * Fire business rule on pre Update of Case.
      *
-     * @param Lpa $lpa
-     * @param $eventArgs
+     * @param Lpa                $lpa
+     * @param PreUpdateEventArgs $eventArgs
      */
     public function preUpdate(Lpa $lpa, PreUpdateEventArgs $eventArgs)
     {
-       if($eventArgs->hasChangedField('status') && $eventArgs->getNewValue('status') == 'Registered') {
-           if(!$this->statutoryWaitingPeriodSpecification->isSatisfiedBy($lpa)) {
-               throw new SpecificationException($this->statutoryWaitingPeriodSpecification->getErrorMessage(), 400, 'status');
-           }
-       }
+        if ($eventArgs->hasChangedField('status') && $eventArgs->getNewValue('status') == 'Registered') {
+            if (!$this->statutoryWaitingPeriodSpecification->isSatisfiedBy($lpa)) {
+                throw new SpecificationException($this->statutoryWaitingPeriodSpecification->getErrorMessage(
+                ), 400, 'status');
+            }
+        }
     }
 }

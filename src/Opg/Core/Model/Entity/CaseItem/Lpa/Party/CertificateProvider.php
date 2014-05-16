@@ -52,12 +52,14 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
     /**
      * @param string $certificateProviderStatementType
+     *
      * @return CertificateProvider
      */
     public function setCertificateProviderStatementType(
         $certificateProviderStatementType
     ) {
         $this->certificateProviderStatementType = $certificateProviderStatementType;
+
         return $this;
     }
 
@@ -71,11 +73,13 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
     /**
      * @param string $statement
+     *
      * @return CertificateProvider
      */
     public function setStatement($statement)
     {
         $this->statement = $statement;
+
         return $this;
     }
 
@@ -84,18 +88,20 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
      * @param string $certificateProviderSkills
+     *
      * @return CertificateProvider
      */
     public function setCertificateProviderSkills($certificateProviderSkills)
     {
         $this->certificateProviderSkills = $certificateProviderSkills;
+
         return $this;
     }
 
@@ -109,7 +115,8 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

@@ -32,6 +32,7 @@ class LayDeputy extends Deputyship
 
     /**
      * @param Person $person
+     *
      * @return \Opg\Core\Model\Entity\CaseItem\CaseItem|void
      * @throws \LogicException
      */

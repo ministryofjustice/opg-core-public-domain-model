@@ -30,13 +30,14 @@ class Correspondent extends BasePerson implements PartyInterface, EntityInterfac
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

@@ -25,6 +25,7 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -55,21 +56,21 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * Constants below are for yes/no radio buttons, we use 0
      * as default
      */
-    const OPTION_NOT_SET   = 0;
-    const OPTION_FALSE     = 1;
-    const OPTION_TRUE      = 2;
+    const OPTION_NOT_SET = 0;
+    const OPTION_FALSE   = 1;
+    const OPTION_TRUE    = 2;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
 
@@ -121,23 +122,25 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $correspondence;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     * @Groups("api-poa-list")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getDobString",setter="setDobString")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dob;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     * @Groups("api-poa-list")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dateOfDeath;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
@@ -145,21 +148,21 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
 
@@ -186,6 +189,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  \Opg\Core\Model\Entity\Address\Address $address
+     *
      * @return Person
      */
     public function addAddress(Address $address = null)
@@ -198,11 +202,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $addresses
+     *
      * @return Person
      */
     public function setAddresses(ArrayCollection $addresses)
     {
-        $this->addresses =  $addresses;
+        $this->addresses = $addresses;
 
         return $this;
     }
@@ -236,7 +241,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $email
+     * @param  string $email
+     *
      * @return PartyInterface
      */
     public function setEmail($email)
@@ -257,12 +263,42 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $id
+     * @param  string $id
+     *
      * @return PartyInterface
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $dob
+     *
+     * @return Person
+     */
+    public function setDob(\DateTime $dob = null)
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    /**
+     * @param string $dob
+     *
+     * @return Person
+     */
+    public function setDobString($dob)
+    {
+        if (!empty($dob)) {
+            $result = OPGDateFormat::createDateTime($dob);
+            if ($result) {
+                return $this->setDob($result);
+            }
+        }
 
         return $this;
     }
@@ -276,21 +312,23 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @return string
      */
-    public function setDob($dob)
+    public function getDobString()
     {
-        $this->dob = $dob;
+        if (!empty($this->dob)) {
+            return $this->dob->format(OPGDateFormat::getDateFormat());
+        }
 
-        return $this;
+        return '';
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @param \DateTime $dateOfDeath
+     *
+     * @return Person
      */
-    public function setDateOfDeath($dateOfDeath)
+    public function setDateOfDeath(\DateTime $dateOfDeath = null)
     {
         $this->dateOfDeath = $dateOfDeath;
 
@@ -298,11 +336,43 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @return string
+     * @param string $dateOfDeath
+     *
+     * @return Person
+     */
+    public function setDateOfDeathString($dateOfDeath)
+    {
+        if (!empty($dateOfDeath)) {
+
+            $result = OPGDateFormat::createDateTime($dateOfDeath);
+
+            if ($result) {
+                return $this->setDateOfDeath($result);
+            }
+
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getDateOfDeath()
     {
         return $this->dateOfDeath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateOfDeathString()
+    {
+        if (!empty($this->dateOfDeath)) {
+            return $this->dateOfDeath->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -324,7 +394,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $salutation
+     * @param  string $salutation
+     *
      * @return PartyInterface
      */
     public function setTitle($salutation)
@@ -345,7 +416,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $salutation
+     * @param  string $salutation
+     *
      * @return PartyInterface
      */
     public function setSalutation($salutation)
@@ -366,7 +438,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $firstname
+     * @param  string $firstname
+     *
      * @return PartyInterface
      */
     public function setFirstname($firstname)
@@ -387,7 +460,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $middlenames
+     * @param  string $middlenames
+     *
      * @return PartyInterface
      */
     public function setMiddlename($middlenames)
@@ -408,6 +482,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param string
+     *
      * @return PartyInterface
      */
     public function setSurname($surname)
@@ -420,6 +495,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      *
      * @param  \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
+     *
      * @throws Exception
      * @return Person
      */
@@ -433,7 +509,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             }
             // @codeCoverageIgnoreEnd
             if (!$this->powerOfAttorneys->contains($case)) {
-               $this->powerOfAttorneys->add($case);
+                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
             // @codeCoverageIgnoreStart
@@ -462,23 +538,26 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->powerOfAttorneys)) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->powerOfAttorneys;
     }
 
     public function getCases()
     {
-        return array ($this->getPowerOfAttorneys(), $this->getDeputyships());
+        return array($this->getPowerOfAttorneys(), $this->getDeputyships());
     }
+
     /**
      * @param  ArrayCollection $cases
+     *
      * @return PartyInterface
      */
     public function setCases(ArrayCollection $cases)
     {
-       foreach ($cases as $case) {
-           $this->addCase($case);
-       }
+        foreach ($cases as $case) {
+            $this->addCase($case);
+        }
     }
 
     /**
@@ -491,12 +570,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->deputyships)) {
             $this->deputyships = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->deputyships;
     }
 
     /**
      * @param  PhoneNumber $phoneNumber
+     *
      * @return $this
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber)
@@ -509,6 +590,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $phoneNumbers
+     *
      * @return $this
      */
     public function setPhoneNumbers(ArrayCollection $phoneNumbers)
@@ -538,6 +620,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  InputFilterInterface $inputFilter
+     *
      * @return return               Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -577,7 +660,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function hasAttachedCase()
     {
         return
-            (bool) (
+            (bool)(
                 ($this->getPowerOfAttorneys()->count() > 0)
                 |
                 ($this->getDeputyships()->count() > 0)
