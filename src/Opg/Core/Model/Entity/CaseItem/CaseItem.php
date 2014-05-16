@@ -203,6 +203,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagRating")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragRating;
 
@@ -211,6 +212,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagTotal")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragTotal;
 
