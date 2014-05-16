@@ -739,7 +739,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             '3' => 0
         );
 
-        if(!empty($tasks)) {
+        if(!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
                 $rag[$taskItem->getRagRating()]++;
             }
@@ -762,7 +762,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $total = 0;
 
-        if(!empty($tasks)) {
+        if(!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
                 $total += $taskItem->getRagRating();
             }
