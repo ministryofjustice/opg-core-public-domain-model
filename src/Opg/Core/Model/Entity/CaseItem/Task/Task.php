@@ -13,6 +13,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -66,6 +67,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDueDateString",setter="setDueDateString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dueDate;

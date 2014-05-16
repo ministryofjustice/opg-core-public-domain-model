@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -85,6 +86,7 @@ class Donor extends BasePerson implements PartyInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
      * @Groups("api-task-list")
      */

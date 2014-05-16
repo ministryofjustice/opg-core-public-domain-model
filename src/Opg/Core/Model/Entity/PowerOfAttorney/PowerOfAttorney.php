@@ -17,6 +17,7 @@ use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -180,6 +181,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type = "datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getRegistrationDueDateString", setter="setRegistrationDueDateString")
      */
     protected $registrationDueDate;
@@ -253,6 +255,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getPaymentDateString",setter="setPaymentDateString")
      */
     protected $paymentDate;
@@ -281,6 +284,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getAttorneyDeclarationSignatureDateString",setter="setAttorneyDeclarationSignatureDateString")
      */
     protected $attorneyDeclarationSignatureDate;
@@ -301,6 +305,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getNotificationDateString",setter="setNotificationDateString")
      */
     protected $notificationDate;
@@ -308,6 +313,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getDispatchDateString",setter="setDispatchDateString")
      */
     protected $dispatchDate;
@@ -315,6 +321,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
      */
     protected $noticeGivenDate;

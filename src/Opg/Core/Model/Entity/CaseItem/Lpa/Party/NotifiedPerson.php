@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -28,6 +29,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
      */
     protected $notifiedDate;

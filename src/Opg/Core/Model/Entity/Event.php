@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -53,6 +54,7 @@ class Event implements EntityInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getCreatedOnString",setter="setCreatedOnString")
      */
     protected $createdOn;

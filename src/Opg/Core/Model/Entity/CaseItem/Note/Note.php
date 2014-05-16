@@ -11,6 +11,7 @@ use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 
 /**

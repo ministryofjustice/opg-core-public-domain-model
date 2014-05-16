@@ -22,6 +22,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
@@ -125,6 +126,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dob;
@@ -133,6 +135,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dateOfDeath;

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -48,6 +49,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getLpaDonorSignatureDateString",setter="setLpaDonorSignatureDateString")
+     * @Type("string")
      * @Groups("api-task-list")
      */
     protected $lpaDonorSignatureDate;
@@ -76,6 +78,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getDonorDeclarationSignatureDateString", setter="setDonorDeclarationSignatureDateString")
      * @Groups("api-task-list")
      */
@@ -91,6 +94,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getLpaCreatedDateString",setter="setLpaCreatedDateString")
      * @Groups("api-task-list")
      */
@@ -99,6 +103,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getLpaReceiptDateString",setter="setLpaReceiptDateString")
      * @Groups("api-task-list")
      */
@@ -114,6 +119,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getLifeSustainingTreatmentSignatureDateString",setter="setLifeSustainingTreatmentSignatureDateString")
      * @Groups("api-task-list")
      */

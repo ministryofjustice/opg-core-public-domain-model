@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -35,6 +36,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
      */
     protected $lpaPartCSignatureDate;
@@ -42,6 +44,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getLpa002SignatureDateString",setter="setLpa002SignatureDateString")
      */
     protected $lpa002SignatureDate;
