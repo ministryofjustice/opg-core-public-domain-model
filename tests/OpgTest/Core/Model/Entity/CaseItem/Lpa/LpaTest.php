@@ -505,6 +505,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'ragTotal'                                  => null,
                 'paymentRemission'                          => 0,
                 'paymentExemption'                          => 0,
+                'trustCorporationSignedAs'                  => null,
             ),
             $lpa->toArrayRecursive()
         );
@@ -840,5 +841,15 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
         $this->assertEquals($class::HW_FULLTEXTNAME, "Health and Welfare");
         $this->assertEquals($class::PF_FULLTEXTNAME, "Personal Finance");
+    }
+
+    public function testGetSetTrustCorporationSignedAs()
+    {
+        $expected = 'I';
+
+        $this->assertEquals('We', $this->lpa->getTrustCorporationSignedAs());
+        $this->lpa->setTrustCorporationSignedAs($expected);
+
+        $this->assertEquals($expected, $this->lpa->getTrustCorporationSignedAs());
     }
 }

@@ -125,6 +125,14 @@ class Lpa extends PowerOfAttorney
      */
     protected $lifeSustainingTreatmentSignatureDate;
 
+
+    /**
+     * @ORM\Column(type = "integer",options={"default":1})
+     * @var string
+     * @Accessor(getter="getTrustCorporationSignedAs",setter="setTrustCorporationSignedAs")
+     */
+    protected $trustCorporationSignedAs;
+
     /**
      * @param string $signedBy
      *
@@ -569,5 +577,27 @@ class Lpa extends PowerOfAttorney
         }
 
         return '';
+    }
+
+    /**
+     * @param string $trustCorporationSignedAs
+     * @return Lpa
+     */
+    public function setTrustCorporationSignedAs($trustCorporationSignedAs)
+    {
+        $this->trustCorporationSignedAs =
+            ($trustCorporationSignedAs === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrustCorporationSignedAs()
+    {
+        return ($this->trustCorporationSignedAs === self::PERMISSION_GIVEN_SINGULAR) ? 'I' : 'We';
     }
 }
