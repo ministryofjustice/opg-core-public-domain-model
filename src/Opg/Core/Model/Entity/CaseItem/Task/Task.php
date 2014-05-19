@@ -153,7 +153,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime($dueDate);
+            $dueDate = OPGDateFormat::createDateTime($dueDate . ' 23:59:59');
 
             if ($dueDate) {
                 $this->setDueDate($dueDate);
