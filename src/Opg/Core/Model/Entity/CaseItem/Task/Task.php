@@ -454,20 +454,26 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      */
     public function getRagRating()
     {
-        $dateDiff = $this->getDueDate()->diff(new \DateTime);
+        if(isset($this->dueDate)) {
+            $dateDiff = $this->getDueDate()->diff(new \DateTime);
 
-        $daysOffset = $dateDiff->days;
-        if ($dateDiff->invert == 1) {
-            $daysOffset *= -1;
+            $daysOffset = $dateDiff->days;
+            if ($dateDiff->invert == 1) {
+                $daysOffset *= -1;
+            }
+
+            if ($daysOffset > 0) {
+                return 3;
+            } elseif ($daysOffset < 0) {
+                return 1;
+            }
+
+            return 2;
         }
-
-        if ($daysOffset > 0) {
+        else {
+            //Something has gone wrong here, we have no due date, flag it
             return 3;
-        } elseif ($daysOffset < 0) {
-            return 1;
         }
-
-        return 2;
     }
 
     /**
