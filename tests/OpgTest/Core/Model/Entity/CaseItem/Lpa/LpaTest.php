@@ -502,7 +502,9 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'noticeGivenDate'                           => null,
                 'correspondence'                            => null,
                 'ragRating'                                 => null,
-                'ragTotal'                                  => null
+                'ragTotal'                                  => null,
+                'paymentRemission'                          => 0,
+                'paymentExemption'                          => 0,
             ),
             $lpa->toArrayRecursive()
         );
