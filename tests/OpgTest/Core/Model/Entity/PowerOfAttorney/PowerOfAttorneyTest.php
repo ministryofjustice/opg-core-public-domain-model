@@ -3,6 +3,7 @@
 namespace OpgTest\Core\Model\Entity\PowerOfAttorney;
 
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantFactory;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
@@ -13,6 +14,9 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
+    /**
+     * @var PowerOfAttorney
+     */
     protected $poa;
 
     public function setUp()
@@ -512,5 +516,21 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->poa->getRegistrationDueDateString());
     }
 
+    public function testGetSetPaymentExemption()
+    {
+        $this->assertEquals(Lpa::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentExemption());
+        $this->poa->setPaymentExemption(Lpa::PAYMENT_OPTION_FALSE);
 
+        $this->assertEquals(Lpa::PAYMENT_OPTION_FALSE, $this->poa->getPaymentExemption());
+
+    }
+
+    public function testGetSetPaymentRemission()
+    {
+        $this->assertEquals(Lpa::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentRemission());
+        $this->poa->setPaymentRemission(Lpa::PAYMENT_OPTION_FALSE);
+
+        $this->assertEquals(Lpa::PAYMENT_OPTION_FALSE, $this->poa->getPaymentRemission());
+
+    }
 }

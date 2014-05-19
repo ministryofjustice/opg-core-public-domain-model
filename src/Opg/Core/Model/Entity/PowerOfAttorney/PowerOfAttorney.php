@@ -261,6 +261,18 @@ abstract class PowerOfAttorney extends CaseItem
     protected $paymentDate;
 
     /**
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var int
+     */
+    protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
+
+    /**
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var int
+     */
+    protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
+
+    /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
      * @Accessor(getter="getAttorneyPartyDeclaration",setter="setAttorneyPartyDeclaration")
@@ -1456,4 +1468,41 @@ abstract class PowerOfAttorney extends CaseItem
 
         return '';
     }
+
+    /**
+     * @param int $paymentExemption
+     * @return PowerOfAttorney
+     */
+    public function setPaymentExemption($paymentExemption = self::PAYMENT_OPTION_NOT_SET)
+    {
+        $this->paymentExemption =$paymentExemption;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentExemption()
+    {
+        return $this->paymentExemption;
+    }
+
+    /**
+     * @param int $paymentRemission
+     * @return PowerOfAttorney
+     */
+    public function setPaymentRemission($paymentRemission = self::PAYMENT_OPTION_NOT_SET)
+    {
+        $this->paymentRemission = $paymentRemission;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentRemission()
+    {
+        return (bool)$this->paymentRemission;
+    }
+
 }
