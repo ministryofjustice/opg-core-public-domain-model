@@ -114,6 +114,7 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @var boolean
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getLocked", setter="setLocked")
      */
     protected $locked;
 
@@ -133,7 +134,7 @@ class User implements EntityInterface, \IteratorAggregate
      */
     public function getLocked()
     {
-        return $this->locked;
+        return (bool)$this->locked;
     }
 
     /**
