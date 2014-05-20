@@ -23,6 +23,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     private $data = array(
         'id'            => '123',
         'type'          => null,
+        'systemType'    => null,
         'status'        => 'Registered',
         'name'          => 'Test name',
         'description'   => 'Test Description',
@@ -115,6 +116,21 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $tasktype,
             $this->task->getType()
+        );
+    }
+
+    public function testGetSetSystemType()
+    {
+        $tasktype = 'System Task type';
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setSystemType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getSystemType()
         );
     }
 

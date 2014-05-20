@@ -44,8 +44,15 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $type;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $systemType;
 
     /**
      * @Serializer\MaxDepth(2)
@@ -513,7 +520,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      */
     public function setType($type)
     {
-        $this->type = $type;
+        $this->type = (string) $type;
 
         return $this;
     }
@@ -524,5 +531,25 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param string $systemType
+     *
+     * @return Task
+     */
+    public function setSystemType($systemType)
+    {
+        $this->systemType = (string) $systemType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemType()
+    {
+        return $this->systemType;
     }
 }
