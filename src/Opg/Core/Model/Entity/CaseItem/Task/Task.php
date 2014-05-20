@@ -42,15 +42,15 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $id;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $type;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
      */
     protected $systemType;
 
@@ -534,19 +534,19 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
-     * @param string $systemType
+     * @param int $systemType
      *
      * @return Task
      */
     public function setSystemType($systemType)
     {
-        $this->systemType = (string) $systemType;
+        $this->systemType = (int) $systemType;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getSystemType()
     {

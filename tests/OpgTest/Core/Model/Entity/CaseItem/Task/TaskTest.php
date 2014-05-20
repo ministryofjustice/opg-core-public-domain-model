@@ -106,7 +106,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetType()
     {
-        $tasktype = 'Task type';
+        $tasktype = 123;
 
         $this->assertInstanceOf(
             'Opg\Core\Model\Entity\CaseItem\Task\Task',
@@ -121,7 +121,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetSystemType()
     {
-        $tasktype = 'System Task type';
+        $tasktype = 456;
 
         $this->assertInstanceOf(
             'Opg\Core\Model\Entity\CaseItem\Task\Task',
