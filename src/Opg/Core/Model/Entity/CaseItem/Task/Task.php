@@ -42,6 +42,12 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $id;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $type;
+
+    /**
      * @Serializer\MaxDepth(2)
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
@@ -404,6 +410,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
             $this->setId($data['id']);
         }
 
+        if (!empty($data['type'])) {
+            $this->setName($data['type']);
+        }
+
         if (!empty($data['name'])) {
             $this->setName($data['name']);
         }
@@ -478,10 +488,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * @param string $description
+     *
+     * @return Task
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -490,5 +504,25 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Task
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

@@ -22,6 +22,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     private $data = array(
         'id'            => '123',
+        'type'          => null,
         'status'        => 'Registered',
         'name'          => 'Test name',
         'description'   => 'Test Description',
@@ -99,6 +100,21 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $id,
             $this->task->getId()
+        );
+    }
+
+    public function testGetSetType()
+    {
+        $tasktype = 'Task type';
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getType()
         );
     }
 
@@ -213,7 +229,10 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expected = new \DateTime('2013-11-22T04:03:02');
 
-        $this->task->setCreatedTime($expected);
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setCreatedTime($expected)
+        );
 
         $this->assertEquals(
             $expected,
