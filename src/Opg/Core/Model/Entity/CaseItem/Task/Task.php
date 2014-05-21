@@ -42,6 +42,19 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $id;
 
     /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     */
+    protected $systemType;
+
+    /**
      * @Serializer\MaxDepth(2)
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
@@ -404,6 +417,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
             $this->setId($data['id']);
         }
 
+        if (!empty($data['type'])) {
+            $this->setName($data['type']);
+        }
+
         if (!empty($data['name'])) {
             $this->setName($data['name']);
         }
@@ -450,6 +467,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
+     * @return CaseItem | null
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
      * @return int
      */
     public function getRagRating()
@@ -478,10 +503,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * @param string $description
+     *
+     * @return Task
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -490,5 +519,45 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Task
+     */
+    public function setType($type)
+    {
+        $this->type = (string) $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $systemType
+     *
+     * @return Task
+     */
+    public function setSystemType($systemType)
+    {
+        $this->systemType = (int) $systemType;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSystemType()
+    {
+        return $this->systemType;
     }
 }
