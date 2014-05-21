@@ -467,6 +467,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
+     * @return CaseItem | null
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
      * @return int
      */
     public function getRagRating()

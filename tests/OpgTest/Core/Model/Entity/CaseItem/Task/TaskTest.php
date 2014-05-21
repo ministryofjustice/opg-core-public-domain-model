@@ -311,4 +311,16 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->task->setCase(new Lpa());
         $this->assertTrue($this->task->isValid());
     }
+
+    public function testGetSetCase()
+    {
+        $case = new Lpa();
+
+        $this->task->setCase($case);
+
+        $this->assertEquals(
+            $case,
+            $this->task->getCase()
+        );
+    }
 }
