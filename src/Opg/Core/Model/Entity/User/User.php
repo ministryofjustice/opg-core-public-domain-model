@@ -12,9 +12,10 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -35,28 +36,28 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string");
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
 
@@ -68,8 +69,8 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      * @Exclude
+     * @ReadOnly
      */
     protected $powerOfAttorneys;
 
@@ -81,8 +82,8 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\Deputyship\Deputyship")
      * @Exclude
+     * @ReadOnly
      */
     protected $deputyships;
 
@@ -100,20 +101,20 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      */
     protected $password;
 
     /**
      * @var string
      * @Exclude
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $token;
 
     /**
      * @var boolean
-     * @Type("boolean")
+     * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getLocked", setter="setLocked")
      */
     protected $locked;
 
@@ -124,6 +125,7 @@ class User implements EntityInterface, \IteratorAggregate
     public function setLocked($locked)
     {
         $this->locked = (bool)$locked;
+
         return $this;
     }
 
@@ -132,7 +134,7 @@ class User implements EntityInterface, \IteratorAggregate
      */
     public function getLocked()
     {
-        return $this->locked;
+        return (bool)$this->locked;
     }
 
     /**
@@ -146,11 +148,13 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param mixed $suspended
+     *
      * @return User
      */
     public function setSuspended($suspended)
     {
         $this->suspended = (bool)$suspended;
+
         return $this;
     }
 
@@ -173,7 +177,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "boolean", options={"default":0})
      * @var boolean
-     * @Type("boolean")
      */
     protected $suspended;
 
@@ -215,6 +218,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $firstname
+     *
      * @return User
      */
     public function setFirstname($firstname)
@@ -234,6 +238,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $surname
+     *
      * @return User
      */
     public function setSurname($surname)
@@ -253,6 +258,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $id
+     *
      * @return User
      */
     public function setId($id)
@@ -388,11 +394,11 @@ class User implements EntityInterface, \IteratorAggregate
                                         \Zend\Validator\Callback::INVALID_VALUE => 'The user must either be an OPG user or a COP user.',
                                     ),
                                     'callback' => function ($roles) {
-                                        $keyedRoles = array_flip($roles);
+                                            $keyedRoles = array_flip($roles);
 
-                                        return (array_key_exists('OPG User', $keyedRoles) xor
+                                            return (array_key_exists('OPG User', $keyedRoles) xor
                                                 array_key_exists('COP User', $keyedRoles));
-                                    }
+                                        }
                                 ),
                             ),
                         )
@@ -447,6 +453,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param bool $exposeClassname
+     *
      * @return array
      */
     public function toArray($exposeClassname = false)
@@ -462,6 +469,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $roleName
+     *
      * @return User $this
      */
     public function addRole($roleName)
@@ -474,6 +482,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param array $roles
+     *
      * @return User $this
      */
     public function setRoles(array $roles)
@@ -483,11 +492,13 @@ class User implements EntityInterface, \IteratorAggregate
         foreach ($roles as $role) {
             $this->addRole($role);
         }
+
         return $this;
     }
 
     /**
      * @param string $roleName
+     *
      * @return User $this
      */
     public function removeRole($roleName)
@@ -503,6 +514,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $roleName
+     *
      * @return bool
      */
     public function hasRole($roleName)
@@ -540,12 +552,14 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param array $roles
+     *
      * @return User
      */
-    public function setFromNormalisedRoles(array $roles) {
+    public function setFromNormalisedRoles(array $roles)
+    {
         $this->clearRoles();
 
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             $this->addRole($role);
         }
 
@@ -554,21 +568,23 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param \Opg\Core\Model\Entity\CaseItem\CaseItem
+     *
      * @return $this
      */
     public function addCase(CaseItem $case)
     {
         if ($case instanceof PowerOfAttorney) {
             $this->powerOfAttorneys->add($case);
-        }
-        else {
+        } else {
             $this->deputyships->add($case);
         }
+
         return $this;
     }
 
     /**
      * @param ArrayCollection $cases
+     *
      * @return $this
      */
     public function setPowerOfAttorneys(ArrayCollection $cases)
@@ -590,6 +606,7 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param ArrayCollection $cases
+     *
      * @return $this
      */
     public function setDeputyships(ArrayCollection $cases)
@@ -597,6 +614,7 @@ class User implements EntityInterface, \IteratorAggregate
         foreach ($cases as $case) {
             $this->addCase($case);
         }
+
         return $this;
     }
 
@@ -610,9 +628,11 @@ class User implements EntityInterface, \IteratorAggregate
 
     /**
      * @param array $data
+     *
      * @return User $this
      */
-    public function exchangeArray(array $data) {
+    public function exchangeArray(array $data)
+    {
         $this->traitExchangeArray($data);
 
         if (isset($data['roles'])) {
@@ -622,4 +642,3 @@ class User implements EntityInterface, \IteratorAggregate
         return $this;
     }
 }
-

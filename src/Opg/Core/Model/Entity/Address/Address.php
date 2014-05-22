@@ -9,7 +9,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -26,10 +25,20 @@ class Address implements EntityInterface, \IteratorAggregate
     use IteratorAggregate;
     use InputFilterTrait;
 
+    // Flags
+    const INCLUDE_PERSON = 1;
+    const EXCLUDE_PERSON = 1;
+
+    // Person name formatting
+    const TITLE          = 0b001;
+    const FIRSTNAME      = 0b010;
+    const SURNAME        = 0b100;
+    const DEFAULT_FORMAT = 0b101;
+
+
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      */
     protected $id;
 
@@ -37,49 +46,42 @@ class Address implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="addresses")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
     /**
      * @ORM\Column(type = "json_array", name="address_lines")
      * @var array
-     * @Type("array")
      */
     protected $addressLines = [];
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
-    protected $town;
+    protected $town = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
-    protected $county;
+    protected $county = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
-    protected $postcode;
+    protected $postcode = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
-    protected $country;
+    protected $country = '';
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $type = 'Primary';
 
@@ -136,6 +138,7 @@ class Address implements EntityInterface, \IteratorAggregate
     public function setAddressLines(array $addressLines)
     {
         $this->addressLines = $addressLines;
+
         return $this;
     }
 
@@ -145,16 +148,19 @@ class Address implements EntityInterface, \IteratorAggregate
     public function clearAddressLines()
     {
         $this->addressLines = [];
+
         return $this;
     }
 
     /**
      * @param string $addressLine
+     *
      * @return Address
      */
     public function setAddressLine($addressLine)
     {
         $this->addressLines[] = $addressLine;
+
         return $this;
     }
 
@@ -234,16 +240,19 @@ class Address implements EntityInterface, \IteratorAggregate
     public function setCountry($country)
     {
         $this->country = (string)$country;
+
         return $this;
     }
 
     /**
      * @param string $type
+     *
      * @return Address
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -257,11 +266,13 @@ class Address implements EntityInterface, \IteratorAggregate
 
     /**
      * @param int $id
+     *
      * @return Address
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -281,10 +292,11 @@ class Address implements EntityInterface, \IteratorAggregate
      */
     public function setPerson(Person $person)
     {
-        if($this->person !== null) {
+        if ($this->person !== null) {
             throw new \LogicException('This address is already linked to a person');
         }
         $this->person = $person;
+
         return $this;
     }
 
@@ -294,6 +306,52 @@ class Address implements EntityInterface, \IteratorAggregate
     public function getPerson()
     {
         return $this->person;
+    }
+
+    /**
+     * @param string $delim
+     * @param int    $showPerson
+     * @param int    $personFormat
+     *
+     * @return string
+     */
+    public function toString($delim = "\n", $showPerson = self::EXCLUDE_PERSON, $personFormat = self::DEFAULT_FORMAT)
+    {
+        $address = [];
+
+        $personEntity = $this->getPerson();
+        if (self::INCLUDE_PERSON === $showPerson && !is_null($personEntity)) {
+            $person = [];
+
+            if (self::TITLE === ($personFormat & self::TITLE)) {
+                $person[] = $personEntity->getTitle();
+            }
+
+            if (self::FIRSTNAME === ($personFormat & self::FIRSTNAME)) {
+                $person[] = $personEntity->getFirstname();
+            }
+
+            if (self::SURNAME === ($personFormat & self::SURNAME)) {
+                $person[] = $personEntity->getSurname();
+            }
+
+            $address[] = implode(' ', $person);
+        }
+
+        // Tidy lines, disregard empty ones.
+        $trimmedLines   = array_map('trim', $this->getAddressLines());
+        $trimmedLines[] = trim($this->getTown());
+        $trimmedLines[] = trim($this->getCounty());
+        $trimmedLines[] = trim($this->getPostcode());
+        $trimmedLines[] = trim($this->getCountry());
+
+        foreach ($trimmedLines as $line) {
+            if (!empty($line)) {
+                $address[] = $line;
+            }
+        }
+
+        return implode($delim, $address);
     }
 
     /**

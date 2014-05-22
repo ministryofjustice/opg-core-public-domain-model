@@ -1,8 +1,4 @@
 <?php
-
-/**
- * @package Opg Core Domain Model
- */
 namespace Opg\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasCorrespondenceInterface;
+use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
@@ -19,21 +16,24 @@ use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\MappedSuperclass
+ * @package Opg\Core\Model\Entity\CaseItem
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface, HasNotesInterface, HasCorrespondenceInterface
+abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
+    HasNotesInterface, HasCorrespondenceInterface, HasRagRating
 {
     use ToArray;
     use HasNotes;
@@ -48,9 +48,20 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     const APPLICATION_TYPE_ONLINE  = 1;
 
     /**
-     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int autoincrementID
+     * Constants below are for payment types radio buttons, we use 0
+     * as default
+     */
+    const PAYMENT_OPTION_NOT_SET = 0;
+    const PAYMENT_OPTION_FALSE   = 1;
+    const PAYMENT_OPTION_TRUE    = 2;
+
+
+    /**
+     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Id
      * @Type("integer")
+     * @var int autoincrementID
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
@@ -58,20 +69,23 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
      * @Type("integer")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $oldCaseId;
 
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
-     * @Type("string")
+     * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $title;
 
@@ -79,6 +93,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $caseType;
 
@@ -86,27 +101,34 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $caseSubtype;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type = "datetime", nullable = true)
+     * @var \DateTime
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getDueDateString", setter="setDueDateString")
      */
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getRegistrationDateString", setter="setRegistrationDateString")
      */
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getClosedDateString", setter="setClosedDateString")
      */
     protected $closedDate;
 
@@ -114,6 +136,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
 
@@ -122,21 +145,22 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
      * @var User
      * @Type("Opg\Core\Model\Entity\User\User")
+     * @ReadOnly
+     * @Serializer\Groups("api-poa-list")
      */
     protected $assignedUser;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Task\Task>")
      * @ReadOnly
+     * @Serializer\Groups("api-poa-list")
      */
     protected $tasks;
 
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      * @ReadOnly
      */
     protected $notes;
@@ -144,7 +168,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
      * @ReadOnly
      */
     protected $documents;
@@ -152,7 +175,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
      * @ReadOnly
      */
     protected $correspondence;
@@ -172,6 +194,24 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $taskStatus = [];
 
+    /**
+     * Non persistable entity
+     * @var int
+     * @ReadOnly
+     * @Accessor(getter="getRagRating")
+     * @Serializer\Groups("api-poa-list")
+     */
+    protected $ragRating;
+
+    /**
+     * Non persistable entity
+     * @var int
+     * @ReadOnly
+     * @Accessor(getter="getRagTotal")
+     * @Serializer\Groups("api-poa-list")
+     */
+    protected $ragTotal;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -181,7 +221,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return string $dueDate
+     * @return \DateTime $dueDate
      */
     public function getDueDate()
     {
@@ -189,11 +229,45 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $dueDate
+     * @return string
      */
-    public function setDueDate($dueDate)
+    public function getDueDateString()
+    {
+        if (!empty($this->dueDate)) {
+            return $this->dueDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $dueDate
+     *
+     * @return CaseItem
+     */
+    public function setDueDate(\DateTime $dueDate)
     {
         $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    /**
+     * @param $dueDate
+     *
+     * @return $this
+     */
+    public function setDueDateString($dueDate)
+    {
+        if (!empty($dueDate)) {
+            $dueDate = OPGDateFormat::createDateTime($dueDate);
+
+            if ($dueDate) {
+                $this->setDueDate($dueDate);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -279,7 +353,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  Task  $task
+     * @param  Task $task
+     *
      * @return $this
      */
     public function addTask(Task $task)
@@ -292,6 +367,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  Document $document
+     *
      * @return $this
      */
     public function addDocument(Document $document)
@@ -309,6 +385,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $tasks
+     *
      * @return CaseItem
      */
     public function setTasks(ArrayCollection $tasks)
@@ -322,6 +399,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $documents
+     *
      * @return CaseItem
      */
     public function setDocuments(ArrayCollection $documents)
@@ -336,7 +414,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @TODO is this still required?
      *
-     * @param  array    $data
+     * @param  array $data
+     *
      * @return CaseItem
      */
     public function exchangeArray(array $data)
@@ -369,7 +448,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             $this->documents = null;
             foreach ($data['documents'] as $documentData) {
                 $newDocument = new Document();
-                $this->addDocument(is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData));
+                $this->addDocument(
+                    is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData)
+                );
             }
         }
 
@@ -393,7 +474,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $title
+     * @param  string $title
+     *
      * @return CaseItem
      */
     public function setTitle($title)
@@ -404,7 +486,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  int   $id
+     * @param  int $id
+     *
      * @return CaseItem
      */
     public function setId($id)
@@ -432,6 +515,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  ArrayCollection $caseItems
+     *
      * @return CaseItem
      */
     public function setCaseItems(ArrayCollection $caseItems)
@@ -445,6 +529,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param  CaseItem $item
+     *
      * @return CaseItem
      */
     public function addCaseItem(CaseItem $item)
@@ -475,20 +560,22 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  array    $taskStatus
+     * @param  array $taskStatus
+     *
      * @return CaseItem
      */
     public function setTaskStatus(array $taskStatus)
     {
         foreach ($taskStatus as $item) {
-            $this->taskStatus[str_replace(' ' ,'',$item['status'])] = $item['counter'];
+            $this->taskStatus[str_replace(' ', '', $item['status'])] = $item['counter'];
         }
 
         return $this;
     }
 
     /**
-     * @param  Person   $person
+     * @param  Person $person
+     *
      * @return CaseItem
      */
     abstract public function addPerson(Person $person);
@@ -503,6 +590,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param $oldCaseId
+     *
      * @return CaseItem
      */
     public function setOldCaseId($oldCaseId)
@@ -521,7 +609,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $applicationType
+     * @param  string $applicationType
+     *
      * @return CaseItem
      */
     public function setApplicationType($applicationType)
@@ -534,12 +623,34 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $closedDate
+     * @param  \DateTime $closedDate
+     *
      * @return CaseItem
      */
-    public function setClosedDate($closedDate)
+    public function setClosedDate(\DateTime $closedDate = null)
     {
+        if (is_null($closedDate)) {
+            $closedDate = new \DateTime();
+        }
         $this->closedDate = $closedDate;
+    }
+
+    /**
+     * @param string $closedDate
+     *
+     * @return Lpa
+     */
+    public function setClosedDateString($closedDate)
+    {
+        if (!empty($closedDate)) {
+            $closedDate = OPGDateFormat::createDateTime($closedDate);
+
+            if ($closedDate) {
+                $this->setClosedDate($closedDate);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -551,23 +662,112 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  string   $registrationDate
+     * @return string
+     */
+    public function getClosedDateString()
+    {
+        if (!empty($this->closedDate)) {
+            return $this->closedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param  \DateTime $registrationDate
+     *
      * @return CaseItem
      */
-    public function setRegistrationDate($registrationDate = null)
+    public function setRegistrationDate(\DateTime $registrationDate)
     {
-        $this->registrationDate =
-            (null === $registrationDate) ? date('d/m/Y') : $registrationDate;
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @param string $registrationDate
+     *
+     * @return CaseItem
+     */
+    public function setRegistrationDateString($registrationDate)
+    {
+        if (!empty($registrationDate)) {
+
+            $registrationDate = OPGDateFormat::createDateTime($registrationDate);
+
+            if ($registrationDate) {
+                $this->setRegistrationDate($registrationDate);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getRegistrationDate()
     {
         return $this->registrationDate;
     }
 
+    /**
+     * @return string
+     */
+    public function getRegistrationDateString()
+    {
+        if (!empty($this->registrationDate)) {
+            return $this->registrationDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @return int
+     */
+    public function getRagRating()
+    {
+        $rag = array(
+            '1' => 0,
+            '2' => 0,
+            '3' => 0
+        );
+
+        if(!empty($this->tasks)) {
+            foreach ($this->tasks as $taskItem) {
+                if($taskItem->getStatus() !== 'Completed') {
+                    $rag[$taskItem->getRagRating()]++;
+                }
+            }
+        }
+
+        //Apply rules
+        if (($rag['3'] >= 1) || $rag['2'] > 2) {
+            return 3;
+        }
+        elseif ($rag['2'] >= 1) {
+            return 2;
+        }
+        return 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRagTotal()
+    {
+        $total = 0;
+
+        if(!empty($this->tasks)) {
+            foreach ($this->tasks as $taskItem) {
+                if($taskItem->getStatus() !== 'Completed') {
+                    $total += $taskItem->getRagRating();
+                }
+            }
+        }
+
+        return $total;
+    }
 }

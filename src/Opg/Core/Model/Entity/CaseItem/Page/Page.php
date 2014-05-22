@@ -8,7 +8,6 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
@@ -178,6 +177,7 @@ class Page implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $text
+     *
      * @return Page
      */
     public function setText($text)

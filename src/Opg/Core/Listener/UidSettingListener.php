@@ -1,5 +1,4 @@
 <?php
-
 namespace Opg\Core\Listener;
 
 use Doctrine\Common\EventSubscriber;
@@ -29,6 +28,10 @@ class UidSettingListener implements EventSubscriber
         $this->idGenerator = new SequenceGenerator(self::SEQ_NAME, self::ALLOCATION_SIZE);
     }
 
+
+    /**
+     * @return array
+     */
     public function getSubscribedEvents()
     {
         return array(
@@ -37,6 +40,9 @@ class UidSettingListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $event
+     */
     public function prePersist(LifecycleEventArgs $event)
     {
         $entity = $event->getEntity();
@@ -57,6 +63,9 @@ class UidSettingListener implements EventSubscriber
         return $uid;
     }
 
+    /**
+     * @param GenerateSchemaEventArgs $event
+     */
     public function postGenerateSchema(GenerateSchemaEventArgs $event)
     {
         $schema = $event->getSchema();

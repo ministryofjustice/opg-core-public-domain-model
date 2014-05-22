@@ -44,22 +44,9 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($correspondentArray, $correspondentCopy->toArray());
     }
 
-    public function testIsValid()
-    {
-        $this->assertFalse($this->correspondent->isValid());
-
-        $errors = $this->correspondent->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->correspondent->addCase(new Lpa());
-        $this->correspondent->setSurname('Test-Surname');
-        $this->assertTrue($this->correspondent->isValid());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
-        $expectedRelationship = 'Siblig';
+        $expectedRelationship = 'Sibling';
         $this->correspondent->setRelationshipToDonor($expectedRelationship);
         $this->assertEquals($expectedRelationship, $this->correspondent->getRelationshipToDonor());
     }

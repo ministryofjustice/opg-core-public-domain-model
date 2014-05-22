@@ -2,7 +2,7 @@
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
-
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 /**
  * ToArray test case.
  */
@@ -101,14 +101,57 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetSignatureDate()
     {
-        $expected = '2014-20-01';
+        $expectedDate = new \DateTime();
 
-        $this->donor->setSignatureDate($expected);
+        $this->assertEmpty($this->donor->getSignatureDate());
+        $this->assertEmpty($this->donor->getSignatureDateString());
+        $this->donor->setSignatureDate($expectedDate);
+
         $this->assertEquals(
-            $expected,
+            $expectedDate,
             $this->donor->getSignatureDate()
         );
     }
+
+    public function testSetGetSignatureDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->donor->getSignatureDate());
+        $this->donor->setSignatureDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->donor->getSignatureDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testSetGetSignatureDateEmptyString()
+    {
+        $this->assertEmpty($this->donor->getSignatureDateString());
+        $this->donor->setSignatureDateString('');
+        $this->assertEmpty($this->donor->getSignatureDateString());
+    }
+
+    public function testSetGetSignatureDateInvalidString()
+    {
+        $this->assertEmpty($this->donor->getSignatureDateString());
+        try {
+            $this->donor->setSignatureDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testSetGetSignatureDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->donor->setSignatureDateString($expected);
+        $this->assertEquals($expected, $this->donor->getSignatureDateString());
+    }
+
 
     public function testSetGetNotesForPreviousLpa()
     {

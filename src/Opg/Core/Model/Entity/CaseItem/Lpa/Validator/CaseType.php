@@ -16,10 +16,12 @@ class CaseType extends InArray
     public function __construct()
     {
         $this->setStrict(InArray::COMPARE_STRICT);
-        
-        $this->setHaystack([
-            self::CASE_TYPE_EPA,
-            self::CASE_TYPE_LPA,
-        ]);
+
+        $this->setHaystack(
+            [
+                self::CASE_TYPE_EPA,
+                self::CASE_TYPE_LPA,
+            ]
+        );
     }
 }

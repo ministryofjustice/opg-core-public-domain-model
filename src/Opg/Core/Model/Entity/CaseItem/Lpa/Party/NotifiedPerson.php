@@ -8,7 +8,9 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -25,13 +27,48 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     use RelationshipToDonor;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
      */
     protected $notifiedDate;
 
     /**
-     * @return string $notifiedDate
+     * @param \DateTime $notifiedDate
+     *
+     * @return Lpa
+     */
+    public function setNotifiedDate(\DateTime $notifiedDate = null)
+    {
+        if (is_null($notifiedDate)) {
+            $notifiedDate = new \DateTime();
+        }
+        $this->notifiedDate = $notifiedDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $notifiedDate
+     *
+     * @return Lpa
+     */
+    public function setNotifiedDateString($notifiedDate)
+    {
+        if (!empty($notifiedDate)) {
+            $notifiedDate = OPGDateFormat::createDateTime($notifiedDate);
+
+            if ($notifiedDate) {
+                $this->setNotifiedDate($notifiedDate);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime $notifiedDate
      */
     public function getNotifiedDate()
     {
@@ -39,13 +76,15 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     }
 
     /**
-     * @param string $notifiedDate
-     * @return NotifiedPerson
+     * @return string
      */
-    public function setNotifiedDate($notifiedDate)
+    public function getNotifiedDateString()
     {
-        $this->notifiedDate = $notifiedDate;
-        return $this;
+        if (!empty($this->notifiedDate)) {
+            return $this->notifiedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -53,13 +92,13 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
      */
     public function getInputFilter()
     {
@@ -82,9 +121,11 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
+                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
                                             return $this->hasAttachedCase();
                                         }
+                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )

@@ -14,17 +14,19 @@ use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
-use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -35,11 +37,14 @@ use Zend\InputFilter\Factory as InputFactory;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "lpa_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney",
+ *     "lpa_replacement_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney",
+ *     "lpa_trust_corporation" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\TrustCorporation",
  *     "lpa_correspondent" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent",
  *     "lpa_donor" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor",
  *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
 abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasCorrespondenceInterface
 {
@@ -49,16 +54,24 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     use HasCorrespondenceTrait;
 
     /**
+     * Constants below are for yes/no radio buttons, we use 0
+     * as default
+     */
+    const OPTION_NOT_SET = 0;
+    const OPTION_FALSE   = 1;
+    const OPTION_TRUE    = 2;
+
+    /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
 
@@ -71,7 +84,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *
      * @var ArrayCollection
      * @MaxDepth(5)
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Lpa>")
+     * @ReadOnly
      */
     protected $powerOfAttorneys;
 
@@ -83,7 +96,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @MaxDepth(5)
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Deputyship\Deputyship>")
+     * @ReadOnly
      */
     protected $deputyships;
 
@@ -94,7 +107,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
+     * @ReadOnly
      */
     protected $notes;
 
@@ -105,63 +118,66 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}
      * )
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
+     * @ReadOnly
      */
     protected $correspondence;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getDobString",setter="setDobString")
      * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dob;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dateOfDeath;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getTitle",setter="setTitle")
      */
-    protected $title;
+    protected $salutation;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\Address\Address
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Address\Address>")
      */
     protected $addresses;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\PhoneNumber\PhoneNumber>")
      */
     protected $phoneNumbers;
 
@@ -176,6 +192,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  \Opg\Core\Model\Entity\Address\Address $address
+     *
      * @return Person
      */
     public function addAddress(Address $address = null)
@@ -188,11 +205,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $addresses
+     *
      * @return Person
      */
     public function setAddresses(ArrayCollection $addresses)
     {
-        $this->addresses =  $addresses;
+        $this->addresses = $addresses;
 
         return $this;
     }
@@ -226,7 +244,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $email
+     * @param  string $email
+     *
      * @return PartyInterface
      */
     public function setEmail($email)
@@ -247,12 +266,42 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $id
+     * @param  string $id
+     *
      * @return PartyInterface
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $dob
+     *
+     * @return Person
+     */
+    public function setDob(\DateTime $dob = null)
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    /**
+     * @param string $dob
+     *
+     * @return Person
+     */
+    public function setDobString($dob)
+    {
+        if (!empty($dob)) {
+            $result = OPGDateFormat::createDateTime($dob);
+            if ($result) {
+                return $this->setDob($result);
+            }
+        }
 
         return $this;
     }
@@ -266,21 +315,23 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @return string
      */
-    public function setDob($dob)
+    public function getDobString()
     {
-        $this->dob = $dob;
+        if (!empty($this->dob)) {
+            return $this->dob->format(OPGDateFormat::getDateFormat());
+        }
 
-        return $this;
+        return '';
     }
 
     /**
-     * @param string
-     * @return PartyInterface
+     * @param \DateTime $dateOfDeath
+     *
+     * @return Person
      */
-    public function setDateOfDeath($dateOfDeath)
+    public function setDateOfDeath(\DateTime $dateOfDeath = null)
     {
         $this->dateOfDeath = $dateOfDeath;
 
@@ -288,11 +339,43 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @return string
+     * @param string $dateOfDeath
+     *
+     * @return Person
+     */
+    public function setDateOfDeathString($dateOfDeath)
+    {
+        if (!empty($dateOfDeath)) {
+
+            $result = OPGDateFormat::createDateTime($dateOfDeath);
+
+            if ($result) {
+                return $this->setDateOfDeath($result);
+            }
+
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getDateOfDeath()
     {
         return $this->dateOfDeath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateOfDeathString()
+    {
+        if (!empty($this->dateOfDeath)) {
+            return $this->dateOfDeath->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -309,17 +392,40 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->salutation;
     }
 
     /**
      *
-     * @param  string         $title
+     * @param  string $salutation
+     *
      * @return PartyInterface
      */
-    public function setTitle($title)
+    public function setTitle($salutation)
     {
-        $this->title = $title;
+        $this->salutation = (string)$salutation;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @return string $salutation
+     */
+    public function getSalutation()
+    {
+        return $this->salutation;
+    }
+
+    /**
+     *
+     * @param  string $salutation
+     *
+     * @return PartyInterface
+     */
+    public function setSalutation($salutation)
+    {
+        $this->salutation = $salutation;
 
         return $this;
     }
@@ -335,7 +441,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $firstname
+     * @param  string $firstname
+     *
      * @return PartyInterface
      */
     public function setFirstname($firstname)
@@ -356,7 +463,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      *
-     * @param  string         $middlenames
+     * @param  string $middlenames
+     *
      * @return PartyInterface
      */
     public function setMiddlename($middlenames)
@@ -377,6 +485,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param string
+     *
      * @return PartyInterface
      */
     public function setSurname($surname)
@@ -389,6 +498,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      *
      * @param  \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
+     *
      * @throws Exception
      * @return Person
      */
@@ -402,7 +512,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             }
             // @codeCoverageIgnoreEnd
             if (!$this->powerOfAttorneys->contains($case)) {
-               $this->powerOfAttorneys->add($case);
+                $this->powerOfAttorneys->add($case);
             }
         } elseif ($case instanceof Deputyship) {
             // @codeCoverageIgnoreStart
@@ -431,23 +541,26 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->powerOfAttorneys)) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->powerOfAttorneys;
     }
 
     public function getCases()
     {
-        return array ($this->getPowerOfAttorneys(), $this->getDeputyships());
+        return array($this->getPowerOfAttorneys(), $this->getDeputyships());
     }
+
     /**
      * @param  ArrayCollection $cases
+     *
      * @return PartyInterface
      */
     public function setCases(ArrayCollection $cases)
     {
-       foreach ($cases as $case) {
-           $this->addCase($case);
-       }
+        foreach ($cases as $case) {
+            $this->addCase($case);
+        }
     }
 
     /**
@@ -460,12 +573,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (is_null($this->deputyships)) {
             $this->deputyships = new ArrayCollection();
         }
+
         // @codeCoverageIgnoreEnd
         return $this->deputyships;
     }
 
     /**
      * @param  PhoneNumber $phoneNumber
+     *
      * @return $this
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber)
@@ -478,6 +593,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  ArrayCollection $phoneNumbers
+     *
      * @return $this
      */
     public function setPhoneNumbers(ArrayCollection $phoneNumbers)
@@ -507,6 +623,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @param  InputFilterInterface $inputFilter
+     *
      * @return return               Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -524,29 +641,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         if (!$this->inputFilter) {
             $inputFilter = new \Zend\InputFilter\InputFilter();
             $factory     = new InputFactory();
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'surname',
-                        'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 2,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
 
             $this->inputFilter = $inputFilter;
         }
@@ -569,7 +663,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function hasAttachedCase()
     {
         return
-            (bool) (
+            (bool)(
                 ($this->getPowerOfAttorneys()->count() > 0)
                 |
                 ($this->getDeputyships()->count() > 0)

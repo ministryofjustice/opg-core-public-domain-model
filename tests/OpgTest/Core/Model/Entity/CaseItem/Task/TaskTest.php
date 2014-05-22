@@ -4,6 +4,7 @@ namespace OpgTest\Core\Model\CaseItem\Task;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\User\User;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Task test case.
@@ -21,14 +22,16 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     private $data = array(
         'id'            => '123',
+        'type'          => null,
+        'systemType'    => null,
         'status'        => 'Registered',
         'name'          => 'Test name',
+        'description'   => 'Test Description',
         'assignedUser'  => null,
         'priority'      => 'high',
-        'dueDate'       => '2010-01-01',
-        'createdTime'   => '2000-01-01T00:00:00',
         'errorMessages' => array(),
-        'case'          => null
+        'case'          => null,
+        'ragRating'     => null
     );
 
     /**
@@ -38,6 +41,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
+        $this->data['createdTime'] = new \DateTime();
+        $this->data['dueDate'] = new \DateTime();
         $this->task = new Task();
     }
 
@@ -99,6 +104,36 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetSetType()
+    {
+        $tasktype = 123;
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getType()
+        );
+    }
+
+    public function testGetSetSystemType()
+    {
+        $tasktype = 456;
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setSystemType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getSystemType()
+        );
+    }
+
     public function testGetSetPriority()
     {
         $priority = 'High';
@@ -125,22 +160,58 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetDueDate()
     {
-        $expected = '2014-06-23';
+        $expectedDate = new \DateTime();
 
-        $this->task->setDueDate($expected);
+        $this->assertEmpty($this->task->getDueDate());
+        $this->assertEmpty($this->task->getDueDateString());
+
+        $this->task->setDueDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->task->getDueDate());
+    }
+
+    public function testGetSetDueDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->task->getDueDate());
+        $this->task->setDueDate();
 
         $this->assertEquals(
-            $expected,
-            $this->task->getDueDate()
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->task->getDueDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function estGetSetDueDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->task->getDueDateString());
+        $this->task->setDueDateString('');
+
+        $returnedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateTimeFormat(),
+                $this->task->setDueDateString()
+            );
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
         );
     }
 
     public function testCreateInvalidDueDate()
     {
-        $expected       = '2013-09-24';
-        $expectedError  = "The due date cannot be in the past";
+        $expectedDate =
+            \DateTime::createFromFormat(
+                OPGDateFormat::getDateFormat(),
+                '24/09/2013'
+            );
 
-        $this->task->setDueDate($expected);
+        $expectedError = "The due date cannot be in the past";
+
+        $this->task->setDueDate($expectedDate);
         $this->assertFalse($this->task->isValid(array('dueDate')));
         $errors = $this->task->getErrorMessages();
         $this->assertEquals($expectedError, $errors['errors']['dueDate']['callbackValue']);
@@ -158,11 +229,26 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetSetDescription()
+    {
+        $taskdesc = 'Test Description';
+
+        $this->task->setDescription($taskdesc);
+
+        $this->assertEquals(
+            $taskdesc,
+            $this->task->getDescription()
+        );
+    }
+
     public function testGetSetCreatedTime()
     {
-        $expected = '2013-11-22T04:03:02';
+        $expected = new \DateTime('2013-11-22T04:03:02');
 
-        $this->task->setCreatedTime($expected);
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setCreatedTime($expected)
+        );
 
         $this->assertEquals(
             $expected,
@@ -188,16 +274,16 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expectedErrors = array(
             'errors' => array(
-                'name' => array(
+                'name'    => array(
                     'isEmpty' => "Value is required and can't be empty"
                 ),
-                'status' => array(
-                        'isEmpty' => "Value is required and can't be empty"
+                'status'  => array(
+                    'isEmpty' => "Value is required and can't be empty"
                 ),
                 'dueDate' => array(
                     'isEmpty' => "Value is required and can't be empty"
                 ),
-                'case' => array(
+                'case'    => array(
                     'isEmpty' => "Value is required and can't be empty"
                 )
             )
@@ -217,12 +303,24 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
 
         unset($expectedErrors['errors']['dueDate']);
-        $this->task->setDueDate('2014-06-23');
+        $this->task->setDueDate(new \DateTime());
         $this->assertFalse($this->task->isValid());
         $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
 
         unset($expectedErrors['errors']['case']);
         $this->task->setCase(new Lpa());
         $this->assertTrue($this->task->isValid());
+    }
+
+    public function testGetSetCase()
+    {
+        $case = new Lpa();
+
+        $this->task->setCase($case);
+
+        $this->assertEquals(
+            $case,
+            $this->task->getCase()
+        );
     }
 }

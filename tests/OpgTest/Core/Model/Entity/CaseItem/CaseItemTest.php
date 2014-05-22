@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\User\User;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * ToArray test case.
@@ -50,10 +51,34 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     public function testSetGetDueDate()
     {
         $caseItemMock = $this->getMockedClass();
-        $expected     = '2014-09-25';
+
+        $caseItemMock->setDueDateString('');
+        $this->assertEmpty($caseItemMock->getDueDate());
+        $this->assertEmpty($caseItemMock->getDueDateString());
+
+        $expected     = new \DateTime('2014-09-25');
 
         $caseItemMock->setDueDate($expected);
         $this->assertEquals($expected, $caseItemMock->getDueDate());
+
+        $expectedString = '2014-09-25';
+        try {
+            $caseItemMock->setDueDateString($expectedString);
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'2014-09-25' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testGetSetDueDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setDueDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getDueDateString());
     }
 
     public function testSetGetAssignedUser()
@@ -325,12 +350,40 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetRegistrationDate()
     {
-        $expectedDate = new \DateTime();
         $caseItemMock = $this->getMockedClass();
 
-        $this->assertNull($caseItemMock->getRegistrationDate());
-        $caseItemMock->setRegistrationDate($expectedDate);
-        $this->assertEquals($expectedDate, $caseItemMock->getRegistrationDate());
+        try {
+            $caseItemMock->setRegistrationDateString('');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        
+        $this->assertEmpty($caseItemMock->getRegistrationDate());
+        $this->assertEmpty($caseItemMock->getRegistrationDateString());
+
+        $expected     = new \DateTime('2014-09-25');
+
+        $caseItemMock->setRegistrationDate($expected);
+        $this->assertEquals($expected, $caseItemMock->getRegistrationDate());
+
+        $expectedString = '2014-09-25';
+
+        try {
+            $caseItemMock->setRegistrationDateString($expectedString);
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'2014-09-25' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+        $expected     = new \DateTime($expectedString);
+        $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getRegistrationDateString());
+
+        $expectedString = date(OPGDateFormat::getDateFormat());
+        $caseItemMock->setRegistrationDateString($expectedString);
+        $this->assertEquals($expectedString, $caseItemMock->getRegistrationDateString());
+
     }
 
     public function testGetSetClosedDate()
@@ -342,4 +395,56 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock->setClosedDate($expectedDate);
         $this->assertEquals($expectedDate, $caseItemMock->getClosedDate());
     }
+
+    public function testGetSetClosedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertEmpty($caseItemMock->getClosedDate());
+        $caseItemMock->setClosedDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $caseItemMock->getClosedDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetClosedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setClosedDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
+    }
+
+    public function testGetSetClosedDateStringNull()
+    {
+        $expected = null;
+
+        $caseItemMock = $this->getMockedClass();
+
+        $caseItemMock->setClosedDateString($expected);
+        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
+        $this->assertEmpty($caseItemMock->getClosedDateString());
+    }
+
+    public function testGetSetClosedDateStringInvalidDate()
+    {
+        $caseItemMock = $this->getMockedClass();
+
+        $this->assertEmpty($caseItemMock->getClosedDateString());
+        try {
+            $caseItemMock->setClosedDateString('');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+
+        $this->assertEmpty($caseItemMock->getClosedDateString());
+    }
+
 }

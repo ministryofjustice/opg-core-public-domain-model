@@ -10,14 +10,11 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
-use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
  *
  * @package Opg Domain Model
- * @author Chris Moreton <chris@netsensia.com>
- *
  */
 class Correspondent extends BasePerson implements PartyInterface, EntityInterface, HasRelationshipToDonor
 {
@@ -33,13 +30,14 @@ class Correspondent extends BasePerson implements PartyInterface, EntityInterfac
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @return InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

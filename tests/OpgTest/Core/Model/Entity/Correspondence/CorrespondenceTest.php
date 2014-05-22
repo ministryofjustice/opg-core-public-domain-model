@@ -15,9 +15,13 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
 
     private $data = array(
         'id'            => '123',
-        'metadata' => array(
-            'filename' => 'filename',
-        ),
+        'type'          => null,
+        'filename'      => null,
+        'case'          => null,
+        'person'        => null,
+        'errorMessages' => array(),
+        'recipientName' => null,
+        'address'       => null
     );
 
     public function setUp()
@@ -25,13 +29,13 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->correspondence = new Correspondence();
     }
 
-    /*public function testGetIterator()
+    public function testGetIterator()
     {
-        $this->assertInstanceOf('RecursiveArrayIterator', $this->document->getIterator());
+        $this->assertInstanceOf('RecursiveArrayIterator', $this->correspondence->getIterator());
 
-        $this->document->exchangeArray($this->data);
-        $this->assertEquals($this->data, $this->document->getIterator()->getArrayCopy());
-    }*/
+        $this->correspondence->exchangeArray($this->data);
+        $this->assertEquals($this->data, $this->correspondence->getIterator()->getArrayCopy());
+    }
 
     /**
      * Kept it simple as validation rules should go to its own class
@@ -76,6 +80,19 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->correspondence->setId('10');
         $this->correspondence->setFilename('document');
         $expectedOutput = '10_document';
-        $this->assertEquals($expectedOutput,$this->correspondence->getDocumentStoreFilename());
+        $this->assertEquals($expectedOutput, $this->correspondence->getDocumentStoreFilename());
+    }
+
+    public function testExchangeArray()
+    {
+        $data = array(
+            'id'   => 123,
+            'type' => 'unknown document'
+        );
+
+        $this->correspondence->exchangeArray($data);
+
+        $this->assertEquals($data['id'], $this->correspondence->getId());
+        $this->assertEquals($data['type'], $this->correspondence->getType());
     }
 }

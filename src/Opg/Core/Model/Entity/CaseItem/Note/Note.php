@@ -9,18 +9,18 @@ use Opg\Core\Model\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name = "notes")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\NoteRepository")
  *
  * @package Opg Core
- * @author  Chris Moreton <chris@netsensia.com>
- *
  */
 class Note implements EntityInterface, \IteratorAggregate
 {
@@ -32,70 +32,60 @@ class Note implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
-     * @Type("integer")
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}, nullable = true)
      * @var int $sourceId
-     * @Type("integer")
      */
     protected $sourceId;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $sourceTable
-     * @Type("string")
      */
     protected $sourceTable;
 
     /**
      * @ORM\Column(type = "string", nullable = false)
      * @var string $type
-     * @Type("string")
      */
     protected $type;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User")
      * @var User $user
-     * @Type("Opg\Core\Model\Entity\User\User")
      */
     protected $createdByUser;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string status
-     * @Type("string")
      */
     protected $status;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string description
-     * @Type("string")
      */
     protected $description;
 
     /**
      * @ORM\Column(type = "string", nullable = false)
      * @var string
-     * @Type("string")
      */
     protected $name;
 
     /**
      * Don't persist this
      * @var CaseItem $case
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Lpa")
      */
     protected $case;
 
     /**
      * Non persistable entity, used for validation of create
      * @var Person person
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      */
     protected $person;
 
@@ -121,7 +111,7 @@ class Note implements EntityInterface, \IteratorAggregate
 
     public function __construct()
     {
-        $this->setCreatedTime(date('Y-m-d H:i:s'));
+        $this->setCreatedTime();
     }
 
     /**

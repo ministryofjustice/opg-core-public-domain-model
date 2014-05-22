@@ -8,7 +8,6 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
-use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -36,6 +35,13 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
      */
     protected $statement;
 
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     */
+    protected $certificateProviderSkills;
+
     /**
      * @return string $certificateProviderStatementType
      */
@@ -46,12 +52,14 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
     /**
      * @param string $certificateProviderStatementType
+     *
      * @return CertificateProvider
      */
     public function setCertificateProviderStatementType(
         $certificateProviderStatementType
     ) {
         $this->certificateProviderStatementType = $certificateProviderStatementType;
+
         return $this;
     }
 
@@ -65,11 +73,13 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
 
     /**
      * @param string $statement
+     *
      * @return CertificateProvider
      */
     public function setStatement($statement)
     {
         $this->statement = $statement;
+
         return $this;
     }
 
@@ -78,13 +88,35 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
      *
      * @return array
      */
-    public function toArray($exposeClassName = TRUE)
+    public function toArray($exposeClassName = true)
     {
         return $this->toTraitArray($exposeClassName);
     }
 
     /**
-     * @return void|InputFilterInterface
+     * @param string $certificateProviderSkills
+     *
+     * @return CertificateProvider
+     */
+    public function setCertificateProviderSkills($certificateProviderSkills)
+    {
+        $this->certificateProviderSkills = $certificateProviderSkills;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCertificateProviderSkills()
+    {
+        return $this->certificateProviderSkills;
+    }
+
+
+    /**
+     * @return InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {

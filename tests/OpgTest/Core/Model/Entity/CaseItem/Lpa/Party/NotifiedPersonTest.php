@@ -6,6 +6,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Common\Exception\UnusedException;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,16 +20,62 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->notifiedPerson = new NotifiedPerson();
     }
 
-    public function testSetGetNotifiedPerson()
+    public function testSetGetNotifiedDate()
     {
-        $expected = '1993-11-22';
+        $expectedDate = new \DateTime();
 
-        $this->notifiedPerson->setNotifiedDate($expected);
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+
+        $this->notifiedPerson->setNotifiedDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->notifiedPerson->getNotifiedDate());
+    }
+
+    public function testSetGetNotifiedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
+        $this->notifiedPerson->setNotifiedDate();
 
         $this->assertEquals(
-            $expected,
-            $this->notifiedPerson->getNotifiedDate()
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->notifiedPerson->getNotifiedDate()->format(OPGDateFormat::getDateFormat())
         );
+    }
+
+    //remember date format for this one
+    public function testSetGetNotifiedDateEmptyString()
+    {
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        $this->notifiedPerson->setNotifiedDateString('');
+
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+    }
+
+    public function testSetGetNotifiedDateInvalidString()
+    {
+        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        try {
+            $this->notifiedPerson->setNotifiedDateString('asddasdsdas');
+        }
+        catch(\Exception $e) {
+            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
+            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
+        }
+    }
+
+    public function testSetGetNotifiedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+        $this->notifiedPerson->setNotifiedDateString($expected);
+        $this->assertEquals($expected, $this->notifiedPerson->getNotifiedDateString());
+
+    }
+
+    public function testGetInputFilter()
+    {
+        $this->assertTrue($this->notifiedPerson->getInputFilter() instanceof InputFilter);
     }
 
     public function testToArrayExchangeArray()
@@ -47,19 +94,6 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($notifiedPerson2), $notifiedPerson['className']);
         $this->assertEquals($this->notifiedPerson, $notifiedPerson2);
         $this->assertEquals($notifiedPerson, $notifiedPerson2->toArray());
-    }
-
-    public function testIsValid()
-    {
-        $this->assertFalse($this->notifiedPerson->isValid());
-
-        $errors = $this->notifiedPerson->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->notifiedPerson->addCase(new Lpa());
-        $this->notifiedPerson->setSurname('Test-Surname');
-        $this->assertTrue($this->notifiedPerson->isValid());
     }
 
     public function testGetSetRelationshipToDonor()

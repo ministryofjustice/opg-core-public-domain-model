@@ -61,23 +61,20 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($certificateProvider, $certificateProvider2->toArray());
     }
 
-    public function testIsValid()
-    {
-        $this->assertFalse($this->certificateProvider->isValid());
-
-        $errors = $this->certificateProvider->getErrorMessages();
-        $this->assertArrayHasKey('surname',$errors['errors']);
-        $this->assertArrayHasKey('powerOfAttorneys',$errors['errors']);
-
-        $this->certificateProvider->addCase(new Lpa());
-        $this->certificateProvider->setSurname('Test-Surname');
-        $this->assertTrue($this->certificateProvider->isValid());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
         $expectedRelationship = 'Doctor';
         $this->certificateProvider->setRelationshipToDonor($expectedRelationship);
         $this->assertEquals($expectedRelationship, $this->certificateProvider->getRelationshipToDonor());
+    }
+
+    public function testGetSetCertificateProviderSkills()
+    {
+        $expected = 'Medically trained';
+
+        $this->assertEmpty($this->certificateProvider->getCertificateProviderSkills());
+
+        $this->certificateProvider->setCertificateProviderSkills($expected);
+        $this->assertEquals($expected, $this->certificateProvider->getCertificateProviderSkills());
     }
 }

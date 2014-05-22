@@ -9,6 +9,10 @@ use Opg\Core\Model\Entity\PowerOfAttorney\Validator\Applicants;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
+/**
+ * Class LpaFilter
+ * @package Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter
+ */
 class LpaFilter extends InputFilter
 {
     /**
@@ -45,21 +49,35 @@ class LpaFilter extends InputFilter
             $this->inputFactory->createInput(
                 array(
                     'name'       => 'status',
-                    'required'   => true,
+                    'required'   => false,
                     'filters'    => array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
                     ),
-                    //'Perfect', 'Imperfect', 'Registered'
                     'validators' => array(
                         array(
-                            'name'    => 'InArray',
+                            'name'    => 'Callback',
                             'options' => array(
-                                'encoding' => 'UTF-8',
-                                'haystack' => array('Perfect', 'Imperfect', 'Registered', 'Pending', 'Withdrawn'),
-                                'strict'   => \Zend\Validator\InArray::COMPARE_STRICT
+                                'messages' => array(
+                                    \Zend\Validator\Callback::INVALID_VALUE =>
+                                        'The status set was invalid',
+                                ),
+                                'callback' => function ($status) {
+                                    if (isset($status)) {
+                                        return (
+                                            in_array(
+                                                $status,
+                                                array('Perfect', 'Imperfect', 'Registered', 'Pending', 'Withdrawn'),
+                                                true
+                                            )
+                                        );
+                                    }
+                                    else {
+                                        return true;
+                                    }
+                                }
                             ),
-                        )
+                        ),
                     )
                 )
             )
@@ -129,7 +147,7 @@ class LpaFilter extends InputFilter
                     'required'   => true,
                     'validators' => array(
                         array(
-                            'name'    => 'NotEmpty'
+                            'name' => 'NotEmpty'
                         )
                     )
                 )

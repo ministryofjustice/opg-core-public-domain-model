@@ -6,11 +6,12 @@ use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -18,9 +19,8 @@ use JMS\Serializer\Annotation\Type;
  * @package Opg Core
  *
  */
-class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationshipToDonor
 {
-    use Company;
     use ToArray {
         toArray as traitToArray;
     }
@@ -34,16 +34,26 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
     protected $occupation;
 
     /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
      */
-    protected $isTrustCorporation = false;
+    protected $lpaPartCSignatureDate;
 
     /**
-     * @ORM\Column(type = "boolean")
-     * @var boolean
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getLpa002SignatureDateString",setter="setLpa002SignatureDateString")
      */
-    protected $isReplacementAttorney = false;
+    protected $lpa002SignatureDate;
+
+    /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     */
+    protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 
     /**
      * @return string $occupation
@@ -55,47 +65,13 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
 
     /**
      * @param string $occupation
+     *
      * @return Attorney
      */
     public function setOccupation($occupation)
     {
         $this->occupation = $occupation;
-        return $this;
-    }
 
-    /**
-     * @return boolean $isTrustCorporation
-     */
-    public function isTrustCorporation()
-    {
-        return $this->isTrustCorporation;
-    }
-
-    /**
-     * @param boolean $isTrustCorporation
-     * @return Attorney
-     */
-    public function setIsTrustCorporation($isTrustCorporation)
-    {
-        $this->isTrustCorporation = $isTrustCorporation;
-        return $this;
-    }
-
-    /**
-     * @return boolean $isReplacementAttorney
-     */
-    public function isReplacementAttorney()
-    {
-        return $this->isReplacementAttorney;
-    }
-
-    /**
-     * @param boolean $isReplacementAttorney
-     * @return Attorney
-     */
-    public function setIsReplacementAttorney($isReplacementAttorney)
-    {
-        $this->isReplacementAttorney = $isReplacementAttorney;
         return $this;
     }
 
@@ -112,29 +88,6 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'email',
-                        'required'   => false,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 24,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
                         'name'       => 'powerOfAttorneys',
                         'required'   => true,
                         'validators' => array(
@@ -146,9 +99,11 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
+                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
                                             return $this->hasAttachedCase();
                                         }
+                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )
@@ -167,7 +122,126 @@ class Attorney extends BasePerson implements  PartyInterface, HasRelationshipToD
      *
      * @return array
      */
-    public function toArray($exposeClassname = TRUE) {
+    public function toArray($exposeClassname = true)
+    {
         return $this->traitToArray($exposeClassname);
+    }
+
+    /**
+     * @param \DateTime $lpa002SignatureDate
+     *
+     * @return Attorney
+     */
+    public function setLpa002SignatureDate(\DateTime $lpa002SignatureDate = null)
+    {
+        $this->lpa002SignatureDate = $lpa002SignatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $lpa002SignatureDate
+     *
+     * @return Attorney
+     */
+    public function setLpa002SignatureDateString($lpa002SignatureDate)
+    {
+        if (!empty($lpa002SignatureDate)) {
+            $result = OPGDateFormat::createDateTime($lpa002SignatureDate);
+            if ($result) {
+                return $this->setLpa002SignatureDate($result);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime $lpa002SignatureDate
+     */
+    public function getLpa002SignatureDate()
+    {
+        return $this->lpa002SignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLpa002SignatureDateString()
+    {
+        if (!empty($this->lpa002SignatureDate)) {
+            return $this->lpa002SignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $lpaPartCSignatureDate
+     *
+     * @return Attorney
+     */
+    public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
+    {
+        $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $lpaPartCSignatureDate
+     *
+     * @return Lpa
+     */
+    public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
+    {
+        if (!empty($lpaPartCSignatureDate)) {
+            $result = OPGDateFormat::createDateTime($lpaPartCSignatureDate);
+            if ($result) {
+                return $this->setLpaPartCSignatureDate($result);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaPartCSignatureDate()
+    {
+        return $this->lpaPartCSignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLpaPartCSignatureDateString()
+    {
+        if (!empty($this->lpaPartCSignatureDate)) {
+            return $this->lpaPartCSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param int $isAttorneyApplyingToRegister
+     *
+     * @return Attorney
+     */
+    public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = self::OPTION_FALSE)
+    {
+        $this->isAttorneyApplyingToRegister = $isAttorneyApplyingToRegister;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsAttorneyApplyingToRegister()
+    {
+        return $this->isAttorneyApplyingToRegister;
     }
 }

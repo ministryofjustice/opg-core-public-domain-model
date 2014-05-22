@@ -8,13 +8,13 @@ use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name = "phonenumbers")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\PhoneNumberRepository")
  *
  * Class PhoneNumber
  * @package Opg\Core\Model\Entity\PhoneNumber
@@ -29,7 +29,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      */
     protected $id;
 
@@ -37,38 +36,36 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
     /**
      * @ORM\Column(type = "string", name="phone_number")
      * @var string
-     * @Type("string")
      */
     protected $phoneNumber;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      */
     protected $type = 'Work';
 
     /**
      * @ORM\Column(type = "boolean", name="is_default")
      * @var boolean
-     * @Type("boolean")
      */
     protected $default = false;
 
     /**
      * @param boolean $default
+     *
      * @return PhoneNumber
      */
     public function setDefault($default = true)
     {
         $this->default = (bool)$default;
+
         return $this;
     }
 
@@ -82,11 +79,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param integer $id
+     *
      * @return PhoneNumber
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -110,6 +109,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
             throw new \LogicException('This phone number is already linked to a person');
         }
         $this->person = $person;
+
         return $this;
     }
 
@@ -123,11 +123,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $phoneNumber
+     *
      * @return PhoneNumber
      */
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
+
         return $this;
     }
 
@@ -141,11 +143,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 
     /**
      * @param string $type
+     *
      * @return PhoneNumber
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 

@@ -17,11 +17,17 @@ class PersonFactory
         //@Todo once we have implemented this properly, remove this failsafe
         $data['personType'] = (isset($data['personType'])) ? $data['personType'] : 'Donor';
 
-        if(!empty($data['personType'])) {
+        if (!empty($data['personType'])) {
             switch ($data['personType']) {
                 case "Attorney" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney";
-                     break;
+                    break;
+                case "ReplacementAttorney" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\ReplacementAttorney";
+                    break;
+                case "TrustCorporation" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\TrustCorporation";
+                    break;
                 case "CertificateProvider" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider";
                     break;
@@ -35,16 +41,22 @@ class PersonFactory
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
                     break;
             }
-        }
-        else {
+        } else {
             throw new \Exception('Cannot build unknown person type.');
         }
 
-        return
-            $serializer->deserialize(
+        // Try-Catch added due to https://github.com/schmittjoh/serializer/issues/216
+        try {
+            $person = $serializer->deserialize(
                 json_encode($data),
                 $personType,
                 'json'
             );
+        } catch (\Exception $e) {
+            //@todo add logging for this or return the actual exception
+            $person = null;
+        }
+
+        return $person;
     }
 }
