@@ -19,6 +19,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"Opg\Core\Model\Entity\CaseItem\Lpa\LpaListener"})
  *
  * Class Lpa
  *
