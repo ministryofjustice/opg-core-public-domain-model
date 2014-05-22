@@ -12,7 +12,6 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
@@ -37,7 +36,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Type("integer")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
@@ -45,7 +43,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $email;
@@ -53,7 +50,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string");
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $firstname;
@@ -61,7 +57,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
@@ -74,7 +69,6 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      * @Exclude
      * @ReadOnly
      */
@@ -88,7 +82,6 @@ class User implements EntityInterface, \IteratorAggregate
      * )
      *
      * @var ArrayCollection
-     * @Type("Opg\Core\Model\Entity\Deputyship\Deputyship")
      * @Exclude
      * @ReadOnly
      */
@@ -98,7 +91,6 @@ class User implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type = "json_array")
      * @var array
      * @Accessor(getter="getNormalisedRoles",setter="setFromNormalisedRoles")
-     * @Type("array")
      * @todo change the way this is persisted to a 0 index array
      */
     protected $roles = [];
@@ -109,28 +101,25 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      */
     protected $password;
 
     /**
      * @var string
      * @Exclude
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $token;
 
     /**
      * @var boolean
-     * @Type("boolean")
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getLocked", setter="setLocked")
      */
     protected $locked;
 
     /**
      * @param boolean $locked
-     *
      * @return User
      */
     public function setLocked($locked)
@@ -145,7 +134,7 @@ class User implements EntityInterface, \IteratorAggregate
      */
     public function getLocked()
     {
-        return $this->locked;
+        return (bool)$this->locked;
     }
 
     /**
@@ -188,7 +177,6 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "boolean", options={"default":0})
      * @var boolean
-     * @Type("boolean")
      */
     protected $suspended;
 

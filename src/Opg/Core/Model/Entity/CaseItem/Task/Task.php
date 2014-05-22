@@ -9,11 +9,11 @@ use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -38,16 +38,27 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int $id
-     * @Type("integer")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
 
     /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type = "integer", nullable = true)
+     * @var int
+     */
+    protected $systemType;
+
+    /**
      * @Serializer\MaxDepth(2)
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $assignedUser;
@@ -55,7 +66,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
@@ -63,7 +73,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $priority;
@@ -71,8 +80,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Type("string")
      * @Accessor(getter="getDueDateString",setter="setDueDateString")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $dueDate;
@@ -80,13 +89,20 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
-     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $name;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string description
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $description;
+
+    /**
      * Non persistable entity, used for validation of create
+     *
      * @var CaseItem case
      * @Groups({"api-poa-list","api-task-list"})
      */
@@ -94,6 +110,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * Non persistable entity
+     *
      * @var int
      * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
@@ -150,7 +167,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setDueDateString($dueDate)
     {
         if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime($dueDate);
+            $dueDate = OPGDateFormat::createDateTime($dueDate . ' 23:59:59');
 
             if ($dueDate) {
                 $this->setDueDate($dueDate);
@@ -401,8 +418,16 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
             $this->setId($data['id']);
         }
 
+        if (!empty($data['type'])) {
+            $this->setName($data['type']);
+        }
+
         if (!empty($data['name'])) {
             $this->setName($data['name']);
+        }
+
+        if (!empty($data['description'])) {
+            $this->setDescription($data['description']);
         }
 
         if (!empty($data['dueDate'])) {
@@ -443,23 +468,97 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
+     * @return CaseItem | null
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
      * @return int
      */
     public function getRagRating()
     {
-        $dateDiff = $this->getDueDate()->diff(new \DateTime);
+        if(isset($this->dueDate)) {
+            $dateDiff = $this->getDueDate()->diff(new \DateTime);
 
-        $daysOffset = $dateDiff->days;
-        if($dateDiff->invert == 1) {
-            $daysOffset *= -1;
+            $daysOffset = $dateDiff->days;
+            if ($dateDiff->invert == 1) {
+                $daysOffset *= -1;
+            }
+
+            if ($daysOffset > 0) {
+                return 3;
+            } elseif ($daysOffset < 0) {
+                return 1;
+            }
+
+            return 2;
         }
-
-        if ($daysOffset > 0) {
+        else {
+            //Something has gone wrong here, we have no due date, flag it
             return 3;
         }
-        elseif ($daysOffset < 0) {
-            return 1;
-        }
-        return 2;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Task
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Task
+     */
+    public function setType($type)
+    {
+        $this->type = (string) $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $systemType
+     *
+     * @return Task
+     */
+    public function setSystemType($systemType)
+    {
+        $this->systemType = (int) $systemType;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSystemType()
+    {
+        return $this->systemType;
     }
 }

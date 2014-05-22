@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
 /**
  * Class RelationshipToDonor
@@ -13,7 +12,6 @@ trait RelationshipToDonor
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Type("string");
      */
     protected $relationshipToDonor;
 

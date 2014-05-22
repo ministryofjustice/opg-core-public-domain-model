@@ -4,8 +4,8 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -32,7 +32,6 @@ class ReplacementAttorney extends AttorneyAbstract
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var boolean
-     * @Type("boolean")
      */
     protected $isReplacementAttorney = false;
 

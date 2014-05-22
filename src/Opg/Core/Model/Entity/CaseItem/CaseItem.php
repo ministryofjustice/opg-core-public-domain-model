@@ -16,17 +16,16 @@ use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use JMS\Serializer\Annotation\Exclude;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -58,9 +57,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
 
     /**
-     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int autoincrementID
+     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Id
      * @Type("integer")
+     * @var int autoincrementID
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $id;
@@ -76,7 +76,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
-     * @Type("string")
+     * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
@@ -153,7 +153,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Task\Task>")
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */
@@ -162,7 +161,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Note\Note>")
      * @ReadOnly
      */
     protected $notes;
@@ -170,7 +168,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Document\Document>")
      * @ReadOnly
      */
     protected $documents;
@@ -178,7 +175,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
      * @var ArrayCollection
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Correspondence\Correspondence>")
      * @ReadOnly
      */
     protected $correspondence;
@@ -203,6 +199,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagRating")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragRating;
 
@@ -211,6 +208,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagTotal")
+     * @Serializer\Groups("api-poa-list")
      */
     protected $ragTotal;
 
@@ -737,9 +735,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             '3' => 0
         );
 
-        if(!empty($tasks)) {
+        if(!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
-                $rag[$taskItem->getRagRating()]++;
+                if($taskItem->getStatus() !== 'Completed') {
+                    $rag[$taskItem->getRagRating()]++;
+                }
             }
         }
 
@@ -760,9 +760,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $total = 0;
 
-        if(!empty($tasks)) {
+        if(!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
-                $total += $taskItem->getRagRating();
+                if($taskItem->getStatus() !== 'Completed') {
+                    $total += $taskItem->getRagRating();
+                }
             }
         }
 

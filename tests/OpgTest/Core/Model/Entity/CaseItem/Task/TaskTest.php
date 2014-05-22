@@ -22,8 +22,11 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     private $data = array(
         'id'            => '123',
+        'type'          => null,
+        'systemType'    => null,
         'status'        => 'Registered',
         'name'          => 'Test name',
+        'description'   => 'Test Description',
         'assignedUser'  => null,
         'priority'      => 'high',
         'errorMessages' => array(),
@@ -98,6 +101,36 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $id,
             $this->task->getId()
+        );
+    }
+
+    public function testGetSetType()
+    {
+        $tasktype = 123;
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getType()
+        );
+    }
+
+    public function testGetSetSystemType()
+    {
+        $tasktype = 456;
+
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setSystemType($tasktype)
+        );
+
+        $this->assertEquals(
+            $tasktype,
+            $this->task->getSystemType()
         );
     }
 
@@ -196,11 +229,26 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetSetDescription()
+    {
+        $taskdesc = 'Test Description';
+
+        $this->task->setDescription($taskdesc);
+
+        $this->assertEquals(
+            $taskdesc,
+            $this->task->getDescription()
+        );
+    }
+
     public function testGetSetCreatedTime()
     {
         $expected = new \DateTime('2013-11-22T04:03:02');
 
-        $this->task->setCreatedTime($expected);
+        $this->assertInstanceOf(
+            'Opg\Core\Model\Entity\CaseItem\Task\Task',
+            $this->task->setCreatedTime($expected)
+        );
 
         $this->assertEquals(
             $expected,
@@ -262,5 +310,17 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         unset($expectedErrors['errors']['case']);
         $this->task->setCase(new Lpa());
         $this->assertTrue($this->task->isValid());
+    }
+
+    public function testGetSetCase()
+    {
+        $case = new Lpa();
+
+        $this->task->setCase($case);
+
+        $this->assertEquals(
+            $case,
+            $this->task->getCase()
+        );
     }
 }

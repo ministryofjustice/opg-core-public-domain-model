@@ -14,10 +14,10 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -51,7 +51,6 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor", fetch = "EAGER")
      * @var Donor
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor")
      * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
      */
@@ -60,7 +59,6 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent", fetch = "EAGER")
      * @var Correspondent
-     * @Type("Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent")
      * @ReadOnly
      */
     protected $correspondent;
@@ -101,14 +99,12 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type = "boolean",options={"default"=0})
      * @var bool
-     * @Type("boolean")
      */
     protected $usesNotifiedPersons = false;
 
     /**
      * @ORM\Column(type = "integer",options={"default"=1})
      * @var int
-     * @Type("string")
      * @Accessor(getter="getNotifiedPersonPermissionBy",setter="setNotifiedPersonPermissionBy")
      *
      * These accessors are required to convert between the integer type we store the field as and the
@@ -123,7 +119,6 @@ abstract class PowerOfAttorney extends CaseItem
      * inverseJoinColumns={@ORM\JoinColumn(name="certificate_provider_id",
      * referencedColumnName="id")}
      * )
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider>")
      * @var ArrayCollection
      * @ReadOnly
      */
@@ -132,63 +127,54 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
-     * @Type("integer")
      */
     protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
-     * @Type("integer")
      */
     protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
      * @var integer
-     * @Type("integer")
      */
     protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
-     * @Type("integer")
      */
     protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Type("boolean")
      */
     protected $caseAttorneySingular = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Type("boolean")
      */
     protected $caseAttorneyJointlyAndSeverally = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Type("boolean")
      */
     protected $caseAttorneyJointly = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Type("boolean")
      */
     protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $cardPaymentContact;
 
@@ -203,77 +189,66 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $howAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $howReplacementAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $attorneyActDecisions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $replacementAttorneyActDecisions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $replacementOrder;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $restrictions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $guidance;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $charges;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $additionalInfo;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $paymentId;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $paymentAmount;
 
@@ -286,9 +261,20 @@ abstract class PowerOfAttorney extends CaseItem
     protected $paymentDate;
 
     /**
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var int
+     */
+    protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
+
+    /**
+     * @ORM\Column(type="integer",options={"default"=0})
+     * @var int
+     */
+    protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
+
+    /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("string")
      * @Accessor(getter="getAttorneyPartyDeclaration",setter="setAttorneyPartyDeclaration")
      */
     protected $attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR;
@@ -296,7 +282,6 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("string")
      * @Accessor(getter="getAttorneyApplicationAssertion",setter="setAttorneyApplicationAssertion")
      */
     protected $attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR;
@@ -304,7 +289,6 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("string")
      * @Accessor(getter="getAttorneyMentalActPermission",setter="setAttorneyMentalActPermission")
      */
     protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
@@ -320,14 +304,12 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("string")
      */
     protected $attorneyDeclarationSignatoryFullName;
 
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
-     * @Type("string")
      * @Accessor(getter="getCorrespondentComplianceAssertion",setter="setCorrespondentComplianceAssertion")
      */
     protected $correspondentComplianceAssertion = self::PERMISSION_GIVEN_SINGULAR;
@@ -1486,4 +1468,41 @@ abstract class PowerOfAttorney extends CaseItem
 
         return '';
     }
+
+    /**
+     * @param int $paymentExemption
+     * @return PowerOfAttorney
+     */
+    public function setPaymentExemption($paymentExemption = self::PAYMENT_OPTION_NOT_SET)
+    {
+        $this->paymentExemption =$paymentExemption;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentExemption()
+    {
+        return $this->paymentExemption;
+    }
+
+    /**
+     * @param int $paymentRemission
+     * @return PowerOfAttorney
+     */
+    public function setPaymentRemission($paymentRemission = self::PAYMENT_OPTION_NOT_SET)
+    {
+        $this->paymentRemission = $paymentRemission;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentRemission()
+    {
+        return (bool)$this->paymentRemission;
+    }
+
 }

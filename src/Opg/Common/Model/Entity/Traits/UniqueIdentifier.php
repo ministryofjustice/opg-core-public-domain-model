@@ -1,7 +1,6 @@
 <?php
 namespace Opg\Common\Model\Entity\Traits;
-
-use JMS\Serializer\Annotation\Type;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class UniqueIdentifier
@@ -15,7 +14,6 @@ trait UniqueIdentifier
      *
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
-     * @Type("integer")
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $uId;
