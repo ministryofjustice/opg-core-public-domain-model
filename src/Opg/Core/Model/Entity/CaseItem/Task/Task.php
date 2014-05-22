@@ -20,6 +20,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"BusinessRule\Specification\Task\Listener"})
  * @ORM\Table(name = "tasks")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\TaskRepository")
