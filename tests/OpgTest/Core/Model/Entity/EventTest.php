@@ -119,7 +119,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCreatedOnString()
     {
-        $expected = date(OPGDateFormat::getDateFormat());
+        $expected = date(OPGDateFormat::getDateTimeFormat());
         $this->event->setCreatedOnString($expected);
         $this->assertEquals($expected, $this->event->getCreatedOnString());
     }

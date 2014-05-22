@@ -148,7 +148,7 @@ class Event implements EntityInterface
     public function getCreatedOnString()
     {
         if (!empty($this->createdOn)) {
-            return $this->createdOn->format(OPGDateFormat::getDateFormat());
+            return $this->createdOn->format(OPGDateFormat::getDateTimeFormat());
         }
 
         return '';
