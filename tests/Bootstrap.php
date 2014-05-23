@@ -8,3 +8,5 @@ ini_set('log_errors', false);
 if (file_exists('vendor/autoload.php')) {
     $loader = include 'vendor/autoload.php';
 }
+
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');

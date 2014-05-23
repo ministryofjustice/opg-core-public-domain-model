@@ -305,5 +305,35 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->person->getDateOfDeathString());
     }
 
+    public function testAddPersonCannotBeAParentOfItself()
+    {
+        $this->setExpectedException('LogicException', 'Person cannot be a parent of itself.');
+        $this->person->addChild($this->person);
+    }
+
+    public function testAddPerson()
+    {
+        $otherPerson1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $otherPerson2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+
+        $this->assertNull($otherPerson1->getParent());
+        $this->person->addChild($otherPerson1);
+        $this->assertSame($this->person, $otherPerson1->getParent());
+
+        $this->assertNull($otherPerson2->getParent());
+        $this->person->addChild($otherPerson2);
+        $this->assertSame($this->person, $otherPerson2->getParent());
+    }
+
+    public function testPersonCannotHaveMultipleParents()
+    {
+        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $parent2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+
+        $parent1->addChild($this->person);
+
+        $this->setExpectedException('LogicException', 'This person is already associated with another parent');
+        $parent2->addChild($this->person);
+    }
   }
 

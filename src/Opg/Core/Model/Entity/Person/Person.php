@@ -181,6 +181,16 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     protected $phoneNumbers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent")
+     */
+    private $children;
+
     public function __construct()
     {
         $this->deputyships      = new ArrayCollection();
@@ -188,6 +198,39 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         $this->addresses        = new ArrayCollection();
         $this->phoneNumbers     = new ArrayCollection();
         $this->notes            = new ArrayCollection();
+        $this->children         = new ArrayCollection();
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function addChild(Person $person)
+    {
+        if ($person === $this) {
+            throw new \LogicException('Person cannot be a parent of itself.');
+        }
+
+        $person->setParent($this);
+        $this->children->add($person);
+    }
+
+    /**
+     * @internal only invoked by addChild(), not for public consumption
+     */
+    public function setParent(Person $person)
+    {
+        if ($this->parent !== null) {
+            throw new \LogicException('This person is already associated with another parent.');
+        }
+
+        $this->parent = $person;
     }
 
     /**
