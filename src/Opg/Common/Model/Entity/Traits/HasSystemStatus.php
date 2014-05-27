@@ -3,7 +3,6 @@ namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Class HasSystemStatus
  * @package Opg\Common\Model\Entity\Traits
