@@ -7,6 +7,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Class AttorneyAbstract
@@ -20,12 +21,14 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Type("string")
      */
     protected $dxNumber;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Type("string")
      */
     protected $dxExchange;
 
