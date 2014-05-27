@@ -201,16 +201,26 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         $this->children         = new ArrayCollection();
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getChildren()
     {
         return $this->children;
     }
 
+    /**
+     * @return mixed
+     */
     public function getParent()
     {
         return $this->parent;
     }
 
+    /**
+     * @param Person $person
+     * @throws \LogicException
+     */
     public function addChild(Person $person)
     {
         if ($person === $this) {
@@ -222,9 +232,11 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
-     * @internal only invoked by addChild(), not for public consumption
+     * @param Person $person
+     * @throws \LogicException
+     * @internal
      */
-    public function setParent(Person $person)
+    protected function setParent(Person $person)
     {
         if ($this->parent !== null) {
             throw new \LogicException('This person is already associated with another parent.');
