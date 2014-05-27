@@ -2,6 +2,7 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Class Company
@@ -12,12 +13,14 @@ trait Company
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $companyName;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Type("string")
      */
     protected $companyNumber;
 
