@@ -144,6 +144,13 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
     }
 
+    public function testGetSetLpaPartCSignatureEmptyString()
+    {
+        $expected = '';
+        $this->attorney->setLpaPartCSignatureDateString($expected);
+        $this->assertEquals($expected, $this->attorney->getLpaPartCSignatureDateString());
+    }
+
     public function testGetSetIsAttorneyApplyingToRegister()
     {
         $this->assertEquals(Attorney::OPTION_NOT_SET, $this->attorney->getIsAttorneyApplyingToRegister());

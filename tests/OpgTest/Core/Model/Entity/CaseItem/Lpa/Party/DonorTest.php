@@ -18,6 +18,11 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         $this->donor = new Donor();
     }
 
+    public function testSetUp()
+    {
+        $this->assertFalse($this->donor->hasAttachedCase());
+    }
+
     public function testSetGetPreviousNames()
     {
         $expected = 'Martha Jones, Jimmy Jones';
