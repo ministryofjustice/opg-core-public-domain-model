@@ -50,4 +50,16 @@ class DateFormatTest extends \PHPUnit_Framework_TestCase
             OPGDateFormat::createDateTime($expected)->format(OPGDateFormat::getDateTimeFormat())
         );
     }
+
+    public function testCreateDateTimeFromMysql()
+    {
+        $expected   = '01/05/1978 00:00:00';
+        $mysqlTest  = '1978-05-01 00:00:00';
+
+        $this->assertTrue(OPGDateFormat::createDateTime($mysqlTest) instanceof \DateTime);
+        $this->assertEquals(
+            $expected,
+            OPGDateFormat::createDateTime($mysqlTest)->format(OPGDateFormat::getDateTimeFormat())
+        );
+    }
 }

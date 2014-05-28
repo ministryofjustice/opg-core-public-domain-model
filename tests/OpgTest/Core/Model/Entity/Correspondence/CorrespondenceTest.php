@@ -95,4 +95,20 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($data['id'], $this->correspondence->getId());
         $this->assertEquals($data['type'], $this->correspondence->getType());
     }
+
+    public function testGetSetRecipientName()
+    {
+        $expected = 'Test Recipient';
+
+        $this->correspondence->setRecipientName($expected);
+        $this->assertEquals($expected, $this->correspondence->getRecipientName());
+    }
+
+    public function testGetSetAddress()
+    {
+        $expected = 'Test Address, Some Town, Postcode';
+
+        $this->correspondence->setAddress($expected);
+        $this->assertEquals($expected, $this->correspondence->getAddress());
+    }
 }
