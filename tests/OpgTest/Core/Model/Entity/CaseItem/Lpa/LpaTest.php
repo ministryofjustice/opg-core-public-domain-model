@@ -12,6 +12,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\CaseItem\Task\Task;
 
 /**
  * Lpa test case.
@@ -831,7 +832,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testValidatorInvalidNonExistentCaseSubtype()
     {
-        $this->lpa->setCaseType('NOT_A_REAL_CASE__TYPE');
+        $this->lpa->setCaseType('NOT_A_REAL_CASE_TYPE');
 
         $this->assertFalse($this->lpa->isValid(['caseSubtype']));
     }
@@ -851,5 +852,41 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->setTrustCorporationSignedAs($expected);
 
         $this->assertEquals($expected, $this->lpa->getTrustCorporationSignedAs());
+    }
+
+    public function testGetRagRatingRed()
+    {
+        $task = new Task();
+        $task->setDueDateString(date('d/m/Y', strtotime('Last Week')));
+
+        $this->lpa->addTask($task);
+        $this->lpa->addTask($task);
+
+        $this->assertEquals(3, $this->lpa->getRagRating());
+        $this->assertEquals(6, $this->lpa->getRagTotal());
+    }
+
+    public function testGetRagRatingAmber()
+    {
+        $task = new Task();
+        $task->setDueDateString(date('d/m/Y'));
+
+        $this->lpa->addTask($task);
+        $this->lpa->addTask($task);
+
+        $this->assertEquals(2, $this->lpa->getRagRating());
+        $this->assertEquals(4, $this->lpa->getRagTotal());
+    }
+
+    public function testGetRagRatingGreen()
+    {
+        $task = new Task();
+        $task->setDueDateString(date('d/m/Y', strtotime('Next Week')));
+
+        $this->lpa->addTask($task);
+        $this->lpa->addTask($task);
+
+        $this->assertEquals(1, $this->lpa->getRagRating());
+        $this->assertEquals(2, $this->lpa->getRagTotal());
     }
 }

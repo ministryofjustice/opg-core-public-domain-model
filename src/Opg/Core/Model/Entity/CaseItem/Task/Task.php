@@ -419,8 +419,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
         }
 
         if (!empty($data['type'])) {
-            $this->setName($data['type']);
-        }
+        $this->setType($data['type']);
+    }
 
         if (!empty($data['name'])) {
             $this->setName($data['name']);
