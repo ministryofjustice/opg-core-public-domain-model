@@ -247,4 +247,22 @@ AddressTest extends \PHPUnit_Framework_TestCase
         $this->address->setId($id);
         $this->assertEquals($id, $this->address->getId());
     }
+
+    public function testToString()
+    {
+        $expected = "Test *1*2*3*TestTown*TestCounty*SW3 4HG*TestCountry";
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->address->setPerson($donor);
+        $this->assertEquals($donor, $this->address->getPerson());
+
+        $this->address->exchangeArray($this->testData);
+
+        $result = $this->address->toString('*', Address::INCLUDE_PERSON, 0b111);
+
+        $this->assertEquals($expected, trim($result));
+    }
 }

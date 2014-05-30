@@ -22,7 +22,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     private $data = array(
         'id'            => '123',
-        'type'          => null,
+        'type'          => 'tasklet',
         'systemType'    => null,
         'status'        => 'Registered',
         'name'          => 'Test name',
@@ -182,9 +182,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function estGetSetDueDateEmptyString()
+    public function testGetSetDueDateEmptyString()
     {
-        $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->task->getDueDateString());
         $this->task->setDueDateString('');
@@ -192,12 +191,11 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $returnedDate =
             \DateTime::createFromFormat(
                 OPGDateFormat::getDateTimeFormat(),
-                $this->task->setDueDateString()
+                $this->task->getDueDateString()
             );
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
+        $this->assertEmpty(
+            $returnedDate
         );
     }
 
@@ -303,7 +301,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
 
         unset($expectedErrors['errors']['dueDate']);
-        $this->task->setDueDate(new \DateTime());
+        $this->task->setDueDate(new \DateTime('tomorrow'));
         $this->assertFalse($this->task->isValid());
         $this->assertEquals($expectedErrors, $this->task->getErrorMessages());
 
@@ -322,5 +320,43 @@ class TaskTest extends \PHPUnit_Framework_TestCase
             $case,
             $this->task->getCase()
         );
+    }
+
+    public function testGetSetDueDateString()
+    {
+        $expected = date('d/m/Y');
+
+        $this->task->setDueDateString($expected);
+
+        $this->assertEquals($expected, $this->task->getDueDateString());
+    }
+
+    public function testGetRagRatingGreen()
+    {
+        $expectedDueDate = date('d/m/Y', strtotime('+2 weeks'));
+        $this->task->setDueDateString($expectedDueDate);
+
+        $this->assertEquals(1, $this->task->getRagRating());
+    }
+
+    public function testGetRagRatingRed()
+    {
+        $expectedDueDate = date('d/m/Y', strtotime('-2 weeks'));
+        $this->task->setDueDateString($expectedDueDate);
+
+        $this->assertEquals(3, $this->task->getRagRating());
+    }
+
+    public function testGetRagRatingAmber()
+    {
+        $expectedDueDate = date('d/m/Y');
+        $this->task->setDueDateString($expectedDueDate);
+
+        $this->assertEquals(2, $this->task->getRagRating());
+    }
+
+    public function testGetRagRatingError()
+    {
+        $this->assertEquals(3, $this->task->getRagRating());
     }
 }

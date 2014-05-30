@@ -79,6 +79,10 @@ class ElasticSynchronizationListener implements EventSubscriber
      */
     public function onFlush(OnFlushEventArgs $event)
     {
+        if ($this->serviceLocator === null) {
+            return;
+        }
+
         $changedCases = $this->collectChangedCases($event);
         foreach ($changedCases as $case) {
             $params = array(

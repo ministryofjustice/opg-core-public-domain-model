@@ -62,6 +62,7 @@ class LpaFilter extends InputFilter
                                     \Zend\Validator\Callback::INVALID_VALUE =>
                                         'The status set was invalid',
                                 ),
+                                // @codeCoverageIgnoreStart
                                 'callback' => function ($status) {
                                     if (isset($status)) {
                                         return (
@@ -76,6 +77,7 @@ class LpaFilter extends InputFilter
                                         return true;
                                     }
                                 }
+                                // @codeCoverageIgnoreEnd
                             ),
                         ),
                     )
