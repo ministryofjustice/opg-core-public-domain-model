@@ -841,7 +841,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
         $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
         $this->assertEquals($class::HW_FULLTEXTNAME, "Health and Welfare");
-        $this->assertEquals($class::PF_FULLTEXTNAME, "Personal Finance");
+        $this->assertEquals($class::PF_FULLTEXTNAME, "Property and Financial Affairs");
     }
 
     public function testGetSetTrustCorporationSignedAs()
