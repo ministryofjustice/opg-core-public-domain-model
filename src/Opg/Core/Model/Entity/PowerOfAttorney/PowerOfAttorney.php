@@ -103,6 +103,12 @@ abstract class PowerOfAttorney extends CaseItem
     protected $usesNotifiedPersons = false;
 
     /**
+     * @ORM\Column(type = "boolean",options={"default"=0})
+     * @var bool
+     */
+    protected $noNoticeGiven = false;
+
+    /**
      * @ORM\Column(type = "integer",options={"default"=1})
      * @var int
      * @Accessor(getter="getNotifiedPersonPermissionBy",setter="setNotifiedPersonPermissionBy")
@@ -939,6 +945,26 @@ abstract class PowerOfAttorney extends CaseItem
      * @return bool
      */
     public function getUsesNotifiedPersons()
+    {
+        return $this->usesNotifiedPersons;
+    }
+
+    /**
+     * @param $noNoticeGiven
+     *
+     * @return PowerOfAttorney
+     */
+    public function setNoNoticeGiven($noNoticeGiven)
+    {
+        $this->noNoticeGiven = (bool)$noNoticeGiven;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getNoNoticeGiven()
     {
         return $this->usesNotifiedPersons;
     }
