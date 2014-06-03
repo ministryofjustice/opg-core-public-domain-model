@@ -966,7 +966,7 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function getNoNoticeGiven()
     {
-        return $this->usesNotifiedPersons;
+        return $this->noNoticeGiven;
     }
 
     /**
