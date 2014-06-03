@@ -507,6 +507,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'paymentRemission'                          => 0,
                 'paymentExemption'                          => 0,
                 'trustCorporationSignedAs'                  => null,
+                'noNoticeGiven'                             => null, 
             ),
             $lpa->toArrayRecursive()
         );
