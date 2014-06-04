@@ -43,6 +43,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->data['createdTime'] = new \DateTime();
         $this->data['dueDate'] = new \DateTime();
+        $this->data['activeDate'] = new \DateTime();
         $this->task = new Task();
     }
 
@@ -196,6 +197,45 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEmpty(
             $returnedDate
+        );
+    }
+
+    public function testGetSetActiveDate()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->task->getActiveDate());
+        $this->assertEmpty($this->task->getActiveDateString());
+
+        $this->task->setActiveDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->task->getActiveDate());
+    }
+
+    public function testGetSetActiveDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->task->getActiveDate());
+        $this->task->setActiveDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->task->getActiveDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetActiveDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->task->getActiveDateString());
+        $this->task->setActiveDateString(null);
+
+        $returnedDate = $this->task->getActiveDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
         );
     }
 
