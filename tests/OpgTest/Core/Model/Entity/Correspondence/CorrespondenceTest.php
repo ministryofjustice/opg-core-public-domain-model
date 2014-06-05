@@ -21,7 +21,8 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         'person'        => null,
         'errorMessages' => array(),
         'recipientName' => null,
-        'address'       => null
+        'address'       => null,
+        'systemType'    => null,
     );
 
     public function setUp()
@@ -110,5 +111,14 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
 
         $this->correspondence->setAddress($expected);
         $this->assertEquals($expected, $this->correspondence->getAddress());
+    }
+
+    public function testGetSetSystemType()
+    {
+        $expected = 'LP-3A';
+
+        $this->assertEmpty($this->correspondence->getSystemType());
+        $this->assertTrue($this->correspondence->setSystemType($expected) instanceof Correspondence);
+        $this->assertEquals($expected, $this->correspondence->getSystemType());
     }
 }

@@ -31,9 +31,16 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $type;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $systemType;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -244,11 +251,14 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $address
+     * @param $address
+     * @return $this
      */
     public function setAddress($address)
     {
         $this->address = $address;
+
+        return $this;
     }
 
     /**
@@ -257,5 +267,24 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @param $systemType
+     * @return $this
+     */
+    public function setSystemType($systemType)
+    {
+        $this->systemType = $systemType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemType()
+    {
+        return $this->systemType;
     }
 }
