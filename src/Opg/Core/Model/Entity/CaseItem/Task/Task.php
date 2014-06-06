@@ -214,7 +214,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setActiveDate(\DateTime $activeDate = null)
     {
         if (is_null($activeDate)) {
-            $activeDate = new \DateTime();
+            $activeDate = OPGDateFormat::createDateTime(date(OPGDateFormat::getDateFormat().' 00:00:00'));
         }
         $this->activeDate = $activeDate;
 
@@ -229,14 +229,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setActiveDateString($activeDate)
     {
         if (!empty($activeDate)) {
-            $activeDate = OPGDateFormat::createDateTime($activeDate . ' 23:59:59');
+            $activeDate = OPGDateFormat::createDateTime($activeDate . ' 00:00:00');
 
-            if ($dueDate) {
-                $this->setActiveDate($activeDate);
+            if ($activeDate) {
+                return $this->setActiveDate($activeDate);
             }
         }
 
-        return $this->setActiveDate(new \DateTime());
+        return $this->setActiveDate();
     }
 
     /**
