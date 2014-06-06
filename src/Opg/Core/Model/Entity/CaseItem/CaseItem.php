@@ -155,6 +155,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var ArrayCollection
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="filterTasks")
      */
     protected $tasks;
 
@@ -761,7 +762,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $total = 0;
 
         if(!empty($this->tasks)) {
-            foreach ($this->tasks as $taskItem) {
+            foreach ($this->filterTasks() as $taskItem) {
                 if($taskItem->getStatus() !== 'Completed') {
                     $total += $taskItem->getRagRating();
                 }
@@ -769,5 +770,30 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return $total;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function filterTasks()
+    {
+        $activeTasks = new ArrayCollection();
+
+        if(!empty($this->tasks)) {
+            foreach ($this->tasks as $taskItem) {
+                if($taskItem->getActiveDate() !== null) {
+                    $now = time();
+                    $taskTime = $taskItem->getActiveDate()->getTimestamp();
+
+                    if ($now >= $taskTime) {
+                        $activeTasks->add($taskItem);
+                    }
+                }
+                else {
+                    $activeTasks->add($taskItem);
+                }
+            }
+        }
+        return $activeTasks;
     }
 }
