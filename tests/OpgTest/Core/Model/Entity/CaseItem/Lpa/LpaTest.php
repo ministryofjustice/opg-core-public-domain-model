@@ -890,4 +890,17 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->lpa->getRagRating());
         $this->assertEquals(2, $this->lpa->getRagTotal());
     }
+
+    public function testFilterTasks()
+    {
+        $task = new Task();
+        $task->setDueDateString(date('d/m/Y', strtotime('next week')));
+        $this->lpa->addTask($task);
+
+        $task2 = new Task();
+        $task2->setActiveDateString(date('d/m/Y', strtotime('tomorrow')));
+        $this->lpa->addTask($task2);
+
+        $this->assertEquals(1, count($this->lpa->filterTasks()));
+    }
 }
