@@ -246,7 +246,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setDueDate(\DateTime $dueDate)
+    public function setDueDate(\DateTime $dueDate = null)
     {
         $this->dueDate = $dueDate;
 
