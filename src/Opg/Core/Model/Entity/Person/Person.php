@@ -2,6 +2,7 @@
 namespace Opg\Core\Model\Entity\Person;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Opg\Common\Model\Entity\EntityInterface;
@@ -223,10 +224,10 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function addChild(Person $person)
     {
-        if (get_class($person) !== get_class($this)) {
+        if (get_class($person) !== ClassUtils::getRealClass(get_class($this))) {
             throw new \LogicException('Parent child relationships can only be defined on the same type of person');
         }
-        
+
         if ($person === $this) {
             throw new \LogicException('Person cannot be a parent of itself.');
         }
