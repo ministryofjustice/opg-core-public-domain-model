@@ -87,6 +87,15 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $dueDate;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getActiveDateString",setter="setActiveDateString")
+     * @Type("string")
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $activeDate;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
      * @Groups({"api-poa-list","api-task-list"})
@@ -192,6 +201,59 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     {
         if (!empty($this->dueDate)) {
             return $this->getDueDate()->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $activeDate
+     *
+     * @return Task
+     */
+    public function setActiveDate(\DateTime $activeDate = null)
+    {
+        if (is_null($activeDate)) {
+            $activeDate = OPGDateFormat::createDateTime(date(OPGDateFormat::getDateFormat().' 00:00:00'));
+        }
+        $this->activeDate = $activeDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $activeDate
+     *
+     * @return Task
+     */
+    public function setActiveDateString($activeDate)
+    {
+        if (!empty($activeDate)) {
+            $activeDate = OPGDateFormat::createDateTime($activeDate . ' 00:00:00');
+
+            if ($activeDate) {
+                return $this->setActiveDate($activeDate);
+            }
+        }
+
+        return $this->setActiveDate();
+    }
+
+    /**
+     * @return \DateTime $activeDate
+     */
+    public function getActiveDate()
+    {
+        return $this->activeDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActiveDateString()
+    {
+        if (!empty($this->activeDate)) {
+            return $this->getActiveDate()->format(OPGDateFormat::getDateFormat());
         }
 
         return '';
@@ -432,6 +494,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
         if (!empty($data['dueDate'])) {
             $this->setDueDate($data['dueDate']);
+        }
+
+        if (!empty($data['activeDate'])) {
+            $this->setActiveDate($data['activeDate']);
         }
 
         if (!empty($data['priority'])) {

@@ -533,4 +533,13 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(Lpa::PAYMENT_OPTION_FALSE, $this->poa->getPaymentRemission());
 
     }
+
+    public function testGetSetNoNoticeGiven()
+    {
+        $this->assertFalse($this->poa->getNoNoticeGiven());
+
+        $this->poa->setNoNoticeGiven(true);
+
+        $this->assertTrue($this->poa->getNoNoticeGiven());
+    }
 }

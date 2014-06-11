@@ -27,7 +27,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 class Lpa extends PowerOfAttorney
 {
-    const PF_FULLTEXTNAME = 'Personal Finance';
+    const PF_FULLTEXTNAME = 'Property and Financial Affairs';
     const HW_FULLTEXTNAME = 'Health and Welfare';
 
     /**
