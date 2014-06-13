@@ -101,7 +101,7 @@ class Lpa extends PowerOfAttorney
     protected $lpaCreatedDate;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpaReceiptDateString",setter="setLpaReceiptDateString")
