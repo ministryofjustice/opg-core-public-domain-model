@@ -124,7 +124,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $correspondence;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")
      * @Type("string")
@@ -133,7 +133,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $dob;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Type("string")
