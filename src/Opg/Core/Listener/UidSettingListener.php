@@ -9,6 +9,7 @@ use Doctrine\ORM\Id\SequenceGenerator;
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 use Doctrine\ORM\Tools\ToolEvents;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\LuhnCheckDigit;
 
 /**
  * Class UidSettingListener
@@ -54,13 +55,13 @@ class UidSettingListener implements EventSubscriber
 
     private function nextId(EntityManager $em)
     {
-        $uid = $this->idGenerator->generate($em, null) + 700000000000;
+        $uid = $this->idGenerator->generate($em, null) + 70000000000;
 
-        if ($uid > 799999999999) {
+        if ($uid > 79999999999) {
             throw new \LogicException('The maximum number of UIDs has been reached.');
         }
 
-        return $uid;
+        return $uid . LuhnCheckDigit::createCheckSum($uid);
     }
 
     /**
