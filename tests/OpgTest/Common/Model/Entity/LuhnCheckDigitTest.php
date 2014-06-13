@@ -1,6 +1,6 @@
 <?php
 
-namespace OpgTest\Common\Model;
+namespace OpgTest\Common\Model\Entity;
 
 
 use Opg\Common\Model\Entity\LuhnCheckDigit;
