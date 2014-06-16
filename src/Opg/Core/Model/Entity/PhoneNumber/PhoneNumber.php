@@ -167,28 +167,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
             $inputFilter = new \Zend\InputFilter\InputFilter();
             $factory     = new \Zend\InputFilter\Factory();
 
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'phoneNumber',
-                        'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name'    => 'StringLength',
-                                'options' => array(
-                                    'encoding' => 'UTF-8',
-                                    'min'      => 3,
-                                    'max'      => 10,
-                                ),
-                            )
-                        )
-                    )
-                )
-            );
             $this->inputFilter = $inputFilter;
         }
 
