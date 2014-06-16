@@ -106,7 +106,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $caseSubtype;
 
     /**
-     * @ORM\Column(type = "datetime", nullable = true)
+     * @ORM\Column(type = "date", nullable = true)
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
@@ -115,7 +115,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
@@ -124,7 +124,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $registrationDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})

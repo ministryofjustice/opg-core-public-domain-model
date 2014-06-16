@@ -34,7 +34,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     protected $occupation;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
@@ -42,7 +42,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     protected $lpaPartCSignatureDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpa002SignatureDateString",setter="setLpa002SignatureDateString")
