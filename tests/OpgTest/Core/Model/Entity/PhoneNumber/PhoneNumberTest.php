@@ -78,15 +78,4 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->phoneNumber->setDefault(true);
         $this->assertTrue($this->phoneNumber->getDefault());
     }
-
-    public function testValidation() {
-        $phoneNumber = 123456789;
-        $this->phoneNumber->setPhoneNumber($phoneNumber);
-        $this->assertTrue($this->phoneNumber->isValid());
-
-        $phoneNumber = null;
-        $this->phoneNumber->setPhoneNumber($phoneNumber);
-        $this->assertFalse($this->phoneNumber->isValid());
-
-    }
 }

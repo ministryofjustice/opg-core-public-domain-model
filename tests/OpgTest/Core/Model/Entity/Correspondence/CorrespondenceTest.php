@@ -5,6 +5,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\Correspondence\Correspondence;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class CorrespondenceTest extends PHPUnit_Framework_TestCase
 {
@@ -33,7 +34,7 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
     public function testGetIterator()
     {
         $this->assertInstanceOf('RecursiveArrayIterator', $this->correspondence->getIterator());
-
+        $this->data['createdDate'] = new \DateTime();
         $this->correspondence->exchangeArray($this->data);
         $this->assertEquals($this->data, $this->correspondence->getIterator()->getArrayCopy());
     }
@@ -120,5 +121,36 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->correspondence->getSystemType());
         $this->assertTrue($this->correspondence->setSystemType($expected) instanceof Correspondence);
         $this->assertEquals($expected, $this->correspondence->getSystemType());
+    }
+
+    public function testGetSetCreatedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertNotEmpty($this->correspondence->getCreatedDate());
+        $this->correspondence->setCreatedDate();
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $this->correspondence->getCreatedDate()->format(OPGDateFormat::getDateTimeFormat())
+        );
+    }
+
+    public function testGetSetCreatedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateTimeFormat());
+        $this->correspondence->setCreatedDateString($expected);
+        $this->assertEquals($expected, $this->correspondence->getCreatedDateString());
+    }
+
+
+    public function testGetSetCreatedDateEmptyString()
+    {
+        $expectedDate = new \DateTime();
+        $this->correspondence->setCreatedDateString(null);
+        $returnedDate = $this->correspondence->getCreatedDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
+        );
     }
 }
