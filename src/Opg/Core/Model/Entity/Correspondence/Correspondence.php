@@ -6,6 +6,9 @@ use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -61,6 +64,14 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     protected $address;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCreatedDateString",setter="setCreatedDateString")
+     */
+    protected $createdDate;
+
+    /**
      * Don't persist this
      * @var CaseItem $case
      */
@@ -71,6 +82,11 @@ class Correspondence implements EntityInterface, \IteratorAggregate
      * @var Person person
      */
     protected $person;
+
+    public function __construct()
+    {
+        $this->createdDate = new \DateTime();
+    }
 
     /**
      * Fulfil IteratorAggregate interface requirements
@@ -287,4 +303,59 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     {
         return $this->systemType;
     }
+
+    /**
+     * @param \DateTime $createdDate
+     *
+     * @return $this
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (is_null($createdDate)) {
+            $createdDate = new \DateTime();
+        }
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $createdDate
+     *
+     * @return $this
+     */
+    public function setCreatedDateString($createdDate)
+    {
+        if (!empty($createdDate)) {
+            $createdDate = OPGDateFormat::createDateTime($createdDate);
+
+            if ($createdDate) {
+                return $this->setCreatedDate($createdDate);
+            }
+
+        }
+
+        return $this->setCreatedDate(new \DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateString()
+    {
+        if (!empty($this->createdDate)) {
+            return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
+    }
+
 }
