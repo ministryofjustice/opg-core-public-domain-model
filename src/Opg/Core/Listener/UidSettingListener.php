@@ -20,7 +20,7 @@ use Opg\Common\Model\Entity\LuhnCheckDigit;
 class UidSettingListener implements EventSubscriber
 {
     const SEQ_NAME = 'global_uid_seq';
-    const ALLOCATION_SIZE = 10;
+    const ALLOCATION_SIZE = 3;
 
     private $idGenerator;
 
