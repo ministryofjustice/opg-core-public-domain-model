@@ -66,7 +66,7 @@ class Note implements EntityInterface, \IteratorAggregate
     protected $status;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
+     * @ORM\Column(type = "text", nullable = true)
      * @var string description
      */
     protected $description;

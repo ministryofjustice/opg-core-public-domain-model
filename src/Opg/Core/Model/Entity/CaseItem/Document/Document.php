@@ -34,7 +34,7 @@ class Document implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
+     * @ORM\Column(type = "text", nullable = true)
      * @var string
      */
     protected $filename;
