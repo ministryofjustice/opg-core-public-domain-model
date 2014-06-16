@@ -185,7 +185,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $cardPaymentContact;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getRegistrationDueDateString", setter="setRegistrationDueDateString")
@@ -259,7 +259,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $paymentAmount;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getPaymentDateString",setter="setPaymentDateString")
@@ -300,7 +300,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getAttorneyDeclarationSignatureDateString",setter="setAttorneyDeclarationSignatureDateString")
@@ -321,7 +321,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $correspondentComplianceAssertion = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getNotificationDateString",setter="setNotificationDateString")
@@ -329,7 +329,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $notificationDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDispatchDateString",setter="setDispatchDateString")
@@ -337,7 +337,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $dispatchDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")

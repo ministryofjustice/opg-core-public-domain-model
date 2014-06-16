@@ -84,7 +84,7 @@ class Donor extends BasePerson implements PartyInterface
     protected $hasLowIncome;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")

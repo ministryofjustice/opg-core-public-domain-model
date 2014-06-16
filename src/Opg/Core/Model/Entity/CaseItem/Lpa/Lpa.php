@@ -46,7 +46,7 @@ class Lpa extends PowerOfAttorney
     protected $lpaAccuracyAscertainedBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getLpaDonorSignatureDateString",setter="setLpaDonorSignatureDateString")
      * @Type("string")
@@ -76,7 +76,7 @@ class Lpa extends PowerOfAttorney
     protected $previousLpaInfo;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDonorDeclarationSignatureDateString", setter="setDonorDeclarationSignatureDateString")
@@ -117,7 +117,7 @@ class Lpa extends PowerOfAttorney
     protected $lifeSustainingTreatment;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLifeSustainingTreatmentSignatureDateString",setter="setLifeSustainingTreatmentSignatureDateString")
