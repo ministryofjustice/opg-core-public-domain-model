@@ -13,7 +13,7 @@ class PageTest extends PHPUnit_Framework_TestCase
     private $page;
 
     private $data = array(
-        'id'           => 'abc123',
+        'id'           => 123,
         'pageNumber'   => 1,
         'document'     => null,
         'thumbnail'    => 'http://thumbnail.abc.com',

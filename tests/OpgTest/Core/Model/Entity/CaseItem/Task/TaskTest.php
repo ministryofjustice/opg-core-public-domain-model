@@ -95,7 +95,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetId()
     {
-        $id = 'Test ID';
+        $id = 13123;
 
         $this->task->setId($id);
 
