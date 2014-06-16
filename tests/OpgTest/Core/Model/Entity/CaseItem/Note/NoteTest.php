@@ -50,7 +50,7 @@ class NoteTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetId()
     {
-        $id = 'Test ID';
+        $id = 123;
 
         $this->note->setId($id);
 

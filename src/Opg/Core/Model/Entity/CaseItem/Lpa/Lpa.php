@@ -69,7 +69,7 @@ class Lpa extends PowerOfAttorney
     protected $donorHasPreviousLpas = false;
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "text")
      * @var string
      * @Groups("api-task-list")
      */

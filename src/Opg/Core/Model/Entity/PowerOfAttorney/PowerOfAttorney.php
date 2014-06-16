@@ -179,7 +179,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "text", nullable=true)
      * @var string
      */
     protected $cardPaymentContact;
@@ -217,7 +217,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $replacementAttorneyActDecisions;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "text", nullable=true)
      * @var string
      */
     protected $replacementOrder;
@@ -241,7 +241,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $charges;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "text", nullable=true)
      * @var string
      */
     protected $additionalInfo;
