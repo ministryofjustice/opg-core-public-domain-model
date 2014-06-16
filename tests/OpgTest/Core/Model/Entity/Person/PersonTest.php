@@ -39,7 +39,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetId ()
     {
-        $expected = '123-AAABBB-CCC-123';
+        $expected = 123456;
 
         $this->person->setId($expected);
         $this->assertEquals($expected, $this->person->getId());
