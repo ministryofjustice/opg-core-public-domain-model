@@ -3,13 +3,16 @@
 
 namespace Opg\Common\Model\Entity;
 
-
+/**
+ * Class LuhnCheckDigit
+ * @package Opg\Common\Model\Entity
+ */
 final class LuhnCheckDigit
 {
 
     /**
-     * @param $number
-     * @return mixed
+     * @param int $number
+     * @return int
      */
     public static function createCheckSum($number)
     {
