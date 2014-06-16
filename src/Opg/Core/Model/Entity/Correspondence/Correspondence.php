@@ -134,13 +134,13 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $id
+     * @param int $id
      *
      * @return Correspondence
      */
     public function setId($id)
     {
-        $this->id = (string)$id;
+        $this->id = (int)$id;
 
         return $this;
     }

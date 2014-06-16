@@ -26,7 +26,7 @@ trait UniqueIdentifier
      */
     public function setUid($uid)
     {
-        $this->uId = $uid;
+        $this->uId = (int)$uid;
 
         return $this;
     }

@@ -332,7 +332,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = (int)$id;
 
         return $this;
     }

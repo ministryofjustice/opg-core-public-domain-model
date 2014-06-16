@@ -314,7 +314,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = (int)$id;
 
         return $this;
     }

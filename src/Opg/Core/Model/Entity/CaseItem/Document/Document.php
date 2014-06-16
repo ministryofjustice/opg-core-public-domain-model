@@ -189,7 +189,7 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     public function setId($id)
     {
-        $this->id = (string)$id;
+        $this->id = (int)$id;
 
         return $this;
     }
