@@ -21,7 +21,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @var array
      */
     private $data = array(
-        'id'            => '123',
+        'id'            => 123,
         'type'          => 'tasklet',
         'systemType'    => null,
         'status'        => 'Registered',
@@ -44,6 +44,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->data['createdTime'] = new \DateTime();
         $this->data['dueDate'] = new \DateTime();
         $this->data['activeDate'] = new \DateTime();
+        $this->data['completedDate'] = new \DateTime();
         $this->task = new Task();
     }
 
@@ -91,6 +92,14 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->task->exchangeArray($this->data);
 
         $this->assertEquals($this->data, $this->task->toArray());
+    }
+
+    public function testNew()
+    {
+        $data = array();
+        $data['completedDate'] = '04/06/2014 11:23:45';
+        $this->task->exchangeArray($data);
+        $this->assertEquals('04/06/2014 11:23:45', $this->task->getCompletedDateString());
     }
 
     public function testGetSetId()
@@ -414,4 +423,49 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(3, $this->task->getRagRating());
     }
+
+    public function testGetSetCompletedDateNulls()
+    {
+        $expectedDate = new \DateTime();
+        $this->assertEmpty($this->task->getCompletedDate());
+        $this->task->setCompletedDate();
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $this->task->getCompletedDate()->format(OPGDateFormat::getDateTimeFormat())
+        );
+    }
+
+    public function testGetSetCompletedDateString()
+    {
+        $expected = date(OPGDateFormat::getDateTimeFormat());
+        $this->task->setCompletedDateString($expected);
+        $this->assertEquals($expected, $this->task->getCompletedDateString());
+    }
+
+
+    public function testGetSetCompletedDateEmptyString()
+    {
+        $this->assertEmpty($this->task->getCompletedDateString());
+        $expectedDate = new \DateTime();
+        $this->task->setCompletedDateString(null);
+        $returnedDate = $this->task->getCompletedDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
+        );
+    }
+
+    public function testSetCompletedDateIsSetWhenCaseStatusSetToCompleted()
+    {
+        $this->task->setStatus('completed');
+        $this->assertNotEmpty($this->task->getCompletedDate());
+        $this->assertEquals($this->task->getCompletedDate(), new \DateTime());
+    }
+
+    public function testClassConstantsExist()
+    {
+        $this->assertEquals(task::STATUS_COMPLETED,'completed');
+    }
+
 }

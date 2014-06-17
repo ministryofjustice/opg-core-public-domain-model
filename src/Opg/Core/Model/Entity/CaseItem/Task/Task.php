@@ -31,6 +31,9 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  */
 class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 {
+
+    const STATUS_COMPLETED = 'completed';
+
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
@@ -108,6 +111,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $description;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCompletedDateString",setter="setCompletedDateString")
+     */
+    protected $completedDate;
 
     /**
      * Non persistable entity, used for validation of create
@@ -339,6 +350,9 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setStatus($status)
     {
         $this->status = $status;
+        if((strtolower($this->status)) == self::STATUS_COMPLETED) {
+            $this->setCompletedDate(new \DateTime());
+        }
 
         return $this;
     }
@@ -500,6 +514,14 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
             $this->setActiveDate($data['activeDate']);
         }
 
+        if (!empty($data['completedDate'])) {
+            if(is_object($data['completedDate'])) {
+                $this->setCompletedDate($data['completedDate']);
+            } else {
+                $this->setCompletedDateString($data['completedDate']);
+            }
+        }
+
         if (!empty($data['priority'])) {
             $this->setPriority($data['priority']);
         }
@@ -627,4 +649,57 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     {
         return $this->systemType;
     }
+
+    /**
+     * @param \DateTime $completedDate
+     *
+     * @return $this
+     */
+    public function setCompletedDate(\DateTime $completedDate = null)
+    {
+        if (is_null($completedDate)) {
+            $completedDate = new \DateTime();
+        }
+        $this->completedDate = $completedDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $completedDate
+     *
+     * @return $this
+     */
+    public function setCompletedDateString($completedDate)
+    {
+        if (!empty($completedDate)) {
+            $completedDate = OPGDateFormat::createDateTime($completedDate);
+
+            if ($completedDate) {
+                return $this->setCompletedDate($completedDate);
+            }
+        }
+        return $this->setCompletedDate(new \DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompletedDate()
+    {
+        return $this->completedDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompletedDateString()
+    {
+        if (!empty($this->completedDate)) {
+            return $this->completedDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
+    }
+
 }
