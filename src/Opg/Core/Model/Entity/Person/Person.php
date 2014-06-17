@@ -25,6 +25,7 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -703,6 +704,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             $factory     = new InputFactory();
 
             $this->inputFilter = $inputFilter;
+            $this->inputFilter->add(new UidFilter());
         }
 
         return $this->inputFilter;

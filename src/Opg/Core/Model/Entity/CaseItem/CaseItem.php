@@ -27,6 +27,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Validation\InputFilter\UidFilter;
 
 /**
  * @ORM\MappedSuperclass
@@ -557,6 +558,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         if (!$this->inputFilter) {
             $this->inputFilter = new CaseItemFilter();
+            $this->inputFilter->add(new UidFilter());
         }
 
         return $this->inputFilter;
