@@ -15,7 +15,7 @@ class LuhnCheckDigitTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateOddNumbers()
     {
-        $expected = 6;
+        $expected = 5;
         $this->assertEquals($expected, LuhnCheckDigit::createCheckSum(12345));
     }
 
