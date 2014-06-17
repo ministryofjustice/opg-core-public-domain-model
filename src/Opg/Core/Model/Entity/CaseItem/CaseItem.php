@@ -94,7 +94,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var string
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
-     * @@Accessor(getter="getCaseType", setter="setCaseType")
+     * @Accessor(getter="getCaseType", setter="setCaseType")
      */
     protected $caseType;
 
