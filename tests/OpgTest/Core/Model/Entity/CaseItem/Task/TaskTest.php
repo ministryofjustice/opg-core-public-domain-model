@@ -94,6 +94,14 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->data, $this->task->toArray());
     }
 
+    public function testNew()
+    {
+        $data = array();
+        $data['completedDate'] = '04/06/2014 11:23:45';
+        $this->task->exchangeArray($data);
+        $this->assertEquals('04/06/2014 11:23:45', $this->task->getCompletedDateString());
+    }
+
     public function testGetSetId()
     {
         $id = 13123;
