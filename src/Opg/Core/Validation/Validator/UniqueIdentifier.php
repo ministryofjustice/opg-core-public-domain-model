@@ -22,7 +22,6 @@ class UniqueIdentifier extends AbstractValidator
      */
     protected $messageTemplates = array (
         self::NOT_CORRECT_FORMAT => 'The uid is not in the expected format',
-        self::CHECKSUM_NOT_VALID => 'The uid did not validate',
     );
 
     /**
