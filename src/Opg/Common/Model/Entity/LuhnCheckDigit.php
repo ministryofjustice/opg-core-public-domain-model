@@ -19,7 +19,7 @@ final class LuhnCheckDigit
        $checksum = 0;
 
         foreach (str_split(strrev((string) $number)) as $i => $d) {
-            $checksum += ($i%2 === 0) ? $d * 2 : $d;
+            $checksum += ($i%2 === 0) ? array_sum(str_split($d * 2)) : $d;
         }
 
         $checksum *= 9;
