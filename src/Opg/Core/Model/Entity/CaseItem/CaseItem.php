@@ -282,10 +282,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $caseType
+     * @return CaseItem
      */
     public function setCaseType($caseType)
     {
         $this->caseType = strtoupper($caseType);
+
+        return $this;
     }
 
     /**
@@ -298,10 +301,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $caseSubtype
+     * @return CaseItem
      */
     public function setCaseSubtype($caseSubtype)
     {
         $this->caseSubtype = $caseSubtype;
+
+        return $this;
     }
 
     /**
@@ -322,10 +328,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $status
+     * @return CaseItem
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
