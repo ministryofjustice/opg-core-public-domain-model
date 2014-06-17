@@ -39,6 +39,15 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $caseItemMock->getCaseType());
     }
 
+    public function testSetGetCaseTypeReturnsUpperCase()
+    {
+        $caseItemMock = $this->getMockedClass();
+        $expected     = 'LPA';
+
+        $caseItemMock->setCaseType(strtolower($expected));
+        $this->assertEquals($expected, $caseItemMock->getCaseType());
+    }
+
     public function testSetGetCaseSubtype()
     {
         $caseItemMock = $this->getMockedClass();
@@ -359,7 +368,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
             $this->assertEquals("'' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
-        
+
         $this->assertEmpty($caseItemMock->getRegistrationDate());
         $this->assertEmpty($caseItemMock->getRegistrationDateString());
 

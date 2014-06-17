@@ -94,6 +94,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var string
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getCaseType", setter="setCaseType")
      */
     protected $caseType;
 
@@ -276,15 +277,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getCaseType()
     {
-        return $this->caseType;
+        return strtoupper($this->caseType);
     }
 
     /**
      * @param string $caseType
+     * @return CaseItem
      */
     public function setCaseType($caseType)
     {
-        $this->caseType = $caseType;
+        $this->caseType = strtoupper($caseType);
+
+        return $this;
     }
 
     /**
@@ -297,10 +301,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $caseSubtype
+     * @return CaseItem
      */
     public function setCaseSubtype($caseSubtype)
     {
         $this->caseSubtype = $caseSubtype;
+
+        return $this;
     }
 
     /**
@@ -321,10 +328,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $status
+     * @return CaseItem
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
