@@ -21,7 +21,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @var array
      */
     private $data = array(
-        'id'            => '123',
+        'id'            => 123,
         'type'          => 'tasklet',
         'systemType'    => null,
         'status'        => 'Registered',

@@ -515,7 +515,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
         }
 
         if (!empty($data['completedDate'])) {
-            $this->setCompletedDate($data['completedDate']);
+            if(is_object($data['completedDate'])) {
+                $this->setCompletedDate($data['completedDate']);
+            } else {
+                $this->setCompletedDateString($data['completedDate']);
+            }
         }
 
         if (!empty($data['priority'])) {
