@@ -2,6 +2,7 @@
 
 namespace Opg\Core\Validation\Validator;
 
+use Opg\Common\Model\Entity\LuhnCheckDigit;
 use Zend\Validator\AbstractValidator;
 
 /**
@@ -12,6 +13,9 @@ class UniqueIdentifier extends AbstractValidator
 {
     const NOT_CORRECT_FORMAT = 'incorrectFormat';
 
+    const CHECKSUM_NOT_VALID = 'invalidChecksum';
+
+
     /**
      * @var string
      */
@@ -21,7 +25,8 @@ class UniqueIdentifier extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array (
-        self::NOT_CORRECT_FORMAT => 'The uid is not in the expected format',
+        self::NOT_CORRECT_FORMAT => "The uid '%value%' is not in the expected format",
+        self::CHECKSUM_NOT_VALID => "The uid '%value%' did not validate against its checksum.",
     );
 
     /**
@@ -30,8 +35,20 @@ class UniqueIdentifier extends AbstractValidator
      */
     public function isValid($uid)
     {
+        $result = true;
+
         $this->setValue(trim($uid));
-        $returnValue = preg_match($this->uidRegexp, $this->getValue());
-        return $returnValue;
+
+        if (!preg_match($this->uidRegexp, $this->getValue())) {
+            $this->error(self::NOT_CORRECT_FORMAT);
+            $result &= false;
+        }
+
+        if (false ==  LuhnCheckDigit::validateNumber($uid)) {
+            $this->error(self::CHECKSUM_NOT_VALID);
+            $result &= false;
+        }
+
+        return $result;
     }
 }

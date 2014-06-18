@@ -4,7 +4,6 @@ namespace Opg\Core\Validation\InputFilter;
 
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
-use Opg\Core\Validation\Validator\Checksum;
 use Opg\Core\Validation\Validator\UniqueIdentifier;
 
 class UidFilter extends InputFilter
@@ -22,10 +21,10 @@ class UidFilter extends InputFilter
 
     protected function setValidators()
     {
-        $this->setMinimumValidator();
+        $this->setUidValidator();
     }
 
-    protected function setMinimumValidator()
+    protected function setUidValidator()
     {
         $this->add(
             $this->inputFactory->createInput(
@@ -33,11 +32,11 @@ class UidFilter extends InputFilter
                     'name'       => 'uId',
                     'required'   => false,
                     'validators' => array(
-                        new UniqueIdentifier(),
-                        new Checksum(),
+                        new UniqueIdentifier()
                     )
                 )
             )
         );
     }
+
 }
