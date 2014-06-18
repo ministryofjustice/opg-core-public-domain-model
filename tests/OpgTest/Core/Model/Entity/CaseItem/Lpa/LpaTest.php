@@ -903,4 +903,38 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, count($this->lpa->filterTasks()));
     }
+
+    public function testUIDValidatorFailsInvalidChecksum()
+    {
+        $uid = '12345';
+
+        $this->lpa->setUid($uid);
+
+        $this->assertFalse($this->lpa->isValid(array('uId')));
+
+        $this->assertCount(2, $this->lpa->getErrorMessages()['errors']['uId']);
+
+        $this->assertEquals(
+            "The uid '12345' is not in the expected format",
+            $this->lpa->getErrorMessages()['errors']['uId']['incorrectFormat']
+        );
+
+        $this->assertEquals(
+            "The uid '12345' did not validate against its checksum.",
+            $this->lpa->getErrorMessages()['errors']['uId']['invalidChecksum']
+        );
+    }
+
+    public function testUIDValidatorPassesInvalidChecksum()
+    {
+        $uid = '700000011440';
+
+        $this->lpa->setUid($uid);
+
+        $this->assertTrue($this->lpa->isValid(array('uId')));
+
+        $this->assertEmpty($this->lpa->getErrorMessages()['errors']);
+
+    }
+
 }

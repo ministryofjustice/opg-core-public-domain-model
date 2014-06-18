@@ -263,9 +263,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock = $this->getMockedClass();
 
         $inputFilter = $caseItemMock->getInputFilter();
-
-        $this->AssertTrue($inputFilter instanceof CaseItemFilter);
-        $this->AssertFalse($inputFilter instanceof Zend\InputFilter\InputFilter);
+        $this->AssertTrue($inputFilter instanceof \Zend\InputFilter\InputFilter);
 
     }
 
