@@ -143,7 +143,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $paymentByCheque;
 
     /**
-     * @ORM\Column(type="integer", options={"default"=0}, nullable=true)
+     * @ORM\Column(type="integer", options={"default"=0})
      * @var integer
      */
     protected $feeExemptionAppliedFor;
