@@ -74,7 +74,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $oldCaseId;
 
     /**
-     * @ORM\Column(type = "integer", nullable=true, options={"default"=0})
+     * @ORM\Column(type = "integer", options={"default"=0})
      * @var int
      * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
