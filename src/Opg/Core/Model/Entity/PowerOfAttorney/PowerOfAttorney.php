@@ -134,25 +134,25 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
+    protected $paymentByDebitCreditCard;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
+    protected $paymentByCheque;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
      * @var integer
      */
-    protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
+    protected $feeExemptionAppliedFor;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
+    protected $feeRemissionAppliedFor;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
@@ -270,13 +270,13 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      */
-    protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
+    protected $paymentRemission;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      */
-    protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
+    protected $paymentExemption;
 
     /**
      * @ORM\Column(type="integer",options={"default":1})
@@ -829,6 +829,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addAttorney(AttorneyAbstract $attorney)
     {
+        if (is_null($this->attorneys)) {
+            $this->attorneys = new ArrayCollection();
+        }
+
         if (!$this->attorneys->contains($attorney)) {
             $this->attorneys->add($attorney);
         }

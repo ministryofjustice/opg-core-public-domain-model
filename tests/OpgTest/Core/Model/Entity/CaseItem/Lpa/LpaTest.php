@@ -951,4 +951,28 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testAttorneyCollectionCreatedIfNullWhenAddAttorneyCalled()
+    {
+        /*
+         * If the constuctor is not called, some collections will not get initialised
+         * Here we confirm that this does not break the addAttorney method
+         */
+
+        $lpa = unserialize(
+            sprintf(
+                'O:%d:"%s":0:{}',
+                strlen('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'),
+                'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
+            )
+        );
+
+        $attorney = new Attorney();
+
+        $lpa->addAttorney($attorney);
+
+        $this->assertEquals(
+            1,
+            $lpa->getAttorneys()->count()
+        );
+    }
 }
