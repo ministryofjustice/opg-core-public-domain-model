@@ -74,13 +74,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $oldCaseId;
 
     /**
-     * @ORM\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true, options={"default"=0})
      * @var int
      * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
-    protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
+    protected $applicationType;
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
