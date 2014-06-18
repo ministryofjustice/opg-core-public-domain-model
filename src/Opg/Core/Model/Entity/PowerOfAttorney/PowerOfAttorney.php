@@ -134,25 +134,25 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $paymentByDebitCreditCard;
+    protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $paymentByCheque;
+    protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
      * @var integer
      */
-    protected $feeExemptionAppliedFor;
+    protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      */
-    protected $feeRemissionAppliedFor;
+    protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
@@ -270,13 +270,13 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      */
-    protected $paymentRemission;
+    protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      */
-    protected $paymentExemption;
+    protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default":1})
