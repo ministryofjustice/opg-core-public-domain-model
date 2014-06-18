@@ -71,20 +71,4 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     {
         return $this->dxNumber;
     }
-
-    /**
-     * @return InputFilterInterface
-     */
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = parent::getInputFilter();
-
-            $factory = new InputFactory();
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
-    }
 }

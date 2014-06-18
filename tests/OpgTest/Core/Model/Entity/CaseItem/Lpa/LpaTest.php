@@ -943,7 +943,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->lpa->setId($id);
 
-        $this->assertFalse($this->lpa->isValid(array('id', 'uId')));
+        $this->assertFalse($this->lpa->isValid(array('id')));
 
         $this->assertEquals(
             "'9223372036854775807' exceeds the maximum integer range allowed.",

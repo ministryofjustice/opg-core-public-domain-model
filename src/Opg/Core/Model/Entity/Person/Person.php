@@ -25,6 +25,7 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
@@ -699,12 +700,16 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     public function getInputFilter()
     {
-        if (!$this->inputFilter) {
-            $inputFilter = new \Zend\InputFilter\InputFilter();
-            $factory     = new InputFactory();
+        $this->inputFilter = new \Zend\InputFilter\InputFilter();
 
-            $this->inputFilter = $inputFilter;
-            $this->inputFilter->add(new UidFilter());
+        $uidFilter =  new UidFilter();
+        foreach($uidFilter->getInputs() as $name=>$input) {
+            $this->inputFilter->add($input, $name);
+        }
+
+        $idFilter = new IdentifierFilter();
+        foreach($idFilter->getInputs() as $name=>$input) {
+            $this->inputFilter->add($input, $name);
         }
 
         return $this->inputFilter;
