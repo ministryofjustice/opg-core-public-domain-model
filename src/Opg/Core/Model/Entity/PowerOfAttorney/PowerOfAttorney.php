@@ -829,6 +829,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addAttorney(AttorneyAbstract $attorney)
     {
+        if (is_null($this->attorneys)) {
+            $this->attorneys = new ArrayCollection();
+        }
+
         if (!$this->attorneys->contains($attorney)) {
             $this->attorneys->add($attorney);
         }
