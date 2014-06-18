@@ -918,7 +918,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
             )
         );
-        //$lpa = new Lpa();
+
         $attorney = new Attorney();
 
         $lpa->addAttorney($attorney);
