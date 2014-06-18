@@ -556,11 +556,17 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getInputFilter()
     {
-        if (!$this->inputFilter) {
-            $this->inputFilter = new CaseItemFilter();
-            $this->inputFilter->add(new UidFilter());
+        $this->inputFilter = new \Zend\InputFilter\InputFilter();
+
+        $caseItemFilter =  new CaseItemFilter();
+        foreach($caseItemFilter->getInputs() as $name=>$input) {
+            $this->inputFilter->add($input, $name);
         }
 
+        $uidFilter =  new UidFilter();
+        foreach($uidFilter->getInputs() as $name=>$input) {
+            $this->inputFilter->add($input, $name);
+        }
         return $this->inputFilter;
     }
 

@@ -914,7 +914,11 @@ abstract class PowerOfAttorney extends CaseItem
     public function getInputFilter()
     {
         parent::getInputFilter();
-        $this->inputFilter->add(new PowerOfAttorneyFilter());
+
+        $powerOfAttorneyFilter =  new PowerOfAttorneyFilter();
+        foreach($powerOfAttorneyFilter->getInputs() as $name=>$input) {
+            $this->inputFilter->add($input, $name);
+        }
 
         return $this->inputFilter;
     }
