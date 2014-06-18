@@ -16,6 +16,8 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Zend\Filter\FilterChain;
+use Zend\Validator\ValidatorChain;
 
 /**
  * @ORM\Entity
@@ -356,7 +358,12 @@ class Lpa extends PowerOfAttorney
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $this->inputFilter = new LpaFilter();
+            parent::getInputFilter();
+
+            $lpaFilter =  new LpaFilter();
+            foreach($lpaFilter->getInputs() as $name=>$input) {
+                $this->inputFilter->add($input, $name);
+            }
         }
 
         return $this->inputFilter;

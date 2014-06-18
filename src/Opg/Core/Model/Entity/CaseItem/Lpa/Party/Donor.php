@@ -32,10 +32,7 @@ class Donor extends BasePerson implements PartyInterface
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = parent::getInputFilter();
-            $factory     = new InputFactory();
-
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter = parent::getInputFilter();
         }
 
         return $this->inputFilter;

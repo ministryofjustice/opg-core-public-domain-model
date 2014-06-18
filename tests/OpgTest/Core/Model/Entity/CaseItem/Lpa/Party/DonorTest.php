@@ -175,4 +175,18 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('ArrayIterator', $iterator);
     }
+
+    public function testIdOutOfRangeFails()
+    {
+        $id = PHP_INT_MAX;
+
+        $this->donor->setId($id);
+
+        $this->assertFalse($this->donor->isValid(array('id')));
+
+        $this->assertEquals(
+            "'9223372036854775807' exceeds the maximum integer range allowed.",
+            $this->donor->getErrorMessages()['errors']['id']['outOfRange']
+        );
+    }
 }

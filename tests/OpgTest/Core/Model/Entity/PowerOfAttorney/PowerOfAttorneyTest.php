@@ -70,15 +70,6 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testFilterThrowsAnError()
-    {
-        $this->poa->addApplicant(ApplicantFactory::createApplicant(array('className'=>'Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor')));
-        $this->poa->isValid();
-
-        $this->assertNotEmpty($this->poa->getInputFilter()->getMessages());
-        $this->assertEquals(1, count($this->poa->getInputFilter()->getMessages()['caseItems']));
-    }
-
     public function testGetSetNotifiedPersonDeclarations()
     {
         $expectedHasNotifiedPersons = true;
