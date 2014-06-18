@@ -43,7 +43,7 @@ final class LuhnCheckDigit
         $checkDigitArray = array_reverse($checkDigitArray);
 
         foreach ($checkDigitArray as $i => $d) {
-            $checksum += ($i%2 === 0) ? $d * 2 : $d;
+            $checksum += ($i%2 === 0) ? array_sum(str_split($d * 2)) : $d;
         }
         return ($checksum + $checkDigit) % 10 === 0;
     }
