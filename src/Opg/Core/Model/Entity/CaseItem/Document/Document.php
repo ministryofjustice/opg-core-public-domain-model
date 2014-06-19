@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Document;
 
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
@@ -9,9 +10,11 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"BusinessRule\Listener\DocumentListener"})
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
@@ -65,6 +68,14 @@ class Document implements EntityInterface, \IteratorAggregate
      * @ReadOnly
      */
     protected $pages;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @ReadOnly
+     * @Accessor(getter="getCreatedDateString")
+     */
+    protected $createdDate;
 
     public function __construct()
     {
@@ -318,5 +329,40 @@ class Document implements EntityInterface, \IteratorAggregate
         $this->filename = $filename;
 
         return $this;
+    }
+
+    /**
+     * @param \DateTime $createdDate
+     * @return $this
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (null === $createdDate) {
+            $this->createdDate = new \DateTime();
+        } else {
+            $this->createdDate = $createdDate;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateString()
+    {
+        if (null !== $this->createdDate) {
+            return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
     }
 }
