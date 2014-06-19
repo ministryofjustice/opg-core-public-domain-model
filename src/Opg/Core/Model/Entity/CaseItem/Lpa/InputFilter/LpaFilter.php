@@ -68,7 +68,16 @@ class LpaFilter extends InputFilter
                                         return (
                                             in_array(
                                                 $status,
-                                                array('Perfect', 'Imperfect', 'Registered', 'Pending', 'Withdrawn'),
+                                                array(
+                                                    'Revoked',
+                                                    'Withdrawn',
+                                                    'Cancelled',
+                                                    'Rejected',
+                                                    'Pending',
+                                                    'Imperfect',
+                                                    'Registered',
+                                                    'Invalid',
+                                                ),
                                                 true
                                             )
                                         );

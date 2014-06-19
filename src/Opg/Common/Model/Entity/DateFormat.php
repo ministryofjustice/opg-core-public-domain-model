@@ -29,7 +29,7 @@ final class DateFormat
     /**
      * @var string
      */
-    protected static $DateTimeMysqlExport = 'Y-m-d H:i:s';
+    protected static $DateTimeSqlExport = 'Y-m-d H:i:s';
 
     /**
      * @return string
@@ -45,6 +45,14 @@ final class DateFormat
     public static function getDateTimeFormat()
     {
         return self::$DateTimeFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSqlDateTimeFormat()
+    {
+        return self::$DateTimeSqlExport;
     }
 
     /**
@@ -64,7 +72,7 @@ final class DateFormat
         }
 
         if (preg_match(self::REGEXP_MYSQL_DATE_TIME, trim($strDateTime))) {
-            return \DateTime::createFromFormat(self::$DateTimeMysqlExport, $strDateTime);
+            return \DateTime::createFromFormat(self::$DateTimeSqlExport, $strDateTime);
         }
 
         throw new InvalidDateFormatException(

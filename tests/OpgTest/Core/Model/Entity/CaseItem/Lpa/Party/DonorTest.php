@@ -1,6 +1,7 @@
 <?php
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 /**
@@ -174,5 +175,31 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         $iterator = $this->donor->getIterator();
 
         $this->assertInstanceOf('ArrayIterator', $iterator);
+    }
+
+    public function testIdOutOfRangeFails()
+    {
+        $id = PHP_INT_MAX;
+
+        $this->donor->setId($id);
+
+        $this->assertFalse($this->donor->isValid(array('id')));
+
+        $this->assertEquals(
+            "'9223372036854775807' exceeds the maximum integer range allowed.",
+            $this->donor->getErrorMessages()['errors']['id']['outOfRange']
+        );
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testLinkDonorWithAttorneyFails()
+    {
+        $attorney = (new Attorney)->setId(22);
+
+        $this->donor->setId(1);
+
+        $this->donor->addChild($attorney);
     }
 }

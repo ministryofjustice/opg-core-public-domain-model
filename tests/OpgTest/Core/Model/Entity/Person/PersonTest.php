@@ -335,5 +335,14 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('LogicException', 'This person is already associated with another parent');
         $parent2->addChild($this->person);
     }
+
+    public function testGetChildren()
+    {
+        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+
+        $parent1->addChild($this->person);
+
+        $this->assertEquals($this->person, $parent1->getChildren()[0]);
+    }
   }
 
