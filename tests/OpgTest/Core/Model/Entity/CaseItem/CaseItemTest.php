@@ -471,8 +471,6 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
     public function testAddGetBusinessRules()
     {
-        $mock = $this->getMockedClass();
-
         $businessRule = new BusinessRule();
         $businessRule->setKey('testkey');
         $businessRule->setValue('testvalue');
@@ -480,36 +478,34 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $collection = new ArrayCollection();
         $collection->add($businessRule);
 
-        $mock->addBusinessRule($businessRule);
+        $this->getMockedClass()->addBusinessRule($businessRule);
 
-        $this->assertEquals($collection, $mock->getBusinessRules());
+        $this->assertEquals($collection, $this->getMockedClass()->getBusinessRules());
     }
 
     public function testGetBusinessRule()
     {
         $key = 'testkey';
-        $mock = $this->getMockedClass();
 
         $businessRule = new BusinessRule();
         $businessRule->setKey($key);
         $businessRule->setValue('testvalue');
 
-        $mock->addBusinessRule($businessRule);
+        $this->getMockedClass()->addBusinessRule($businessRule);
 
-        $this->assertEquals($businessRule, $mock->getBusinessRule($key));
+        $this->assertEquals($businessRule, $this->getMockedClass()->getBusinessRule($key));
     }
 
     public function testGetBusinessRuleNotFound()
     {
         $key = 'testkey';
-        $mock = $this->getMockedClass();
 
         $businessRule = new BusinessRule();
         $businessRule->setKey($key);
         $businessRule->setValue('testvalue');
 
-        $mock->addBusinessRule($businessRule);
+        $this->getMockedClass()->addBusinessRule($businessRule);
 
-        $this->assertEquals(null, $mock->getBusinessRule($key . '2'));
+        $this->assertEquals(null, $this->getMockedClass()->getBusinessRule($key . '2'));
     }
 }

@@ -829,7 +829,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function addBusinessRule(BusinessRule $businessRule)
+    public function addBusinessRules(BusinessRule $businessRule)
     {
         $this->businessRules[] = $businessRule;
 
