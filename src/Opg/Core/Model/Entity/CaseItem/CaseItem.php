@@ -27,8 +27,6 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Opg\Core\Validation\InputFilter\IdentifierFilter;
-use Opg\Core\Validation\InputFilter\UidFilter;
 
 /**
  * @ORM\MappedSuperclass
@@ -47,15 +45,15 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use HasCorrespondence;
 
     const APPLICATION_TYPE_CLASSIC = 0;
-    const APPLICATION_TYPE_ONLINE  = 1;
+    const APPLICATION_TYPE_ONLINE = 1;
 
     /**
      * Constants below are for payment types radio buttons, we use 0
      * as default
      */
     const PAYMENT_OPTION_NOT_SET = 0;
-    const PAYMENT_OPTION_FALSE   = 1;
-    const PAYMENT_OPTION_TRUE    = 2;
+    const PAYMENT_OPTION_FALSE = 1;
+    const PAYMENT_OPTION_TRUE = 2;
 
 
     /**
@@ -96,7 +94,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var string
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
-     * @Accessor(getter="getCaseType", setter="setCaseType")
      */
     protected $caseType;
 
@@ -216,12 +213,19 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $ragTotal;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case_item", cascade={"all"}, fetch="EAGER")
+     * @var \Opg\Core\Model\Entity\CaseItem\BusinessRule
+     */
+    protected $businessRules;
+
     public function __construct()
     {
-        $this->tasks = new ArrayCollection();
-        $this->notes = new ArrayCollection();
-        $this->documents = new ArrayCollection();
-        $this->caseItems = new ArrayCollection();
+        $this->tasks         = new ArrayCollection();
+        $this->notes         = new ArrayCollection();
+        $this->documents     = new ArrayCollection();
+        $this->caseItems     = new ArrayCollection();
+        $this->businessRules = new ArrayCollection();
     }
 
     /**
@@ -279,18 +283,15 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getCaseType()
     {
-        return strtoupper($this->caseType);
+        return $this->caseType;
     }
 
     /**
      * @param string $caseType
-     * @return CaseItem
      */
     public function setCaseType($caseType)
     {
-        $this->caseType = strtoupper($caseType);
-
-        return $this;
+        $this->caseType = $caseType;
     }
 
     /**
@@ -303,13 +304,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $caseSubtype
-     * @return CaseItem
      */
     public function setCaseSubtype($caseSubtype)
     {
         $this->caseSubtype = $caseSubtype;
-
-        return $this;
     }
 
     /**
@@ -330,13 +328,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @param string $status
-     * @return CaseItem
      */
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
     }
 
     /**
@@ -557,22 +552,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getInputFilter()
     {
-        $this->inputFilter = new \Zend\InputFilter\InputFilter();
-
-        $caseItemFilter =  new CaseItemFilter();
-        foreach($caseItemFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
+        if (!$this->inputFilter) {
+            $this->inputFilter = new CaseItemFilter();
         }
 
-        $uidFilter =  new UidFilter();
-        foreach($uidFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
-
-        $idFilter = new IdentifierFilter();
-        foreach($idFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
         return $this->inputFilter;
     }
 
@@ -760,9 +743,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             '3' => 0
         );
 
-        if(!empty($this->tasks)) {
+        if (!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
-                if($taskItem->getStatus() !== 'Completed') {
+                if ($taskItem->getStatus() !== 'Completed') {
                     $rag[$taskItem->getRagRating()]++;
                 }
             }
@@ -771,10 +754,10 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         //Apply rules
         if (($rag['3'] >= 1) || $rag['2'] > 2) {
             return 3;
-        }
-        elseif ($rag['2'] >= 1) {
+        } elseif ($rag['2'] >= 1) {
             return 2;
         }
+
         return 1;
     }
 
@@ -785,9 +768,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $total = 0;
 
-        if(!empty($this->tasks)) {
+        if (!empty($this->tasks)) {
             foreach ($this->filterTasks() as $taskItem) {
-                if($taskItem->getStatus() !== 'Completed') {
+                if ($taskItem->getStatus() !== 'Completed') {
                     $total += $taskItem->getRagRating();
                 }
             }
@@ -803,21 +786,69 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $activeTasks = new ArrayCollection();
 
-        if(!empty($this->tasks)) {
+        if (!empty($this->tasks)) {
             foreach ($this->tasks as $taskItem) {
-                if($taskItem->getActiveDate() !== null) {
-                    $now = time();
+                if ($taskItem->getActiveDate() !== null) {
+                    $now      = time();
                     $taskTime = $taskItem->getActiveDate()->getTimestamp();
 
                     if ($now >= $taskTime) {
                         $activeTasks->add($taskItem);
                     }
-                }
-                else {
+                } else {
                     $activeTasks->add($taskItem);
                 }
             }
         }
+
         return $activeTasks;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBusinessRules()
+    {
+        return $this->businessRules;
+    }
+
+    /**
+     * @param ArrayCollection $businessRules
+     *
+     * @return CaseItem
+     */
+    public function setBusinessRules(ArrayCollection $businessRules)
+    {
+        $this->businessRules = $businessRules;
+
+        return $this;
+    }
+
+    /**
+     * @param BusinessRule $businessRule
+     *
+     * @return CaseItem
+     */
+    public function addBusinessRules(BusinessRule $businessRule)
+    {
+        $this->businessRules[] = $businessRule;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return BusinessRule|null
+     */
+    public function getBusinessRule($key)
+    {
+        foreach ($this->getBusinessRules() as $rule) {
+            if ($rule->getKey() == $key) {
+                return $rule;
+            }
+        }
+
+        return null;
     }
 }
