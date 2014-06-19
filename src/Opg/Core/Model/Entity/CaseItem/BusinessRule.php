@@ -55,11 +55,22 @@ class BusinessRule implements EntityInterface, \IteratorAggregate
     protected $case;
 
     /**
+     * @ORM\Column(type = "Datetime", nullable = true)
+     * @var Datetime value
+     */
+    protected $createdOn;
+
+    /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->createdOn = new \Datetime;
     }
 
     /**
@@ -144,6 +155,26 @@ class BusinessRule implements EntityInterface, \IteratorAggregate
     public function setCase(CaseItem $case)
     {
         $this->case = $case;
+
+        return $this;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param \Datetime $createdOn
+     *
+     * @return BusinessRule
+     */
+    public function setCreatedOn(\Datetime $createdOn)
+    {
+        $this->createdOn = $createdOn;
 
         return $this;
     }

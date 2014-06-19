@@ -1,6 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\Entity\CaseItem;
 
+use Opg\Core\Model\Entity\CaseItem\BusinessRule;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 
 
@@ -49,5 +50,22 @@ class BusinessRuleTest extends \PHPUnit_Framework_TestCase
         $businessRuleMock->setCase($expected);
 
         $this->assertEquals($expected, $businessRuleMock->getCase());
+    }
+
+    public function testSetGetDatetimeDefault()
+    {
+        $businessRule = new BusinessRule();
+
+        $this->assertInstanceOf('Datetime', $businessRule->getCreatedOn());
+    }
+
+    public function testSetGetDatetime()
+    {
+        $now = new \Datetime;
+        $businessRuleMock = $this->getMockedClass();
+
+        $businessRuleMock->setCreatedOn($now);
+
+        $this->assertEquals($now, $businessRuleMock->getCreatedOn());
     }
 }
