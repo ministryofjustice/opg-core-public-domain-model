@@ -10,6 +10,7 @@ use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\CaseItem\BusinessRule;
 
 /**
  * ToArray test case.
@@ -454,4 +455,57 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($caseItemMock->getClosedDateString());
     }
 
+    public function testSetGetBusinessRules()
+    {
+        $businessRule = new BusinessRule();
+        $businessRule->setKey('testkey');
+        $businessRule->setValue('testvalue');
+
+        $collection = new ArrayCollection();
+        $collection->add($businessRule);
+
+        $this->getMockedClass()->setBusinessRules($collection);
+
+        $this->assertEquals($collection, $this->getMockedClass()->getBusinessRules());
+    }
+
+    public function testAddGetBusinessRules()
+    {
+        $businessRule = new BusinessRule();
+        $businessRule->setKey('testkey');
+        $businessRule->setValue('testvalue');
+
+        $collection = new ArrayCollection();
+        $collection->add($businessRule);
+
+        $this->getMockedClass()->addBusinessRule($businessRule);
+
+        $this->assertEquals($collection, $this->getMockedClass()->getBusinessRules());
+    }
+
+    public function testGetBusinessRule()
+    {
+        $key = 'testkey';
+
+        $businessRule = new BusinessRule();
+        $businessRule->setKey($key);
+        $businessRule->setValue('testvalue');
+
+        $this->getMockedClass()->addBusinessRule($businessRule);
+
+        $this->assertEquals($businessRule, $this->getMockedClass()->getBusinessRule($key));
+    }
+
+    public function testGetBusinessRuleNotFound()
+    {
+        $key = 'testkey';
+
+        $businessRule = new BusinessRule();
+        $businessRule->setKey($key);
+        $businessRule->setValue('testvalue');
+
+        $this->getMockedClass()->addBusinessRule($businessRule);
+
+        $this->assertEquals(null, $this->getMockedClass()->getBusinessRule($key . '2'));
+    }
 }
