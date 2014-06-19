@@ -72,7 +72,7 @@ final class DateFormat
         }
 
         if (preg_match(self::REGEXP_MYSQL_DATE_TIME, trim($strDateTime))) {
-            return \DateTime::createFromFormat(self::$DateTimeMysqlExport, $strDateTime);
+            return \DateTime::createFromFormat(self::$DateTimeSqlExport, $strDateTime);
         }
 
         throw new InvalidDateFormatException(
