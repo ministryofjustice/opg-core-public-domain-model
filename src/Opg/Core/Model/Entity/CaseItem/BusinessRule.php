@@ -55,8 +55,8 @@ class BusinessRule implements EntityInterface, \IteratorAggregate
     protected $case;
 
     /**
-     * @ORM\Column(type = "Datetime", nullable = true)
-     * @var Datetime value
+     * @ORM\Column(type = "datetime", nullable = true)
+     * @var \Datetime value
      */
     protected $createdOn;
 
