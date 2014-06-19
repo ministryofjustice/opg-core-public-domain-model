@@ -48,6 +48,14 @@ final class DateFormat
     }
 
     /**
+     * @return string
+     */
+    public static function getSqlDateTimeFormat()
+    {
+        return self::$DateTimeMysqlExport;
+    }
+
+    /**
      * @param $strDateTime
      *
      * @return \DateTime
