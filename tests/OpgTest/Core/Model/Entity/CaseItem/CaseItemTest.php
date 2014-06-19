@@ -466,7 +466,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $this->getMockedClass()->setBusinessRules($collection);
 
-        $this->assertEquals($collection, $this->getMockedClass()->getBusinessRules());
+        $this->assertEquals($businessRule, $this->getMockedClass()->getBusinessRules()->current());
     }
 
     public function testAddGetBusinessRules()
@@ -475,12 +475,9 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $businessRule->setKey('testkey');
         $businessRule->setValue('testvalue');
 
-        $collection = new ArrayCollection();
-        $collection->add($businessRule);
-
         $this->getMockedClass()->addBusinessRule($businessRule);
 
-        $this->assertEquals($collection, $this->getMockedClass()->getBusinessRules());
+        $this->assertEquals($businessRule, $this->getMockedClass()->getBusinessRules()->current());
     }
 
     public function testGetBusinessRule()
