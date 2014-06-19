@@ -11,6 +11,7 @@ namespace OpgTest\Core\Model\Entity\PhoneNumber;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
+use Zend\InputFilter\InputFilter;
 
 class PhoneNumberTest extends \PHPUnit_Framework_TestCase
 {
@@ -77,5 +78,12 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->phoneNumber->getDefault());
         $this->phoneNumber->setDefault(true);
         $this->assertTrue($this->phoneNumber->getDefault());
+    }
+
+    public function testGetInputFilter()
+    {
+        $this->assertTrue(
+            $this->phoneNumber->getInputFilter() instanceof InputFilter
+        );
     }
 }
