@@ -20,6 +20,12 @@ class DateFormatTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, OPGDateFormat::getDateTimeFormat());
     }
 
+    public function testSqlDateFormat()
+    {
+        $expected = 'Y-m-d H:i:s';
+
+        $this->assertEquals($expected, OPGDateFormat::getSqlDateTimeFormat());
+    }
     public function testCreateDateTimeFail()
     {
         $data = 'This is not a valid date';
