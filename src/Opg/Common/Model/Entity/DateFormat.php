@@ -29,7 +29,7 @@ final class DateFormat
     /**
      * @var string
      */
-    protected static $DateTimeMysqlExport = 'Y-m-d H:i:s';
+    protected static $DateTimeSqlExport = 'Y-m-d H:i:s';
 
     /**
      * @return string
@@ -52,7 +52,7 @@ final class DateFormat
      */
     public static function getSqlDateTimeFormat()
     {
-        return self::$DateTimeMysqlExport;
+        return self::$DateTimeSqlExport;
     }
 
     /**
