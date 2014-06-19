@@ -161,13 +161,13 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
         return $this->type;
     }
 
+    /**
+     * @return InputFilterTrait|\Zend\InputFilter\InputFilter|\Zend\InputFilter\InputFilterInterface
+     */
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = new \Zend\InputFilter\InputFilter();
-            $factory     = new \Zend\InputFilter\Factory();
-
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter = new \Zend\InputFilter\InputFilter();
         }
 
         return $this->inputFilter;
