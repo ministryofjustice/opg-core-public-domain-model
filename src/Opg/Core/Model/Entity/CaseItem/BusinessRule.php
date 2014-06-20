@@ -48,7 +48,7 @@ class BusinessRule implements EntityInterface, \IteratorAggregate
     protected $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", inversedBy="business_rules")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", inversedBy="businessRules")
      * @ORM\JoinColumn(name="case_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\CaseItem\CaseItem
      */

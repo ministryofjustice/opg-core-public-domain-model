@@ -217,7 +217,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $ragTotal;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case_item", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\CaseItem\BusinessRule
      */
     protected $businessRules;
