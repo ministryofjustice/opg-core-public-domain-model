@@ -40,6 +40,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('RecursiveArrayIterator', $this->document->getIterator());
 
         $this->document->exchangeArray($this->data);
+        $this->data['createdDate'] = new \DateTime();
         $this->assertEquals($this->data, $this->document->getIterator()->getArrayCopy());
     }
 
@@ -66,7 +67,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->data['pages'] = $pageCollection->toArray();
         $this->data['metadata']['numberOfPages'] = count($this->data['pages']);
         $this->document = $this->document->exchangeArray($this->data);
-
+        $this->data['createdDate'] = new \DateTime();
         $this->assertEquals($this->data, $this->document->toArray());
     }
 
@@ -132,8 +133,6 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 
     public function testGetCreatedDateWithNull()
     {
-        $this->assertNull($this->document->getCreatedDate());
-
         $this->assertTrue($this->document->setCreatedDate() instanceof Document);
         $this->assertNotEmpty($this->document->getCreatedDate());
         $this->assertNotEmpty($this->document->getCreatedDateString());
@@ -144,8 +143,6 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $expected = '01/01/2014 00:00:00';
 
         $expectedDate = \DateTime::createFromFormat(DateFormat::getDateTimeFormat(), $expected);
-
-        $this->assertNull($this->document->getCreatedDate());
 
         $this->assertTrue($this->document->setCreatedDate($expectedDate) instanceof Document);
         $this->assertEquals($expectedDate, $this->document->getCreatedDate());

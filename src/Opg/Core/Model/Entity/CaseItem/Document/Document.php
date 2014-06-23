@@ -80,6 +80,7 @@ class Document implements EntityInterface, \IteratorAggregate
     public function __construct()
     {
         $this->pages = new ArrayCollection();
+        $this->setCreatedDate();
     }
 
     /**
