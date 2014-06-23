@@ -72,6 +72,7 @@ class Document implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @ReadOnly
      * @Accessor(getter="getCreatedDateString")
      */
