@@ -3,6 +3,7 @@ namespace OpgTest\Core\Model\Entity\CaseItem\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -15,7 +16,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     private $document;
 
     private $data = array(
-        'id'            => '123',
+        'id'            => 123,
         'type'          => 'doctype',
         'subtype'       => 'docsubtype',
         'title'         => 'doc title',
@@ -26,6 +27,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
             'documentType' => 'doctype',
             'numberOfPages' => 0
         ),
+        'createdDate'   => null,
     );
 
     public function setUp()
@@ -38,6 +40,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('RecursiveArrayIterator', $this->document->getIterator());
 
         $this->document->exchangeArray($this->data);
+        $this->data['createdDate'] = new \DateTime();
         $this->assertEquals($this->data, $this->document->getIterator()->getArrayCopy());
     }
 
@@ -64,7 +67,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->data['pages'] = $pageCollection->toArray();
         $this->data['metadata']['numberOfPages'] = count($this->data['pages']);
         $this->document = $this->document->exchangeArray($this->data);
-
+        $this->data['createdDate'] = new \DateTime();
         $this->assertEquals($this->data, $this->document->toArray());
     }
 
@@ -126,5 +129,23 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $filename = 'TestFile';
         $this->document->setFilename($filename);
         $this->assertEquals($filename, $this->document->getFilename());
+    }
+
+    public function testGetCreatedDateWithNull()
+    {
+        $this->assertTrue($this->document->setCreatedDate() instanceof Document);
+        $this->assertNotEmpty($this->document->getCreatedDate());
+        $this->assertNotEmpty($this->document->getCreatedDateString());
+    }
+
+    public function testGetCreatedDate()
+    {
+        $expected = '01/01/2014 00:00:00';
+
+        $expectedDate = \DateTime::createFromFormat(DateFormat::getDateTimeFormat(), $expected);
+
+        $this->assertTrue($this->document->setCreatedDate($expectedDate) instanceof Document);
+        $this->assertEquals($expectedDate, $this->document->getCreatedDate());
+        $this->assertEquals($expected, $this->document->getCreatedDateString());
     }
 }

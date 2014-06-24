@@ -75,6 +75,7 @@ class LpaFilter extends InputFilter
                                                     'Rejected',
                                                     'Pending',
                                                     'Imperfect',
+                                                    'Perfect',
                                                     'Registered',
                                                     'Invalid',
                                                 ),

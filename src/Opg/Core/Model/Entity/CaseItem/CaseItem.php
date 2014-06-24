@@ -216,12 +216,19 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $ragTotal;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case", cascade={"all"}, fetch="EAGER")
+     * @var \Opg\Core\Model\Entity\CaseItem\BusinessRule
+     */
+    protected $businessRules;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->caseItems = new ArrayCollection();
+        $this->businessRules = new ArrayCollection();
     }
 
     /**
@@ -819,5 +826,53 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
             }
         }
         return $activeTasks;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBusinessRules()
+    {
+        return $this->businessRules;
+    }
+
+    /**
+     * @param ArrayCollection $businessRules
+     *
+     * @return CaseItem
+     */
+    public function setBusinessRules(ArrayCollection $businessRules)
+    {
+        $this->businessRules = $businessRules;
+
+        return $this;
+    }
+
+    /**
+     * @param BusinessRule $businessRule
+     *
+     * @return CaseItem
+     */
+    public function addBusinessRule(BusinessRule $businessRule)
+    {
+        $this->businessRules[] = $businessRule;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return BusinessRule|null
+     */
+    public function getBusinessRule($key)
+    {
+        foreach ($this->getBusinessRules() as $rule) {
+            if ($rule->getKey() == $key) {
+                return $rule;
+            }
+        }
+
+        return null;
     }
 }
