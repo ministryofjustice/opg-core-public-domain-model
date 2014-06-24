@@ -710,7 +710,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setRegistrationDate(\DateTime $registrationDate)
+    public function setRegistrationDate(\DateTime $registrationDate = null)
     {
         $this->registrationDate = $registrationDate;
 
@@ -722,7 +722,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setRegistrationDateString($registrationDate)
+    public function setRegistrationDateString($registrationDate = null)
     {
         if (!empty($registrationDate)) {
 
