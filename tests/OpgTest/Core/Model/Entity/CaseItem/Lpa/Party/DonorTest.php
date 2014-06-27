@@ -1,9 +1,12 @@
 <?php
 namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\Warning\Warning;
+
 /**
  * ToArray test case.
  */
@@ -201,5 +204,51 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         $this->donor->setId(1);
 
         $this->donor->addChild($attorney);
+    }
+
+    public function testGetSetWarnings()
+    {
+        $expected = (new Warning())
+            ->setWarningType('Proximity Warning')
+            ->setWarningText('That is no moon!');
+
+        $this->assertEquals(0, $this->donor->getWarnings()->count());
+
+        $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
+
+        $this->assertEquals(1, $this->donor->getWarnings()->count());
+
+        $this->assertEquals($expected, $this->donor->getWarnings()->toArray()[0]);
+
+        $warning2 = new Warning();
+
+        $this->donor->addWarning($warning2);
+
+        $this->assertEquals(2, $this->donor->getWarnings()->count());
+
+        $testWarnings = new ArrayCollection();
+
+        $this->donor->setWarnings($testWarnings);
+
+        $this->assertEquals(0, $this->donor->getWarnings()->count());
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testSetWarningsFailsWhenWarningHasAPerson()
+    {
+        $expected = (new Warning())
+            ->setWarningType('Proximity Warning')
+            ->setWarningText('That is no moon!');
+
+        $this->assertEquals(0, $this->donor->getWarnings()->count());
+
+        $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
+
+        $this->assertEquals(1, $this->donor->getWarnings()->count());
+
+        $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
+
     }
 }

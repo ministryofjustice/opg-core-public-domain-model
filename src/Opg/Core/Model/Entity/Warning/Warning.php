@@ -7,6 +7,7 @@ use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Core\Model\Entity\User\User as UserEntity;
+use Opg\Core\Model\Entity\Person\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -71,6 +72,13 @@ class Warning implements HasSystemStatusInterface
      * @var UserEntity
      */
     protected $closedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="warnings")
+     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
+     * @var PersonEntity
+     */
+    protected $person;
 
     public function __construct()
     {
@@ -159,6 +167,7 @@ class Warning implements HasSystemStatusInterface
         if (!empty($this->dateAdded)) {
             return $this->getDateAdded()->format(DateFormat::getDateFormat());
         }
+
         // @codeCoverageIgnoreStart
         return '';
         //@codeCoverageIgnoreEnd
@@ -270,5 +279,27 @@ class Warning implements HasSystemStatusInterface
         return $this->warningType;
     }
 
+    /**
+     * @param PersonEntity $person
+     * @return Warning
+     * @throws \LogicException
+     */
+    public function setPerson(PersonEntity $person)
+    {
+        if ($this->person instanceof PersonEntity) {
+            throw new \LogicException('This warning is already associated with a person');
+        }
 
+        $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * @return PersonEntity
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
 }

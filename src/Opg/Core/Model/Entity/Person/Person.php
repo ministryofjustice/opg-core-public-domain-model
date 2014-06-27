@@ -25,6 +25,7 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use Opg\Core\Model\Entity\Warning\Warning;
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
@@ -194,6 +195,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     private $children;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning" mappedBy="person", cascade-{"all"}, fetch="EAGER")
+     * @var ArrayCollection
+     */
+    protected $warnings;
+
     public function __construct()
     {
         $this->deputyships      = new ArrayCollection();
@@ -202,6 +209,48 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         $this->phoneNumbers     = new ArrayCollection();
         $this->notes            = new ArrayCollection();
         $this->children         = new ArrayCollection();
+        $this->warnings         = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getWarnings()
+    {
+        // @codeCoverageIgnoreStart
+        if (empty($this->warnings)) {
+            $this->warnings = new ArrayCollection();
+        }
+        // @codeCoverageIgnoreEnd
+        return $this->warnings;
+    }
+
+    /**
+     * @param ArrayCollection $warnings
+     * @return $this
+     */
+    public function setWarnings(ArrayCollection $warnings)
+    {
+        $this->warnings = $warnings;
+
+        return $this;
+    }
+
+    /**
+     * @param Warning $warning
+     * @return $this
+     */
+    public function addWarning(Warning $warning)
+    {
+        // @codeCoverageIgnoreStart
+        if (empty($this->warnings)) {
+            $this->warnings = new ArrayCollection();
+        }
+        // @codeCoverageIgnoreEnd
+        $this->warnings->add($warning);
+        $warning->setPerson($this);
+
+        return $this;
     }
 
     /**

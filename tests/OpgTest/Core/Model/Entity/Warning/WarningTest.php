@@ -4,6 +4,7 @@ namespace OpgTest\Core\Model\Entity\Warning;
 
 
 use Opg\Common\Model\Entity\DateFormat;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Core\Model\Entity\Warning\Warning;
 
@@ -140,5 +141,30 @@ class WarningTest extends \PHPUnit_Framework_TestCase
             $expected,
             $this->warning->setWarningText($expected)->getWarningText()
         );
+    }
+
+    public function getSetStatus()
+    {
+        $this->assertTrue($this->warning->isActive());
+
+        $this->assertFalse($this->warning->setSystemStatus(false)->isActive());
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage This warning is already associated with a person
+     */
+    public function testGetSetPerson()
+    {
+        $expected = (new Donor())
+            ->setId(1)
+            ->setFirstName('Bob');
+
+        $this->assertEmpty($this->warning->getPerson());
+
+        $this->assertEquals($expected, $this->warning->setPerson($expected)->getPerson());
+
+        //Throw us an exception here
+        $this->warning->setPerson(new Donor());
     }
 }
