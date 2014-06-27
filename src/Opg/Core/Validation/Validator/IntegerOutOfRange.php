@@ -12,6 +12,8 @@ class IntegerOutOfRange extends AbstractValidator
 {
     const INT_MAX_RANGE = 2147483647;
 
+    const INT_MIN_RANGE = -2147483648;
+
     const INT_OUT_OF_RANGE = 'outOfRange';
 
     protected $messageTemplates = array (
@@ -26,7 +28,7 @@ class IntegerOutOfRange extends AbstractValidator
     {
         $this->setValue($number);
 
-        if ($number > self::INT_MAX_RANGE) {
+        if ($number > self::INT_MAX_RANGE || $number < self::INT_MIN_RANGE) {
             $this->error(self::INT_OUT_OF_RANGE);
             return false;
         }

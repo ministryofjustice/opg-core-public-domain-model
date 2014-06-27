@@ -263,14 +263,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetSuspended()
     {
-        $this->assertTrue($this->user->setSuspended(true)->getSuspended());
-        $this->assertFalse($this->user->setSuspended(false)->getSuspended());
+        $this->assertTrue($this->user->setSuspended(true)->isSuspended());
+        $this->assertFalse($this->user->setSuspended(false)->isSuspended());
     }
 
     public function testGetSetLocked()
     {
-        $this->assertTrue($this->user->setLocked(true)->getLocked());
-        $this->assertFalse($this->user->setLocked(false)->getLocked());
+        $this->assertTrue($this->user->setLocked(true)->isLocked());
+        $this->assertFalse($this->user->setLocked(false)->isLocked());
     }
 
     public function testSetGetNormalisedRoles()
