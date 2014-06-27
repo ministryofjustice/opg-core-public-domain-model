@@ -344,5 +344,23 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($this->person, $parent1->getChildren()[0]);
     }
+
+    public function testIdTooLargeFails()
+    {
+        $expected = PHP_INT_MAX;
+
+        $this->person->setId($expected);
+
+        $this->assertFalse($this->person->isValid(array('id')));
+    }
+
+    public function testIdTooSmallFails()
+    {
+        $expected = PHP_INT_MAX*-1;
+
+        $this->person->setId($expected);
+
+        $this->assertFalse($this->person->isValid(array('id')));
+    }
   }
 
