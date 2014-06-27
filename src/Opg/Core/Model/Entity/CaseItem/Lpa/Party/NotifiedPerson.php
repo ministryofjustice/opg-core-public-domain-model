@@ -1,7 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -20,10 +19,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor
 {
-    use ToArray {
-        toArray as toTraitArray;
-    }
-    use ExchangeArray;
+    use ToArray;
     use RelationshipToDonor;
 
     /**
@@ -85,16 +81,6 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
         }
 
         return '';
-    }
-
-    /**
-     * @param bool $exposeClassName
-     *
-     * @return array
-     */
-    public function toArray($exposeClassName = true)
-    {
-        return $this->toTraitArray($exposeClassName);
     }
 
     /**

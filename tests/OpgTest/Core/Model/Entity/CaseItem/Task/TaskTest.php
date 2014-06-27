@@ -68,9 +68,6 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetIterator()
     {
         $this->assertInstanceOf('RecursiveArrayIterator', $this->task->getIterator());
-
-        $this->task->exchangeArray($this->data);
-        $this->assertEquals($this->data, $this->task->getIterator()->getArrayCopy());
     }
 
     /**
@@ -84,21 +81,11 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testExchangeArray()
-    {
-        $user = new User();
-        $user->setFirstname('Test User');
-        $this->data['assignedUser'] = $user->toArray();
-        $this->task->exchangeArray($this->data);
-
-        $this->assertEquals($this->data, $this->task->toArray());
-    }
-
     public function testNew()
     {
         $data = array();
         $data['completedDate'] = '04/06/2014 11:23:45';
-        $this->task->exchangeArray($data);
+        $this->task->setCompletedDateString($data['completedDate']);
         $this->assertEquals('04/06/2014 11:23:45', $this->task->getCompletedDateString());
     }
 

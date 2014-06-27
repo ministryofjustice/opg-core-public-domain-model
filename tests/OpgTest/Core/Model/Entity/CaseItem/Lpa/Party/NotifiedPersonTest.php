@@ -78,24 +78,6 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->notifiedPerson->getInputFilter() instanceof InputFilter);
     }
 
-    public function testToArrayExchangeArray()
-    {
-        $this->notifiedPerson
-            ->setId('1')
-            ->setEmail('notifiedperson@domain.com')
-            ->setCases(new ArrayCollection());
-
-
-        $notifiedPerson = $this->notifiedPerson->toArray();
-
-        $notifiedPerson2 = $this->notifiedPerson->exchangeArray($notifiedPerson);
-
-        $this->assertArrayHasKey('className',$notifiedPerson);
-        $this->assertEquals(get_class($notifiedPerson2), $notifiedPerson['className']);
-        $this->assertEquals($this->notifiedPerson, $notifiedPerson2);
-        $this->assertEquals($notifiedPerson, $notifiedPerson2->toArray());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
         $expectedRelationship = 'Sibling';

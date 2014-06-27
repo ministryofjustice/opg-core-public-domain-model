@@ -4,7 +4,6 @@ namespace Opg\Core\Model\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -24,12 +23,7 @@ use JMS\Serializer\Annotation\ReadOnly;
  */
 class User implements EntityInterface, \IteratorAggregate
 {
-    use ToArray {
-        toArray as traitToArray;
-    }
-    use ExchangeArray {
-        exchangeArray as traitExchangeArray;
-    }
+    use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
 
@@ -452,22 +446,6 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param bool $exposeClassname
-     *
-     * @return array
-     */
-    public function toArray($exposeClassname = false)
-    {
-        $baseArray = $this->traitToArray($exposeClassname);
-
-        if (!empty($baseArray['roles'])) {
-            $baseArray['roles'] = array_keys($baseArray['roles']);
-        }
-
-        return $baseArray;
-    }
-
-    /**
      * @param string $roleName
      *
      * @return User $this
@@ -624,21 +602,5 @@ class User implements EntityInterface, \IteratorAggregate
     public function getDeputyships()
     {
         return $this->deputyships;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return User $this
-     */
-    public function exchangeArray(array $data)
-    {
-        $this->traitExchangeArray($data);
-
-        if (isset($data['roles'])) {
-            $this->setRoles($data['roles']);
-        }
-
-        return $this;
     }
 }

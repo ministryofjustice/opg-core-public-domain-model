@@ -35,15 +35,6 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray()
-    {
-        $data = array('cannotSignForm'=>NULL);
-
-        $response = $this->donor->exchangeArray($data);
-
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor', $response);
-    }
-
     public function testGetInputFilter()
     {
         $response = $this->donor->getInputFilter();

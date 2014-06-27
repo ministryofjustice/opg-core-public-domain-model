@@ -153,49 +153,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->user->hasRole($role2));
     }
 
-    public function testExchangeArrayNonRoles()
-    {
-        $data = array(
-            'id'        => 'TestId',
-            'username'  => 'TestUser',
-            'email'     => 'TestEmail',
-            'firstname' => 'TestFirstName',
-            'surname'   => 'TestSurname',
-            'password'  => 'Password',
-            'locked'    => true,
-            'suspended' => false
-        );
-
-        $this->user->exchangeArray($data);
-
-        $this->assertEquals($data['id'],        $this->user->getId());
-        $this->assertEquals($data['email'],     $this->user->getEmail());
-        $this->assertEquals($data['firstname'], $this->user->getFirstname());
-        $this->assertEquals($data['surname'],   $this->user->getSurname());
-        $this->assertEquals($data['password'],  $this->user->getPassword());
-        $this->assertEquals($data['locked'],    $this->user->isLocked());
-        $this->assertEquals($data['suspended'], $this->user->isSuspended());
-    }
-
-    public function testExchangeArrayRolesList()
-    {
-        $data = array(
-            'roles' => array(
-                'TestRole1' => 'TestRole1',
-                'TestRole2' => 'TestRole2'
-            )
-        );
-
-        $this->assertFalse($this->user->hasRole('TestRole1'));
-        $this->assertFalse($this->user->hasRole('TestRole2'));
-
-        $this->user->exchangeArray($data);
-
-        $this->assertTrue($this->user->hasRole('TestRole1'));
-        $this->assertTrue($this->user->hasRole('TestRole2'));
-
-    }
-
     public function testNoErrorMessages()
     {
         $this->assertEquals(
@@ -255,7 +212,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
 
-        $expectedArray = ['TestRole1'];
+        $expectedArray = ['TestRole1' => 'TestRole1'];
         $this->assertEquals($expectedArray, $array['roles']);
     }
 
@@ -272,48 +229,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->user->removeRole('TestRole1');
 
         $this->assertFalse($this->user->hasRole('TestRole1'));
-    }
-
-    public function testToArray()
-    {
-        $data = array(
-            'id'        => 'TestId',
-            'email'     => 'TestEmail',
-            'firstname' => 'TestFirstName',
-            'surname'   => 'TestSurname',
-            'password'  => 'Password',
-            'roles' => array(
-                'TestRole1' => 'TestRole1',
-                'TestRole2' => 'TestRole2'
-            ),
-            'locked'    => false,
-            'suspended' => false
-        );
-
-        $this->user->exchangeArray($data);
-
-        $this->assertEquals($data['id'],        $this->user->getId());
-        $this->assertEquals($data['email'],     $this->user->getEmail());
-        $this->assertEquals($data['firstname'], $this->user->getFirstname());
-        $this->assertEquals($data['surname'],   $this->user->getSurname());
-        $this->assertEquals($data['password'],  $this->user->getPassword());
-        $this->assertEquals($data['locked'],    $this->user->isLocked());
-        $this->assertEquals($data['suspended'], $this->user->isSuspended());
-        $this->assertTrue($this->user->hasRole('TestRole1'));
-        $this->assertTrue($this->user->hasRole('TestRole2'));
-
-        $userArray = $this->user->toArray();
-        $this->assertTrue(is_array($userArray));
-
-        $this->assertEquals('TestId',        $userArray['id']);
-        $this->assertEquals('TestEmail',     $userArray['email']);
-        $this->assertEquals('TestFirstName', $userArray['firstname']);
-        $this->assertEquals('TestSurname',   $userArray['surname']);
-        $this->assertEquals('Password',      $userArray['password']);
-
-        // Order not important/not guaranteed for roles so only check for presence of role names.
-        $this->assertTrue(in_array('TestRole1', $userArray['roles']));
-        $this->assertTrue(in_array('TestRole2', $userArray['roles']));
     }
 
     public function testCreateUserFail()

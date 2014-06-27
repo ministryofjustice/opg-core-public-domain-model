@@ -1,10 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Zend\InputFilter\Factory as InputFactory;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
@@ -12,6 +10,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+
 
 /**
  * @ORM\Entity
@@ -21,10 +20,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 class Donor extends BasePerson implements PartyInterface
 {
-    use ToArray {
-        toArray as traitToArray;
-    }
-    use ExchangeArray;
+    use ToArray;
 
     /**
      * @return InputFilter|InputFilterInterface
@@ -314,15 +310,5 @@ class Donor extends BasePerson implements PartyInterface
         $this->notesForPreviousLpa = $notesForPreviousLpa;
 
         return $this;
-    }
-
-    /**
-     * @param bool $exposeClassname
-     *
-     * @return array
-     */
-    public function toArray($exposeClassname = true)
-    {
-        return $this->traitToArray($exposeClassname);
     }
 }

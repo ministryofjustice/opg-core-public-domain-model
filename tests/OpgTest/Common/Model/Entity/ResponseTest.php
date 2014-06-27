@@ -82,24 +82,4 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray() {
-        $task = new Task();
-        $taskArray = [
-            'name'   => 'Test Task',
-            'id'     => 123,
-            'status' => 'very active'
-        ];
-
-        $task = $task->exchangeArray($taskArray);
-        $dataArray = ['data' => $task];
-        $response = new Response();
-
-        $response = $response->exchangeArray($dataArray);
-
-        $returnArray = $response->toArray();
-
-        $this->assertEquals($returnArray['data']['name'], $taskArray['name']);
-        $this->assertEquals($returnArray['data']['id'], $taskArray['id']);
-        $this->assertEquals($returnArray['data']['status'], $taskArray['status']);
-    }
 }
