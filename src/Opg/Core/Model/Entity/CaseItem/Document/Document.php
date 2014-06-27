@@ -27,10 +27,7 @@ use JMS\Serializer\Annotation\Type;
 class Document implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
-
-    use \Opg\Common\Model\Entity\Traits\ToArray {
-        toArray as traitToArray;
-    }
+    use \Opg\Common\Model\Entity\Traits\ToArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -87,32 +84,6 @@ class Document implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Opg\Common\Model\Entity\EntityInterface::toArray()
-     */
-    public function toArray($exposeClassname = false)
-    {
-        $data = $this->traitToArray($exposeClassname);
-
-        $numberOfPages = 0;
-
-        if (!$this->pages->isEmpty()) {
-            $data['pages'] = $this->getPages()->toArray();
-            $numberOfPages = count($data['pages']);
-        }
-
-        $data['metadata'] = [];
-
-        $data['metadata']['filename'] = $data['filename'];
-        unset($data['filename']);
-
-        $data['metadata']['documentType']  = $data['type'];
-        $data['metadata']['numberOfPages'] = $numberOfPages;
-
-        return $data;
-    }
-
-    /**
      * Fulfil IteratorAggregate interface requirements
      *
      * @return \RecursiveArrayIterator|\Traversable
@@ -120,48 +91,6 @@ class Document implements EntityInterface, \IteratorAggregate
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return Document
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['type'])) {
-            $this->setType($data['type']);
-        }
-
-        if (!empty($data['subtype'])) {
-            $this->setSubType($data['subtype']);
-        }
-
-        if (!empty($data['title'])) {
-            $this->setTitle($data['title']);
-        }
-
-        if (!empty($data['metadata'])) {
-            $metadata = $data['metadata'];
-            if (!empty($data['metadata']['filename'])) {
-                $this->setFilename($metadata['filename']);
-            }
-        }
-
-        if (!empty($data['pages'])) {
-            $currentPage = new Page();
-            $pages       = new ArrayCollection();
-            foreach ($data['pages'] as $page) {
-                $pages->add((is_array($page)) ? $currentPage->exchangeArray($page) : $page);
-            }
-            $this->pages = $pages;
-        }
-
-        return $this;
     }
 
     /**

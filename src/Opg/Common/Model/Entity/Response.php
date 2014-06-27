@@ -87,16 +87,4 @@ class Response implements \IteratorAggregate
         return $this->additionalData;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return Response
-     */
-    public function exchangeArray(array $data)
-    {
-        empty($data['data']) ? : $this->setData($data['data']);
-        empty($data['additionalData']) ? : $this->setAdditionalData($data['additionalData']);
-
-        return $this;
-    }
 }

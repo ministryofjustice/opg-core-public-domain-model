@@ -34,9 +34,6 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
     public function testGetIterator()
     {
         $this->assertInstanceOf('RecursiveArrayIterator', $this->correspondence->getIterator());
-        $this->data['createdDate'] = new \DateTime();
-        $this->correspondence->exchangeArray($this->data);
-        $this->assertEquals($this->data, $this->correspondence->getIterator()->getArrayCopy());
     }
 
     /**
@@ -83,19 +80,6 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $this->correspondence->setFilename('document');
         $expectedOutput = '10_document';
         $this->assertEquals($expectedOutput, $this->correspondence->getDocumentStoreFilename());
-    }
-
-    public function testExchangeArray()
-    {
-        $data = array(
-            'id'   => 123,
-            'type' => 'unknown document'
-        );
-
-        $this->correspondence->exchangeArray($data);
-
-        $this->assertEquals($data['id'], $this->correspondence->getId());
-        $this->assertEquals($data['type'], $this->correspondence->getType());
     }
 
     public function testGetSetRecipientName()
