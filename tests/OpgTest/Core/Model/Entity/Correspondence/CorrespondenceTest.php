@@ -137,4 +137,13 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
             $returnedDate->format(OPGDateFormat::getDateTimeFormat())
         );
     }
+
+    public function testGetSetType()
+    {
+        $expected = 'Client Notification';
+
+        $this->correspondence->setType($expected);
+
+        $this->assertEquals($expected, $this->correspondence->getType());
+    }
 }
