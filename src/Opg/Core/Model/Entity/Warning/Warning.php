@@ -63,14 +63,14 @@ class Warning implements HasSystemStatusInterface
 
     /**
      * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\User\User")
-     * @ORM\JoinColumn(name="added_by", references="id")
+     * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
      */
     protected $addedBy;
 
     /**
      * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\User\User")
-     * @ORM\JoinColumn(name="closed_by", references="id")
+     * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
      */
     protected $closedBy;
