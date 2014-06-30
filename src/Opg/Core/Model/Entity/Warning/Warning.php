@@ -19,6 +19,8 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\Entity
  * @ORM\Table(name = "warning")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
  */
 class Warning implements HasSystemStatusInterface
 {
