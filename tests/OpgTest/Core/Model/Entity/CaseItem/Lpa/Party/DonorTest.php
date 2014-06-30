@@ -267,4 +267,4 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
 
     }
-
+}
