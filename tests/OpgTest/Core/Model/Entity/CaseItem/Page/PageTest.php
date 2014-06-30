@@ -32,20 +32,9 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Page\Page', $this->page);
     }
 
-    public function testExchangeAndToArray()
-    {
-        $this->page->exchangeArray($this->data);
-
-        $this->assertEquals($this->data, $this->page->toArray());
-
-    }
-
     public function testGetIterator()
     {
         $this->assertInstanceOf('RecursiveArrayIterator', $this->page->getIterator());
-
-        $this->page->exchangeArray($this->data);
-        $this->assertEquals($this->data, $this->page->getIterator()->getArrayCopy());
     }
 
     /**

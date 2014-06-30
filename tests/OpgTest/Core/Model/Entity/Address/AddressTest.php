@@ -137,65 +137,6 @@ AddressTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray()
-    {
-        $this->testData = array(
-            'country'      => 'TestCountry',
-            'town'         => 'TestTown',
-            'county'       => 'TestCounty',
-            'addressLines' => [1, 2, 3],
-            'postcode'     => 'SW3 4HG',
-        );
-
-        $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\Address\Address',
-            $this->address->exchangeArray($this->testData)
-        );
-
-        $this->assertEquals(
-            $this->testData['country'],
-            $this->address->getCountry()
-        );
-
-        $this->assertEquals(
-            $this->testData['town'],
-            $this->address->getTown()
-        );
-
-        $this->assertEquals(
-            $this->testData['county'],
-            $this->address->getCounty()
-        );
-
-        $this->assertEquals(
-            $this->testData['postcode'],
-            $this->address->getPostcode()
-        );
-
-        $this->assertEquals(
-            $this->testData['addressLines'],
-            $this->address->getAddressLines()
-        );
-    }
-
-    public function testToArray()
-    {
-        $this->address->exchangeArray($this->testData);
-
-        $returnArray = $this->address->toArray();
-
-        unset($returnArray['inputFilter']);
-
-        $this->assertTrue(
-            is_array($returnArray)
-        );
-
-        $this->assertEquals(
-            $this->testData,
-            $returnArray
-        );
-    }
-
     public function testNoErrorMessages()
     {
         $this->assertEquals(
@@ -250,7 +191,7 @@ AddressTest extends \PHPUnit_Framework_TestCase
 
     public function testToString()
     {
-        $expected = "Test *1*2*3*TestTown*TestCounty*SW3 4HG*TestCountry";
+        $expected = "Test *1*2*3*Test Town*Test County*SW3 4HG*Test Country";
         $donor = new Donor();
         $donor->setId(1);
         $donor->setFirstName('Test');
@@ -259,7 +200,12 @@ AddressTest extends \PHPUnit_Framework_TestCase
         $this->address->setPerson($donor);
         $this->assertEquals($donor, $this->address->getPerson());
 
-        $this->address->exchangeArray($this->testData);
+        $this->address
+            ->setAddressLines(array(1,2,3))
+            ->setTown('Test Town')
+            ->setCounty('Test County')
+            ->setPostcode('SW3 4HG')
+            ->setCountry('Test Country');
 
         $result = $this->address->toString('*', Address::INCLUDE_PERSON, 0b111);
 

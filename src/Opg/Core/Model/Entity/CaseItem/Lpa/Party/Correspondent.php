@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
@@ -20,21 +19,8 @@ use JMS\Serializer\Annotation\Type;
 class Correspondent extends BasePerson implements PartyInterface, EntityInterface, HasRelationshipToDonor
 {
     use Company;
-    use ToArray {
-        toArray as toTraitArray;
-    }
-    use ExchangeArray;
+    use ToArray;
     use RelationshipToDonor;
-
-    /**
-     * @param bool $exposeClassName
-     *
-     * @return array
-     */
-    public function toArray($exposeClassName = true)
-    {
-        return $this->toTraitArray($exposeClassName);
-    }
 
     /**
      * @return InputFilterInterface

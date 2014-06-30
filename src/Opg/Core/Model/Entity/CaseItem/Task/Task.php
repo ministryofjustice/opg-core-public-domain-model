@@ -484,66 +484,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
-     * @param array $data
-     *
-     * @return $this|EntityInterface
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['type'])) {
-        $this->setType($data['type']);
-    }
-
-        if (!empty($data['name'])) {
-            $this->setName($data['name']);
-        }
-
-        if (!empty($data['description'])) {
-            $this->setDescription($data['description']);
-        }
-
-        if (!empty($data['dueDate'])) {
-            $this->setDueDate($data['dueDate']);
-        }
-
-        if (!empty($data['activeDate'])) {
-            $this->setActiveDate($data['activeDate']);
-        }
-
-        if (!empty($data['completedDate'])) {
-            if(is_object($data['completedDate'])) {
-                $this->setCompletedDate($data['completedDate']);
-            } else {
-                $this->setCompletedDateString($data['completedDate']);
-            }
-        }
-
-        if (!empty($data['priority'])) {
-            $this->setPriority($data['priority']);
-        }
-
-        if (!empty($data['status'])) {
-            $this->setStatus($data['status']);
-        }
-
-        if (!empty($data['createdTime'])) {
-            $this->setCreatedTime($data['createdTime']);
-        }
-
-        if (!empty($data['assignedUser'])) {
-            $user = new User();
-            $user = $user->exchangeArray($data['assignedUser']);
-            $this->setAssignedUser($user);
-        }
-
-        return $this;
-    }
-
-    /**
      * @param CaseItem $case
      *
      * @return Task

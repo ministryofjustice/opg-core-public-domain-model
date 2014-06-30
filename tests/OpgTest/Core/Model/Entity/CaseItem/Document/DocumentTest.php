@@ -38,10 +38,6 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     public function testGetIterator()
     {
         $this->assertInstanceOf('RecursiveArrayIterator', $this->document->getIterator());
-
-        $this->document->exchangeArray($this->data);
-        $this->data['createdDate'] = new \DateTime();
-        $this->assertEquals($this->data, $this->document->getIterator()->getArrayCopy());
     }
 
     /**
@@ -52,23 +48,6 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $inputFilter = $this->document->getInputFilter();
 
         $this->assertInstanceOf('Zend\InputFilter\InputFilter', $inputFilter);
-    }
-
-    public function testExchangeAndToArray()
-    {
-        $pageCollection = new ArrayCollection();
-
-        for($i=0; $i<10; $i++) {
-            $page = new Page();
-            $page->setId($i+1)->setPageNumber($i+1);
-            $pageCollection->add($page);
-        }
-
-        $this->data['pages'] = $pageCollection->toArray();
-        $this->data['metadata']['numberOfPages'] = count($this->data['pages']);
-        $this->document = $this->document->exchangeArray($this->data);
-        $this->data['createdDate'] = new \DateTime();
-        $this->assertEquals($this->data, $this->document->toArray());
     }
 
     public function testSetGetId()
