@@ -196,7 +196,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade-{"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
      */
     protected $warnings;
