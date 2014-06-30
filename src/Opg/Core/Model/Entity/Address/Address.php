@@ -353,20 +353,4 @@ class Address implements EntityInterface, \IteratorAggregate
 
         return implode($delim, $address);
     }
-
-    /**
-     * @param array $data
-     *
-     * @return Address
-     */
-    public function exchangeArray(array $data)
-    {
-        empty($data['addressLines']) ? : $this->setAddressLines($data['addressLines']);
-        empty($data['town']) ? : $this->setTown($data['town']);
-        empty($data['postcode']) ? : $this->setPostcode($data['postcode']);
-        empty($data['county']) ? : $this->setCounty($data['county']);
-        empty($data['country']) ? : $this->setCountry($data['country']);
-
-        return $this;
-    }
 }

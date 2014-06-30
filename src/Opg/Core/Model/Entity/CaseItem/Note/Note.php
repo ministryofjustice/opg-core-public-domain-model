@@ -287,31 +287,6 @@ class Note implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param array $data
-     *
-     * @return Note
-     */
-    public function exchangeArray(array $data)
-    {
-        empty($data['id']) ? : $this->setId($data['id']);
-        empty($data['type']) ? : $this->setType($data['type']);
-
-        if (!empty($data['user'])) {
-            $createdByUser = new User();
-            $createdByUser->exchangeArray($data['user']);
-
-            $this->setCreatedByUser($createdByUser);
-        }
-
-        empty($data['status']) ? : $this->setStatus($data['status']);
-        empty($data['description']) ? : $this->setDescription($data['description']);
-        empty($data['name']) ? : $this->setName($data['name']);
-        empty($data['createdTime']) ? : $this->setCreatedTime($data['createdTime']);
-
-        return $this;
-    }
-
-    /**
      * @throws \Opg\Common\Exception\UnusedException
      * @return InputFilter
      */

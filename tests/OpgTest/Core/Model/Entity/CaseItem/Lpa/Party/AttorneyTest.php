@@ -43,24 +43,6 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testToArrayExchangeArray()
-    {
-        $this->attorney
-            ->setId('1')
-            ->setEmail('attorney@domain.com')
-            ->setCases(new ArrayCollection());
-
-
-        $attorneyArray = $this->attorney->toArray();
-
-        $attorney2 = $this->attorney->exchangeArray($attorneyArray);
-
-        $this->assertArrayHasKey('className',$attorneyArray);
-        $this->assertEquals(get_class($attorney2), $attorneyArray['className']);
-        $this->assertEquals($this->attorney, $attorney2);
-        $this->assertEquals($attorneyArray, $attorney2->toArray());
-    }
-
     public function testGetSetLpa002SignatureDate()
     {
         $expectedDate = new \DateTime();

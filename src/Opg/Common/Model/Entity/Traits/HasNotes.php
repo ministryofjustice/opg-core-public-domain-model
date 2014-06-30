@@ -47,9 +47,11 @@ trait HasNotes
      */
     public function addNote(NoteEntity $note)
     {
+        // @codeCoverageIgnoreStart
         if (is_null($this->notes)) {
             $this->notes = new ArrayCollection();
         }
+        // @codeCoverageIgnoreEnd
 
         if (!$this->notes->contains($note)) {
             $this->notes->add($note);

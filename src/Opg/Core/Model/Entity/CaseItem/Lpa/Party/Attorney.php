@@ -3,7 +3,6 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Zend\InputFilter\InputFilterInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,10 +20,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationshipToDonor
 {
-    use ToArray {
-        toArray as traitToArray;
-    }
-    use ExchangeArray;
+    use ToArray;
     use RelationshipToDonor;
 
     /**
@@ -115,16 +111,6 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
         }
 
         return $this->inputFilter;
-    }
-
-    /**
-     * @param bool $exposeClassname
-     *
-     * @return array
-     */
-    public function toArray($exposeClassname = true)
-    {
-        return $this->traitToArray($exposeClassname);
     }
 
     /**

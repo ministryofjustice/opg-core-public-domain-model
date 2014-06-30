@@ -158,65 +158,6 @@ class NoteTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray()
-    {
-
-        $expectedUser          = new User();
-        $expectedUserFirstName = 'Test';
-        $expectedUserSurname   = 'User';
-        $expectedUser->setFirstName($expectedUserFirstName)->setSurname($expectedUserSurname);
-
-
-        $array = array(
-            'id'          => 1,
-            'type'        => 'General Note',
-            'createdTime' => new \DateTime('2013-11-22T04:03:02'),
-            'status'      => 'A',
-            'description' => 'Test Note Body',
-            'name'        => 'Test Note Header',
-            'user'        => $expectedUser->toArray()
-        );
-
-        $this->note->exchangeArray($array);
-
-        $this->assertEquals(
-            $array['id'],
-            $this->note->getId()
-        );
-
-        $this->assertEquals(
-            $array['type'],
-            $this->note->getType()
-        );
-
-        $this->assertEquals(
-            $array['createdTime'],
-            $this->note->getCreatedTime()
-        );
-
-        $this->assertEquals(
-            $array['status'],
-            $this->note->getStatus()
-        );
-
-        $this->assertEquals(
-            $array['description'],
-            $this->note->getDescription()
-        );
-
-        $this->assertEquals(
-            $array['name'],
-            $this->note->getName()
-        );
-
-        $this->assertTrue($this->note->getCreatedByUser() instanceof User);
-
-        $this->assertEquals(
-            $expectedUserFirstName,
-            $this->note->getCreatedByUser()->getFirstName()
-        );
-    }
-
     public function testSetGetCase()
     {
         $expectedCase = new Lpa();

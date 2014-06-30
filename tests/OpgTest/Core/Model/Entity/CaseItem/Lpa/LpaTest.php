@@ -401,20 +401,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testExchangeArray()
-    {
-        $data = array(
-            'id' => '12345123'
-        );
-
-        $this->lpa->exchangeArray($data);
-
-        $this->assertEquals(
-            $data['id'],
-            $this->lpa->getId()
-        );
-    }
-
     /**
      * @group array-recursive
      */

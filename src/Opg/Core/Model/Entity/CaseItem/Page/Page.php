@@ -3,7 +3,6 @@ namespace Opg\Core\Model\Entity\CaseItem\Page;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Zend\InputFilter\Factory as InputFactory;
@@ -22,7 +21,6 @@ class Page implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
-    use ExchangeArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
