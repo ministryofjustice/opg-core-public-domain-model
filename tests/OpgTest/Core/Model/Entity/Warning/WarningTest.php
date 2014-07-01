@@ -7,6 +7,7 @@ use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Core\Model\Entity\Warning\Warning;
+use Zend\InputFilter\InputFilter;
 
 class WarningTest extends \PHPUnit_Framework_TestCase
 {
@@ -166,5 +167,23 @@ class WarningTest extends \PHPUnit_Framework_TestCase
 
         //Throw us an exception here
         $this->warning->setPerson(new Donor());
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Method not supported
+     */
+    public function testGetInputFilter()
+    {
+        $this->warning->getInputFilter();
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Method not supported
+     */
+    public function testSetInputFilter()
+    {
+        $this->warning->setInputFilter(new InputFilter());
     }
 }

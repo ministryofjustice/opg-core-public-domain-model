@@ -3,6 +3,7 @@
 namespace Opg\Core\Model\Entity\Warning;
 
 use Opg\Common\Model\Entity\DateFormat;
+use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +13,7 @@ use Opg\Core\Model\Entity\Person\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
-use Symfony\Component\Validator\Tests\Fixtures\EntityInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Class Warning
@@ -306,5 +307,24 @@ class Warning implements HasSystemStatusInterface, EntityInterface
     public function getPerson()
     {
         return $this->person;
+    }
+
+    /**
+     * @return void|InputFilterInterface
+     * @throws \Exception
+     */
+    public function getInputFilter()
+    {
+        throw new \Exception('Method not supported');
+    }
+
+    /**
+     * @param InputFilterInterface $inputFilter
+     * @return void|\Zend\InputFilter\InputFilterAwareInterface
+     * @throws \Exception
+     */
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception('Method not supported');
     }
 }
