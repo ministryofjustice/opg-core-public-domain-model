@@ -66,14 +66,14 @@ class Warning implements HasSystemStatusInterface, EntityInterface
     protected $dateClosed;
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
      */
     protected $addedBy;
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
      */
@@ -83,6 +83,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="warnings")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var PersonEntity
+     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
