@@ -177,13 +177,4 @@ class WarningTest extends \PHPUnit_Framework_TestCase
     {
         $this->warning->getInputFilter();
     }
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Method not supported
-     */
-    public function testSetInputFilter()
-    {
-        $this->warning->setInputFilter(new InputFilter());
-    }
 }
