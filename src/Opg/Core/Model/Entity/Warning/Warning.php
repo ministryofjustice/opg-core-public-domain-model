@@ -6,11 +6,13 @@ use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\User\User as UserEntity;
 use Opg\Core\Model\Entity\Person\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
+use Symfony\Component\Validator\Tests\Fixtures\EntityInterface;
 
 /**
  * Class Warning
@@ -22,9 +24,10 @@ use JMS\Serializer\Annotation\ReadOnly;
  *
  * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
  */
-class Warning implements HasSystemStatusInterface
+class Warning implements HasSystemStatusInterface, EntityInterface
 {
     use HasSystemStatus;
+    use ToArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
