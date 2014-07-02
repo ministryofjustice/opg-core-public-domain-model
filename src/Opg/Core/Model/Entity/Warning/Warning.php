@@ -23,7 +23,7 @@ use Zend\InputFilter\InputFilterInterface;
  * @package Opg\Core\Model\Entity\Warning
  *
  * @ORM\Entity
- * @ORM\Table(name = "warning")
+ * @ORM\Table(name = "warnings")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
@@ -257,7 +257,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      */
     public function setWarningText($warningText)
     {
-        $this->warningText = $warningText;
+        $this->warningText = (string)$warningText;
 
         return $this;
     }
@@ -277,7 +277,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      */
     public function setWarningType($warningType)
     {
-        $this->warningType = $warningType;
+        $this->warningType = (string)$warningType;
 
         return $this;
     }
@@ -315,8 +315,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return void|InputFilterInterface
-     * @throws \Exception
+     * @return \Zend\InputFilter\InputFilter|InputFilterInterface
      */
     public function getInputFilter()
     {
