@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Exclude;
+use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterInterface;
 
 /**
@@ -27,7 +28,7 @@ use Zend\InputFilter\InputFilterInterface;
  *
  * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
  */
-class Warning implements HasSystemStatusInterface, EntityInterface
+class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAggregate
 {
     use HasSystemStatus;
     use ToArray;
@@ -319,6 +320,36 @@ class Warning implements HasSystemStatusInterface, EntityInterface
      */
     public function getInputFilter()
     {
-        throw new \Exception('Method not supported');
+        if( !$this->inputFilter) {
+            $this->inputFilter = new \Zend\InputFilter\InputFilter();
+
+            $inputFactory = new InputFactory();
+
+            $this->inputFilter->add($inputFactory->createInput(
+                    array(
+                        'name'       => 'warningType',
+                        'required'   => true,
+                    )
+                )
+            );
+
+            $this->inputFilter->add($inputFactory->createInput(
+                    array(
+                        'name'       => 'warningText',
+                        'required'   => true,
+                    )
+                )
+            );
+        }
+
+        return $this->inputFilter;
+    }
+
+    /**
+     * @return \RecursiveArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
     }
 }

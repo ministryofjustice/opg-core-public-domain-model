@@ -169,12 +169,25 @@ class WarningTest extends \PHPUnit_Framework_TestCase
         $this->warning->setPerson(new Donor());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Method not supported
-     */
     public function testGetInputFilter()
     {
-        $this->warning->getInputFilter();
+        $this->assertTrue($this->warning->getInputFilter() instanceof InputFilter);
+    }
+
+    public function testGetIterator()
+    {
+        $this->assertTrue($this->warning->getIterator() instanceof \Traversable);
+    }
+
+    public function testWarningIsValid()
+    {
+        $this->assertFalse($this->warning->isValid());
+
+        $this->warning->setWarningType('Test');
+        $this->assertFalse($this->warning->isValid());
+
+        $this->warning->setWarningText('Test');
+        $this->assertTrue($this->warning->isValid());
+
     }
 }
