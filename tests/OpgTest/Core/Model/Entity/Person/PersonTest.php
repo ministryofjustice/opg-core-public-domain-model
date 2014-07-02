@@ -2,6 +2,7 @@
 
 namespace OpgTest\Core\Model\Entity\Person;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\Deputyship\DeputyshipCollection;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
@@ -10,6 +11,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use \Exception;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
  * Person test case.
@@ -343,6 +345,32 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $parent1->addChild($this->person);
 
         $this->assertEquals($this->person, $parent1->getChildren()[0]);
+    }
+
+    public function testGetFiltered()
+    {
+        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+
+        $testCollection = new ArrayCollection();
+        $testActiveCollection = new ArrayCollection();
+
+        $warning1 = (new Warning())->setWarningText('Test Warning 1')->setSystemStatus(true);
+        $testCollection->add($warning1);
+        $testActiveCollection->add($warning1);
+
+        $warning2 = (new Warning())->setWarningText('Test Warning 2')->setSystemStatus(true);
+        $testCollection->add($warning2);
+        $testActiveCollection->add($warning2);
+
+        $warning3 = (new Warning())->setWarningText('Test Warning 3')->setSystemStatus(false);
+        $testCollection->add($warning3);
+
+        $person->setWarnings($testCollection);
+
+        $this->assertEquals($testCollection, $person->getWarnings());
+
+        $this->assertEquals($testActiveCollection, $person->getActiveWarnings());
+
     }
   }
 
