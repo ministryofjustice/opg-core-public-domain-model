@@ -30,20 +30,6 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->correspondent instanceof EntityInterface);
     }
 
-    public function testToArrayExchangeArray()
-    {
-        $this->correspondent->setId('1');
-
-        $correspondentArray = $this->correspondent->toArray();
-
-        $correspondentCopy = $this->correspondent->exchangeArray($correspondentArray);
-
-        $this->assertArrayHasKey('className',$correspondentArray);
-        $this->assertEquals(get_class($correspondentCopy), $correspondentArray['className']);
-        $this->assertEquals($this->correspondent, $correspondentCopy);
-        $this->assertEquals($correspondentArray, $correspondentCopy->toArray());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
         $expectedRelationship = 'Sibling';

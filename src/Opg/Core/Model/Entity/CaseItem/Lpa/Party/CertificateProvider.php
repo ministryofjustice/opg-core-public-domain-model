@@ -1,7 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
@@ -17,10 +16,7 @@ use Zend\Validator\Callback;
  */
 class CertificateProvider extends BasePerson implements PartyInterface, HasRelationshipToDonor
 {
-    use ToArray {
-        toArray as toTraitArray;
-    }
-    use ExchangeArray;
+    use ToArray;
     use RelationshipToDonor;
 
     /**
@@ -81,16 +77,6 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
         $this->statement = $statement;
 
         return $this;
-    }
-
-    /**
-     * @param bool $exposeClassName
-     *
-     * @return array
-     */
-    public function toArray($exposeClassName = true)
-    {
-        return $this->toTraitArray($exposeClassName);
     }
 
     /**

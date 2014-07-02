@@ -2,12 +2,10 @@
 namespace OpgTest\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
-use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\BusinessRule;
@@ -211,52 +209,6 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $iterator     = $caseItemMock->getIterator();
 
         $this->assertInstanceOf('ArrayIterator', $iterator);
-    }
-
-    public function testExchangeArray()
-    {
-
-        $caseItemMock = $this->getMockedClass();
-
-        $expectedUserFirstName = 'Test';
-        $expectedUserSurname   = ' User';
-        $expectedUserId        = 1;
-
-
-        $user = new User();
-        $user->setFirstname($expectedUserFirstName)->setSurname($expectedUserSurname)->setId($expectedUserId);
-        $caseItemMock->setAssignedUser($user);
-
-
-        $tasks = new ArrayCollection();
-        for ($i = 0; $i < 10; ++$i) {
-            $currentTask = new Task();
-            $currentTask->setId($i);
-            $tasks->add($currentTask);
-        }
-        $caseItemMock->setTasks($tasks);
-
-        $notes = new ArrayCollection();
-        for ($i = 0; $i < 10; ++$i) {
-            $currentNote = new Note();
-            $currentNote->setId($i);
-            $notes->add($currentNote);
-        }
-        $caseItemMock->addNotes($notes);
-
-        $documents = new ArrayCollection();
-        for ($i = 0; $i < 10; ++$i) {
-            $currentDocument = new Document();
-            $currentDocument->setId($i);
-            $documents->add($currentDocument);
-        }
-        $caseItemMock->setDocuments($documents);
-
-        $expectedArray = $caseItemMock->toArray();
-
-        $caseItemMock2 = $caseItemMock->exchangeArray($expectedArray);
-
-        $this->assertEquals($caseItemMock, $caseItemMock2);
     }
 
     public function testGetInputFilter()

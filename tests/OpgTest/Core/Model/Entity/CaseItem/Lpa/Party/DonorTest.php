@@ -4,6 +4,8 @@ namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Validation\Validator\IntegerOutOfRange;
+
 /**
  * ToArray test case.
  */
@@ -33,15 +35,6 @@ class DonorTest extends \PHPUnit_Framework_TestCase
             $expected,
             $this->donor->getPreviousNames()
         );
-    }
-
-    public function testExchangeArray()
-    {
-        $data = array('cannotSignForm'=>NULL);
-
-        $response = $this->donor->exchangeArray($data);
-
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor', $response);
     }
 
     public function testGetInputFilter()
@@ -191,6 +184,30 @@ class DonorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testIdOutOfMixRangeFails()
+    {
+        $id = PHP_INT_MAX * -1;
+
+        $this->donor->setId($id);
+
+        $this->assertFalse($this->donor->isValid(array('id')));
+
+        $this->assertEquals(
+            "'-9223372036854775807' exceeds the minimum integer range allowed.",
+            $this->donor->getErrorMessages()['errors']['id']['underMinRange']
+        );
+    }
+
+    public function testIdInRangePasses()
+    {
+        $id = rand(IntegerOutOfRange::INT_MIN_RANGE, IntegerOutOfRange::INT_MAX_RANGE);
+
+        $this->donor->setId($id);
+
+        $this->assertTrue($this->donor->isValid(array('id')));
+
+    }
+
     /**
      * @expectedException \LogicException
      */
@@ -202,4 +219,5 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
         $this->donor->addChild($attorney);
     }
+
 }

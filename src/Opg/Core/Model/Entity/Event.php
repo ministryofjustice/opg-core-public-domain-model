@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\User\User;
@@ -25,7 +24,6 @@ class Event implements EntityInterface
 {
     use ToArray;
     use InputFilter;
-    use ExchangeArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true})

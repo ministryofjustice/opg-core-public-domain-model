@@ -23,9 +23,7 @@ class Correspondence implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
 
-    use \Opg\Common\Model\Entity\Traits\ToArray {
-        toArray as traitToArray;
-    }
+    use \Opg\Common\Model\Entity\Traits\ToArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -98,23 +96,6 @@ class Correspondence implements EntityInterface, \IteratorAggregate
         return new \RecursiveArrayIterator($this->toArray());
     }
 
-    /**
-     * @param array $data
-     *
-     * @return Correspondence
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['type'])) {
-            $this->setType($data['type']);
-        }
-
-        return $this;
-    }
 
     /**
      * @return InputFilter|InputFilterInterface

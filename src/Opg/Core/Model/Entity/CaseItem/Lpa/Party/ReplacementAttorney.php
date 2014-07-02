@@ -1,7 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
@@ -16,10 +15,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 class ReplacementAttorney extends AttorneyAbstract
 {
-    use ExchangeArray;
-    use ToArray {
-        toArray as traitToArray;
-    }
+    use ToArray;
 
     /**
      * @ORM\Column(type="date", nullable=true)

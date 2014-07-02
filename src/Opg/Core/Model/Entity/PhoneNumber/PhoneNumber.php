@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\PhoneNumber;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -23,7 +22,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
 {
     use ToArray;
     use IteratorAggregate;
-    use ExchangeArray;
     use InputFilterTrait;
 
     /**

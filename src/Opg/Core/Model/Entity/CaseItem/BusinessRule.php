@@ -2,11 +2,9 @@
 namespace Opg\Core\Model\Entity\CaseItem;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
-use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
@@ -27,7 +25,6 @@ class BusinessRule implements EntityInterface, \IteratorAggregate
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use \Opg\Common\Model\Entity\Traits\IteratorAggregate;
     use ToArray;
-    use ExchangeArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id

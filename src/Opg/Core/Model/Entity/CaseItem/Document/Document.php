@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Document;
 
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
@@ -9,9 +10,13 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
+
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"BusinessRule\Listener\DocumentListener"})
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
@@ -22,10 +27,7 @@ use JMS\Serializer\Annotation\ReadOnly;
 class Document implements EntityInterface, \IteratorAggregate
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
-
-    use \Opg\Common\Model\Entity\Traits\ToArray {
-        toArray as traitToArray;
-    }
+    use \Opg\Common\Model\Entity\Traits\ToArray;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -66,35 +68,19 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     protected $pages;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @ReadOnly
+     * @Accessor(getter="getCreatedDateString")
+     */
+    protected $createdDate;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see \Opg\Common\Model\Entity\EntityInterface::toArray()
-     */
-    public function toArray($exposeClassname = false)
-    {
-        $data = $this->traitToArray($exposeClassname);
-
-        $numberOfPages = 0;
-
-        if (!$this->pages->isEmpty()) {
-            $data['pages'] = $this->getPages()->toArray();
-            $numberOfPages = count($data['pages']);
-        }
-
-        $data['metadata'] = [];
-
-        $data['metadata']['filename'] = $data['filename'];
-        unset($data['filename']);
-
-        $data['metadata']['documentType']  = $data['type'];
-        $data['metadata']['numberOfPages'] = $numberOfPages;
-
-        return $data;
+        $this->setCreatedDate();
     }
 
     /**
@@ -105,48 +91,6 @@ class Document implements EntityInterface, \IteratorAggregate
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return Document
-     */
-    public function exchangeArray(array $data)
-    {
-        if (!empty($data['id'])) {
-            $this->setId($data['id']);
-        }
-
-        if (!empty($data['type'])) {
-            $this->setType($data['type']);
-        }
-
-        if (!empty($data['subtype'])) {
-            $this->setSubType($data['subtype']);
-        }
-
-        if (!empty($data['title'])) {
-            $this->setTitle($data['title']);
-        }
-
-        if (!empty($data['metadata'])) {
-            $metadata = $data['metadata'];
-            if (!empty($data['metadata']['filename'])) {
-                $this->setFilename($metadata['filename']);
-            }
-        }
-
-        if (!empty($data['pages'])) {
-            $currentPage = new Page();
-            $pages       = new ArrayCollection();
-            foreach ($data['pages'] as $page) {
-                $pages->add((is_array($page)) ? $currentPage->exchangeArray($page) : $page);
-            }
-            $this->pages = $pages;
-        }
-
-        return $this;
     }
 
     /**
@@ -318,5 +262,40 @@ class Document implements EntityInterface, \IteratorAggregate
         $this->filename = $filename;
 
         return $this;
+    }
+
+    /**
+     * @param \DateTime $createdDate
+     * @return $this
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (null === $createdDate) {
+            $this->createdDate = new \DateTime();
+        } else {
+            $this->createdDate = $createdDate;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateString()
+    {
+        if (null !== $this->createdDate) {
+            return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
+        }
+
+        return '';
     }
 }

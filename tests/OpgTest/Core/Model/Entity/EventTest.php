@@ -149,25 +149,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testToArrayExchangeArray()
-    {
-        $user = new User();
-        $user->setId(111)
-            ->setFirstname('Test Firstname')
-            ->setSurname('Test Surname');
-
-        $event = $this->event->setId(123)
-            ->setSourceEntityId(456)
-            ->setSourceTable('table1')
-            ->setUser($user)
-            ->setType('READ')
-            ->setCreatedOn(new \DateTime());
-
-        $eventToArray = $this->event->toArray();
-
-        $this->assertSame($event, $this->event->exchangeArray($eventToArray));
-    }
-
     /**
      * @expectedException \Exception
      */

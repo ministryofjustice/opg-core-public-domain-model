@@ -9,7 +9,6 @@ use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasCorrespondenceInterface;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
-use Opg\Common\Model\Entity\Traits\ExchangeArray;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\HasCorrespondence;
@@ -41,9 +40,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
-    use ExchangeArray {
-        exchangeArray as exchangeArrayTrait;
-    }
     use HasCorrespondence;
 
     const APPLICATION_TYPE_CLASSIC = 0;
@@ -432,52 +428,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @TODO is this still required?
-     *
-     * @param  array $data
-     *
-     * @return CaseItem
-     */
-    public function exchangeArray(array $data)
-    {
-        $this->exchangeArrayTrait($data);
-
-        if (!empty($data['assignedUser'])) {
-            $assignedUser = new User();
-            $assignedUser->exchangeArray($data['assignedUser']);
-            $this->setAssignedUser($assignedUser);
-        }
-
-        if (!empty($data['tasks'])) {
-            $this->tasks = null;
-            foreach ($data['tasks'] as $taskData) {
-                $newTask = new Task();
-                $this->addTask(is_object($taskData) ? $taskData : $newTask->exchangeArray($taskData));
-            }
-        }
-
-        if (!empty($data['notes'])) {
-            $this->notes = null;
-            foreach ($data['notes'] as $noteData) {
-                $newNote = new Note();
-                $this->addNote(is_object($noteData) ? $noteData : $newNote->exchangeArray($noteData));
-            }
-        }
-
-        if (!empty($data['documents'])) {
-            $this->documents = null;
-            foreach ($data['documents'] as $documentData) {
-                $newDocument = new Document();
-                $this->addDocument(
-                    is_object($documentData) ? $documentData : $newDocument->exchangeArray($documentData)
-                );
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -710,7 +660,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setRegistrationDate(\DateTime $registrationDate)
+    public function setRegistrationDate(\DateTime $registrationDate = null)
     {
         $this->registrationDate = $registrationDate;
 
@@ -722,7 +672,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setRegistrationDateString($registrationDate)
+    public function setRegistrationDateString($registrationDate = null)
     {
         if (!empty($registrationDate)) {
 

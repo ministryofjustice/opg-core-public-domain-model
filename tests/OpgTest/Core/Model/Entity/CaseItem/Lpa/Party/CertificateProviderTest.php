@@ -43,24 +43,6 @@ class CertificateProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testToArrayExchangeArray()
-    {
-        $this->certificateProvider
-            ->setId('1')
-            ->setEmail('certificateprovider@domain.com')
-            ->setCases(new ArrayCollection());
-
-
-        $certificateProvider = $this->certificateProvider->toArray();
-
-        $certificateProvider2 = $this->certificateProvider->exchangeArray($certificateProvider);
-
-        $this->assertArrayHasKey('className',$certificateProvider);
-        $this->assertEquals(get_class($certificateProvider2), $certificateProvider['className']);
-        $this->assertEquals($this->certificateProvider, $certificateProvider2);
-        $this->assertEquals($certificateProvider, $certificateProvider2->toArray());
-    }
-
     public function testGetSetRelationshipToDonor()
     {
         $expectedRelationship = 'Doctor';
