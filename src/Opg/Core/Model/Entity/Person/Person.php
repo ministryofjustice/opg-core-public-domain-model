@@ -198,6 +198,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"all"}, fetch="EAGER")
      * @var ArrayCollection
+     * @Accessor(getter="getActiveWarnings")
      */
     protected $warnings;
 
@@ -784,5 +785,21 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
                 |
                 ($this->getDeputyships()->count() > 0)
             );
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getActiveWarnings()
+    {
+        $warningBucket = new ArrayCollection();
+
+        foreach ($this->warnings as $warning) {
+            if ($warning->isActive()) {
+                $warningBucket->add($warning);
+            }
+        }
+
+        return $warningBucket;
     }
 }
