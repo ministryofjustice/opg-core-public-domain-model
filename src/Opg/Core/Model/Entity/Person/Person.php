@@ -794,12 +794,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     {
         $warningBucket = new ArrayCollection();
 
-        foreach ($this->warnings as $warning) {
-            if ($warning->isActive()) {
-                $warningBucket->add($warning);
+        if (null !== $this->warnings) {
+            foreach ($this->warnings as $warning) {
+                if ($warning->isActive()) {
+                    $warningBucket->add($warning);
+                }
             }
         }
-
         return $warningBucket;
     }
 }
