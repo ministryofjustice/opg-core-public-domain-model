@@ -16,7 +16,6 @@ use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
- * @ORM\EntityListeners({"BusinessRule\Listener\DocumentListener"})
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
