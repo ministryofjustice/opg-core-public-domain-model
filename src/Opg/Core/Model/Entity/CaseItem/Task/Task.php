@@ -46,8 +46,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     protected $id;
 
     /**
-     * @ORM\Column(type = "integer", nullable = true)
-     * @var int
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $type;

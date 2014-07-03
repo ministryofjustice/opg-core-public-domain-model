@@ -185,14 +185,6 @@ abstract class PowerOfAttorney extends CaseItem
     protected $cardPaymentContact;
 
     /**
-     * @ORM\Column(type = "date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @Accessor(getter="getRegistrationDueDateString", setter="setRegistrationDueDateString")
-     */
-    protected $registrationDueDate;
-
-    /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
      */
@@ -377,60 +369,6 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     *
-     * @return \DateTime $registrationDueDate
-     */
-    public function getRegistrationDueDate()
-    {
-        return $this->registrationDueDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRegistrationDueDateString()
-    {
-        if (!empty($this->registrationDueDate)) {
-            return $this->registrationDueDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
-    }
-
-    /**
-     *
-     * @param \DateTime $registrationDueDate
-     *
-     * @return PowerOfAttorney
-     */
-    public function setRegistrationDueDate(\DateTime $registrationDueDate = null)
-    {
-        if (is_null($registrationDueDate)) {
-            $registrationDueDate = new \DateTime();
-        }
-        $this->registrationDueDate = $registrationDueDate;
-
-        return $this;
-    }
-
-    /**
-     * @param string $registrationDueDate
-     *
-     * @return PowerOfAttorney
-     */
-    public function setRegistrationDueDateString($registrationDueDate)
-    {
-        if (!empty($registrationDueDate)) {
-            $registrationDueDate = OPGDateFormat::createDateTime($registrationDueDate);
-
-            if ($registrationDueDate) {
-                $this->setRegistrationDueDate($registrationDueDate);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      *
      * @return string $howAttorneysAct

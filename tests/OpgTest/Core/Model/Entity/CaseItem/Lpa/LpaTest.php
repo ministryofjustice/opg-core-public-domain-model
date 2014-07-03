@@ -169,21 +169,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetRegistrationDueDate()
-    {
-        $expected = new \DateTime('2014-09-25');
-
-        $this->assertEmpty($this->lpa->getRegistrationDueDate());
-        $this->assertEmpty($this->lpa->getRegistrationDueDateString());
-
-        $this->lpa->setRegistrationDueDate($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getRegistrationDueDate()
-        );
-    }
-
     public function testGetSetHowAttorneysAct()
     {
         $expected = 'Jointly and Severally';
@@ -424,7 +409,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'notifiedPersons'                           => array(),
                 'certificateProviders'                      => array(),
                 'cardPaymentContact'                        => null,
-                'registrationDueDate'                       => null,
                 'howAttorneysAct'                           => null,
                 'howReplacementAttorneysAct'                => null,
                 'attorneyActDecisions'                      => null,
