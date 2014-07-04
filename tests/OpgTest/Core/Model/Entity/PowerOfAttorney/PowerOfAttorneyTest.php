@@ -453,60 +453,6 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->poa->getDispatchDateString());
     }
 
-    public function testGetSetRegistrationDueDate()
-    {
-        $expectedDate = new \DateTime();
-
-        $this->assertEmpty($this->poa->getRegistrationDueDate());
-        $this->assertEmpty($this->poa->getRegistrationDueDateString());
-
-        $this->poa->setRegistrationDueDate($expectedDate);
-        $this->assertEquals($expectedDate, $this->poa->getRegistrationDueDate());
-    }
-
-    public function testGetSetRegistrationDueDateNulls()
-    {
-        $expectedDate = new \DateTime();
-
-        $this->assertEmpty($this->poa->getRegistrationDueDate());
-        $this->poa->setRegistrationDueDate();
-
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->poa->getRegistrationDueDate()->format(OPGDateFormat::getDateFormat())
-        );
-    }
-
-    public function testGetSetRegistrationDueDateInvalidString()
-    {
-        $this->assertEmpty($this->poa->getRegistrationDueDateString());
-        try {
-            $this->poa->setRegistrationDueDateString('asddasdsdas');
-        }
-        catch(\Exception $e) {
-            $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
-            $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
-        }
-
-        $this->assertEmpty($this->poa->getRegistrationDueDateString());
-
-    }
-
-    public function testGetSetRegistrationDueDateNullString()
-    {
-        $this->assertEmpty($this->poa->getRegistrationDueDateString());
-        $this->poa->setRegistrationDueDateString(null);
-        $this->assertEmpty($this->poa->getRegistrationDueDateString());
-
-    }
-
-    public function testGetSetRegistrationDueDateString()
-    {
-        $expected = date(OPGDateFormat::getDateFormat());
-        $this->poa->setRegistrationDueDateString($expected);
-        $this->assertEquals($expected, $this->poa->getRegistrationDueDateString());
-    }
-
     public function testGetSetPaymentExemption()
     {
         $this->assertEquals(Lpa::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentExemption());
