@@ -21,7 +21,7 @@ trait InputFilter
     protected $inputFilter;
 
     /**
-     * @Type('array')
+     * @Type("array")
      * @var array
      * @ReadOnly
      */

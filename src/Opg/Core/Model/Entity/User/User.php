@@ -173,6 +173,7 @@ class User implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "boolean", options={"default":0})
      * @var boolean
+     * @Type("boolean")
      */
     protected $suspended;
 
