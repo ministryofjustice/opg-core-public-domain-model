@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -106,6 +107,7 @@ class User implements EntityInterface, \IteratorAggregate
     protected $token;
 
     /**
+     * @Type("boolean")
      * @var boolean
      * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getLocked", setter="setLocked")
