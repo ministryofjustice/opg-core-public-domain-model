@@ -38,14 +38,14 @@ class CaseSubtype extends Callback
                     case CaseTypeValidator::CASE_TYPE_LPA:
                         $validSubtypes = [
                             self::CASE_SUB_TYPE_HW,
-                            self::CASE_SUB_TYPE_PW
+                            self::CASE_SUB_TYPE_PF
                         ];
                         break;
 
                     case CaseTypeValidator::CASE_TYPE_EPA:
                         $validSubtypes = [
                             self::CASE_SUB_TYPE_HW,
-                            self::CASE_SUB_TYPE_PW
+                            self::CASE_SUB_TYPE_PF
                         ];
                         break;
 
