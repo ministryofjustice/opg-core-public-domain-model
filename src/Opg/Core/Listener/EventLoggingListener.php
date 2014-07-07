@@ -243,8 +243,7 @@ class EventLoggingListener implements EventSubscriber
         } elseif ($entity instanceof Warning) {
             try {
                 return $this->getAssociatedPerson($em, $entity, 'warnings');
-            }
-            catch(\LogicException $e) {
+            } catch(\Exception $e) {
                 return null;
             }
         }
