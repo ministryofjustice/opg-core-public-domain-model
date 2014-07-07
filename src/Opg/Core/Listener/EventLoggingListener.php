@@ -23,6 +23,7 @@ use Opg\Core\Model\Entity\Correspondence\Correspondence;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
+use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
  * Logs events for entities which implement EventDataProvider.
@@ -239,7 +240,10 @@ class EventLoggingListener implements EventSubscriber
             return $this->getAssociatedPerson($em, $entity, 'phoneNumbers');
         } elseif ($entity instanceof Correspondence) {
             return $this->findOwningEntityForCorrespondence($em, $entity);
+        } elseif ($entity instanceof Warning) {
+            return $this->getAssociatedPerson($em, $entity, 'warnings');
         }
+
 
         return null;
     }
