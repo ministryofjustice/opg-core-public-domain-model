@@ -3,6 +3,8 @@ namespace Opg\Common\Model\Entity\Traits;
 
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Exception\UnusedException;
+use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Class InputFilter
@@ -19,7 +21,9 @@ trait InputFilter
     protected $inputFilter;
 
     /**
+     * @Type("array")
      * @var array
+     * @ReadOnly
      */
     protected $errorMessages = array();
 
