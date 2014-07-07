@@ -53,6 +53,12 @@ class Document implements EntityInterface, \IteratorAggregate
     protected $subtype;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $sourceDocumentType;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
@@ -296,5 +302,24 @@ class Document implements EntityInterface, \IteratorAggregate
         }
 
         return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceDocumentType()
+    {
+        return $this->sourceDocumentType;
+    }
+
+    /**
+     * @param $sourceDocumentType
+     * @return $this
+     */
+    public function setSourceDocumentType($sourceDocumentType)
+    {
+        $this->sourceDocumentType = (string)$sourceDocumentType;
+
+        return $this;
     }
 }

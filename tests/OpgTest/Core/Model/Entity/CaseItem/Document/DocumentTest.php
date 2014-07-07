@@ -127,4 +127,15 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedDate, $this->document->getCreatedDate());
         $this->assertEquals($expected, $this->document->getCreatedDateString());
     }
+
+    public function testGetSetSourceDocumentType()
+    {
+        $expected = 'napkin';
+
+        $this->assertEmpty($this->document->getSourceDocumentType());
+
+        $this->assertTrue($this->document->setSourceDocumentType($expected) instanceof Document);
+
+        $this->assertEquals($expected, $this->document->getSourceDocumentType());
+    }
 }
