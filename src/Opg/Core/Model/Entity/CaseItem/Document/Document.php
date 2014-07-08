@@ -19,7 +19,7 @@ use JMS\Serializer\Annotation\Type;
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
- * @ORM\EntityListeners({"BusinessRule\Listener\Document"})
+ * @ORM\EntityListeners({"BusinessRule\Specification\Document\Listener"})
  *
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document
