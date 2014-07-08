@@ -138,4 +138,14 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->document->getSourceDocumentType());
     }
+
+    public function testGetSetCaseId()
+    {
+        $expected = 111;
+
+        $this->assertNull($this->document->getCaseId());
+        $this->assertTrue($this->document->setCaseId($expected) instanceof Document);
+
+        $this->assertEquals($expected, $this->document->getCaseId());
+    }
 }
