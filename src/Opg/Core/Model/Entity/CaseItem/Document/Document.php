@@ -83,6 +83,15 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     protected $createdDate;
 
+    /**
+     * Non persisted entity
+     * @var int
+     * @Type("integer")
+     * @ReadOnly
+     * @Exclude
+     */
+    protected $caseId;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -322,5 +331,24 @@ class Document implements EntityInterface, \IteratorAggregate
         $this->sourceDocumentType = (string)$sourceDocumentType;
 
         return $this;
+    }
+
+    /**
+     * @param $caseId
+     * @return $this
+     */
+    public function setCaseId($caseId)
+    {
+        $this->caseId = (int) $caseId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCaseId()
+    {
+        return $this->caseId;
     }
 }
