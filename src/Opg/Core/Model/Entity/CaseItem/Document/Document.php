@@ -19,6 +19,7 @@ use JMS\Serializer\Annotation\Type;
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
+ * @ORM\EntityListeners({"BusinessRule\Specification\Document\Listener"})
  *
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document
@@ -53,6 +54,12 @@ class Document implements EntityInterface, \IteratorAggregate
     protected $subtype;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $sourceDocumentType;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
@@ -75,6 +82,15 @@ class Document implements EntityInterface, \IteratorAggregate
      * @Accessor(getter="getCreatedDateString")
      */
     protected $createdDate;
+
+    /**
+     * Non persisted entity
+     * @var int
+     * @Type("integer")
+     * @ReadOnly
+     * @Exclude
+     */
+    protected $caseId;
 
     public function __construct()
     {
@@ -296,5 +312,43 @@ class Document implements EntityInterface, \IteratorAggregate
         }
 
         return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceDocumentType()
+    {
+        return $this->sourceDocumentType;
+    }
+
+    /**
+     * @param $sourceDocumentType
+     * @return $this
+     */
+    public function setSourceDocumentType($sourceDocumentType)
+    {
+        $this->sourceDocumentType = (string)$sourceDocumentType;
+
+        return $this;
+    }
+
+    /**
+     * @param $caseId
+     * @return $this
+     */
+    public function setCaseId($caseId)
+    {
+        $this->caseId = (int) $caseId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCaseId()
+    {
+        return $this->caseId;
     }
 }
