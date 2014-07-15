@@ -46,4 +46,15 @@ class UniqueIdentifierTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->uid->setUidString($expectedString)->getUid());
     }
+
+    public function testGetSetFormattedUIDDoesNotFormat()
+    {
+        $expected = 12344567;
+
+        $this->assertEmpty($this->uid->getUid());
+
+        $this->assertEquals($expected, $this->uid->setUid($expected)->getUid());
+
+        $this->assertEquals($expected, $this->uid->getUidString());
+    }
 }
