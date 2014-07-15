@@ -2,6 +2,7 @@
 namespace Opg\Common\Model\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * Class UniqueIdentifier
@@ -15,8 +16,9 @@ trait UniqueIdentifier
      *
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
-     * @Type("integer")
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getUidString", setter="setUidString")
      */
     protected $uId;
 
@@ -38,5 +40,25 @@ trait UniqueIdentifier
     public function getUid()
     {
         return $this->uId;
+    }
+
+    /**
+     * The front end user would prefer this as a formatted string
+     * @return string
+     */
+    public function getUidString()
+    {
+        return preg_replace('/^(\d{4})(\d{4})(\d{4})$/',"$1-$2-$3", $this->uId);
+    }
+
+    /**
+     * @param string $uidString
+     * @return $this
+     */
+    public function setUidString($uidString)
+    {
+        $this->uId =  preg_replace("/[^\d]/", "", $uidString);
+
+        return $this;
     }
 }
