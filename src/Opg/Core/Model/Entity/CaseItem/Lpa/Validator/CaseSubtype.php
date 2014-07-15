@@ -15,7 +15,7 @@ use Zend\Validator\Callback;
 class CaseSubtype extends Callback
 {
     const CASE_SUB_TYPE_HW = 'hw';
-    const CASE_SUB_TYPE_PF = 'pf';
+    const CASE_SUB_TYPE_PFA = 'pfa';
 
     public function __construct()
     {
@@ -38,14 +38,14 @@ class CaseSubtype extends Callback
                     case CaseTypeValidator::CASE_TYPE_LPA:
                         $validSubtypes = [
                             self::CASE_SUB_TYPE_HW,
-                            self::CASE_SUB_TYPE_PF
+                            self::CASE_SUB_TYPE_PFA
                         ];
                         break;
 
                     case CaseTypeValidator::CASE_TYPE_EPA:
                         $validSubtypes = [
                             self::CASE_SUB_TYPE_HW,
-                            self::CASE_SUB_TYPE_PF
+                            self::CASE_SUB_TYPE_PFA
                         ];
                         break;
 
@@ -54,7 +54,7 @@ class CaseSubtype extends Callback
                         $validSubtypes = [];
                 }
 
-                return in_array($value, $validSubtypes);
+                return in_array(strtolower($value), $validSubtypes);
             }
         );
     }
