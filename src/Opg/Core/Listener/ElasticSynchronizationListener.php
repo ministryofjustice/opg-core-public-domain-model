@@ -86,7 +86,7 @@ class ElasticSynchronizationListener implements EventSubscriber
         $changedCases = $this->collectChangedCases($event);
         foreach ($changedCases as $case) {
             $params = array(
-                'type'  => 'case',
+                'type'  => $case->getCaseSubtype(),
                 'index' => $this->caseIndex,
                 'id'    => $case->getUidString()
             );
