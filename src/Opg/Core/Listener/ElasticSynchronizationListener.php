@@ -88,7 +88,7 @@ class ElasticSynchronizationListener implements EventSubscriber
             $params = array(
                 'type'  => $case->getCaseSubtype(),
                 'index' => $this->caseIndex,
-                'id'    => $case->getUid()
+                'id'    => $case->getUidString()
             );
 
             try {
