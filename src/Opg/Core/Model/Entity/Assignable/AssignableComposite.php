@@ -9,6 +9,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Core\Model\Entity\Deputyship\Deputyship as DeputyshipEntity;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * @ORM\MappedSuperclass
@@ -22,6 +26,7 @@ abstract class AssignableComposite implements IsAssignee
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getId", setter="setId")
      */
     protected $id;
 
@@ -68,6 +73,7 @@ abstract class AssignableComposite implements IsAssignee
      * @ORM\Column(type = "string")
      * @var string
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getName", setter="setName")
      */
     protected $name;
 
