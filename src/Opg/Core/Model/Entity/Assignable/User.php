@@ -37,9 +37,11 @@ class User extends AssignableComposite implements EntityInterface, \IteratorAggr
     protected $email;
 
     /**
-     * @ORM\Column(type = "string")
+     * Non persisted entity, is an alias of $name
      * @var string
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getFirstName", setter="setFirstname")
      */
     protected $firstname;
 
@@ -176,7 +178,7 @@ class User extends AssignableComposite implements EntityInterface, \IteratorAggr
      */
     public function getFirstname()
     {
-        return $this->firstname;
+        return $this->getName();
     }
 
     /**
@@ -187,8 +189,7 @@ class User extends AssignableComposite implements EntityInterface, \IteratorAggr
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-
-        return $this;
+        return $this->setName($firstname);
     }
 
     /**

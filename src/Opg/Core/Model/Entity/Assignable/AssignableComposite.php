@@ -16,7 +16,7 @@ use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEnti
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
  */
-abstract class AssignableComposite
+abstract class AssignableComposite implements IsAssignee
 {
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -63,6 +63,13 @@ abstract class AssignableComposite
      * @ReadOnly
      */
     protected $tasks;
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $name;
 
     public function __construct()
     {
@@ -243,4 +250,22 @@ abstract class AssignableComposite
         return $this->id;
     }
 
+    /**
+     * @param string $name
+     * @return $this|IsAssignee
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }
