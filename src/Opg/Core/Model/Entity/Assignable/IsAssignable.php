@@ -16,13 +16,13 @@ interface IsAssignable
     public function isAssigned();
 
     /**
-     * @return
+     * @return AssignableComposite
      */
     public function getAssignee();
 
     /**
-     * @param IsAssignable $assignee
+     * @param AssignableComposite $assignee
      * @return IsAssignable
      */
-    public function setAssignee(IsAssignable $assignee);
+    public function assign(AssignableComposite $assignee);
 }
