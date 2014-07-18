@@ -1,8 +1,13 @@
 <?php
 
-namespace Opg\Core\Model\Entity;
+namespace Opg\Core\Model\Entity\Assignable;
 
-
+/**
+ * Interface IsAssignable
+ * @package Opg\Core\Model\Entity
+ *
+ * For case/task etc
+ */
 interface IsAssignable
 {
     /**

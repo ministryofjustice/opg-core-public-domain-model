@@ -1,9 +1,9 @@
 <?php
 
-namespace OpgTest\Core\Model\Entity;
+namespace OpgTest\Core\Model\Entity\Assignable;
 
 
-use Opg\Core\Model\Entity\IsAssignable;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
 
 class IsAssignableTest extends \PHPUnit_Framework_TestCase {
 
@@ -11,7 +11,7 @@ class IsAssignableTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->interface = $this->getMock('Opg\Core\Model\Entity\IsAssignable');
+        $this->interface = $this->getMock('Opg\Core\Model\Entity\Assignable\IsAssignable');
     }
 
     public function testSetUp()
