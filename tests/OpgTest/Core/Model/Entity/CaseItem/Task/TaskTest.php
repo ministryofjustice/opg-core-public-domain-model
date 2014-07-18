@@ -3,7 +3,7 @@ namespace OpgTest\Core\Model\CaseItem\Task;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**

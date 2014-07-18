@@ -19,7 +19,7 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
@@ -141,9 +141,9 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @Serializer\MaxDepth(1)
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
+     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\User", fetch = "EAGER")
      * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
+     * @Type("Opg\Core\Model\Entity\Assignable\User")
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */

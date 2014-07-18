@@ -1,7 +1,7 @@
 <?php
 namespace Opg\Core\Listener;
 
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 
 /**
  * This interface can be implemented by services which provide the
