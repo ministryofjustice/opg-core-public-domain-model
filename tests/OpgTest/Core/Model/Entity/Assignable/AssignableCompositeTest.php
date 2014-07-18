@@ -71,8 +71,8 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
     public function testGetSetCases()
     {
 
-        unset($this->assignable->deputyships);
-        unset($this->assignable->poas);
+        unset($this->assignable->{'deputyships'});
+        unset($this->assignable->{'poas'});
 
         $lpa = new Lpa();
 
@@ -88,15 +88,15 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($cases, $this->assignable->getCases());
 
-        unset($this->assignable->deputyships);
-        unset($this->assignable->poas);
+        unset($this->assignable->{'deputyships'});
+        unset($this->assignable->{'poas'});
 
         $this->assertEmpty($this->assignable->getCases()->toArray());
     }
 
     public function testSetGetTasks()
     {
-        unset($this->assignable->tasks);
+        unset($this->assignable->{'tasks'});
         $task = new Task();
 
         $task2 = clone $task;
@@ -110,7 +110,7 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($tasks, $this->assignable->getTasks());
 
-        unset($this->assignable->tasks);
+        unset($this->assignable->{'tasks'});
         $this->assertEmpty($this->assignable->getTasks()->toArray());
     }
 }
