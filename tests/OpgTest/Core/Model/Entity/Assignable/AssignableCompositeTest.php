@@ -8,6 +8,11 @@ use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 
+
+class AssignableCompositeStub extends AssignableComposite
+{
+
+}
 /**
  * Class AssignableCompositeTest
  * @package OpgTest\Core\Model\Entity\Assignable
@@ -21,7 +26,7 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->assignable = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Assignable\AssignableComposite');
+        $this->assignable = new AssignableCompositeStub();
     }
 
     public function testGetSetId()
