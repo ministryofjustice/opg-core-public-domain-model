@@ -1,0 +1,102 @@
+<?php
+
+
+namespace Opg\Core\Model\Entity\Assignable;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name = "assignable_groups")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ * "team" = "Opg\Core\Model\Entity\Assignable\Team",
+ * })
+ *
+ * Class Group
+ * @package Opg\Core\Model\Entity\Assignable
+ */
+class Group extends AssignableComposite implements IsGroupable
+{
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $groupName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "AssignableComposite", inversedBy = "children")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity = "AssignableComposite", mappedBy = "parent")
+     */
+    private $children;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
+    /**
+     * @param Group $parent
+     * @return IsGroupable
+     * @throws \LogicException
+     */
+    public function setParent(Group $parent)
+    {
+        if (null !== $this->parent) {
+            throw new \LogicException('Group already has a parent');
+        }
+
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return AssignableComposite
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Group $child
+     * @return IsGroupable
+     */
+    public function addChild(Group $child)
+    {
+        if (false === $this->children->contains($child)) {
+            $this->children->add($child);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param ArrayCollection $children
+     * @return IsGroupable
+     */
+    public function setChildren(ArrayCollection $children)
+    {
+        foreach ($children->toArray() as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
+    }
+}

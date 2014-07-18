@@ -22,7 +22,7 @@ use JMS\Serializer\Annotation\Type;
  * @ORM\Table(name = "users")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class User extends AssignableComposite implements EntityInterface, \IteratorAggregate
+class User extends AssignableComposite implements EntityInterface, \IteratorAggregate, IsAssignee
 {
     use ToArray;
     use IteratorAggregate;
