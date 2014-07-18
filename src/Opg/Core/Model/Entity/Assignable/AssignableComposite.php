@@ -77,6 +77,12 @@ abstract class AssignableComposite implements IsAssignee
      */
     protected $name;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Team", inversedBy="members")
+     * @ORM\JoinTable(name="assignee_teams")
+     */
+    protected $teams;
+
     public function __construct()
     {
         $this->deputyships      = new ArrayCollection();

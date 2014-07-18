@@ -31,16 +31,17 @@ class Group extends AssignableComposite implements IsGroupable
     /**
      * @ORM\ManyToOne(targetEntity = "AssignableComposite", inversedBy = "children")
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @ORM\OneToMany(targetEntity = "AssignableComposite", mappedBy = "parent")
      */
-    private $children;
+    protected $children;
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        parent::__construct();
     }
 
     /**
@@ -73,6 +74,10 @@ class Group extends AssignableComposite implements IsGroupable
      */
     public function addChild(Group $child)
     {
+        if (null === $this->children) {
+            $this->children = new ArrayCollection();
+        }
+
         if (false === $this->children->contains($child)) {
             $this->children->add($child);
         }

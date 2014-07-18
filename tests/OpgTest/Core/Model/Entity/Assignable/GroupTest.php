@@ -6,6 +6,20 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\Group;
 
+class GroupStub extends Group
+{
+    public function __unset($key)
+    {
+        switch($key)
+        {
+            case 'children' :
+                $this->children = null;
+                break;
+        }
+    }
+}
+
+
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -15,7 +29,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->group = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Assignable\Group');
+        $this->group = new GroupStub();
     }
 
     public function testSetUp()
@@ -52,6 +66,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->group->setId(1);
 
         $this->assertEmpty($this->group->getChildren()->toArray());
+        unset($this->group->{'children'});
         $this->assertTrue($this->group->setChildren($collection) instanceof Group);
         $this->assertEquals($collection, $this->group->getChildren());
 
