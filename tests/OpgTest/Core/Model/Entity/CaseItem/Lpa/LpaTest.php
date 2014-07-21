@@ -427,7 +427,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'caseSubtype'                               => null,
                 'dueDate'                                   => null,
                 'status'                                    => null,
-                'assignedUser'                              => null,
+                'assignee'                                  => null,
                 'tasks'                                     => array(),
                 'notes'                                     => array(),
                 'documents'                                 => array(),

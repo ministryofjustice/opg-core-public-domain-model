@@ -14,6 +14,8 @@ use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
@@ -34,7 +36,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasCorrespondenceInterface, HasRagRating
+    HasNotesInterface, HasCorrespondenceInterface, HasRagRating, IsAssignable
 {
     use ToArray;
     use HasNotes;
@@ -141,13 +143,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @Serializer\MaxDepth(1)
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
-     * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch = "EAGER")
+     * @var AssignableComposite
+     * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
      */
-    protected $assignedUser;
+    protected $assignee;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
@@ -324,14 +326,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignedUser()
-    {
-        return $this->assignedUser;
-    }
-
-    /**
      * @param string $status
      * @return CaseItem
      */
@@ -343,11 +337,30 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param User $assignedUser
+     * @return bool
      */
-    public function setAssignedUser(User $assignedUser = null)
+    public function isAssigned()
     {
-        $this->assignedUser = $assignedUser;
+        return (null !== $this->assignee);
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\Assignable\AssignableComposite
+     */
+    public function getAssignee()
+    {
+        return $this->assignee;
+    }
+
+    /**
+     * @param AssignableComposite $assignee
+     * @return $this|IsAssignable
+     */
+    public function assign(AssignableComposite $assignee)
+    {
+        $this->assignee = $assignee;
+
+        return $this;
     }
 
     /**

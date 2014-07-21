@@ -48,19 +48,9 @@ interface CaseItemInterface
     public function getStatus();
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignedUser();
-
-    /**
      * @param string $status
      */
     public function setStatus($status);
-
-    /**
-     * @param User $assignedUser
-     */
-    public function setAssignedUser(User $assignedUser);
 
     /**
      *

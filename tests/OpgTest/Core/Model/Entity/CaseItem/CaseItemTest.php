@@ -89,7 +89,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $caseItemMock->getDueDateString());
     }
 
-    public function testSetGetAssignedUser()
+    public function testSetGetAssignee()
     {
         $caseItemMock = $this->getMockedClass();
         $name         = 'Test';
@@ -98,9 +98,9 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setFirstname($name)->setSurname($secondName);
 
-        $caseItemMock->setAssignedUser($user);
+        $caseItemMock->assign($user);
 
-        $this->assertEquals($name, $caseItemMock->getAssignedUser()->getFirstName());
+        $this->assertEquals($name, $caseItemMock->getAssignee()->getFirstName());
     }
 
     public function testSetGetNotes()
