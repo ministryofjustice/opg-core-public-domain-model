@@ -23,7 +23,9 @@ use JMS\Serializer\Annotation\Accessor;
 abstract class AssignableComposite implements IsAssignee
 {
     /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @ORM\Column(type = "integer", options = {"unsigned": true})
+     * @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Id
      * @var integer
      * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getId", setter="setId")
@@ -32,9 +34,9 @@ abstract class AssignableComposite implements IsAssignee
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
-     * @ORM\JoinTable(name="composite_powerofattorneys",
+     * @ORM\JoinTable(name="assigned_powerofattorneys",
      *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="poa_id", referencedColumnName="id")}
      * )
      *
      * @var ArrayCollection
@@ -45,7 +47,7 @@ abstract class AssignableComposite implements IsAssignee
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
-     * @ORM\JoinTable(name="composite_deputyships",
+     * @ORM\JoinTable(name="assigned_deputyships",
      *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
      * )
@@ -57,10 +59,10 @@ abstract class AssignableComposite implements IsAssignee
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\CaseItem\Task\Task")
-     * @ORM\JoinTable(name="composite_tasks",
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
+     * @ORM\JoinTable(name="assigned_tasks",
      *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")}
      * )
      *
      * @var ArrayCollection
@@ -78,7 +80,7 @@ abstract class AssignableComposite implements IsAssignee
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="members")
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
      */
     protected $teams;

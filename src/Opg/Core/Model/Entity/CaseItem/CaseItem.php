@@ -57,7 +57,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
 
     /**
-     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Column(type = "integer")
+     * @ORM\GeneratedValue(strategy = "AUTO")
      * @ORM\Id
      * @Type("integer")
      * @var int autoincrementID

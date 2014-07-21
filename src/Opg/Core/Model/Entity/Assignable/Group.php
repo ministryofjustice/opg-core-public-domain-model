@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Group
  * @package Opg\Core\Model\Entity\Assignable
  */
-class Group extends AssignableComposite implements IsGroupable
+abstract class Group extends AssignableComposite implements IsGroupable
 {
     /**
      * @ORM\Column(type="string")
@@ -29,12 +29,12 @@ class Group extends AssignableComposite implements IsGroupable
     protected $groupName;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "AssignableComposite", inversedBy = "children")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy = "children")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity = "AssignableComposite", mappedBy = "parent")
+     * @ORM\OneToMany(targetEntity = "Group", mappedBy = "parent")
      */
     protected $children;
 

@@ -9,8 +9,8 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Traversable;
-use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity
