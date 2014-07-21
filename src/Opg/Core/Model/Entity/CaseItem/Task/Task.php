@@ -4,6 +4,8 @@ namespace Opg\Core\Model\Entity\CaseItem\Task;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\User\User;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
@@ -29,7 +31,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @author  Chris Moreton
  *
  */
-class Task implements EntityInterface, \IteratorAggregate, HasRagRating
+class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable
 {
 
     const STATUS_COMPLETED = 'completed';
@@ -60,11 +62,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * @Serializer\MaxDepth(2)
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch="EAGER")
      * @var User
      * @Groups({"api-poa-list","api-task-list"})
      */
-    protected $assignedUser;
+    protected $assignee;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -306,9 +308,9 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     /**
      * @return User $assignedUser
      */
-    public function getAssignedUser()
+    public function getAssignee()
     {
-        return $this->assignedUser;
+        return $this->assignee;
     }
 
     /**
@@ -332,15 +334,22 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
-     * @param User $assignedUser
-     *
-     * @return Task
+     * @param AssignableComposite $assignee
+     * @return IsAssignable
      */
-    public function setAssignedUser(User $assignedUser = null)
+    public function assign(AssignableComposite $assignee)
     {
-        $this->assignedUser = $assignedUser;
+        $this->assignee = $assignee;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAssigned()
+    {
+        return (null !== $this->assignee);
     }
 
     /**

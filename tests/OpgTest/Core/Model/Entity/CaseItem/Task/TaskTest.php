@@ -311,11 +311,11 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setSurname($name);
 
-        $this->task->setAssignedUser($user);
+        $this->task->assign($user);
 
         $this->assertEquals(
             $name,
-            $this->task->getAssignedUser()->getSurname()
+            $this->task->getAssignee()->getSurname()
         );
     }
 
