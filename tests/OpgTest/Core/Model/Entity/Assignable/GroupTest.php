@@ -80,5 +80,8 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->group->setChildren($collection2) instanceof Group);
         $this->assertEquals($collection, $this->group->getChildren());
 
+        $this->assertTrue($this->group->addChildren($collection2) instanceof Group);
+        $this->assertEquals($collection, $this->group->getChildren());
+
     }
 }

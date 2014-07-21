@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\Assignable;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\EntityInterface;
@@ -47,7 +45,7 @@ class Team extends Group implements EntityInterface, \IteratorAggregate, IsAssig
      */
     public function getIterator()
     {
-        // TODO: Implement getIterator() method.
+        return new \RecursiveArrayIterator($this->toArray());
     }
 
     /**
@@ -57,9 +55,13 @@ class Team extends Group implements EntityInterface, \IteratorAggregate, IsAssig
      */
     public function getInputFilter()
     {
-        // TODO: Implement getInputFilter() method.
+        return new \Zend\InputFilter\InputFilter();
     }
 
+    /**
+     * @param AssignableComposite $member
+     * @return $this
+     */
     public function addMember(AssignableComposite $member)
     {
         if (null === $this->members) {
@@ -71,5 +73,49 @@ class Team extends Group implements EntityInterface, \IteratorAggregate, IsAssig
         }
 
         return $this;
+    }
+
+    /**
+     * @param ArrayCollection $members
+     * @return $this
+     */
+    public function addMembers(ArrayCollection $members)
+    {
+
+        foreach ($members->toArray() as $member) {
+            $this->addMember($member);
+        }
+
+        return $this;
+     }
+
+    /**
+     * @param ArrayCollection $members
+     * @return $this
+     */
+    public function setMembers(ArrayCollection $members)
+    {
+
+        if ($this->members instanceof ArrayCollection) {
+            $this->members->clear();
+        }
+
+        foreach ($members->toArray() as $member) {
+            $this->addMember($member);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMembers()
+    {
+        if (null === $this->members) {
+            $this->members = new ArrayCollection();
+        }
+
+        return $this->members;
     }
 }

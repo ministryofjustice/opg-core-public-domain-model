@@ -88,6 +88,7 @@ abstract class AssignableComposite implements IsAssignee
         $this->deputyships      = new ArrayCollection();
         $this->powerOfAttorneys = new ArrayCollection();
         $this->tasks            = new ArrayCollection();
+        $this->teams            = new ArrayCollection();
     }
 
     /**

@@ -96,8 +96,25 @@ class Group extends AssignableComposite implements IsGroupable
      * @param ArrayCollection $children
      * @return IsGroupable
      */
+    public function addChildren(ArrayCollection $children)
+    {
+        foreach ($children->toArray() as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $children
+     * @return IsGroupable
+     */
     public function setChildren(ArrayCollection $children)
     {
+        if ($this->children instanceof ArrayCollection) {
+            $this->children->clear();
+        }
+
         foreach ($children->toArray() as $child) {
             $this->addChild($child);
         }
