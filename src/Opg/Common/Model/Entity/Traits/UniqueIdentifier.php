@@ -23,6 +23,13 @@ trait UniqueIdentifier
     protected $uId;
 
     /**
+     * @var
+     * @readOnly
+     * @Accessor(getter="getUid")
+     */
+    protected $normalizedUid;
+
+    /**
      * (non-PHPdoc)
      * @see \Opg\Common\Model\Entity\UniqueIdentifierInterface::setUid()
      */
