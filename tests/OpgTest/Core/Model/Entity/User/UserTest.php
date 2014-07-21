@@ -1,8 +1,8 @@
 <?php
-namespace OpgTest\Core\Model\Entity\Assignable;
+namespace OpgTest\Core\Model\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Core\Model\Entity\User\User;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 
 /**

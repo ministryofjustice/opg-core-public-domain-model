@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\CaseItem\Task;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Core\Model\Entity\User\User;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
@@ -60,7 +60,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * @Serializer\MaxDepth(2)
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User
      * @Groups({"api-poa-list","api-task-list"})
      */

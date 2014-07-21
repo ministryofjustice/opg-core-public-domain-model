@@ -4,7 +4,7 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
-use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Core\Model\Entity\User\User;
 
 class AssigneeStub implements IsAssignable
 {

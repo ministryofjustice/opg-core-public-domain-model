@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\Entity\Event;
 
 use Opg\Core\Model\Entity\Event;
-use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**

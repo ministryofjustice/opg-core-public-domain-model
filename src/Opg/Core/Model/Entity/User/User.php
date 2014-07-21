@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\Assignable;
+namespace Opg\Core\Model\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +16,8 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\IsAssignee;
 
 /**
  * @ORM\Entity

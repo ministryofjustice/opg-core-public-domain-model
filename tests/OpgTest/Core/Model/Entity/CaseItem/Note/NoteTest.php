@@ -7,7 +7,7 @@ use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
-use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Core\Model\Entity\User\User;
 use Zend\InputFilter\InputFilterAwareInterface;
 
 /**

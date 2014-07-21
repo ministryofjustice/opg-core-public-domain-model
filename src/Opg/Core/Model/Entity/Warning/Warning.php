@@ -9,7 +9,7 @@ use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Assignable\User as UserEntity;
+use Opg\Core\Model\Entity\User\User as UserEntity;
 use Opg\Core\Model\Entity\Person\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
@@ -70,14 +70,14 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $dateClosed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
      */
     protected $addedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
      */
@@ -97,7 +97,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\Assignable\User $addedBy
+     * @param \Opg\Core\Model\Entity\User\User $addedBy
      *
      * @return Warning
      */
@@ -109,7 +109,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\Assignable\User
+     * @return \Opg\Core\Model\Entity\User\User
      */
     public function getAddedBy()
     {
@@ -117,7 +117,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\Assignable\User $closedBy
+     * @param \Opg\Core\Model\Entity\User\User $closedBy
      *
      * @return Warning
      */
@@ -129,7 +129,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\Assignable\User
+     * @return \Opg\Core\Model\Entity\User\User
      */
     public function getClosedBy()
     {
