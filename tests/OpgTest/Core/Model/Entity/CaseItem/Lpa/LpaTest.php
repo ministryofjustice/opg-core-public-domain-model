@@ -479,6 +479,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'trustCorporationSignedAs'                  => null,
                 'noNoticeGiven'                             => false,
                 'businessRules'                             => array(),
+                'normalizedUid'                             => null
             ),
             $lpa->toArrayRecursive()
         );
