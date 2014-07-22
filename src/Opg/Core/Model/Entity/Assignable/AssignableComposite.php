@@ -3,6 +3,7 @@
 
 namespace Opg\Core\Model\Entity\Assignable;
 
+use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem  as CaseEntity;
 use Opg\Core\Model\Entity\CaseItem\Task\Task as TaskEntity;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,8 +32,10 @@ use JMS\Serializer\Annotation\Accessor;
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
  */
-abstract class AssignableComposite implements IsAssignee
+abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 {
+    use ToArray;
+
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true})
      * @ORM\GeneratedValue(strategy = "AUTO")
@@ -298,6 +301,9 @@ abstract class AssignableComposite implements IsAssignee
         return $this->name;
     }
 
+    /**
+     * @return \RecursiveArrayIterator
+     */
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());

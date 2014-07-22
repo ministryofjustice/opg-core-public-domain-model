@@ -19,10 +19,9 @@ use JMS\Serializer\Annotation\Exclude;
  * @package Opg\Core\Model\Entity\Assignable
  */
 
-class Team extends Group implements EntityInterface, \IteratorAggregate, IsAssignee
+class Team extends Group implements EntityInterface, IsAssignee
 {
     use InputFilter;
-    use ToArray;
     use Assignee;
 
     /**
@@ -34,18 +33,6 @@ class Team extends Group implements EntityInterface, \IteratorAggregate, IsAssig
     {
         $this->members = new ArrayCollection();
         parent::__construct();
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Retrieve an external iterator
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
-     */
-    public function getIterator()
-    {
-        return new \RecursiveArrayIterator($this->toArray());
     }
 
     /**

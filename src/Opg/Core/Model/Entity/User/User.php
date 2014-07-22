@@ -1,12 +1,10 @@
 <?php
 namespace Opg\Core\Model\Entity\User;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
-use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
@@ -22,9 +20,8 @@ use Opg\Core\Model\Entity\Assignable\IsAssignee;
 /**
  * @ORM\Entity
  */
-class User extends AssignableComposite implements EntityInterface, \IteratorAggregate, IsAssignee
+class User extends AssignableComposite implements EntityInterface, IsAssignee
 {
-    use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
 
