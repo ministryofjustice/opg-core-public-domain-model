@@ -143,6 +143,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $status;
 
     /**
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch="EAGER")
      * @Serializer\MaxDepth(1)
      * @var AssignableComposite
      * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
@@ -359,6 +360,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function assign(AssignableComposite $assignee)
     {
         $this->assignee = $assignee;
+        $this->assignee->addCase($this);
 
         return $this;
     }

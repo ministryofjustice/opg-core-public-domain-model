@@ -14,7 +14,18 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 
+
 /**
+ * @ORM\Entity
+ * @ORM\Table(name = "assignees")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "assignee_user" = "Opg\Core\Model\Entity\User\User",
+ *     "assignee_team" = "Opg\Core\Model\Entity\Assignable\Team",
+ * })
  * @ORM\MappedSuperclass
  *
  * Class Composite

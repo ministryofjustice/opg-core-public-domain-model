@@ -61,6 +61,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     protected $systemType;
 
     /**
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch="EAGER")
      * @Serializer\MaxDepth(2)
      * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
      * @var User
@@ -340,6 +341,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     public function assign(AssignableComposite $assignee)
     {
         $this->assignee = $assignee;
+        $this->assignee->addTask($this);
 
         return $this;
     }

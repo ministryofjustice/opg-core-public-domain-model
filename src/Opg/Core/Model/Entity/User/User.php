@@ -21,8 +21,6 @@ use Opg\Core\Model\Entity\Assignable\IsAssignee;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "users")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class User extends AssignableComposite implements EntityInterface, \IteratorAggregate, IsAssignee
 {
