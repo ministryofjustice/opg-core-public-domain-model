@@ -16,6 +16,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
@@ -838,5 +839,28 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return null;
+    }
+
+    /**
+     * Alias
+     * @param AssignableComposite $user
+     * @return $this|IsAssignable
+     */
+    public function setAssignedUser(AssignableComposite $user = null)
+    {
+        if (null === $user) {
+            $user = new NullEntity();
+        }
+
+        return $this->assign($user);
+    }
+
+    /**
+     * Alias
+     * @return AssignableComposite
+     */
+    public function getAssignedUser()
+    {
+        return $this->getAssignee();
     }
 }

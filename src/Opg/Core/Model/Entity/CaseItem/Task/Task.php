@@ -6,6 +6,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\User\User;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
@@ -653,4 +654,26 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
         return '';
     }
 
+    /**
+     * Alias
+     * @param AssignableComposite $user
+     * @return $this|IsAssignable
+     */
+    public function setAssignedUser(AssignableComposite $user = null)
+    {
+        if (null === $user) {
+            $user = new NullEntity();
+        }
+
+        return $this->assign($user);
+    }
+
+    /**
+     * Alias
+     * @return AssignableComposite
+     */
+    public function getAssignedUser()
+    {
+        return $this->getAssignee();
+    }
 }
