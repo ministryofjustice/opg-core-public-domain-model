@@ -8,14 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "assignable_groups")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({
- * "team" = "Opg\Core\Model\Entity\Assignable\Team",
- * })
  *
  * Class Group
  * @package Opg\Core\Model\Entity\Assignable
