@@ -34,9 +34,10 @@ abstract class AssignableComposite implements IsAssignee
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
-     * @ORM\JoinTable(name="assigned_powerofattorneys",
-     *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="poa_id", referencedColumnName="id")}
+     * @ORM\JoinTable(
+     *      name="assigned_powerofattorneys",
+     *      joinColumns={@ORM\JoinColumn(name="assigned_poa_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="poa_id", referencedColumnName="id", unique=true)}
      * )
      *
      * @var ArrayCollection
@@ -47,9 +48,10 @@ abstract class AssignableComposite implements IsAssignee
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
-     * @ORM\JoinTable(name="assigned_deputyships",
-     *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
+     * @ORM\JoinTable(
+     *      name="assigned_deputyships",
+     *      joinColumns={@ORM\JoinColumn(name="assigned_dep_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id", unique=true)}
      * )
      *
      * @var ArrayCollection
@@ -60,9 +62,10 @@ abstract class AssignableComposite implements IsAssignee
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
-     * @ORM\JoinTable(name="assigned_tasks",
-     *     joinColumns={@ORM\JoinColumn(name="assigned_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")}
+     * @ORM\JoinTable(
+     *      name="assigned_tasks",
+     *      joinColumns={@ORM\JoinColumn(name="assigned_task_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id", unique=true)}
      * )
      *
      * @var ArrayCollection

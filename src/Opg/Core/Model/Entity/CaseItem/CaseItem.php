@@ -144,7 +144,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @Serializer\MaxDepth(1)
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch = "EAGER")
      * @var AssignableComposite
      * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
      * @ReadOnly

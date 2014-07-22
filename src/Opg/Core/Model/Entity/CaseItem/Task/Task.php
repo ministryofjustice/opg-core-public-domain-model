@@ -62,7 +62,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
 
     /**
      * @Serializer\MaxDepth(2)
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch="EAGER")
+     * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
      * @var User
      * @Groups({"api-poa-list","api-task-list"})
      */
