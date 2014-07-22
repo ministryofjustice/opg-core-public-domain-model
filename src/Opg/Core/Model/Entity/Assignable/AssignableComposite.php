@@ -27,7 +27,6 @@ use JMS\Serializer\Annotation\Accessor;
  *     "assignee_user" = "Opg\Core\Model\Entity\User\User",
  *     "assignee_team" = "Opg\Core\Model\Entity\Assignable\Team",
  * })
- * @ORM\MappedSuperclass
  *
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
