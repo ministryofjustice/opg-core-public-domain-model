@@ -297,4 +297,10 @@ abstract class AssignableComposite implements IsAssignee
     {
         return $this->name;
     }
+
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
+    }
+
 }
