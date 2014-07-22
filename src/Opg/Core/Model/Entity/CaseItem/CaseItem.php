@@ -360,7 +360,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function assign(AssignableComposite $assignee)
     {
         $this->assignee = $assignee;
-        $this->assignee->addCase($this);
+//        $this->assignee->addCase($this);
 
         return $this;
     }

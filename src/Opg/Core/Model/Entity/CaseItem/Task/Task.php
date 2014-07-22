@@ -341,7 +341,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     public function assign(AssignableComposite $assignee)
     {
         $this->assignee = $assignee;
-        $this->assignee->addTask($this);
+//        $this->assignee->addTask($this);
 
         return $this;
     }
