@@ -26,6 +26,11 @@ class AssignableCompositeStub extends AssignableComposite
                 break;
         }
     }
+
+    public function getDisplayName()
+    {
+        return $this->getName();
+    }
 }
 /**
  * Class AssignableCompositeTest
@@ -112,5 +117,14 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
         unset($this->assignable->{'tasks'});
         $this->assertEmpty($this->assignable->getTasks()->toArray());
+    }
+
+    public function testGetSetDisplayName()
+    {
+        $expected = "Test Name";
+
+        $this->assertTrue($this->assignable->setName($expected) instanceof AssignableComposite);
+
+        $this->assertEquals($expected, $this->assignable->getDisplayName());
     }
 }

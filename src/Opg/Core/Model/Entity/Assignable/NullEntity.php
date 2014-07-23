@@ -83,4 +83,12 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
     {
         throw new \LogicException('Not implemented');
     }
+
+    /**
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return self::NULL_USER_NAME;
+    }
 }

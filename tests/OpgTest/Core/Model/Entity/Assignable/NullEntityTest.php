@@ -98,4 +98,8 @@ class NullEntityTest extends \PHPUnit_Framework_TestCase
         $this->nullEntity->getInputFilter();
     }
 
+    public function testGetDisplayName()
+    {
+        $this->assertEquals(NullEntity::NULL_USER_NAME, $this->nullEntity->getDisplayName());
+    }
 }
