@@ -101,6 +101,14 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      */
     protected $teams;
 
+    /**
+     * @var string
+     * @Type("string")
+     * @Accessor(getter="getDisplayName")
+     * @ReadOnly
+     */
+    protected $displayName;
+
     public function __construct()
     {
         $this->deputyships      = new ArrayCollection();
@@ -307,5 +315,10 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     {
         return new \RecursiveArrayIterator($this->toArray());
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getDisplayName();
 
 }

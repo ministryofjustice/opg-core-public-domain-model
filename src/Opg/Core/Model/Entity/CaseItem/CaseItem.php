@@ -845,6 +845,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * Alias
      * @param AssignableComposite $user
      * @return $this|IsAssignable
+     * @deprecated
      */
     public function setAssignedUser(AssignableComposite $user = null)
     {
@@ -858,6 +859,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * Alias
      * @return AssignableComposite
+     * @deprecated
      */
     public function getAssignedUser()
     {

@@ -186,6 +186,25 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     }
 
     /**
+     * @param $groupName
+     * @return $this
+     */
+    public function setGroupName($groupName)
+    {
+        $this->groupName = $groupName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroupName()
+    {
+        return $this->groupName;
+    }
+
+    /**
      * @param ArrayCollection $children
      * @return IsGroupable
      */
@@ -200,5 +219,10 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
         }
 
         return $this;
+    }
+
+    public function getDisplayName()
+    {
+        return sprintf('%s (%s)', $this->getName(), $this->getGroupName());
     }
 }

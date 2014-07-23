@@ -658,6 +658,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * Alias
      * @param AssignableComposite $user
      * @return $this|IsAssignable
+     * @deprecated
      */
     public function setAssignedUser(AssignableComposite $user = null)
     {
@@ -671,6 +672,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * Alias
      * @return AssignableComposite
+     * @deprecated
      */
     public function getAssignedUser()
     {

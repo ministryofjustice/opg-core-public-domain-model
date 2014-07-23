@@ -490,4 +490,12 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return sprintf('%s %s', $this->getFirstname(), $this->getSurname());
+    }
 }
