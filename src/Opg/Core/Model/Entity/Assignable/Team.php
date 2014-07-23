@@ -19,7 +19,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @package Opg\Core\Model\Entity\Assignable
  */
 
-class Team extends Group implements EntityInterface, IsAssignee
+class Team extends AssignableComposite implements EntityInterface, IsAssignee, IsGroupable
 {
     use InputFilter;
     use Assignee;
@@ -29,8 +29,26 @@ class Team extends Group implements EntityInterface, IsAssignee
      */
     protected $members;
 
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $groupName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy = "children")
+     */
+    protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity = "Team", mappedBy = "parent")
+     */
+    protected $children;
+
+
     public function __construct()
     {
+        $this->children = new ArrayCollection();
         $this->members = new ArrayCollection();
         parent::__construct();
     }
@@ -104,5 +122,83 @@ class Team extends Group implements EntityInterface, IsAssignee
         }
 
         return $this->members;
+    }
+
+    /**
+     * @param AssignableComposite $parent
+     * @return IsGroupable
+     * @throws \LogicException
+     */
+    public function setParent(AssignableComposite $parent)
+    {
+        if (null !== $this->parent) {
+            throw new \LogicException('Group already has a parent');
+        }
+
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return AssignableComposite
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Group $child
+     * @return IsGroupable
+     */
+    public function addChild(AssignableComposite $child)
+    {
+        if (null === $this->children) {
+            $this->children = new ArrayCollection();
+        }
+
+        if (false === $this->children->contains($child)) {
+            $this->children->add($child);
+        }
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param ArrayCollection $children
+     * @return IsGroupable
+     */
+    public function addChildren(ArrayCollection $children)
+    {
+        foreach ($children->toArray() as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $children
+     * @return IsGroupable
+     */
+    public function setChildren(ArrayCollection $children)
+    {
+        if ($this->children instanceof ArrayCollection) {
+            $this->children->clear();
+        }
+
+        foreach ($children->toArray() as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
     }
 }

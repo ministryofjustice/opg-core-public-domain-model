@@ -7,12 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * 
+ *
  * Class Group
  * @package Opg\Core\Model\Entity\Assignable
  */
-abstract class Group extends AssignableComposite implements IsGroupable
+abstract class Group /*extends AssignableComposite implements IsGroupable*/
 {
     /**
      * @ORM\Column(type="string")

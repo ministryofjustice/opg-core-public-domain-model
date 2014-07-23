@@ -11,10 +11,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface IsGroupable
 {
     /**
-     * @param Group $parent
+     * @param AssignableComposite $parent
      * @return IsGroupable
      */
-    public function setParent(Group $parent);
+    public function setParent(AssignableComposite $parent);
 
     /**
      * @return AssignableComposite
@@ -22,10 +22,10 @@ interface IsGroupable
     public function getParent();
 
     /**
-     * @param Group $child
+     * @param AssignableComposite $child
      * @return IsGroupable
      */
-    public function addChild(Group $child);
+    public function addChild(AssignableComposite $child);
 
     /**
      * @return ArrayCollection
