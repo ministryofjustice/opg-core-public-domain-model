@@ -125,11 +125,11 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     }
 
     /**
-     * @param AssignableComposite $parent
+     * @param Team $parent
      * @return IsGroupable
      * @throws \LogicException
      */
-    public function setParent(AssignableComposite $parent)
+    public function setParent(Team $parent)
     {
         if (null !== $this->parent) {
             throw new \LogicException('Group already has a parent');
@@ -149,10 +149,10 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     }
 
     /**
-     * @param Group $child
+     * @param Team $child
      * @return IsGroupable
      */
-    public function addChild(AssignableComposite $child)
+    public function addChild(Team $child)
     {
         if (null === $this->children) {
             $this->children = new ArrayCollection();
