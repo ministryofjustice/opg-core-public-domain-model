@@ -312,12 +312,14 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setSurname($name);
 
-        $this->task->setAssignedUser($user);
+        $this->assertFalse($this->task->isAssigned());
+        $this->task->assign($user);
 
         $this->assertEquals(
             $name,
-            $this->task->getAssignedUser()->getSurname()
+            $this->task->getAssignee()->getSurname()
         );
+        $this->assertTrue($this->task->isAssigned());
     }
 
     public function testUnnasignUser()

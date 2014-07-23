@@ -245,10 +245,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     {
         if (!empty($activeDate)) {
             $activeDate = OPGDateFormat::createDateTime($activeDate . ' 00:00:00');
-
-            if ($activeDate) {
-                return $this->setActiveDate($activeDate);
-            }
+            return $this->setActiveDate($activeDate);
         }
 
         return $this->setActiveDate();
@@ -626,10 +623,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     {
         if (!empty($completedDate)) {
             $completedDate = OPGDateFormat::createDateTime($completedDate);
-
-            if ($completedDate) {
-                return $this->setCompletedDate($completedDate);
-            }
+            return $this->setCompletedDate($completedDate);
         }
         return $this->setCompletedDate(new \DateTime());
     }

@@ -134,9 +134,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     {
         if (!empty($lpa002SignatureDate)) {
             $result = OPGDateFormat::createDateTime($lpa002SignatureDate);
-            if ($result) {
-                return $this->setLpa002SignatureDate($result);
-            }
+            return $this->setLpa002SignatureDate($result);
         }
 
         return $this;
@@ -183,9 +181,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     {
         if (!empty($lpaPartCSignatureDate)) {
             $result = OPGDateFormat::createDateTime($lpaPartCSignatureDate);
-            if ($result) {
-                return $this->setLpaPartCSignatureDate($result);
-            }
+            return $this->setLpaPartCSignatureDate($result);
         }
 
         return $this;

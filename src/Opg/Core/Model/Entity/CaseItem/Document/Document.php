@@ -307,11 +307,7 @@ class Document implements EntityInterface, \IteratorAggregate
      */
     public function getCreatedDateString()
     {
-        if (null !== $this->createdDate) {
-            return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
-        }
-
-        return '';
+        return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
     }
 
     /**
