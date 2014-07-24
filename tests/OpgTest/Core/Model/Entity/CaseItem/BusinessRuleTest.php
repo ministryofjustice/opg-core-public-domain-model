@@ -3,6 +3,7 @@ namespace OpgTest\Core\Model\Entity\CaseItem;
 
 use Opg\Core\Model\Entity\CaseItem\BusinessRule;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Zend\InputFilter\InputFilter;
 
 
 /**
@@ -67,5 +68,12 @@ class BusinessRuleTest extends \PHPUnit_Framework_TestCase
         $businessRuleMock->setCreatedOn($now);
 
         $this->assertEquals($now, $businessRuleMock->getCreatedOn());
+    }
+
+    public function testGetInputFilter()
+    {
+        $businessRuleMock = $this->getMockedClass();
+
+        $this->assertTrue($businessRuleMock->getInputFilter() instanceof InputFilter);
     }
 }
