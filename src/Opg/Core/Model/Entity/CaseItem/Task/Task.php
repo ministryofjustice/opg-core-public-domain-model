@@ -62,6 +62,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     protected $systemType;
 
     /**
+     * @ORM\ManyToOne(
+     *      cascade={"persist"},
+     *      targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite",
+     *      fetch = "EAGER"
+     * )
      * @Serializer\MaxDepth(2)
      * @Type("Opg\Core\Model\Entity\Assignable\AssignableComposite")
      * @var User
