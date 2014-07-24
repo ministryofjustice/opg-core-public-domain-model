@@ -9,18 +9,26 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
+ *
  * Class NullEntity
  * @package Opg\Core\Model\Entity\Assignable
  */
 class NullEntity extends AssignableComposite implements EntityInterface, IsAssignee
 {
 
-    const NULL_USER_ID = -1;
+    const NULL_USER_ID = null;
 
     const NULL_USER_NAME = 'Unassigned';
 
+    public function __construct()
+    {
+        $this->name = self::NULL_USER_NAME;
+        $this->id = self::NULL_USER_ID;
+    }
     /**
      * @param int $id
      * @return $this
