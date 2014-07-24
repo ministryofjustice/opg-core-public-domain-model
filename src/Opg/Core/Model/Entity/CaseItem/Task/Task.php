@@ -133,6 +133,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * @Type("Opg\Core\Model\Entity\CaseItem\CaseItem")
      * @var CaseItem case
      * @Groups({"api-poa-list","api-task-list"})
+     * @ReadOnly
      */
     protected $case;
 
