@@ -109,7 +109,6 @@ class Event implements EntityInterface
 
     /**
      * @param \DateTime $createdOn
-     *
      * @return Event
      */
     public function setCreatedOn(\DateTime $createdOn = null)
@@ -128,9 +127,7 @@ class Event implements EntityInterface
     {
         if (!empty($createdOn)) {
             $result = OPGDateFormat::createDateTime($createdOn);
-            if ($result) {
-                return $this->setCreatedOn($result);
-            }
+            return $this->setCreatedOn($result);
         }
 
         return $this;

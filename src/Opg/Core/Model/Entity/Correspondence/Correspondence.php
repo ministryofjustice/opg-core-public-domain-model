@@ -309,11 +309,7 @@ class Correspondence implements EntityInterface, \IteratorAggregate
     {
         if (!empty($createdDate)) {
             $createdDate = OPGDateFormat::createDateTime($createdDate);
-
-            if ($createdDate) {
-                return $this->setCreatedDate($createdDate);
-            }
-
+            return $this->setCreatedDate($createdDate);
         }
 
         return $this->setCreatedDate(new \DateTime());
@@ -332,11 +328,7 @@ class Correspondence implements EntityInterface, \IteratorAggregate
      */
     public function getCreatedDateString()
     {
-        if (!empty($this->createdDate)) {
-            return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
-        }
-
-        return '';
+        return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
     }
 
 }

@@ -427,7 +427,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'caseSubtype'                               => null,
                 'dueDate'                                   => null,
                 'status'                                    => null,
-                'assignedUser'                              => null,
+                'assignee'                                  => null,
                 'tasks'                                     => array(),
                 'notes'                                     => array(),
                 'documents'                                 => array(),
@@ -825,6 +825,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->setTrustCorporationSignedAs($expected);
 
         $this->assertEquals($expected, $this->lpa->getTrustCorporationSignedAs());
+
+        $this->lpa->setTrustCorporationSignedAs('We');
+
+        $this->assertNotEquals($expected, $this->lpa->getTrustCorporationSignedAs());
     }
 
     public function testGetRagRatingRed()

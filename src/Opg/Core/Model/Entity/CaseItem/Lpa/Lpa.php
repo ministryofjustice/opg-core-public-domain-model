@@ -184,10 +184,7 @@ class Lpa extends PowerOfAttorney
     {
         if (!empty($signatureDate)) {
             $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-
-            if ($signatureDate) {
-                $this->setLpaDonorSignatureDate($signatureDate);
-            }
+            $this->setLpaDonorSignatureDate($signatureDate);
         }
 
         return $this;
@@ -257,10 +254,7 @@ class Lpa extends PowerOfAttorney
     {
         if (!empty($signatureDate)) {
             $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-
-            if ($signatureDate) {
-                $this->setDonorDeclarationSignatureDate($signatureDate);
-            }
+            $this->setDonorDeclarationSignatureDate($signatureDate);
         }
 
         return $this;
@@ -418,11 +412,7 @@ class Lpa extends PowerOfAttorney
     {
         if (!empty($lpaCreatedDate)) {
             $lpaCreatedDate = OPGDateFormat::createDateTime($lpaCreatedDate);
-
-            if ($lpaCreatedDate) {
-                return $this->setLpaCreatedDate($lpaCreatedDate);
-            }
-
+            return $this->setLpaCreatedDate($lpaCreatedDate);
         }
 
         return $this->setLpaCreatedDate(new \DateTime());
@@ -472,10 +462,7 @@ class Lpa extends PowerOfAttorney
     {
         if (!empty($lpaReceiptDate)) {
             $lpaReceiptDate = OPGDateFormat::createDateTime($lpaReceiptDate);
-
-            if ($lpaReceiptDate) {
-                return $this->setLpaReceiptDate($lpaReceiptDate);
-            }
+            return $this->setLpaReceiptDate($lpaReceiptDate);
         }
 
         return $this->setLpaReceiptDate(new \DateTime($lpaReceiptDate));
@@ -556,10 +543,7 @@ class Lpa extends PowerOfAttorney
             $lifeSustainingTreatmentSignatureDate = OPGDateFormat::createDateTime(
                 $lifeSustainingTreatmentSignatureDate
             );
-
-            if ($lifeSustainingTreatmentSignatureDate) {
-                $this->setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate);
-            }
+            return $this->setLifeSustainingTreatmentSignatureDate($lifeSustainingTreatmentSignatureDate);
         }
 
         return $this;

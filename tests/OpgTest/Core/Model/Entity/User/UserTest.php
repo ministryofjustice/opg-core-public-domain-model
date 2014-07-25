@@ -336,4 +336,16 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->user->addRole('COP User');
         $this->assertTrue($this->user->isValid(array('roles')));
     }
+
+    public function testGetDisplayName()
+    {
+        $firstName = 'Test';
+        $surname = 'User';
+
+        $expected = sprintf('%s %s', $firstName, $surname);
+
+        $this->user->setFirstname($firstName)->setSurname($surname);
+
+        $this->assertEquals($expected, $this->user->getDisplayName());
+    }
 }

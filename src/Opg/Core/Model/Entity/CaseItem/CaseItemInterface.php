@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
-use \Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\User\User;
 
 /**
  * Interface CaseItemInterface
@@ -48,19 +48,9 @@ interface CaseItemInterface
     public function getStatus();
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignedUser();
-
-    /**
      * @param string $status
      */
     public function setStatus($status);
-
-    /**
-     * @param User $assignedUser
-     */
-    public function setAssignedUser(User $assignedUser);
 
     /**
      *

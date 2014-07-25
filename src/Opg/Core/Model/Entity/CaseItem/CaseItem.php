@@ -14,6 +14,10 @@ use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\Assignee;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
@@ -34,13 +38,14 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasCorrespondenceInterface, HasRagRating
+    HasNotesInterface, HasCorrespondenceInterface, HasRagRating, IsAssignable
 {
     use ToArray;
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
     use HasCorrespondence;
+    use Assignee;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -55,7 +60,8 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
 
     /**
-     * @ORM\Column(type = "integer") @ORM\GeneratedValue(strategy = "AUTO")
+     * @ORM\Column(type = "integer")
+     * @ORM\GeneratedValue(strategy = "AUTO")
      * @ORM\Id
      * @Type("integer")
      * @var int autoincrementID
@@ -138,16 +144,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
-
-    /**
-     * @Serializer\MaxDepth(1)
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\User\User", fetch = "EAGER")
-     * @var User
-     * @Type("Opg\Core\Model\Entity\User\User")
-     * @ReadOnly
-     * @Serializer\Groups("api-poa-list")
-     */
-    protected $assignedUser;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
@@ -324,14 +320,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignedUser()
-    {
-        return $this->assignedUser;
-    }
-
-    /**
      * @param string $status
      * @return CaseItem
      */
@@ -340,14 +328,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->status = $status;
 
         return $this;
-    }
-
-    /**
-     * @param User $assignedUser
-     */
-    public function setAssignedUser(User $assignedUser = null)
-    {
-        $this->assignedUser = $assignedUser;
     }
 
     /**
@@ -824,5 +804,30 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return null;
+    }
+
+    /**
+     * Alias
+     * @param AssignableComposite $user
+     * @return $this|IsAssignable
+     * @deprecated
+     */
+    public function setAssignedUser(AssignableComposite $user = null)
+    {
+        if (null === $user) {
+            $user = new NullEntity();
+        }
+
+        return $this->assign($user);
+    }
+
+    /**
+     * Alias
+     * @return AssignableComposite
+     * @deprecated
+     */
+    public function getAssignedUser()
+    {
+        return $this->getAssignee();
     }
 }

@@ -1,12 +1,10 @@
 <?php
 namespace Opg\Core\Model\Entity\User;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
-use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
@@ -16,24 +14,17 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\IsAssignee;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "users")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class User implements EntityInterface, \IteratorAggregate
+class User extends AssignableComposite implements EntityInterface, IsAssignee
 {
-    use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
 
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     * @Groups({"api-poa-list","api-task-list"})
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type = "string")
@@ -43,9 +34,11 @@ class User implements EntityInterface, \IteratorAggregate
     protected $email;
 
     /**
-     * @ORM\Column(type = "string")
+     * Non persisted entity, is an alias of $name
      * @var string
+     * @Type("string")
      * @Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getFirstName", setter="setFirstname")
      */
     protected $firstname;
 
@@ -55,32 +48,6 @@ class User implements EntityInterface, \IteratorAggregate
      * @Groups({"api-poa-list","api-task-list"})
      */
     protected $surname;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
-     * @ORM\JoinTable(name="user_pas",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
-     * )
-     *
-     * @var ArrayCollection
-     * @Exclude
-     * @ReadOnly
-     */
-    protected $powerOfAttorneys;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
-     * @ORM\JoinTable(name="user_deputyships",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
-     * )
-     *
-     * @var ArrayCollection
-     * @Exclude
-     * @ReadOnly
-     */
-    protected $deputyships;
 
     /**
      * @ORM\Column(type = "json_array")
@@ -179,8 +146,6 @@ class User implements EntityInterface, \IteratorAggregate
 
     public function __construct()
     {
-        $this->deputyships      = new ArrayCollection();
-        $this->powerOfAttorneys = new ArrayCollection();
         $this->setLocked(false);
         $this->setSuspended(false);
     }
@@ -210,7 +175,7 @@ class User implements EntityInterface, \IteratorAggregate
      */
     public function getFirstname()
     {
-        return $this->firstname;
+        return $this->getName();
     }
 
     /**
@@ -221,8 +186,7 @@ class User implements EntityInterface, \IteratorAggregate
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-
-        return $this;
+        return $this->setName($firstname);
     }
 
     /**
@@ -241,26 +205,6 @@ class User implements EntityInterface, \IteratorAggregate
     public function setSurname($surname)
     {
         $this->surname = $surname;
-
-        return $this;
-    }
-
-    /**
-     * @return string $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return User
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
 
         return $this;
     }
@@ -548,62 +492,10 @@ class User implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem
-     *
-     * @return $this
+     * @return string
      */
-    public function addCase(CaseItem $case)
+    public function getDisplayName()
     {
-        if ($case instanceof PowerOfAttorney) {
-            $this->powerOfAttorneys->add($case);
-        } else {
-            $this->deputyships->add($case);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return $this
-     */
-    public function setPowerOfAttorneys(ArrayCollection $cases)
-    {
-        foreach ($cases as $case) {
-            $this->addCase($case);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPowerOfAttorneys()
-    {
-        return $this->powerOfAttorneys;
-    }
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return $this
-     */
-    public function setDeputyships(ArrayCollection $cases)
-    {
-        foreach ($cases as $case) {
-            $this->addCase($case);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDeputyships()
-    {
-        return $this->deputyships;
+        return sprintf('%s %s', $this->getFirstname(), $this->getSurname());
     }
 }

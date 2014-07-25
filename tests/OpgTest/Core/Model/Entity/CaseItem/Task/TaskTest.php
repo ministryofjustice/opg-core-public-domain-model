@@ -1,6 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Task;
 
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\User\User;
@@ -311,12 +312,21 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setSurname($name);
 
-        $this->task->setAssignedUser($user);
+        $this->assertFalse($this->task->isAssigned());
+        $this->task->assign($user);
 
         $this->assertEquals(
             $name,
-            $this->task->getAssignedUser()->getSurname()
+            $this->task->getAssignee()->getSurname()
         );
+        $this->assertTrue($this->task->isAssigned());
+    }
+
+    public function testUnnasignUser()
+    {
+        $this->task->setAssignedUser();
+
+        $this->assertTrue($this->task->getAssignedUser() instanceof NullEntity);
     }
 
     public function testValidations()

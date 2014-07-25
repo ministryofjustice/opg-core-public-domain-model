@@ -4,6 +4,10 @@ namespace Opg\Core\Model\Entity\CaseItem\Task;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\Assignee;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\User\User;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
@@ -29,7 +33,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @author  Chris Moreton
  *
  */
-class Task implements EntityInterface, \IteratorAggregate, HasRagRating
+class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable
 {
 
     const STATUS_COMPLETED = 'completed';
@@ -37,6 +41,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
+    use Assignee;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -57,14 +62,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
      * @var int
      */
     protected $systemType;
-
-    /**
-     * @Serializer\MaxDepth(2)
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
-     * @var User
-     * @Groups({"api-poa-list","api-task-list"})
-     */
-    protected $assignedUser;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -123,9 +120,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
 
     /**
      * Non persistable entity, used for validation of create
-     *
+     * @Type("Opg\Core\Model\Entity\CaseItem\CaseItem")
      * @var CaseItem case
      * @Groups({"api-poa-list","api-task-list"})
+     * @ReadOnly
      */
     protected $case;
 
@@ -242,10 +240,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     {
         if (!empty($activeDate)) {
             $activeDate = OPGDateFormat::createDateTime($activeDate . ' 00:00:00');
-
-            if ($activeDate) {
-                return $this->setActiveDate($activeDate);
-            }
+            return $this->setActiveDate($activeDate);
         }
 
         return $this->setActiveDate();
@@ -304,14 +299,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     }
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignedUser()
-    {
-        return $this->assignedUser;
-    }
-
-    /**
      * @return string $status
      */
     public function getStatus()
@@ -327,18 +314,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     public function setId($id)
     {
         $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @param User $assignedUser
-     *
-     * @return Task
-     */
-    public function setAssignedUser(User $assignedUser = null)
-    {
-        $this->assignedUser = $assignedUser;
 
         return $this;
     }
@@ -615,10 +590,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
     {
         if (!empty($completedDate)) {
             $completedDate = OPGDateFormat::createDateTime($completedDate);
-
-            if ($completedDate) {
-                return $this->setCompletedDate($completedDate);
-            }
+            return $this->setCompletedDate($completedDate);
         }
         return $this->setCompletedDate(new \DateTime());
     }
@@ -643,4 +615,28 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating
         return '';
     }
 
+    /**
+     * Alias
+     * @param AssignableComposite $user
+     * @return $this|IsAssignable
+     * @deprecated
+     */
+    public function setAssignedUser(AssignableComposite $user = null)
+    {
+        if (null === $user) {
+            $user = new NullEntity();
+        }
+
+        return $this->assign($user);
+    }
+
+    /**
+     * Alias
+     * @return AssignableComposite
+     * @deprecated
+     */
+    public function getAssignedUser()
+    {
+        return $this->getAssignee();
+    }
 }

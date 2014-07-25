@@ -2,10 +2,12 @@
 namespace OpgTest\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\BusinessRule;
@@ -13,6 +15,28 @@ use Opg\Core\Model\Entity\CaseItem\BusinessRule;
 /**
  * ToArray test case.
  */
+
+class CaseItemStub extends CaseItem
+{
+
+    public function __unset($key)
+    {
+        if ($key === 'tasks') {
+            $this->tasks = null;
+        }
+    }
+
+    /**
+     * @param  Person $person
+     *
+     * @return CaseItem
+     */
+    public function addPerson(Person $person)
+    {
+        // TODO: Implement addPerson() method.
+    }
+}
+
 class CaseItemTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -89,7 +113,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $caseItemMock->getDueDateString());
     }
 
-    public function testSetGetAssignedUser()
+    public function testSetGetAssignee()
     {
         $caseItemMock = $this->getMockedClass();
         $name         = 'Test';
@@ -97,10 +121,11 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $user = new User();
         $user->setFirstname($name)->setSurname($secondName);
+        $this->assertFalse($caseItemMock->isAssigned());
+        $caseItemMock->assign($user);
+        $this->assertTrue($caseItemMock->isAssigned());
 
-        $caseItemMock->setAssignedUser($user);
-
-        $this->assertEquals($name, $caseItemMock->getAssignedUser()->getFirstName());
+        $this->assertEquals($name, $caseItemMock->getAssignee()->getFirstName());
     }
 
     public function testSetGetNotes()
@@ -134,8 +159,10 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetTasks()
     {
-        $caseItemMock = $this->getMockedClass();
+        $caseItemMock = new CaseItemStub();
 
+        unset($caseItemMock->{'tasks'});
+        
         for ($i = 0; $i < 10; $i++) {
             $task = new Task();
             $task->setId($i);
