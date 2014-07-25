@@ -122,7 +122,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param TaskEntity $task
-     * @return $this
+     * @return AssignableComposite
      */
     public function addTask(TaskEntity $task)
     {
@@ -137,7 +137,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param ArrayCollection $tasks
-     * @return $this|IsAssignee
+     * @return AssignableComposite
      */
     public function setTasks(ArrayCollection $tasks)
     {
@@ -192,7 +192,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param PowerOfAttorneyEntity $poa
-     * @return $this
+     * @return AssignableComposite
      */
     public function addPowerOfAttorney(PowerOfAttorneyEntity $poa)
     {
@@ -219,7 +219,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param DeputyshipEntity $poa
-     * @return $this
+     * @return AssignableComposite
      */
     public function addDeputyship(DeputyshipEntity $poa)
     {
@@ -246,7 +246,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param ArrayCollection $cases
-     * @return $this
+     * @return AssignableComposite
      */
     public function setCases(ArrayCollection $cases)
     {
@@ -259,7 +259,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param ArrayCollection $cases
-     * @return $this
+     * @return AssignableComposite
      * Alias function
      */
     public function setPowerOfAttorneys(ArrayCollection $cases)
@@ -269,7 +269,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param ArrayCollection $cases
-     * @return $this
+     * @return AssignableComposite
      * Alias function
      */
     public function setDeputyships(ArrayCollection $cases)
@@ -279,7 +279,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param int $id
-     * @return $this
+     * @return AssignableComposite
      */
     public function setId($id)
     {
@@ -298,7 +298,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param string $name
-     * @return $this|IsAssignee
+     * @return AssignableComposite
      */
     public function setName($name)
     {
