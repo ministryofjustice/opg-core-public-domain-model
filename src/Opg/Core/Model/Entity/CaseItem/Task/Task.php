@@ -5,6 +5,7 @@ use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\User\User;
@@ -40,6 +41,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
+    use Assignee;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -60,18 +62,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * @var int
      */
     protected $systemType;
-
-    /**
-     * @ORM\ManyToOne(
-     *      cascade={"persist"},
-     *      targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite",
-     *      fetch = "EAGER"
-     * )
-     * @Serializer\MaxDepth(2)
-     * @var User
-     * @Groups({"api-poa-list","api-task-list"})
-     */
-    protected $assignee;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -309,14 +299,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @return User $assignedUser
-     */
-    public function getAssignee()
-    {
-        return $this->assignee;
-    }
-
-    /**
      * @return string $status
      */
     public function getStatus()
@@ -334,26 +316,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
         $this->id = (int)$id;
 
         return $this;
-    }
-
-    /**
-     * @param AssignableComposite $assignee
-     * @return IsAssignable
-     */
-    public function assign(AssignableComposite $assignee)
-    {
-        $this->assignee = $assignee;
-//        $this->assignee->addTask($this);
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAssigned()
-    {
-        return (null !== $this->assignee);
     }
 
     /**

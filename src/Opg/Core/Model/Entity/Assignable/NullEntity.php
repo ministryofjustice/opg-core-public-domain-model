@@ -63,7 +63,6 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
         return self::NULL_USER_NAME;
     }
 
-
     /**
      * @param bool $exposeClassname
      * @return array

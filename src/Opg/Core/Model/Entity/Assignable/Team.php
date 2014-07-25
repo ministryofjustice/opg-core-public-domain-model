@@ -22,7 +22,6 @@ use JMS\Serializer\Annotation\Exclude;
 class Team extends AssignableComposite implements EntityInterface, IsAssignee, IsGroupable
 {
     use InputFilter;
-    use Assignee;
 
     /**
      * @ORM\ManyToMany(targetEntity="AssignableComposite", mappedBy="teams")
