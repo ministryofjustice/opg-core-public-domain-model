@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\Assignable;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\MaxDepth;
+
 /**
  * Class Assignee
  * @package Opg\Core\Model\Entity\Assignee
@@ -27,7 +27,7 @@ trait Assignee
      */
     public function isAssigned()
     {
-        return (null !== $this->assignee);
+        return ( null !== $this->assignee );
     }
 
     /**
@@ -40,13 +40,13 @@ trait Assignee
 
     /**
      * @param AssignableComposite $assignee
+     *
      * @return IsAssignable
      */
-    public function assign(AssignableComposite $assignee = null)
+    public function assign( AssignableComposite $assignee = null )
     {
         $this->assignee = $assignee;
 
         return $this;
     }
-
 }
