@@ -209,7 +209,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
         return $this;
     }
 
-       /**
+    /**
      * @return \Zend\InputFilter\InputFilterInterface
      */
     public function getInputFilter()
