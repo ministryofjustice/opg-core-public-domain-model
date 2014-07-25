@@ -80,7 +80,6 @@ class TeamTest extends \PHPUnit_Framework_TestCase
             'tasks'             => array(),
             'name'              => null,
             'errorMessages'     => array(),
-            'assignee'          => null,
             'teams'             => array(),
             'displayName'       => null
         );

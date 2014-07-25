@@ -100,6 +100,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
+     * @var ArrayCollection
      */
     protected $teams;
 
@@ -134,6 +135,10 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
         return $this;
     }
 
+    /**
+     * @param ArrayCollection $tasks
+     * @return $this|IsAssignee
+     */
     public function setTasks(ArrayCollection $tasks)
     {
         foreach ($tasks->toArray() as $task) {

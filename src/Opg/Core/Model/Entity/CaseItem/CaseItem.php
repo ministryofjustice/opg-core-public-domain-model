@@ -15,6 +15,7 @@ use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -44,6 +45,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use UniqueIdentifier;
     use InputFilter;
     use HasCorrespondence;
+    use Assignee;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -142,15 +144,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\Groups({"api-poa-list","api-task-list"})
      */
     protected $status;
-
-    /**
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch = "EAGER")
-     * @Serializer\MaxDepth(1)
-     * @var AssignableComposite
-     * @ReadOnly
-     * @Serializer\Groups("api-poa-list")
-     */
-    protected $assignee;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
@@ -333,34 +326,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAssigned()
-    {
-        return (null !== $this->assignee);
-    }
-
-    /**
-     * @return \Opg\Core\Model\Entity\Assignable\AssignableComposite
-     */
-    public function getAssignee()
-    {
-        return $this->assignee;
-    }
-
-    /**
-     * @param AssignableComposite $assignee
-     * @return $this|IsAssignable
-     */
-    public function assign(AssignableComposite $assignee)
-    {
-        $this->assignee = $assignee;
-//        $this->assignee->addCase($this);
 
         return $this;
     }
