@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\Assignable;
-
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
@@ -27,13 +25,15 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
     public function __construct()
     {
         $this->name = self::NULL_USER_NAME;
-        $this->id = self::NULL_USER_ID;
+        $this->id   = self::NULL_USER_ID;
     }
+
     /**
      * @param int $id
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function setId($id)
+    public function setId( $id )
     {
         return $this;
     }
@@ -48,9 +48,10 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
 
     /**
      * @param string $name
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function setName($name)
+    public function setName( $name )
     {
         return $this;
     }
@@ -65,21 +66,23 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
 
     /**
      * @param bool $exposeClassname
+     *
      * @return array
      */
-    public function toArray($exposeClassname = false)
+    public function toArray( $exposeClassname = false )
     {
         return array();
     }
 
     /**
      * @param InputFilterInterface $inputFilter
+     *
      * @return void|InputFilterAwareInterface
      * @throws \LogicException
      */
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    public function setInputFilter( InputFilterInterface $inputFilter )
     {
-        throw new \LogicException('Not implemented');
+        throw new \LogicException( 'Not implemented' );
     }
 
     /**
@@ -88,7 +91,7 @@ class NullEntity extends AssignableComposite implements EntityInterface, IsAssig
      */
     public function getInputFilter()
     {
-        throw new \LogicException('Not implemented');
+        throw new \LogicException( 'Not implemented' );
     }
 
     /**

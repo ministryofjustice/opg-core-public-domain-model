@@ -18,7 +18,6 @@ use JMS\Serializer\Annotation\Exclude;
  * Class Team
  * @package Opg\Core\Model\Entity\Assignable
  */
-
 class Team extends AssignableComposite implements EntityInterface, IsAssignee, IsGroupable
 {
     use InputFilter;
@@ -48,7 +47,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->members = new ArrayCollection();
+        $this->members  = new ArrayCollection();
         parent::__construct();
     }
 
@@ -64,16 +63,17 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param AssignableComposite $member
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function addMember(AssignableComposite $member)
+    public function addMember( AssignableComposite $member )
     {
         if (null === $this->members) {
             $this->members = new ArrayCollection();
         }
 
-        if (false === $this->members->contains($member)) {
-            $this->members->add($member);
+        if (false === $this->members->contains( $member )) {
+            $this->members->add( $member );
         }
 
         return $this;
@@ -81,23 +81,25 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param ArrayCollection $members
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function addMembers(ArrayCollection $members)
+    public function addMembers( ArrayCollection $members )
     {
 
         foreach ($members->toArray() as $member) {
-            $this->addMember($member);
+            $this->addMember( $member );
         }
 
         return $this;
-     }
+    }
 
     /**
      * @param ArrayCollection $members
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function setMembers(ArrayCollection $members)
+    public function setMembers( ArrayCollection $members )
     {
 
         if ($this->members instanceof ArrayCollection) {
@@ -105,7 +107,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
         }
 
         foreach ($members->toArray() as $member) {
-            $this->addMember($member);
+            $this->addMember( $member );
         }
 
         return $this;
@@ -125,13 +127,14 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param Team $parent
+     *
      * @return IsGroupable
      * @throws \LogicException
      */
-    public function setParent(Team $parent)
+    public function setParent( Team $parent )
     {
         if (null !== $this->parent) {
-            throw new \LogicException('Group already has a parent');
+            throw new \LogicException( 'Group already has a parent' );
         }
 
         $this->parent = $parent;
@@ -149,16 +152,17 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param Team $child
+     *
      * @return IsGroupable
      */
-    public function addChild(Team $child)
+    public function addChild( Team $child )
     {
         if (null === $this->children) {
             $this->children = new ArrayCollection();
         }
 
-        if (false === $this->children->contains($child)) {
-            $this->children->add($child);
+        if (false === $this->children->contains( $child )) {
+            $this->children->add( $child );
         }
         return $this;
     }
@@ -173,12 +177,13 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param ArrayCollection $children
+     *
      * @return IsGroupable
      */
-    public function addChildren(ArrayCollection $children)
+    public function addChildren( ArrayCollection $children )
     {
         foreach ($children->toArray() as $child) {
-            $this->addChild($child);
+            $this->addChild( $child );
         }
 
         return $this;
@@ -186,9 +191,10 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param $groupName
-     * @return $this
+     *
+     * @return NullEntity
      */
-    public function setGroupName($groupName)
+    public function setGroupName( $groupName )
     {
         $this->groupName = $groupName;
 
@@ -205,16 +211,17 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @param ArrayCollection $children
+     *
      * @return IsGroupable
      */
-    public function setChildren(ArrayCollection $children)
+    public function setChildren( ArrayCollection $children )
     {
         if ($this->children instanceof ArrayCollection) {
             $this->children->clear();
         }
 
         foreach ($children->toArray() as $child) {
-            $this->addChild($child);
+            $this->addChild( $child );
         }
 
         return $this;
@@ -222,6 +229,6 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     public function getDisplayName()
     {
-        return sprintf('%s (%s)', $this->getName(), $this->getGroupName());
+        return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
     }
 }

@@ -12,9 +12,10 @@ interface IsGroupable
 {
     /**
      * @param Team $parent
+     *
      * @return IsGroupable
      */
-    public function setParent(Team $parent);
+    public function setParent( Team $parent );
 
     /**
      * @return AssignableComposite
@@ -23,9 +24,10 @@ interface IsGroupable
 
     /**
      * @param Team $child
+     *
      * @return IsGroupable
      */
-    public function addChild(Team $child);
+    public function addChild( Team $child );
 
     /**
      * @return ArrayCollection
@@ -34,8 +36,8 @@ interface IsGroupable
 
     /**
      * @param ArrayCollection $children
+     *
      * @return IsGroupable
      */
-    public function setChildren(ArrayCollection $children);
-
+    public function setChildren( ArrayCollection $children );
 }

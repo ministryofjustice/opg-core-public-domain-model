@@ -21,9 +21,10 @@ interface IsAssignee
 
     /**
      * @param int $id
+     *
      * @return IsAssignee
      */
-    public function setId($id);
+    public function setId( $id );
 
     /**
      * @return string
@@ -32,21 +33,24 @@ interface IsAssignee
 
     /**
      * @param string $name
+     *
      * @return IsAssignee
      */
-    public function setName($name);
+    public function setName( $name );
 
     /**
      * @param TaskEntity $task
+     *
      * @return IsAssignee
      */
-    public function addTask(TaskEntity $task);
+    public function addTask( TaskEntity $task );
 
     /**
      * @param ArrayCollection $tasks
+     *
      * @return IsAssignee
      */
-    public function setTasks(ArrayCollection $tasks);
+    public function setTasks( ArrayCollection $tasks );
 
     /**
      * @return ArrayCollection
@@ -55,9 +59,10 @@ interface IsAssignee
 
     /**
      * @param CaseEntity $case
+     *
      * @return IsAssignee
      */
-    public function addCase(CaseEntity $case);
+    public function addCase( CaseEntity $case );
 
     /**
      * @return ArrayCollection
@@ -66,9 +71,10 @@ interface IsAssignee
 
     /**
      * @param PowerOfAttorneyEntity $poa
+     *
      * @return IsAssignee
      */
-    public function addPowerOfAttorney(PowerOfAttorneyEntity $poa);
+    public function addPowerOfAttorney( PowerOfAttorneyEntity $poa );
 
     /**
      * @return ArrayCollection
@@ -77,9 +83,10 @@ interface IsAssignee
 
     /**
      * @param DeputyshipEntity $poa
+     *
      * @return IsAssignee
      */
-    public function addDeputyship(DeputyshipEntity $poa);
+    public function addDeputyship( DeputyshipEntity $poa );
 
     /**
      * @return ArrayCollection
@@ -88,22 +95,24 @@ interface IsAssignee
 
     /**
      * @param ArrayCollection $cases
+     *
      * @return IsAssignee
      */
-    public function setCases(ArrayCollection $cases);
+    public function setCases( ArrayCollection $cases );
 
     /**
      * @param ArrayCollection $cases
+     *
      * @return IsAssignee
      * Alias function
      */
-    public function setPowerOfAttorneys(ArrayCollection $cases);
+    public function setPowerOfAttorneys( ArrayCollection $cases );
+
     /**
      * @param ArrayCollection $cases
+     *
      * @return IsAssignee
      * Alias function
      */
-    public function setDeputyships(ArrayCollection $cases);
-
-
+    public function setDeputyships( ArrayCollection $cases );
 }

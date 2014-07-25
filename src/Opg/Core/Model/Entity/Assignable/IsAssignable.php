@@ -22,7 +22,8 @@ interface IsAssignable
 
     /**
      * @param AssignableComposite $assignee
+     *
      * @return IsAssignable
      */
-    public function assign(AssignableComposite $assignee);
+    public function assign( AssignableComposite $assignee );
 }
