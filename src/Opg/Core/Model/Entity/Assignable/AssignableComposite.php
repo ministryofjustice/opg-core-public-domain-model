@@ -1,10 +1,9 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\Assignable;
 
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\CaseItem\CaseItem  as CaseEntity;
+use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
 use Opg\Core\Model\Entity\CaseItem\Task\Task as TaskEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +14,6 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
-
 
 /**
  * @ORM\Entity
@@ -122,27 +120,29 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param TaskEntity $task
+     *
      * @return AssignableComposite
      */
-    public function addTask(TaskEntity $task)
+    public function addTask( TaskEntity $task )
     {
         if (null === $this->tasks) {
             $this->tasks = new ArrayCollection();
         }
 
-        $this->tasks->add($task);
+        $this->tasks->add( $task );
 
         return $this;
     }
 
     /**
      * @param ArrayCollection $tasks
+     *
      * @return AssignableComposite
      */
-    public function setTasks(ArrayCollection $tasks)
+    public function setTasks( ArrayCollection $tasks )
     {
         foreach ($tasks->toArray() as $task) {
-            $this->addTask($task);
+            $this->addTask( $task );
         }
 
         return $this;
@@ -162,15 +162,15 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param CaseEntity $case
+     *
      * @return $this
      */
-    public function addCase(CaseEntity $case)
+    public function addCase( CaseEntity $case )
     {
         if ($case instanceof PowerOfAttorneyEntity) {
-            return $this->addPowerOfAttorney($case);
-        }
-        else {
-            return $this->addDeputyship($case);
+            return $this->addPowerOfAttorney( $case );
+        } else {
+            return $this->addDeputyship( $case );
         }
     }
 
@@ -180,11 +180,11 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     public function getCases()
     {
         $cases = new ArrayCollection();
-        foreach($this->getPowerOfAttorneys() as $case) {
-            $cases->add($case);
+        foreach ($this->getPowerOfAttorneys() as $case) {
+            $cases->add( $case );
         }
-        foreach($this->getDeputyships() as $case) {
-            $cases->add($case);
+        foreach ($this->getDeputyships() as $case) {
+            $cases->add( $case );
         }
 
         return $cases;
@@ -192,15 +192,16 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param PowerOfAttorneyEntity $poa
+     *
      * @return AssignableComposite
      */
-    public function addPowerOfAttorney(PowerOfAttorneyEntity $poa)
+    public function addPowerOfAttorney( PowerOfAttorneyEntity $poa )
     {
         if (null === $this->powerOfAttorneys) {
             $this->powerOfAttorneys = new ArrayCollection();
         }
 
-        $this->powerOfAttorneys->add($poa);
+        $this->powerOfAttorneys->add( $poa );
 
         return $this;
     }
@@ -219,15 +220,16 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param DeputyshipEntity $poa
+     *
      * @return AssignableComposite
      */
-    public function addDeputyship(DeputyshipEntity $poa)
+    public function addDeputyship( DeputyshipEntity $poa )
     {
         if (null === $this->deputyships) {
             $this->deputyships = new ArrayCollection();
         }
 
-        $this->deputyships->add($poa);
+        $this->deputyships->add( $poa );
 
         return $this;
     }
@@ -246,44 +248,50 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param ArrayCollection $cases
+     *
      * @return AssignableComposite
      */
-    public function setCases(ArrayCollection $cases)
+    public function setCases( ArrayCollection $cases )
     {
         foreach ($cases as $case) {
-            $this->addCase($case);
+            $this->addCase( $case );
         }
 
         return $this;
     }
 
     /**
-     * @param ArrayCollection $cases
-     * @return AssignableComposite
      * Alias function
+     * 
+     * @param ArrayCollection $cases
+     *
+     * @return AssignableComposite
      */
-    public function setPowerOfAttorneys(ArrayCollection $cases)
+    public function setPowerOfAttorneys( ArrayCollection $cases )
     {
-        return $this->setCases($cases);
+        return $this->setCases( $cases );
     }
 
     /**
-     * @param ArrayCollection $cases
-     * @return AssignableComposite
      * Alias function
+     *
+     * @param ArrayCollection $cases
+     *
+     * @return AssignableComposite
      */
-    public function setDeputyships(ArrayCollection $cases)
+    public function setDeputyships( ArrayCollection $cases )
     {
-        return $this->setCases($cases);
+        return $this->setCases( $cases );
     }
 
     /**
      * @param int $id
+     *
      * @return AssignableComposite
      */
-    public function setId($id)
+    public function setId( $id )
     {
-        $this->id = (int)$id;
+        $this->id = (int) $id;
 
         return $this;
     }
@@ -298,11 +306,12 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * @param string $name
+     *
      * @return AssignableComposite
      */
-    public function setName($name)
+    public function setName( $name )
     {
-        $this->name = (string)$name;
+        $this->name = (string) $name;
 
         return $this;
     }
@@ -320,12 +329,11 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      */
     public function getIterator()
     {
-        return new \RecursiveArrayIterator($this->toArray());
+        return new \RecursiveArrayIterator( $this->toArray() );
     }
 
     /**
      * @return string
      */
     abstract public function getDisplayName();
-
 }
