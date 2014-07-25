@@ -4,7 +4,6 @@ namespace Opg\Core\Model\Entity\Assignable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\exposeClassname;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
