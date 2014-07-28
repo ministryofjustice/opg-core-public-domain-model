@@ -38,7 +38,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     protected $person;
 
     /**
-     * @ORM\Column(type = "string", name="phone_number")
+     * @ORM\Column(type = "string", name="phone_number", nullable=true)
      * @var string
      */
     protected $phoneNumber;
