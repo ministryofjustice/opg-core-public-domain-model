@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * Class Assignee
@@ -19,6 +20,7 @@ trait Assignee
      * @var AssignableComposite
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
+     * @Accessor(getter="getAssignee", setter="setAssignee")
      */
     protected $assignee;
 
@@ -35,6 +37,9 @@ trait Assignee
      */
     public function getAssignee()
     {
+        if (is_null($this->assignee)) {
+            return new NullEntity();
+        }
         return $this->assignee;
     }
 
@@ -45,6 +50,10 @@ trait Assignee
      */
     public function assign( AssignableComposite $assignee = null )
     {
+        if ($assignee instanceof NullEntity) {
+            $assignee = null;
+        }
+
         $this->assignee = $assignee;
 
         return $this;
