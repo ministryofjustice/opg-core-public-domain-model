@@ -8,7 +8,6 @@ use Zend\Validator\AbstractValidator;
 
 class TeamName extends AbstractValidator
 {
-    const EMPTY_TEAM_NAME  = 'noTeamName';
     const NAME_TO_LONG     = 'nameTooLong';
     const MAX_LEN          = 255;
 
@@ -16,7 +15,6 @@ class TeamName extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::EMPTY_TEAM_NAME => 'The team name is required',
         self::NAME_TO_LONG => 'The name cannot exceed 255 characters in length.'
     );
 
@@ -30,11 +28,6 @@ class TeamName extends AbstractValidator
         $this->setValue($team);
 
         $result = true;
-
-        if (strlen(trim($team)) <= 0) {
-            $this->error(self::EMPTY_TEAM_NAME);
-            $result &= false;
-        }
 
         if (strlen(trim($team)) > self::MAX_LEN) {
             $this->error(self::NAME_TO_LONG);

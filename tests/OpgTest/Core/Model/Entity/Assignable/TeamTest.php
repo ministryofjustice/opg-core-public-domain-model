@@ -150,6 +150,7 @@ class TeamTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->team->isValid());
 
+
         $nameTooLong = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
