@@ -145,4 +145,24 @@ class TeamTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($childCollection, $this->team->getChildren());
     }
+
+    public function testValidation()
+    {
+        $this->assertFalse($this->team->isValid());
+
+        $nameTooLong = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        . 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        $this->team->setName($nameTooLong);
+
+        $this->assertFalse($this->team->isValid());
+
+        $this->team->setName('Something Sensible');
+
+        $this->assertTrue($this->team->isValid());
+
+    }
 }

@@ -7,6 +7,7 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Core\Model\Entity\Assignable\Validation\InputFilter\TeamFilter;
 use Traversable;
 use Zend\InputFilter\InputFilterInterface;
 use JMS\Serializer\Annotation\Exclude;
@@ -57,7 +58,16 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
      */
     public function getInputFilter()
     {
-        return new \Zend\InputFilter\InputFilter();
+        if (!$this->inputFilter) {
+            $this->inputFilter = new \Zend\InputFilter\InputFilter();
+            $teamFilter = new TeamFilter();
+
+            foreach ($teamFilter->getInputs() as $input) {
+                $this->inputFilter->add($input);
+            }
+        }
+
+        return $this->inputFilter;
     }
 
     /**
