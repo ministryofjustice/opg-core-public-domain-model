@@ -50,37 +50,37 @@ class Address implements EntityInterface, \IteratorAggregate
     protected $person;
 
     /**
-     * @ORM\Column(type = "json_array", name="address_lines")
+     * @ORM\Column(type = "json_array", name="address_lines", nullable = true)
      * @var array
      */
     protected $addressLines = [];
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $town = '';
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $county = '';
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $postcode = '';
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $country = '';
 
     /**
-     * @ORM\Column(type = "string")
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $type = 'Primary';
