@@ -72,6 +72,9 @@ class TeamTest extends \PHPUnit_Framework_TestCase
 
         unset($this->team->{'teams'});
         $this->assertEquals(0, $this->team->getTeams()->count());
+
+        unset($this->team->{'members'});
+        $this->assertTrue($this->team->removeMember($member1) instanceof TeamStub);
     }
 
     public function testGetIterator()

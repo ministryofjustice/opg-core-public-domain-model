@@ -154,5 +154,15 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
         $this->assignable->addTeams($teamCollection);
 
         $this->assertEquals($teamCollection, $this->assignable->getTeams());
+
+        foreach($teamCollection->toArray() as $team) {
+            $this->assignable->removeTeam($team);
+        }
+
+        $this->assertEquals(0, count($this->assignable->getTeams()->toArray()));
+
+        unset($this->assignable->{'teams'});
+        $this->assertTrue($this->assignable->removeTeam(new Team()) instanceof AssignableCompositeStub);
+
     }
 }

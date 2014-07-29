@@ -23,7 +23,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     use InputFilter;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="AssignableComposite", mappedBy="teams")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="AssignableComposite", mappedBy="teams")
      */
     protected $members;
 
@@ -133,6 +133,21 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
         }
 
         return $this->members;
+    }
+
+    /**
+     * @param AssignableComposite $member
+     * @return ArrayCollection
+     */
+    public function removeMember(AssignableComposite $member)
+    {
+        if (null === $this->members) {
+            $this->members = new ArrayCollection();
+        }
+
+        $this->members->removeElement($member);
+
+        return $this;
     }
 
     /**
