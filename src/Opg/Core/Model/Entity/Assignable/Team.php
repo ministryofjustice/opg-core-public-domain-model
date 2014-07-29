@@ -23,7 +23,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     use InputFilter;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AssignableComposite", mappedBy="teams")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="AssignableComposite", mappedBy="teams")
      */
     protected $members;
 

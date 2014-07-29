@@ -46,7 +46,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      * @ORM\JoinTable(
      *      name="assigned_powerofattorneys",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -60,7 +60,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $powerOfAttorneys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
      * @ORM\JoinTable(
      *      name="assigned_deputyships",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -74,7 +74,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
      * @ORM\JoinTable(
      *      name="assigned_tasks",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -96,7 +96,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
      * @var ArrayCollection
      */
