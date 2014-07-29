@@ -262,7 +262,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * Alias function
-     * 
+     *
      * @param ArrayCollection $cases
      *
      * @return AssignableComposite
@@ -336,4 +336,58 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @return string
      */
     abstract public function getDisplayName();
+
+    /**
+     * @param Team $team
+     * @return $this
+     */
+    public function addTeam(Team $team)
+    {
+        if (null === $this->teams) {
+            $this->teams = new ArrayCollection();
+        }
+
+        if (false === $this->teams->contains($team)) {
+            $this->teams->add($team);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     * @return $this
+     */
+    public function setTeams(ArrayCollection $teams)
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     * @return $this
+     */
+    public function addTeams(ArrayCollection $teams)
+    {
+        foreach ($teams->toArray() as $team) {
+            if ($team instanceof Team) {
+                $this->addTeam($team);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return ArrayCollection
+     */
+    public function getTeams()
+    {
+        if (null === $this->teams) {
+            $this->teams = new ArrayCollection();
+        }
+
+        return $this->teams;
+    }
 }

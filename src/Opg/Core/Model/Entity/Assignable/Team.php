@@ -83,6 +83,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
         if (false === $this->members->contains( $member )) {
             $this->members->add( $member );
+            $member->addTeam($this);
         }
 
         return $this;
