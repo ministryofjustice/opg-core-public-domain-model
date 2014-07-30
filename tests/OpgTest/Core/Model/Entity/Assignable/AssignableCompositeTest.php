@@ -4,6 +4,7 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
+use Opg\Core\Model\Entity\Assignable\Team;
 use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
@@ -17,6 +18,9 @@ class AssignableCompositeStub extends AssignableComposite
         {
             case 'tasks' :
                 $this->tasks = null;
+                break;
+            case 'teams' :
+                $this->teams = null;
                 break;
             case 'deputyships':
                 $this->deputyships = null;
@@ -126,5 +130,39 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->assignable->setName($expected) instanceof AssignableComposite);
 
         $this->assertEquals($expected, $this->assignable->getDisplayName());
+    }
+
+    public function testTeams()
+    {
+        unset($this->assignable->{'teams'});
+
+        $this->assertEmpty($this->assignable->getTeams()->toArray());
+
+        unset($this->assignable->{'teams'});
+
+        $teamCollection = new ArrayCollection();
+
+        $teamCollection->add(new Team());
+        $teamCollection->add(new Team());
+        $teamCollection->add(new Team());
+
+        $this->assignable->setTeams($teamCollection);
+
+        $this->assertEquals($teamCollection, $this->assignable->getTeams());
+
+        unset($this->assignable->{'teams'});
+        $this->assignable->addTeams($teamCollection);
+
+        $this->assertEquals($teamCollection, $this->assignable->getTeams());
+
+        foreach($teamCollection->toArray() as $team) {
+            $this->assignable->removeTeam($team);
+        }
+
+        $this->assertEquals(0, count($this->assignable->getTeams()->toArray()));
+
+        unset($this->assignable->{'teams'});
+        $this->assertTrue($this->assignable->removeTeam(new Team()) instanceof AssignableCompositeStub);
+
     }
 }

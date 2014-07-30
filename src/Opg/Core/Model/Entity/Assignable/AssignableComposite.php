@@ -46,7 +46,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
      * @ORM\JoinTable(
      *      name="assigned_powerofattorneys",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -60,7 +60,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $powerOfAttorneys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
      * @ORM\JoinTable(
      *      name="assigned_deputyships",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -74,7 +74,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
      * @ORM\JoinTable(
      *      name="assigned_tasks",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -96,7 +96,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
      * @var ArrayCollection
      */
@@ -262,7 +262,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
 
     /**
      * Alias function
-     * 
+     *
      * @param ArrayCollection $cases
      *
      * @return AssignableComposite
@@ -336,4 +336,73 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @return string
      */
     abstract public function getDisplayName();
+
+    /**
+     * @param Team $team
+     * @return $this
+     */
+    public function addTeam(Team $team)
+    {
+        if (null === $this->teams) {
+            $this->teams = new ArrayCollection();
+        }
+
+        if (false === $this->teams->contains($team)) {
+            $this->teams->add($team);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     * @return $this
+     */
+    public function setTeams(ArrayCollection $teams)
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $teams
+     * @return $this
+     */
+    public function addTeams(ArrayCollection $teams)
+    {
+        foreach ($teams->toArray() as $team) {
+            if ($team instanceof Team) {
+                $this->addTeam($team);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return ArrayCollection
+     */
+    public function getTeams()
+    {
+        if (null === $this->teams) {
+            $this->teams = new ArrayCollection();
+        }
+
+        return $this->teams;
+    }
+
+    /**
+     * @param Team $team
+     * @return $this
+     */
+    public function removeTeam(Team $team)
+    {
+        if (null == $this->teams) {
+            $this->teams = new ArrayCollection();
+        }
+
+        $this->teams->removeElement($team);
+
+        return $this;
+    }
 }
