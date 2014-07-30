@@ -14,6 +14,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -99,6 +100,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
      * @var ArrayCollection
+     * @MaxDepth(1)
      */
     protected $teams;
 

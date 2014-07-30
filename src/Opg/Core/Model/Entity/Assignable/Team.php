@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\Assignable\Validation\InputFilter\TeamFilter;
 use Traversable;
 use Zend\InputFilter\InputFilterInterface;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @ORM\ManyToMany(cascade={"all"}, targetEntity="AssignableComposite", mappedBy="teams")
+     * @MaxDepth(1)
      */
     protected $members;
 
