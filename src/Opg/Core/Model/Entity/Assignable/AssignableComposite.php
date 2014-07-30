@@ -100,7 +100,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\Assignable\Team", inversedBy="members")
      * @ORM\JoinTable(name="assignee_teams")
      * @var ArrayCollection
-     * @MaxDepth(1)
+     * @MaxDepth(2)
      */
     protected $teams;
 

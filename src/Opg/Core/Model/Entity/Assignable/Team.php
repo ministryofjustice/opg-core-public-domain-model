@@ -25,7 +25,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
 
     /**
      * @ORM\ManyToMany(cascade={"all"}, targetEntity="AssignableComposite", mappedBy="teams")
-     * @MaxDepth(1)
+     * @MaxDepth(2)
      */
     protected $members;
 
