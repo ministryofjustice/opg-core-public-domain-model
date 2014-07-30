@@ -37,7 +37,7 @@ class Queue
     protected $data;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="status", type="smallint", length=1, nullable=false)
      */
