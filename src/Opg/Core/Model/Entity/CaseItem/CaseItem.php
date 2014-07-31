@@ -209,6 +209,15 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $ragTotal;
 
     /**
+     * @ORM\Column(type = "date", nullable = true)
+     * @var \DateTime
+     * @Type("string")
+     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Accessor(getter="getRejectedDateString", setter="setRejectedDateString")
+     */
+    protected $rejectedDate;
+
+    /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case", cascade={"all"}, fetch="EAGER")
      * @var \Opg\Core\Model\Entity\CaseItem\BusinessRule
      */
@@ -829,5 +838,49 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function getAssignedUser()
     {
         return $this->getAssignee();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getRejectedDate()
+    {
+        return $this->rejectedDate;
+    }
+
+    /**
+     * @param \DateTime $rejectedDate
+     * @return CaseItem
+     */
+    public function setRejectedDate(\DateTime $rejectedDate = null)
+    {
+        $this->rejectedDate = $rejectedDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRejectedDateString()
+    {
+        if (null !== $this->rejectedDate) {
+            return $this->rejectedDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param $rejectedDate
+     * @return $this|CaseItem
+     */
+    public function setRejectedDateString($rejectedDate)
+    {
+        if (strlen(trim($rejectedDate))) {
+            return $this->setRejectedDate(OPGDateFormat::createDateTime($rejectedDate));
+        }
+
+        return $this;
     }
 }

@@ -162,7 +162,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock = new CaseItemStub();
 
         unset($caseItemMock->{'tasks'});
-        
+
         for ($i = 0; $i < 10; $i++) {
             $task = new Task();
             $task->setId($i);
@@ -489,5 +489,31 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $mock->addBusinessRule($businessRule);
 
         $this->assertEquals(null, $mock->getBusinessRule($key . '2'));
+    }
+
+    public function testGetSetRejectedDate()
+    {
+        $expected = new \DateTime();
+        $mock = $this->getMockedClass();
+
+        $this->assertNull($mock->getRejectedDate());
+        $this->assertTrue($mock->setRejectedDate() instanceof CaseItem);
+        $this->assertNull($mock->getRejectedDate());
+
+        $this->assertTrue($mock->setRejectedDate($expected) instanceof CaseItem);
+        $this->assertEquals($expected, $mock->getRejectedDate());
+    }
+
+    public function testGetSetRejectedDateString()
+    {
+        $expected = (new \DateTime())->format(OPGDateFormat::getDateFormat());
+        $mock = $this->getMockedClass();
+
+        $this->assertEmpty($mock->getRejectedDateString());
+        $this->assertTrue($mock->setRejectedDateString('') instanceof CaseItem);
+        $this->assertEmpty($mock->getRejectedDateString());
+
+        $this->assertTrue($mock->setRejectedDateString($expected) instanceof CaseItem);
+        $this->assertEquals($expected, $mock->getRejectedDateString());
     }
 }
