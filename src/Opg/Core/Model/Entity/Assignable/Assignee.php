@@ -16,10 +16,10 @@ trait Assignee
 {
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite", fetch = "EAGER")
-     * @Serializer\MaxDepth(1)
+     * @MaxDepth(1)
      * @var AssignableComposite
      * @ReadOnly
-     * @Serializer\Groups("api-poa-list")
+     * @Groups({"api-poa-list","api-task-list"})
      * @Accessor(getter="getAssignee", setter="setAssignee")
      */
     protected $assignee;

@@ -120,7 +120,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
 
     /**
      * Non persistable entity, used for validation of create
-     * @Type("Opg\Core\Model\Entity\CaseItem\CaseItem")
      * @var CaseItem case
      * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
