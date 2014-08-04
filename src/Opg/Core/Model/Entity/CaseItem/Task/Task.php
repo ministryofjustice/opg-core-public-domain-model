@@ -38,6 +38,10 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
 
     const STATUS_COMPLETED = 'completed';
 
+    const MIN_TASK_NAME_LENGTH = 5;
+
+    const MAX_TASK_NAME_LENGTH = 255;
+
     use \Opg\Common\Model\Entity\Traits\Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
@@ -373,8 +377,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
                                 'name'    => 'StringLength',
                                 'options' => array(
                                     'encoding' => 'UTF-8',
-                                    'min'      => 5,
-                                    'max'      => 24,
+                                    'min'      => self::MIN_TASK_NAME_LENGTH,
+                                    'max'      => self::MAX_TASK_NAME_LENGTH,
                                 )
                             )
                         )
