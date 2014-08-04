@@ -37,9 +37,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
 {
 
     const STATUS_COMPLETED = 'completed';
-
     const MIN_TASK_NAME_LENGTH = 5;
-
     const MAX_TASK_NAME_LENGTH = 255;
 
     use \Opg\Common\Model\Entity\Traits\Time;
