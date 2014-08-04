@@ -427,8 +427,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->task->getCompletedDate());
         $this->task->setCompletedDate();
         $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
-            $this->task->getCompletedDate()->format(OPGDateFormat::getDateTimeFormat())
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->task->getCompletedDate()->format(OPGDateFormat::getDateFormat())
         );
     }
 
