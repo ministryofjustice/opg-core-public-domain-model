@@ -108,6 +108,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @var string
      * @Type("string")
      * @Accessor(getter="getDisplayName")
+     * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
      */
     protected $displayName;
