@@ -24,7 +24,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     use InputFilter;
 
     /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="AssignableComposite", inversedBy="teams")
+     * @ORM\ManyToMany(targetEntity="AssignableComposite", inversedBy="teams")
      * @ORM\JoinTable(name="assignee_teams")
      * @MaxDepth(2)
      */
