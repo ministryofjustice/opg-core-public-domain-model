@@ -255,8 +255,14 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDisplayName()
     {
-        return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
+        if (null !== $this->groupName) {
+            return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
+        }
+        return $this->getName();
     }
 }
