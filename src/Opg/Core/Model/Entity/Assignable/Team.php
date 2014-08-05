@@ -24,7 +24,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     use InputFilter;
 
     /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="AssignableComposite", inversedBy="teams")
+     * @ORM\ManyToMany(targetEntity="AssignableComposite", inversedBy="teams")
      * @ORM\JoinTable(name="assignee_teams")
      * @MaxDepth(2)
      */
@@ -255,8 +255,14 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDisplayName()
     {
-        return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
+        if (null !== $this->groupName) {
+            return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
+        }
+        return $this->getName();
     }
 }

@@ -108,6 +108,10 @@ class TeamTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->team->setGroupName($group) instanceof Team);
 
         $this->assertEquals($expected, $this->team->getDisplayName());
+
+        $this->team->setGroupName(null);
+
+        $this->assertEquals($name, $this->team->getDisplayName());
     }
 
     /**
