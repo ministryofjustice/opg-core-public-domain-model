@@ -122,10 +122,10 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setFirstname($name)->setSurname($secondName);
         $this->assertFalse($caseItemMock->isAssigned());
-        $caseItemMock->assign($user);
+        $caseItemMock->setAssignedUser($user);
         $this->assertTrue($caseItemMock->isAssigned());
 
-        $this->assertEquals($name, $caseItemMock->getAssignee()->getFirstName());
+        $this->assertEquals($name, $caseItemMock->getAssignedUser()->getFirstName());
     }
 
     public function testSetGetNotes()

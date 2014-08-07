@@ -336,6 +336,12 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $noticeGivenDate;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $applicantType;
+
     public function __construct()
     {
         parent::__construct();
@@ -1477,4 +1483,22 @@ abstract class PowerOfAttorney extends CaseItem
         return (bool)$this->paymentRemission;
     }
 
+    /**
+     * @param string $applicantType
+     * @return PowerOfAttorney
+     */
+    public function setApplicantType($applicantType)
+    {
+        $this->applicantType = $applicantType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantType()
+    {
+        return $this->applicantType;
+    }
 }
