@@ -480,7 +480,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'noNoticeGiven'                             => false,
                 'businessRules'                             => array(),
                 'normalizedUid'                             => null,
-                'rejectedDate'                              => null
+                'rejectedDate'                              => null,
+                'applicantType'                             => null
             ),
             $lpa->toArrayRecursive()
         );
@@ -878,7 +879,12 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $task2->setActiveDateString(date('d/m/Y', strtotime('tomorrow')));
         $this->lpa->addTask($task2);
 
-        $this->assertEquals(1, count($this->lpa->filterTasks()));
+        $task3 = new Task();
+        $task3->setActiveDateString(date('d/m/Y', strtotime('yesterday')));
+        $this->lpa->addTask($task3);
+
+
+        $this->assertEquals(2, count($this->lpa->filterTasks()));
     }
 
     public function testUIDValidatorFailsInvalidChecksum()
@@ -951,5 +957,15 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             1,
             $lpa->getAttorneys()->count()
         );
+    }
+
+    public function testGetSetApplicantType()
+    {
+        $expected = 'Test Type';
+
+        $this->assertEmpty($this->lpa->getApplicantType());
+        $this->lpa->setApplicantType($expected);
+
+        $this->assertEquals($expected, $this->lpa->getApplicantType());
     }
 }

@@ -823,10 +823,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function setAssignedUser(AssignableComposite $user = null)
     {
-        if (null === $user) {
-            $user = new NullEntity();
-        }
-
         return $this->assign($user);
     }
 
