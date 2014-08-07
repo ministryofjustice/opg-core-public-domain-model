@@ -200,11 +200,7 @@ class Queue
      */
     public function getCreated()
     {
-        if ($this->created) {
-            return clone $this->created;
-        }
-
-        return null;
+        return  $this->created;
     }
 
     /**
@@ -228,11 +224,7 @@ class Queue
      */
     public function getScheduled()
     {
-        if ($this->scheduled) {
-            return clone $this->scheduled;
-        }
-
-        return null;
+        return  $this->scheduled;
     }
 
     /**
@@ -256,11 +248,7 @@ class Queue
      */
     public function getExecuted()
     {
-        if ($this->executed) {
-            return clone $this->executed;
-        }
-
-        return null;
+        return $this->executed;
     }
 
     /**
@@ -284,11 +272,7 @@ class Queue
      */
     public function getFinished()
     {
-        if ($this->finished) {
-            return clone $this->finished;
-        }
-
-        return null;
+        return  $this->finished;
     }
 
     /**
