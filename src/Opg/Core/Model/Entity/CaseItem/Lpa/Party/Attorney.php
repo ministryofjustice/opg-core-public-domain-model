@@ -48,6 +48,8 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     /**
      * @ORM\Column(type = "integer", nullable = true)
      * @var int
+     * @Type("boolean")
+     * @Accessor(getter="getIsAttorneyApplyingToRegister", setter="setIsAttorneyApplyingToRegister")
      */
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 
@@ -208,22 +210,37 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     }
 
     /**
-     * @param int $isAttorneyApplyingToRegister
+     * @param bool $isAttorneyApplyingToRegister
      *
      * @return Attorney
      */
-    public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = self::OPTION_FALSE)
+    public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = null)
     {
-        $this->isAttorneyApplyingToRegister = $isAttorneyApplyingToRegister;
+        switch ($isAttorneyApplyingToRegister) {
+            case true:
+                $this->isAttorneyApplyingToRegister = self::OPTION_TRUE;
+                break;
+            case false:
+                $this->isAttorneyApplyingToRegister = self::OPTION_FALSE;
+                break;
+            default:
+                $this->isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
+        }
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return bool
      */
     public function getIsAttorneyApplyingToRegister()
     {
-        return $this->isAttorneyApplyingToRegister;
+        switch ($this->isAttorneyApplyingToRegister) {
+            case self::OPTION_TRUE:
+                return (bool)true;
+                break;
+            default:
+                return (bool)false;
+        }
     }
 }
