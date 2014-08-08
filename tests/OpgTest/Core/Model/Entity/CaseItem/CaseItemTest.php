@@ -506,7 +506,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetRejectedDateString()
     {
-        $expected = (new \DateTime())->format(OPGDateFormat::getDateFormat());
+        $expected = (new \DateTime())->format(OPGDateFormat::getDateFormat()) . ' 00:00:01';
         $mock = $this->getMockedClass();
 
         $this->assertEmpty($mock->getRejectedDateString());
