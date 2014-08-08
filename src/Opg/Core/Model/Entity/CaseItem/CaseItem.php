@@ -209,7 +209,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $ragTotal;
 
     /**
-     * @ORM\Column(type = "date", nullable = true)
+     * @ORM\Column(type = "datetime", nullable = true)
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list"})
@@ -861,7 +861,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function getRejectedDateString()
     {
         if (null !== $this->rejectedDate) {
-            return $this->rejectedDate->format(OPGDateFormat::getDateFormat());
+            return $this->rejectedDate->format(OPGDateFormat::getDateTimeFormat());
         }
 
         return '';
