@@ -3,15 +3,34 @@
 namespace OpgTest\Core\Model\Entity\PowerOfAttorney;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantFactory;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
+use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorneyFactory;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
+class PowerOfAttorneyStub extends  PowerOfAttorney
+{
+    public function addPerson(Person $person)
+    {
+        return $this;
+    }
+
+    public function __unset($key)
+    {
+        switch($key) {
+            case 'applicants' :
+                $this->applicants = null;
+                break;
+        }
+    }
+}
 class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     /**
@@ -21,7 +40,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->poa = $this->getMockForAbstractClass('Opg\\Core\\Model\\Entity\\PowerOfAttorney\\PowerOfAttorney');
+        $this->poa = new PowerOfAttorneyStub();
     }
 
     public function testSetUp()
@@ -478,5 +497,20 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->poa->setNoNoticeGiven(true);
 
         $this->assertTrue($this->poa->getNoNoticeGiven());
+    }
+
+    public function testGetSetApplicants()
+    {
+        unset($this->poa->{'applicants'});
+        $this->assertTrue($this->poa->getApplicants() instanceof ArrayCollection);
+
+        unset($this->poa->{'applicants'});
+        $person = (new Donor())->setId(3);
+
+        $this->poa->addApplicant($person);
+        $this->assertTrue($this->poa->getApplicants() instanceof ArrayCollection);
+        $this->assertEquals($this->poa->getApplicants()->toArray()[0], $person);
+
+
     }
 }

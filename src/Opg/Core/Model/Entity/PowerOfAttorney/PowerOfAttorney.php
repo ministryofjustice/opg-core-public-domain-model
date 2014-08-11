@@ -712,6 +712,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function getApplicants()
     {
+        if (null ===  $this->applicants) {
+            $this->applicants = new ArrayCollection();
+        }
+
         return $this->applicants;
     }
 
@@ -722,6 +726,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addApplicant(Person $applicant)
     {
+        if (null === $this->applicants) {
+            $this->applicants = new ArrayCollection();
+        }
+
         if (!$this->applicants->contains($applicant)) {
             $this->applicants->add($applicant);
         }
