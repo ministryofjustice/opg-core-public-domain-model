@@ -192,6 +192,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Person\Person>")
      */
     private $children;
 
