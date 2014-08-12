@@ -757,6 +757,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function getAttorneys()
     {
+        if (null === $this->attorneys) {
+            $this->attorneys = new ArrayCollection();
+        }
+
         return $this->attorneys;
     }
 
