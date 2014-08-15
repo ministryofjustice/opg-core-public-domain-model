@@ -100,7 +100,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", mappedBy="members")
      * @var ArrayCollection
      * @Groups({"api-poa-list","api-task-list"})
-     * @MaxDepth(2)
+     * @MaxDepth(3)
      */
     protected $teams;
 
