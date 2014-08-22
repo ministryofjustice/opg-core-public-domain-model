@@ -16,8 +16,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         'id'           => 123,
         'pageNumber'   => 1,
         'document'     => null,
-        'thumbnail'    => 'http://thumbnail.abc.com',
-        'main'         => 'http://main.abc.com',
+        'uri'          => '',
         'text'         => 'testtext',
         'errorMessages' => array()
     );
@@ -61,18 +60,11 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->data['pageNumber'], $this->page->getPageNumber());
     }
 
-    public function testGetSetThumbernail()
+    public function testGetSetUri()
     {
-        $this->page->setThumbnail($this->data['thumbnail']);
+        $this->page->setUri($this->data['uri']);
 
-        $this->assertEquals($this->data['thumbnail'], $this->page->getThumbnail());
-    }
-
-    public function testGetSetMain()
-    {
-        $this->page->setMain($this->data['main']);
-
-        $this->assertEquals($this->data['main'], $this->page->getMain());
+        $this->assertEquals($this->data['uri'], $this->page->getUri());
     }
 
     public function testGetSetText()
