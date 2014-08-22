@@ -3,28 +3,28 @@
 namespace OpgTest\Common\Exception;
 
 use Opg\Common\Exception\OPGBaseException;
+use Opg\Common\Exception\OPGException;
 
-class OPGBaseExceptionStub extends OPGBaseException{}
 
-class OPGBaseExceptionTest extends \PHPUnit_Framework_TestCase {
+class OPGExceptionTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var OPGBaseExceptionStub
+     * @var OPGException
      */
     protected $exception;
 
     public function setUp()
     {
-        $this->exception = new OPGBaseExceptionStub(get_class($this), 3, 'bar');
+        $this->exception = new OPGException(get_class($this), 3, 'bar');
     }
 
     public function testSetUp()
     {
-        $this->assertTrue($this->exception instanceof OPGBaseExceptionStub);
+        $this->assertTrue($this->exception instanceof OPGException);
         $this->assertEquals('unexpectedValue', $this->exception->getMessageDescriptor());
         $this->assertEquals(3, $this->exception->getCode());
         $this->assertEquals(
-            'OpgTest\Common\Exception\OPGBaseExceptionTest',
+            'OpgTest\Common\Exception\OPGExceptionTest',
             $this->exception->getMessage()
         );
     }
