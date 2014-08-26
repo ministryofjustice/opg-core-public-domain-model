@@ -68,4 +68,15 @@ class DateFormatTest extends \PHPUnit_Framework_TestCase
             OPGDateFormat::createDateTime($mysqlTest)->format(OPGDateFormat::getDateTimeFormat())
         );
     }
+
+    public function testCreateDateTimeFromBanktec()
+    {
+        $expected = date('dmY');
+
+        $this->assertTrue(OPGDateFormat::createDateTime($expected) instanceof \DateTime);
+        $this->assertEquals(
+            $expected,
+            OPGDateFormat::createDateTime($expected)->format(OPGDateFormat::getBanktecFormat())
+        );
+    }
 }

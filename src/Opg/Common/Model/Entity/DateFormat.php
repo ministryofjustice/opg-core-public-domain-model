@@ -16,6 +16,8 @@ final class DateFormat
     const REGEXP_DATE_TIME = '/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
 
     const REGEXP_MYSQL_DATE_TIME = '/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
+
+    const REGEXP_BANKTEC_FORMAT = '/^\d{8}$/';
     /**
      * @var string
      */
@@ -30,6 +32,11 @@ final class DateFormat
      * @var string
      */
     protected static $DateTimeSqlExport = 'Y-m-d H:i:s';
+
+    /**
+     * @var string
+     */
+    protected static $BanktecDateFormat = 'dmY';
 
     /**
      * @return string
@@ -56,6 +63,15 @@ final class DateFormat
     }
 
     /**
+     * @return string
+     */
+    public static function getBanktecFormat()
+    {
+        return self::$BanktecDateFormat;
+    }
+
+
+    /**
      * @param $strDateTime
      *
      * @return \DateTime
@@ -73,6 +89,10 @@ final class DateFormat
 
         if (preg_match(self::REGEXP_MYSQL_DATE_TIME, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::$DateTimeSqlExport, $strDateTime);
+        }
+
+        if(preg_match(self::REGEXP_BANKTEC_FORMAT, trim($strDateTime))) {
+            return \DateTime::createFromFormat(self::getBanktecFormat(), $strDateTime);
         }
 
         throw new InvalidDateFormatException(
