@@ -41,16 +41,9 @@ class Page implements EntityInterface, \IteratorAggregate
     private $pageNumber;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
-    private $thumbnail;
-
-    /**
-     * @ORM\Column(type = "text", nullable = true)
-     * @var string
-     */
-    private $main;
+    private $uri;
 
     /**
      * @ORM\Column(type = "text", nullable = true)
@@ -114,13 +107,13 @@ class Page implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $main
+     * @param string $uri
      *
      * @return Page
      */
-    public function setMain($main)
+    public function setUri($uri)
     {
-        $this->main = (string)$main;
+        $this->uri = (string)$uri;
 
         return $this;
     }
@@ -128,9 +121,9 @@ class Page implements EntityInterface, \IteratorAggregate
     /**
      * @return string
      */
-    public function getMain()
+    public function getUri()
     {
-        return $this->main;
+        return $this->uri;
     }
 
     /**
@@ -151,26 +144,6 @@ class Page implements EntityInterface, \IteratorAggregate
     public function getPageNumber()
     {
         return $this->pageNumber;
-    }
-
-    /**
-     * @param string $thumbnail
-     *
-     * @return Page
-     */
-    public function setThumbnail($thumbnail)
-    {
-        $this->thumbnail = (string)$thumbnail;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
     }
 
     /**
