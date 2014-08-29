@@ -19,6 +19,7 @@ use Opg\Core\Model\Entity\Assignable\IsAssignee;
 
 /**
  * @ORM\Entity
+ * @ORM\EntityListeners({"Application\Listener\UserListener"})
  */
 class User extends AssignableComposite implements EntityInterface, IsAssignee
 {
