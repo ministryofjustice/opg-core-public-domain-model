@@ -204,6 +204,12 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      */
     protected $warnings;
 
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $occupation;
+
     public function __construct()
     {
         $this->deputyships      = new ArrayCollection();
@@ -797,5 +803,25 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
             }
         }
         return $warningBucket;
+    }
+
+    /**
+     * @return string $occupation
+     */
+    public function getOccupation()
+    {
+        return $this->occupation;
+    }
+
+    /**
+     * @param string $occupation
+     *
+     * @return Attorney
+     */
+    public function setOccupation($occupation)
+    {
+        $this->occupation = $occupation;
+
+        return $this;
     }
 }
