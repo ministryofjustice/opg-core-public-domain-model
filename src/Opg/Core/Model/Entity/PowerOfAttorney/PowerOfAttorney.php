@@ -342,6 +342,14 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $applicantType;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCancellationDateString",setter="setCancellationDateString")
+     */
+    protected $cancellationDate;
+
     public function __construct()
     {
         parent::__construct();
@@ -1512,5 +1520,45 @@ abstract class PowerOfAttorney extends CaseItem
     public function getApplicantType()
     {
         return $this->applicantType;
+    }
+
+    /**
+     * @param \DateTime $cancellationDate
+     * @return PowerOfAttorney
+     */
+    public function setCancellationDate(\DateTime $cancellationDate = null)
+    {
+        $this->cancellationDate = $cancellationDate;
+
+        return $this;
+    }
+
+    /**
+     * @param $cancellationDate
+     * @return PowerOfAttorney
+     */
+    public function setCancellationDateString($cancellationDate)
+    {
+        return $this->setCancellationDate(OPGDateFormat::createDateTime($cancellationDate));
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCancellationDate()
+    {
+        return $this->cancellationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCancellationDateString()
+    {
+        if ($this->cancellationDate instanceof \DateTime) {
+            return $this->cancellationDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 }

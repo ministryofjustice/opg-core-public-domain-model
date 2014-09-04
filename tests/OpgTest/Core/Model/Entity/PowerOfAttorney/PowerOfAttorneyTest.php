@@ -513,4 +513,33 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
 
     }
+
+    public function testGetSetCancellationDate()
+    {
+        $expected = new \DateTime();
+
+        $this->assertEmpty($this->poa->getCancellationDate());
+        $this->assertTrue($this->poa->setCancellationDate($expected) instanceof PowerOfAttorney);
+        $this->assertEquals($expected, $this->poa->getCancellationDate());
+    }
+
+    public function testGetSetCancellationDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->poa->getCancellationDateString());
+        $this->assertTrue($this->poa->setCancellationDateString($expected) instanceof PowerOfAttorney);
+        $this->assertEquals($expected, $this->poa->getCancellationDateString());
+    }
+
+    /**
+     * @expectedException \Opg\Common\Model\Entity\Exception\InvalidDateFormatException
+     */
+    public function testGetSetCancellationDateStringFails()
+    {
+        $expected = 'Invalid date';
+
+        $this->assertEmpty($this->poa->getCancellationDate());
+        $this->assertTrue($this->poa->setCancellationDateString($expected) instanceof PowerOfAttorney);
+    }
 }
