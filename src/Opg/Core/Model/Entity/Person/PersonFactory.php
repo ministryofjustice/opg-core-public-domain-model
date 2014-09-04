@@ -37,8 +37,11 @@ class PersonFactory
                 case "Correspondent" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Correspondent";
                     break;
-                default:
+                case "Donor" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
+                    break;
+                default:
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NonCaseContact";
                     break;
             }
         } else {
