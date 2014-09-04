@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class NoneCaseContact
  * @package Opg\Core\Model\Entity\CaseActor
  */
-class NoneCaseContact extends BasePerson
+class NonCaseContact extends BasePerson
 {
     use ToArray;
 
