@@ -190,15 +190,12 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      */
     public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = null)
     {
-        switch ($isAttorneyApplyingToRegister) {
-            case true:
-                $this->isAttorneyApplyingToRegister = self::OPTION_TRUE;
-                break;
-            case false:
-                $this->isAttorneyApplyingToRegister = self::OPTION_FALSE;
-                break;
-            default:
-                $this->isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
+        if ($isAttorneyApplyingToRegister === true) {
+            $this->isAttorneyApplyingToRegister = self::OPTION_TRUE;
+        } elseif ($isAttorneyApplyingToRegister === false) {
+            $this->isAttorneyApplyingToRegister = self::OPTION_FALSE;
+        } else {
+            $this->isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
         }
 
         return $this;
