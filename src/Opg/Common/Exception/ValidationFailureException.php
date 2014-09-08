@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Opg\Common\Exception;
 
 /**
