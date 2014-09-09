@@ -195,7 +195,7 @@ class Epa extends PowerOfAttorney
      *
      * @return  Epa
      */
-    public function setOtheEpaInfo($epaInfo)
+    public function setOtherEpaInfo($epaInfo)
     {
         $this->otherEpaInfo = $epaInfo;
 
