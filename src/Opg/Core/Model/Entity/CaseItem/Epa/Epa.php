@@ -46,9 +46,19 @@ class Epa extends PowerOfAttorney
      * @ReadOnly
      * @var ArrayCollection
      */
-    protected $relatives;
+    protected $notifiedRelatives;
     
-
+    /**
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Relative")
+     * @ORM\JoinTable(name="pa_notified_attorneys",
+     *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="notified_attorney_id", referencedColumnName="id")}
+     * )
+     * @ReadOnly
+     * @var ArrayCollection
+     */
+    protected $notifiedAttorneys;
+    
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
@@ -88,7 +98,7 @@ class Epa extends PowerOfAttorney
     
     public function __construct()
     {
-        $this->relatives = new ArrayCollection();
+        $this->notifiedRelatives = new ArrayCollection();
     }
 
     /**
@@ -139,26 +149,6 @@ class Epa extends PowerOfAttorney
         }
 
         return '';
-    }
-
-    /**
-     * @param  string $fullName
-     *
-     * @return Epa
-     */
-    public function setDonorEpaSignatoryFullName($fullName)
-    {
-        $this->epaDonorSignatoryFullName = $fullName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDonorEpaSignatoryFullName()
-    {
-        return $this->epaDonorSignatoryFullName;
     }
 
     /**
@@ -233,40 +223,18 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param string $trustCorporationSignedAs
-     * @return Epa
-     */
-    public function setTrustCorporationSignedAs($trustCorporationSignedAs)
-    {
-        $this->trustCorporationSignedAs =
-            ($trustCorporationSignedAs === 'I') ?
-                self::PERMISSION_GIVEN_SINGULAR :
-                self::PERMISSION_GIVEN_PLURAL;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTrustCorporationSignedAs()
-    {
-        return ($this->trustCorporationSignedAs === self::PERMISSION_GIVEN_SINGULAR) ? 'I' : 'We';
-    }
-    
-    /**
      * @param Relative $relative
      *
      * @return EPA
      */
-    public function addRelative(Relative $relative)
+    public function addNotifiedRelative(Relative $relative)
     {
-        if (is_null($this->relatives)) {
-            $this->relatives = new ArrayCollection();
+        if (is_null($this->notifiedRelatives)) {
+            $this->notifiedRelatives = new ArrayCollection();
         }
 
-        if (!$this->relatives->contains($relative)) {
-            $this->relatives->add($relative);
+        if (!$this->notifiedRelatives->contains($relative)) {
+            $this->notifiedRelatives->add($relative);
         }
 
         return $this;
@@ -275,13 +243,13 @@ class Epa extends PowerOfAttorney
     /**
      * @return ArrayCollection $relatives
      */
-    public function getRelatives()
+    public function getNotifiedRelatives()
     {
-        if (null === $this->relatives) {
-            $this->relatives = new ArrayCollection();
+        if (null === $this->notifiedRelatives) {
+            $this->notifiedRelatives = new ArrayCollection();
         }
 
-        return $this->relatives;
+        return $this->notifiedRelatives;
     }
 
     /**
@@ -289,7 +257,7 @@ class Epa extends PowerOfAttorney
      *
      * @return EPA
      */
-    public function setRelatives(ArrayCollection $relatives)
+    public function setNotifiedRelatives(ArrayCollection $relatives)
     {
         foreach ($relatives as $relative) {
             $this->addRelative($relative);
@@ -298,4 +266,48 @@ class Epa extends PowerOfAttorney
         return $this;
     }
 
+
+    /**
+     * @param Attorney $attorney
+     *
+     * @return EPA
+     */
+    public function addNotifiedAttorney(Attorney $attorney)
+    {
+        if (is_null($this->notifiedAttorneys)) {
+            $this->notifiedAttorneys = new ArrayCollection();
+        }
+
+        if (!$this->notifiedAttorneys->contains($attorney)) {
+            $this->notifiedAttorneys->add($attorney);
+        }
+
+        return $this;
+    }
+    
+    /**
+     * @return ArrayCollection $attorneys
+     */
+    public function getNotifiedAttorneys()
+    {
+        if (null === $this->notifiedAttorneys) {
+            $this->notifiedAttorneys = new ArrayCollection();
+        }
+
+        return $this->notifiedAttorneys;
+    }
+
+    /**
+     * @param ArrayCollection $attorneys
+     *
+     * @return EPA
+     */
+    public function setNotifiedAttorneys(ArrayCollection $attorneys)
+    {
+        foreach ($attorneys as $attorney) {
+            $this->addNotifiedAttorney($attorney);
+        }
+
+        return $this;
+    }
 }
