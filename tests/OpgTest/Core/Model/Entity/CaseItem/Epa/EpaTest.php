@@ -198,84 +198,97 @@ class EpaTest extends \PHPUnit_Framework_TestCase
     /**
      * @group array-recursive
      */
-//    public function testArrayRecursive()
-//    {
-//        $epa = new Epa();
-//        $epa->setDonor(new Donor());
-//        $epa->addApplicant(new Attorney());
-//        $epa->addAttorney(new Attorney());
-//        $epa->addNotifiedPerson(new NotifiedPerson());
-//        $epa->addDocument($doc = new Document());
-//        $doc->addPage(new Page());
-//
-//        $this->assertEquals(
-//            array(
-//                'donor'                                     => array(),
-//                'correspondent'                             => null,
-//                'applicants'                                => array(),
-//                'attorneys'                                 => array(),
-//                'notifiedPersons'                           => array(),
-//                'id'                                        => null,
-//                'title'                                     => null,
-//                'caseType'                                  => 'epa',
-//                'caseSubtype'                               => null,
-//                'dueDate'                                   => null,
-//                'status'                                    => null,
-//                'assignee'                                  => null,
-//                'tasks'                                     => array(),
-//                'notes'                                     => array(),
-//                'documents'                                 => array(),
-//                'caseItems'                                 => array(),
-//                'uId'                                       => null,
-//                'inputFilter'                               => null,
-//                'errorMessages'                             => array(),
-//                'taskStatus'                                => array(),
-//                'EpaDonorSignatureDate'                     => null,
-//                'donorHasPreviousLpas'                      => false,
-//                'previousLpaInfo'                           => null,
-//                'usesNotifiedPersons'                       => false,
-//                'notifiedPersonPermissionBy'                => 1,
-//                'attorneyPartyDeclaration'                  => 1,
-//                'attorneyApplicationAssertion'              => 1,
-//                'attorneyMentalActPermission'               => 1,
-//                'attorneyDeclarationSignatureDate'          => null,
-//                'correspondentComplianceAssertion'          => 1,
-//                'certificateProviders'                      => array(),
-//                'paymentByDebitCreditCard'                  => 0,
-//                'paymentByCheque'                           => 0,
-//                'feeExemptionAppliedFor'                    => 0,
-//                'feeRemissionAppliedFor'                    => 0,
-//                'caseAttorneySingular'                      => false,
-//                'caseAttorneyJointlyAndSeverally'           => false,
-//                'caseAttorneyJointly'                       => false,
-//                'caseAttorneyJointlyAndJointlyAndSeverally' => false,
-//                'lpaCreatedDate'                            => null,
-//                'lpaReceiptDate'                            => null,
-//                'oldCaseId'                                 => null,
-//                'applicationType'                           => 0,
-//                'registrationDate'                          => null,
-//                'closedDate'                                => null,
-//                'lifeSustainingTreatment'                   => null,
-//                'lifeSustainingTreatmentSignatureDate'      => null,
-//                'notificationDate'                          => null,
-//                'dispatchDate'                              => null,
-//                'noticeGivenDate'                           => null,
-//                'correspondence'                            => null,
-//                'ragRating'                                 => null,
-//                'ragTotal'                                  => null,
-//                'paymentRemission'                          => 0,
-//                'paymentExemption'                          => 0,
-//                'trustCorporationSignedAs'                  => null,
-//                'noNoticeGiven'                             => false,
-//                'businessRules'                             => array(),
-//                'normalizedUid'                             => null,
-//                'rejectedDate'                              => null,
-//                'applicantType'                             => null,
-//                'cancellationDate'                          => null
-//            ),
-//            $epa->toArrayRecursive()
-//        );
-//    }
+    public function testArrayRecursive()
+    {
+        $epa = new Epa();
+        $epa->setDonor(new Donor());
+        $epa->addAttorney(new Attorney());
+        $epa->addNotifiedRelative(new NotifiedRelative());
+        $epa->addNotifiedAttorney(new NotifiedAttorney());
+        $epa->addDocument($doc = new Document());
+        $doc->addPage(new Page());
+        
+        $this->assertEquals(
+            array(
+                'caseType'							        => 'epa',
+                'notifiedRelatives'                         => array(),
+                'notifiedAttorneys'                         => array(),
+                'epaDonorSignatureDate'                     => null, 
+                'donorHasOtherEpas'                         => false,
+                'otherEpaInfo'                              => null,
+                'donor'                                     => array(),
+                'correspondent'                             => null,
+                'applicants'                                => null,
+                'attorneys'                                 => array(),
+                'notifiedPersons'                           => null,
+                'usesNotifiedPersons'				        => false,
+                'noNoticeGiven'                             => false,
+                'notifiedPersonPermissionBy'                => 1,
+                'certificateProviders'                      => null,
+                'paymentByDebitCreditCard'                  => 0,
+                'paymentByCheque'                           => 0,
+                'feeExemptionAppliedFor'                    => 0,
+                'feeRemissionAppliedFor'                    => 0,
+                'caseAttorneySingular'                      => false,
+                'caseAttorneyJointlyAndSeverally'           => false,
+                'caseAttorneyJointly'                       => false,
+                'caseAttorneyJointlyAndJointlyAndSeverally' => false,
+                'cardPaymentContact'                        => null,
+                'howAttorneysAct'                           => null,
+                'howReplacementAttorneysAct'                => null,
+                'attorneyActDecisions'                      => null,
+                'replacementAttorneyActDecisions'           => null,
+                'replacementOrder'                          => null,
+                'restrictions'                              => null,
+                'guidance'                                  => null,
+                'charges'                                   => null,
+                'additionalInfo'                            => null,
+                'paymentId'                                 => null,
+                'paymentAmount'                             => null,
+                'paymentDate'                               => null,
+                'paymentRemission'                          => 0,
+                'paymentExemption'                          => 0,
+                'attorneyPartyDeclaration'                  => 1,
+                'attorneyApplicationAssertion'              => 1,
+                'attorneyMentalActPermission'               => 1,
+                'attorneyDeclarationSignatureDate'          => null,
+                'attorneyDeclarationSignatoryFullName'      => null,
+                'correspondentComplianceAssertion'          => 1,
+                'notificationDate'                          => null,
+                'dispatchDate'                              => null,
+                'noticeGivenDate'                           => null,
+                'applicantType'                             => null,
+                'cancellationDate'                          => null,
+                'id'                                        => null,
+                'oldCaseId'                                 => null,
+                'applicationType'                           => 0,
+                'title'                                     => null,
+                'caseSubtype'                               => null,
+                'dueDate'                                   => null,
+                'registrationDate'                          => null,
+                'closedDate'                                => null,
+                'status'                                    => null,
+                'tasks'                                     => null,
+                'notes'                                     => null,
+                'documents'                                 => array(),
+                'correspondence'                            => null,
+                'caseItems'                                 => null,
+                'taskStatus'                                => array(),
+                'ragRating'                                 => null,
+                'ragTotal'                                  => null,
+                'rejectedDate'                              => null,
+                'businessRules'                             => null,
+                'uId'                                       => null,
+                'normalizedUid'                             => null,
+                'inputFilter'                               => null,
+                'errorMessages'                             => array(),
+                'assignee'                                  => null,
+                'epaDonorNoticeGivenDate'					=> null,
+                'personNotifyDonor'							=> null,
+            ),
+            $epa->toArrayRecursive()
+        );
+    }
 
     public function testAddPerson()
     {
@@ -425,27 +438,6 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($this->epa->filterTasks()));
     }
 
-//    public function testUIDValidatorFailsInvalidChecksum()
-//    {
-//        $uid = '12345';
-//
-//        $this->epa->setUid($uid);
-//
-//        $this->assertFalse($this->epa->isValid(array('uId')));
-//
-//        $this->assertCount(2, $this->epa->getErrorMessages()['errors']['uId']);
-//
-//        $this->assertEquals(
-//            "The uid '12345' is not in the expected format",
-//            $this->epa->getErrorMessages()['errors']['uId']['incorrectFormat']
-//        );
-//
-//        $this->assertEquals(
-//            "The uid '12345' did not validate against its checksum.",
-//            $this->epa->getErrorMessages()['errors']['uId']['invalidChecksum']
-//        );
-//    }
-
     public function testUIDValidatorPassesInvalidChecksum()
     {
         $uid = '700000011440';
@@ -457,20 +449,6 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->epa->getErrorMessages()['errors']);
 
     }
-
-//    public function testIdOutOfRangeFails()
-//    {
-//        $id = PHP_INT_MAX;
-//
-//        $this->epa->setId($id);
-//
-//        $this->assertFalse($this->epa->isValid(array('id')));
-//
-//        $this->assertEquals(
-//            "'9223372036854775807' exceeds the maximum integer range allowed.",
-//            $this->epa->getErrorMessages()['errors']['id']['outOfRange']
-//        );
-//    }
 
     public function testAttorneyCollectionCreatedIfNullWhenAddAttorneyCalled()
     {
