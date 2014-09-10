@@ -7,7 +7,8 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
-use Opg\Core\Model\Entity\CaseActor\Relative;
+use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
+use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -38,10 +39,10 @@ class Epa extends PowerOfAttorney
     protected $caseType = CaseTypeValidator::CASE_TYPE_EPA;
     
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Relative")
-     * @ORM\JoinTable(name="pa_relatives",
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedRelative")
+     * @ORM\JoinTable(name="pa_notified_relatives",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="relative_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="notified_relative_id", referencedColumnName="id")}
      * )
      * @ReadOnly
      * @var ArrayCollection
@@ -49,7 +50,7 @@ class Epa extends PowerOfAttorney
     protected $notifiedRelatives;
     
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Relative")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedAttorney")
      * @ORM\JoinTable(name="pa_notified_attorneys",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_attorney_id", referencedColumnName="id")}
@@ -69,13 +70,6 @@ class Epa extends PowerOfAttorney
     protected $epaDonorSignatureDate;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
-     * @Groups("api-task-list")
-     */
-    protected $epaDonorSignatoryFullName;
-
-    /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var bool
      * @Groups("api-task-list")
@@ -89,16 +83,10 @@ class Epa extends PowerOfAttorney
      */
     protected $otherEpaInfo;
 
-    /**
-     * @ORM\Column(type = "integer",options={"default":1})
-     * @var string
-     * @Accessor(getter="getTrustCorporationSignedAs",setter="setTrustCorporationSignedAs")
-     */
-    protected $trustCorporationSignedAs;
-    
     public function __construct()
     {
         $this->notifiedRelatives = new ArrayCollection();
+        $this->notifiedAttorneys = new ArrayCollection();
     }
 
     /**
@@ -205,12 +193,12 @@ class Epa extends PowerOfAttorney
      */
     public function addPerson(Person $person)
     {
-        if ($person instanceof AttorneyAbstract) {
+        if ($person instanceof NotifiedAttorney) {
+            $this->addNotifiedAttorney($person);
+        } elseif ($person instanceof AttorneyAbstract) {
             $this->addAttorney($person);
-        } elseif ($person instanceof Relative) {
-            $this->addRelative($person);
-        } elseif ($person instanceof NotifiedPerson) {
-            $this->addNotifiedPerson($person);
+        } elseif ($person instanceof NotifiedRelative) {
+            $this->addNotifiedRelative($person);
         } elseif ($person instanceof Correspondent) {
             $this->setCorrespondent($person);
         } elseif ($person instanceof Donor) {
@@ -223,25 +211,25 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param Relative $relative
+     * @param NotifiedRelative $notifiedRelative
      *
      * @return EPA
      */
-    public function addNotifiedRelative(Relative $relative)
+    public function addNotifiedRelative(NotifiedRelative $notifiedRelative)
     {
         if (is_null($this->notifiedRelatives)) {
             $this->notifiedRelatives = new ArrayCollection();
         }
 
-        if (!$this->notifiedRelatives->contains($relative)) {
-            $this->notifiedRelatives->add($relative);
+        if (!$this->notifiedRelatives->contains($notifiedRelative)) {
+            $this->notifiedRelatives->add($notifiedRelative);
         }
 
         return $this;
     }
     
     /**
-     * @return ArrayCollection $relatives
+     * @return ArrayCollection $notifiedRelatives
      */
     public function getNotifiedRelatives()
     {
@@ -253,14 +241,14 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param ArrayCollection $relatives
+     * @param ArrayCollection $notifiedRelatives
      *
      * @return EPA
      */
-    public function setNotifiedRelatives(ArrayCollection $relatives)
+    public function setNotifiedRelatives(ArrayCollection $notifiedRelatives)
     {
-        foreach ($relatives as $relative) {
-            $this->addRelative($relative);
+        foreach ($notifiedRelatives as $notifiedRelative) {
+            $this->addRelative($notifiedRelative);
         }
 
         return $this;
@@ -268,11 +256,11 @@ class Epa extends PowerOfAttorney
 
 
     /**
-     * @param Attorney $attorney
+     * @param NotifiedAttorney $attorney
      *
      * @return EPA
      */
-    public function addNotifiedAttorney(Attorney $attorney)
+    public function addNotifiedAttorney(NotifiedAttorney $attorney)
     {
         if (is_null($this->notifiedAttorneys)) {
             $this->notifiedAttorneys = new ArrayCollection();
