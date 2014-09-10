@@ -1,6 +1,10 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Epa;
 
+use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
+
+use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
@@ -285,10 +289,15 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->addPerson($attorney);
         $this->assertEquals($attorney, $this->epa->getAttorneys()[0]);
 
-        $notifiedPerson = new NotifiedPerson();
-        $notifiedPerson->setId('1');
-        $this->epa->addPerson($notifiedPerson);
-        $this->assertEquals($notifiedPerson, $this->epa->getNotifiedPersons()[0]);
+        $notifiedRelative = new NotifiedRelative();
+        $notifiedRelative->setId('1');
+        $this->epa->addPerson($notifiedRelative);
+        $this->assertEquals($notifiedRelative, $this->epa->getNotifiedRelatives()[0]);
+
+        $notifiedAttorney = new NotifiedAttorney();
+        $notifiedAttorney->setId('1');
+        $this->epa->addPerson($notifiedAttorney);
+        $this->assertEquals($notifiedAttorney, $this->epa->getNotifiedAttorneys()[0]);
 
         $correspondent = new Correspondent();
         $correspondent->setId('1');
@@ -360,13 +369,6 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->epa->hasOtherEpas());
         $this->assertEquals($expectedEpaInfo, $this->epa->getOtherEpaInfo());
-    }
-
-    public function testConstantsExist()
-    {
-        $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
-        $this->assertEquals($class::HW_FULLTEXTNAME, "Health and Welfare");
-        $this->assertEquals($class::PF_FULLTEXTNAME, "Property and Financial Affairs");
     }
 
     public function testGetRagRatingRed()
