@@ -54,6 +54,18 @@ class Epa extends PowerOfAttorney
     protected $personNotifyDonor;
     
     /**
+     * @ORM\Column(type = "boolean",options={"default"=0})
+     * @var bool
+     */
+    protected $hasRelativeToNotice;
+    
+    /**
+     * @ORM\Column(type = "boolean",options={"default"=0})
+     * @var bool
+     */
+    protected $areAllAttorneysApplyingToRegister;
+    
+    /**
      * It must have at least 3 relatives to be notified to create an EPA.
      *  
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedRelative")
@@ -301,7 +313,7 @@ class Epa extends PowerOfAttorney
      *
      * @return EPA
      */
-    public function addPersonNotifyDonor(NotifiedRelative $personNotifyDonor)
+    public function addPersonNotifyDonor(PersonNotifyDonor $personNotifyDonor)
     {
         $this->personNotifyDonor = $personNotifyDonor;
 
@@ -321,7 +333,7 @@ class Epa extends PowerOfAttorney
      *
      * @return EPA
      */
-    public function setPersonNotifyDonor(ArrayCollection $personNotifyDonor)
+    public function setPersonNotifyDonor(PersonNotifyDonor $personNotifyDonor)
     {
         $this->personNotifyDonor = $personNotifyDonor;
 
@@ -415,5 +427,45 @@ class Epa extends PowerOfAttorney
         }
 
         return $this;
+    }
+    
+    /**
+     * @param   bool $hasRelativeToNotice
+     *
+     * @return  Epa
+     */
+    public function setHasRelativeToNotice($hasRelativeToNotice)
+    {
+        $this->hasRelativeToNotice = (bool)$hasRelativeToNotice;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasRelativeToNotice()
+    {
+        return $this->hasRelativeToNotice;
+    }
+    
+    /**
+     * @param   bool $allAttorneyApplyingToRegister
+     *
+     * @return  Epa
+     */
+    public function setAreAllAttorneysApplyingToRegister($allAttorneyApplyingToRegister)
+    {
+        $this->areAllAttorneysApplyingToRegister = (bool)$allAttorneyApplyingToRegister;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAreAllAttorneysApplyingToRegister()
+    {
+        return $this->areAllAttorneysApplyingToRegister;
     }
 }

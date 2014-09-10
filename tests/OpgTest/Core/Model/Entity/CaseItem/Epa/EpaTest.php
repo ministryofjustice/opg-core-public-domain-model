@@ -1,6 +1,8 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Epa;
 
+use Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor;
+
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
@@ -283,8 +285,10 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'inputFilter'                               => null,
                 'errorMessages'                             => array(),
                 'assignee'                                  => null,
-                'epaDonorNoticeGivenDate'					=> null,
-                'personNotifyDonor'							=> null,
+                'epaDonorNoticeGivenDate'                   => null,
+                'personNotifyDonor'                         => null,
+                'hasRelativeToNotice'                       => null,
+                'areAllAttorneysApplyingToRegister'         => null,
             ),
             $epa->toArrayRecursive()
         );
@@ -301,6 +305,11 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $attorney->setId('1');
         $this->epa->addPerson($attorney);
         $this->assertEquals($attorney, $this->epa->getAttorneys()[0]);
+
+        $personNotifyDonor = new PersonNotifyDonor();
+        $personNotifyDonor->setId('1');
+        $this->epa->addPerson($personNotifyDonor);
+        $this->assertEquals($personNotifyDonor, $this->epa->getPersonNotifyDonor());
 
         $notifiedRelative = new NotifiedRelative();
         $notifiedRelative->setId('1');
@@ -370,18 +379,18 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->epa->getEpaDonorSignatureDateString());
     }
 
-    public function testGetSetPreviousEpa()
+    public function testGetSetOtherEpa()
     {
         $expectedOtherEpas = true;
-        $expectedEpaInfo      = "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
+        $expectedOtherEpaInfo      = "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
 
         $this->assertFalse($this->epa->hasOtherEpas());
 
         $this->epa->setDonorHasOtherEpas($expectedOtherEpas);
-        $this->epa->setOtherEpaInfo($expectedEpaInfo);
+        $this->epa->setOtherEpaInfo($expectedOtherEpaInfo);
 
         $this->assertTrue($this->epa->hasOtherEpas());
-        $this->assertEquals($expectedEpaInfo, $this->epa->getOtherEpaInfo());
+        $this->assertEquals($expectedOtherEpaInfo, $this->epa->getOtherEpaInfo());
     }
 
     public function testGetRagRatingRed()
@@ -501,5 +510,64 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->setApplicantType($expected);
 
         $this->assertEquals($expected, $this->epa->getApplicantType());
+    }
+    
+    public function testGetSetHasRelativeToNotice()
+    {
+        $this->assertNull($this->epa->getHasRelativeToNotice());
+        $this->epa->setHasRelativeToNotice(true);
+        $this->assertTrue($this->epa->getHasRelativeToNotice());
+        $this->epa->setHasRelativeToNotice(false);
+        $this->assertFalse($this->epa->getHasRelativeToNotice());
+    }
+    
+    public function testAreAllAttorneysApplyingToRegister()
+    {
+        $this->assertNull($this->epa->getAreAllAttorneysApplyingToRegister());
+        $this->epa->setAreAllAttorneysApplyingToRegister(true);
+        $this->assertTrue($this->epa->getAreAllAttorneysApplyingToRegister());
+        $this->epa->setAreAllAttorneysApplyingToRegister(false);
+        $this->assertFalse($this->epa->getAreAllAttorneysApplyingToRegister());
+    }
+    
+    public function testGetSetEpaDonorNoticeGivenDate()
+    {
+        $expectedDate          = new \DateTime();
+
+        $this->epa->setEpaDonorNoticeGivenDate($expectedDate);
+
+        $this->assertEquals($expectedDate, $this->epa->getEpaDonorNoticeGivenDate());
+
+    }
+
+    public function testGetSetEpaDonorNoticeGivenDateNulls()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDate());
+        $this->epa->setEpaDonorNoticeGivenDate();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->epa->getEpaDonorNoticeGivenDate()->format(OPGDateFormat::getDateFormat())
+        );
+    }
+
+    public function testGetSetEpaDonorNoticeGivenDateEmptyString()
+    {
+        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
+        $this->epa->setEpaDonorNoticeGivenDateString('');
+
+        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
+    }
+
+    public function testGetSetEpaDonorNoticeGivenDateString()
+    {
+        $expected = date(OPGDateFormat::getDateFormat());
+
+        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
+        $this->epa->setEpaDonorNoticeGivenDateString($expected);
+
+        $this->assertEquals($expected, $this->epa->getEpaDonorNoticeGivenDateString());
     }
 }
