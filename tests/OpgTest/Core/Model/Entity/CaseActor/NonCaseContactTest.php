@@ -30,6 +30,7 @@ class NoneCaseContactTest extends \PHPUnit_Framework_TestCase
         $expectedFirstName = 'Martin';
         $expectedMiddlename = 'Luther II';
         $expectedSurname   = 'King';
+        $expectedFullname = implode(' ', array($expectedFirstName, $expectedMiddlename, $expectedSurname));
 
         $this->assertTrue($this->ncc->setTitle($expectedTitle) instanceof NonCaseContact);
         $this->assertTrue($this->ncc->setFirstname($expectedFirstName) instanceof NonCaseContact);
@@ -39,10 +40,17 @@ class NoneCaseContactTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedFirstName, $this->ncc->getFirstname());
         $this->assertEquals($expectedSurname, $this->ncc->getSurname());
         
-        $this->assertTrue($this->ncc->setFullname(implode(' ', array($expectedFirstName, $expectedMiddlename, $expectedSurname))) instanceof NonCaseContact);
+        $this->assertTrue($this->ncc->setFullname($expectedFullname) instanceof NonCaseContact);
+        $this->assertEquals($expectedFullname, $this->ncc->getFullname());
         $this->assertEquals($expectedFirstName, $this->ncc->getFirstname());
         $this->assertEquals($expectedSurname, $this->ncc->getSurname());
         $this->assertEquals($expectedMiddlename, $this->ncc->getMiddlename());
+        
+        $this->assertTrue($this->ncc->setFullname(null) instanceof NonCaseContact);
+        $this->assertEquals($expectedFullname, $this->ncc->getFullname());
+        
+        $this->assertTrue($this->ncc->setFullname($expectedSurname) instanceof NonCaseContact);
+        $this->assertEquals($expectedSurname, $this->ncc->getSurname());
     }
 
     /**
