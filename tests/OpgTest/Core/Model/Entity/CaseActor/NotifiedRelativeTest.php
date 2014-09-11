@@ -25,61 +25,61 @@ class NotifiedRelativeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->na instanceof NotifiedRelative);
     }
 
-    public function testGetSetEpaNotifiedRelativeNoticeGivenDate()
+    public function testGetsetNoticeGivenDate()
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDate());
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDateString());
+        $this->assertEmpty($this->na->getNoticeGivenDate());
+        $this->assertEmpty($this->na->getNoticeGivenDateString());
 
-        $this->na->setEpaNotifiedRelativeNoticeGivenDate($expectedDate);
-        $this->assertEquals($expectedDate, $this->na->getEpaNotifiedRelativeNoticeGivenDate());
+        $this->na->setNoticeGivenDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->na->getNoticeGivenDate());
     }
 
-    public function testGetSetEpaNotifiedRelativeNoticeGivenDateNulls()
+    public function testGetsetNoticeGivenDateNulls()
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDate());
-        $this->na->setEpaNotifiedRelativeNoticeGivenDate();
+        $this->assertEmpty($this->na->getNoticeGivenDate());
+        $this->na->setNoticeGivenDate();
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->na->getEpaNotifiedRelativeNoticeGivenDate()->format(OPGDateFormat::getDateFormat())
+            $this->na->getNoticeGivenDate()->format(OPGDateFormat::getDateFormat())
         );
     }
 
-    public function testGetSetEpaNotifiedRelativeNoticeGivenDateEmptyString()
+    public function testGetsetNoticeGivenDateEmptyString()
     {
 
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDate());
-        $this->na->setEpaNotifiedRelativeNoticeGivenDateString('');
+        $this->assertEmpty($this->na->getNoticeGivenDate());
+        $this->na->setNoticeGivenDateString('');
 
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDate());
+        $this->assertEmpty($this->na->getNoticeGivenDate());
     }
 
-    public function testGetSetEpaNotifiedRelativeNoticeGivenDateInvalidString()
+    public function testGetsetNoticeGivenDateInvalidString()
     {
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDateString());
+        $this->assertEmpty($this->na->getNoticeGivenDateString());
         try {
-            $this->na->setEpaNotifiedRelativeNoticeGivenDateString('asddasdsdas');
+            $this->na->setNoticeGivenDateString('asddasdsdas');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
             $this->assertEquals("'asddasdsdas' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
 
-        $this->assertEmpty($this->na->getEpaNotifiedRelativeNoticeGivenDateString());
+        $this->assertEmpty($this->na->getNoticeGivenDateString());
 
     }
 
-    public function testGetSetEpaNotifiedRelativeNoticeGivenDateValidString()
+    public function testGetsetNoticeGivenDateValidString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
 
-        $this->na->setEpaNotifiedRelativeNoticeGivenDateString($expected);
+        $this->na->setNoticeGivenDateString($expected);
 
-        $this->assertEquals($expected, $this->na->getEpaNotifiedRelativeNoticeGivenDateString());
+        $this->assertEquals($expected, $this->na->getNoticeGivenDateString());
     }
     
 }

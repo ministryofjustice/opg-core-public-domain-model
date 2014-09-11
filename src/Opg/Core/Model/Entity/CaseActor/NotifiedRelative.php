@@ -18,7 +18,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getEpaNotifiedRelativeNoticeGivenDateString",setter="setEpaNotifiedRelativeNoticeGivenDateString")
+     * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
      * @Type("string")
      * @Groups("api-task-list")
      */
@@ -29,7 +29,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
      *
      * @return $this
      */
-    public function setEpaNotifiedRelativeNoticeGivenDate(\DateTime $noticeGivenDate = null)
+    public function setNoticeGivenDate(\DateTime $noticeGivenDate = null)
     {
         if (is_null($noticeGivenDate)) {
             $noticeGivenDate = new \DateTime();
@@ -44,11 +44,11 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
      *
      * @return Epa
      */
-    public function setEpaNotifiedRelativeNoticeGivenDateString($noticeGivenDate)
+    public function setNoticeGivenDateString($noticeGivenDate)
     {
         if (!empty($noticeGivenDate)) {
             $noticeGivenDate = OPGDateFormat::createDateTime($noticeGivenDate);
-            $this->setEpaNotifiedRelativeNoticeGivenDate($noticeGivenDate);
+            $this->setNoticeGivenDate($noticeGivenDate);
         }
 
         return $this;
@@ -57,7 +57,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
     /**
      * @return \DateTime
      */
-    public function getEpaNotifiedRelativeNoticeGivenDate()
+    public function getNoticeGivenDate()
     {
         return $this->noticeGivenDate;
     }
@@ -65,7 +65,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
     /**
      * @return string
      */
-    public function getEpaNotifiedRelativeNoticeGivenDateString()
+    public function getNoticeGivenDateString()
     {
         if (!empty($this->noticeGivenDate)) {
             return $this->noticeGivenDate->format(OPGDateFormat::getDateFormat());

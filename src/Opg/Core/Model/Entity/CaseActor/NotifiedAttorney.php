@@ -15,7 +15,7 @@ class NotifiedAttorney extends Attorney
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getEpaNotifiedAttorneyNoticeGivenDateString",setter="setEpaNotifiedAttorneyNoticeGivenDateString")
+     * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
      * @Type("string")
      * @Groups("api-task-list")
      */
@@ -26,7 +26,7 @@ class NotifiedAttorney extends Attorney
      *
      * @return $this
      */
-    public function setEpaNotifiedAttorneyNoticeGivenDate(\DateTime $noticeGivenDate = null)
+    public function setNoticeGivenDate(\DateTime $noticeGivenDate = null)
     {
         if (is_null($noticeGivenDate)) {
             $noticeGivenDate = new \DateTime();
@@ -41,11 +41,11 @@ class NotifiedAttorney extends Attorney
      *
      * @return Epa
      */
-    public function setEpaNotifiedAttorneyNoticeGivenDateString($noticeGivenDate)
+    public function setNoticeGivenDateString($noticeGivenDate)
     {
         if (!empty($noticeGivenDate)) {
             $noticeGivenDate = OPGDateFormat::createDateTime($noticeGivenDate);
-            $this->setEpaNotifiedAttorneyNoticeGivenDate($noticeGivenDate);
+            $this->setNoticeGivenDate($noticeGivenDate);
         }
 
         return $this;
@@ -54,7 +54,7 @@ class NotifiedAttorney extends Attorney
     /**
      * @return \DateTime
      */
-    public function getEpaNotifiedAttorneyNoticeGivenDate()
+    public function getNoticeGivenDate()
     {
         return $this->noticeGivenDate;
     }
@@ -62,7 +62,7 @@ class NotifiedAttorney extends Attorney
     /**
      * @return string
      */
-    public function getEpaNotifiedAttorneyNoticeGivenDateString()
+    public function getNoticeGivenDateString()
     {
         if (!empty($this->noticeGivenDate)) {
             return $this->noticeGivenDate->format(OPGDateFormat::getDateFormat());
