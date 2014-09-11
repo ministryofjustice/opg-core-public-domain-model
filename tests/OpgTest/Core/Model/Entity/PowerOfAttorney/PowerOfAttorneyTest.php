@@ -28,6 +28,15 @@ class PowerOfAttorneyStub extends  PowerOfAttorney
             case 'applicants' :
                 $this->applicants = null;
                 break;
+            case 'notifiedPersons' :
+                $this->notifiedPersons = null;
+                break;
+            case 'attorneys' :
+                $this->attorneys = null;
+                break;
+            case 'certificateProviders' :
+                $this->certificateProviders = null;
+                break;
         }
     }
 }
@@ -73,10 +82,15 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($notfiedPersons, $this->poa->getNotifiedPersons());
 
+        unset($this->poa->notifiedPersons);
+        $np = new NotifiedPerson();
+        $this->poa->addNotifiedPerson($np);
+        $this->assertEquals($np, $this->poa->getNotifiedPersons()[0]);
     }
 
     public function testGetSetCertificateProviders()
     {
+        unset($this->poa->certificateProviders);
         $certificateProviders = $this->poa->getCertificateProviders();
 
         for($i=0;$i<5;$i++) {
@@ -87,6 +101,10 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($certificateProviders, $this->poa->getCertificateProviders());
 
+        unset($this->poa->certificateProviders);
+        $cp = new CertificateProvider();
+        $this->poa->addCertificateProvider($cp);
+        $this->assertEquals($cp, $this->poa->getCertificateProviders()[0]);
     }
 
     public function testGetSetNotifiedPersonDeclarations()

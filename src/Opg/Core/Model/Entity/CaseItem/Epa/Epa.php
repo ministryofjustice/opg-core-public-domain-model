@@ -1,13 +1,16 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Epa;
 
+use Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
-use Opg\Core\Model\Entity\CaseActor\Relative;
+use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
+use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -38,18 +41,60 @@ class Epa extends PowerOfAttorney
     protected $caseType = CaseTypeValidator::CASE_TYPE_EPA;
     
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Relative")
-     * @ORM\JoinTable(name="pa_relatives",
+     * The person who is not an attorney and who gives notice to the donor to apply to register the EPA
+     * 
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor")
+     * @ORM\JoinTable(name="pa_person_notify_donor",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="relative_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="person_notify_donor_id", referencedColumnName="id")}
      * )
      * @ReadOnly
      * @var ArrayCollection
      */
-    protected $relatives;
+    protected $personNotifyDonor;
     
-
     /**
+     * @ORM\Column(type = "boolean",options={"default"=0})
+     * @var bool
+     */
+    protected $hasRelativeToNotice;
+    
+    /**
+     * @ORM\Column(type = "boolean",options={"default"=0})
+     * @var bool
+     */
+    protected $areAllAttorneysApplyingToRegister;
+    
+    /**
+     * It must have at least 3 relatives to be notified to create an EPA.
+     *  
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedRelative")
+     * @ORM\JoinTable(name="pa_notified_relatives",
+     *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="notified_relative_id", referencedColumnName="id")}
+     * )
+     * @ReadOnly
+     * @var ArrayCollection
+     */
+    protected $notifiedRelatives;
+    
+    /**
+     * The attorneys who are not applying to register the EPA. They need to be notified by the attorneys who are
+     * applying to register the EPA. 
+     * 
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedAttorney")
+     * @ORM\JoinTable(name="pa_notified_attorneys",
+     *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="notified_attorney_id", referencedColumnName="id")}
+     * )
+     * @ReadOnly
+     * @var ArrayCollection
+     */
+    protected $notifiedAttorneys;
+    
+    /**
+     * When donor signed this EPA.
+     * 
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getEpaDonorSignatureDateString",setter="setEpaDonorSignatureDateString")
@@ -59,11 +104,16 @@ class Epa extends PowerOfAttorney
     protected $epaDonorSignatureDate;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * When donor was notified for applying to register this EPA.
+     * 
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Accessor(getter="getEpaDonorNoticeGivenDateString",setter="setEpaDonorNoticeGivenDateString")
+     * @Type("string")
      * @Groups("api-task-list")
+     * 
      */
-    protected $epaDonorSignatoryFullName;
+    protected $epaDonorNoticeGivenDate;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
@@ -79,16 +129,10 @@ class Epa extends PowerOfAttorney
      */
     protected $otherEpaInfo;
 
-    /**
-     * @ORM\Column(type = "integer",options={"default":1})
-     * @var string
-     * @Accessor(getter="getTrustCorporationSignedAs",setter="setTrustCorporationSignedAs")
-     */
-    protected $trustCorporationSignedAs;
-    
     public function __construct()
     {
-        $this->relatives = new ArrayCollection();
+        $this->notifiedRelatives = new ArrayCollection();
+        $this->notifiedAttorneys = new ArrayCollection();
     }
 
     /**
@@ -142,13 +186,31 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param  string $fullName
+     * @param \DateTime $noticeGivenDate
+     *
+     * @return $this
+     */
+    public function setEpaDonorNoticeGivenDate(\DateTime $noticeGivenDate = null)
+    {
+        if (is_null($noticeGivenDate)) {
+            $noticeGivenDate = new \DateTime();
+        }
+        $this->epaDonorNoticeGivenDate = $noticeGivenDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $noticeGivenDate
      *
      * @return Epa
      */
-    public function setDonorEpaSignatoryFullName($fullName)
+    public function setEpaDonorNoticeGivenDateString($noticeGivenDate)
     {
-        $this->epaDonorSignatoryFullName = $fullName;
+        if (!empty($noticeGivenDate)) {
+            $noticeGivenDate = OPGDateFormat::createDateTime($noticeGivenDate);
+            $this->setEpaDonorNoticeGivenDate($noticeGivenDate);
+        }
 
         return $this;
     }
@@ -156,9 +218,21 @@ class Epa extends PowerOfAttorney
     /**
      * @return string
      */
-    public function getDonorEpaSignatoryFullName()
+    public function getEpaDonorNoticeGivenDate()
     {
-        return $this->epaDonorSignatoryFullName;
+        return $this->epaDonorNoticeGivenDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEpaDonorNoticeGivenDateString()
+    {
+        if (!empty($this->epaDonorNoticeGivenDate)) {
+            return $this->epaDonorNoticeGivenDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 
     /**
@@ -195,7 +269,7 @@ class Epa extends PowerOfAttorney
      *
      * @return  Epa
      */
-    public function setOtheEpaInfo($epaInfo)
+    public function setOtherEpaInfo($epaInfo)
     {
         $this->otherEpaInfo = $epaInfo;
 
@@ -215,12 +289,14 @@ class Epa extends PowerOfAttorney
      */
     public function addPerson(Person $person)
     {
-        if ($person instanceof AttorneyAbstract) {
+        if ($person instanceof NotifiedAttorney) {
+            $this->addNotifiedAttorney($person);
+        } elseif ($person instanceof AttorneyAbstract) {
             $this->addAttorney($person);
-        } elseif ($person instanceof Relative) {
-            $this->addRelative($person);
-        } elseif ($person instanceof NotifiedPerson) {
-            $this->addNotifiedPerson($person);
+        } elseif ($person instanceof NotifiedRelative) {
+            $this->addNotifiedRelative($person);
+        } elseif ($person instanceof PersonNotifyDonor) {
+            $this->addPersonNotifyDonor($person);
         } elseif ($person instanceof Correspondent) {
             $this->setCorrespondent($person);
         } elseif ($person instanceof Donor) {
@@ -233,69 +309,163 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param string $trustCorporationSignedAs
-     * @return Epa
-     */
-    public function setTrustCorporationSignedAs($trustCorporationSignedAs)
-    {
-        $this->trustCorporationSignedAs =
-            ($trustCorporationSignedAs === 'I') ?
-                self::PERMISSION_GIVEN_SINGULAR :
-                self::PERMISSION_GIVEN_PLURAL;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTrustCorporationSignedAs()
-    {
-        return ($this->trustCorporationSignedAs === self::PERMISSION_GIVEN_SINGULAR) ? 'I' : 'We';
-    }
-    
-    /**
-     * @param Relative $relative
+     * @param PersonNotifyDonor $personNotifyDonor
      *
      * @return EPA
      */
-    public function addRelative(Relative $relative)
+    public function addPersonNotifyDonor(PersonNotifyDonor $personNotifyDonor)
     {
-        if (is_null($this->relatives)) {
-            $this->relatives = new ArrayCollection();
-        }
-
-        if (!$this->relatives->contains($relative)) {
-            $this->relatives->add($relative);
-        }
+        $this->personNotifyDonor = $personNotifyDonor;
 
         return $this;
     }
     
     /**
-     * @return ArrayCollection $relatives
+     * @return ArrayCollection $personNotifyDonor
      */
-    public function getRelatives()
+    public function getPersonNotifyDonor()
     {
-        if (null === $this->relatives) {
-            $this->relatives = new ArrayCollection();
-        }
-
-        return $this->relatives;
+        return $this->personNotifyDonor;
     }
 
     /**
-     * @param ArrayCollection $relatives
+     * @param ArrayCollection $personNotifyDonor
      *
      * @return EPA
      */
-    public function setRelatives(ArrayCollection $relatives)
+    public function setPersonNotifyDonor(PersonNotifyDonor $personNotifyDonor)
     {
-        foreach ($relatives as $relative) {
-            $this->addRelative($relative);
+        $this->personNotifyDonor = $personNotifyDonor;
+
+        return $this;
+    }
+    
+    /**
+     * @param NotifiedRelative $notifiedRelative
+     *
+     * @return EPA
+     */
+    public function addNotifiedRelative(NotifiedRelative $notifiedRelative)
+    {
+        if (is_null($this->notifiedRelatives)) {
+            $this->notifiedRelatives = new ArrayCollection();
+        }
+
+        if (!$this->notifiedRelatives->contains($notifiedRelative)) {
+            $this->notifiedRelatives->add($notifiedRelative);
+        }
+
+        return $this;
+    }
+    
+    /**
+     * @return ArrayCollection $notifiedRelatives
+     */
+    public function getNotifiedRelatives()
+    {
+        if (null === $this->notifiedRelatives) {
+            $this->notifiedRelatives = new ArrayCollection();
+        }
+
+        return $this->notifiedRelatives;
+    }
+
+    /**
+     * @param ArrayCollection $notifiedRelatives
+     *
+     * @return EPA
+     */
+    public function setNotifiedRelatives(ArrayCollection $notifiedRelatives)
+    {
+        foreach ($notifiedRelatives as $notifiedRelative) {
+            $this->addNotifiedRelative($notifiedRelative);
         }
 
         return $this;
     }
 
+
+    /**
+     * @param NotifiedAttorney $attorney
+     *
+     * @return EPA
+     */
+    public function addNotifiedAttorney(NotifiedAttorney $attorney)
+    {
+        if (is_null($this->notifiedAttorneys)) {
+            $this->notifiedAttorneys = new ArrayCollection();
+        }
+
+        if (!$this->notifiedAttorneys->contains($attorney)) {
+            $this->notifiedAttorneys->add($attorney);
+        }
+
+        return $this;
+    }
+    
+    /**
+     * @return ArrayCollection $attorneys
+     */
+    public function getNotifiedAttorneys()
+    {
+        if (null === $this->notifiedAttorneys) {
+            $this->notifiedAttorneys = new ArrayCollection();
+        }
+
+        return $this->notifiedAttorneys;
+    }
+
+    /**
+     * @param ArrayCollection $attorneys
+     *
+     * @return EPA
+     */
+    public function setNotifiedAttorneys(ArrayCollection $attorneys)
+    {
+        foreach ($attorneys as $attorney) {
+            $this->addNotifiedAttorney($attorney);
+        }
+
+        return $this;
+    }
+    
+    /**
+     * @param   bool $hasRelativeToNotice
+     *
+     * @return  Epa
+     */
+    public function setHasRelativeToNotice($hasRelativeToNotice)
+    {
+        $this->hasRelativeToNotice = (bool)$hasRelativeToNotice;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasRelativeToNotice()
+    {
+        return $this->hasRelativeToNotice;
+    }
+    
+    /**
+     * @param   bool $allAttorneyApplyingToRegister
+     *
+     * @return  Epa
+     */
+    public function setAreAllAttorneysApplyingToRegister($allAttorneyApplyingToRegister)
+    {
+        $this->areAllAttorneysApplyingToRegister = (bool)$allAttorneyApplyingToRegister;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAreAllAttorneysApplyingToRegister()
+    {
+        return $this->areAllAttorneysApplyingToRegister;
+    }
 }

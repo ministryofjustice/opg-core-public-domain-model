@@ -33,6 +33,13 @@ class NonCaseContact extends BasePerson
      * @Exclude
      */
     protected $deputyships = null;
+    
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Groups({"api-poa-list","api-task-list"})
+     */
+    protected $fullname = null;
 
     public function __construct()
     {
@@ -67,5 +74,50 @@ class NonCaseContact extends BasePerson
     public function getCases()
     {
         return null;
+    }
+
+    /**
+     *
+     * @return string $fullname
+     */
+    public function getFullname()
+    {
+        if(empty($this->fullname) && (!empty($this->surname)||!empty($this->firstname)||!empty($this->middlenames))) {
+            $this->fullname = implode(' ', array($this->firstname, $this->middlenames, $this->surname));
+        }
+        
+        return $this->fullname;
+    }
+
+    /**
+     *
+     * @param  string $fullname
+     *
+     * @return PartyInterface
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+        
+        if($fullname != null) {
+            $names = explode(' ', $fullname);
+            
+            $name_size = sizeof($names);
+            if($name_size > 1) {
+                $this->firstname = $names[0];
+                $this->surname = $names[$name_size-1];
+                
+                if($name_size > 2) {
+                    array_shift($names);
+                    array_pop($names);
+                    $this->middlenames = implode(' ', $names);
+                }
+            }
+            else {
+                $this->surname = $names[0];
+            }
+        }
+
+        return $this;
     }
 }
