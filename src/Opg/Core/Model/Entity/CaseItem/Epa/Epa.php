@@ -378,7 +378,7 @@ class Epa extends PowerOfAttorney
     public function setNotifiedRelatives(ArrayCollection $notifiedRelatives)
     {
         foreach ($notifiedRelatives as $notifiedRelative) {
-            $this->addRelative($notifiedRelative);
+            $this->addNotifiedRelative($notifiedRelative);
         }
 
         return $this;

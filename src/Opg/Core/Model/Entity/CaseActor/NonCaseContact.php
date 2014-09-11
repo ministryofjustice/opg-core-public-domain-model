@@ -99,21 +99,23 @@ class NonCaseContact extends BasePerson
     {
         $this->fullname = $fullname;
         
-        $names = explode(' ', $fullname);
-        
-        $name_size = sizeof($names);
-        if($name_size > 1) {
-            $this->firstname = $names[0];
-            $this->surname = $names[$name_size-1];
+        if($fullname != null) {
+            $names = explode(' ', $fullname);
             
-            if($name_size > 2) {
-                array_shift($names);
-                array_pop($names);
-                $this->middlenames = implode(' ', $names);
+            $name_size = sizeof($names);
+            if($name_size > 1) {
+                $this->firstname = $names[0];
+                $this->surname = $names[$name_size-1];
+                
+                if($name_size > 2) {
+                    array_shift($names);
+                    array_pop($names);
+                    $this->middlenames = implode(' ', $names);
+                }
             }
-        }
-        else {
-            $this->surname = $names[0];
+            else {
+                $this->surname = $names[0];
+            }
         }
 
         return $this;
