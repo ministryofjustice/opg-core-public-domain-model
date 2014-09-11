@@ -18,10 +18,10 @@ class CaseType extends InArray
         $this->setStrict(InArray::COMPARE_STRICT);
 
         $this->setHaystack(
-            [
+            array(
                 self::CASE_TYPE_EPA,
                 self::CASE_TYPE_LPA,
-            ]
+            )
         );
     }
 }
