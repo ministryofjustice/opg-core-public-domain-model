@@ -3,11 +3,9 @@ namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\CaseActor\PartyInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
+use Opg\Core\Model\Entity\CaseActor\Correspondent;
 
-/**
- * ToArray test case.
- */
+
 class CorrespondentTest extends \PHPUnit_Framework_TestCase
 {
     /**

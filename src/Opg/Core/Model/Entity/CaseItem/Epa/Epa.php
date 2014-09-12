@@ -5,7 +5,7 @@ use Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
+use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
@@ -18,8 +18,6 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Zend\Filter\FilterChain;
-use Zend\Validator\ValidatorChain;
 
 /**
  * @ORM\Entity

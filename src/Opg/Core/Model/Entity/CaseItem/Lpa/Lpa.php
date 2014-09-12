@@ -3,7 +3,7 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
+use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
