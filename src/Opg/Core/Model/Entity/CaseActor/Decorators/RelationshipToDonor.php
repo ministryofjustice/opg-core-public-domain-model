@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Traits;
+namespace Opg\Core\Model\Entity\CaseActor\Decorators;
 
 use Doctrine\ORM\Mapping as ORM;
 

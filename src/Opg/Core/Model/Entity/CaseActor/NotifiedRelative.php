@@ -4,7 +4,7 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\HasRelationshipToDonor;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
@@ -14,7 +14,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
 {
     use RelationshipToDonor;
-    
+
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
@@ -23,7 +23,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
      * @Groups("api-task-list")
      */
     protected $noticeGivenDate;
-    
+
     /**
      * @param \DateTime $noticeGivenDate
      *

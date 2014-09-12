@@ -1,9 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Zend\InputFilter\InputFilterInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;

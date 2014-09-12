@@ -3,10 +3,9 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
+use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 
 /**
