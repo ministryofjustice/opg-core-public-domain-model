@@ -1,7 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
+use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;

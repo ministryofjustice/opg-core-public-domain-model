@@ -20,13 +20,13 @@ class PersonFactory
         if (!empty($data['personType'])) {
             switch ($data['personType']) {
                 case "Attorney" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Attorney";
                     break;
                 case "ReplacementAttorney" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\ReplacementAttorney";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\ReplacementAttorney";
                     break;
                 case "TrustCorporation" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\TrustCorporation";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\TrustCorporation";
                     break;
                 case "CertificateProvider" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider";

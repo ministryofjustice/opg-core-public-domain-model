@@ -1,9 +1,8 @@
 <?php
 
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\TrustCorporation;
 
 class TrustCorporationTest extends \PHPUnit_Framework_TestCase
 {

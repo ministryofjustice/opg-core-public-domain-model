@@ -1,13 +1,8 @@
 <?php
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Zend\InputFilter\InputFilter;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\CaseActor\Attorney;
 
 class AttorneyTest extends \PHPUnit_Framework_TestCase
 {
