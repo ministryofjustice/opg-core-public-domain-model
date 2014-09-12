@@ -3,6 +3,8 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;

@@ -1,11 +1,8 @@
 <?php
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
-use Opg\Common\Exception\UnusedException;
-use Zend\InputFilter\InputFilter;
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 
 /**

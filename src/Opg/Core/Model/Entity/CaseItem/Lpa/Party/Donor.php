@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;

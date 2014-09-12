@@ -3,6 +3,8 @@ namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;

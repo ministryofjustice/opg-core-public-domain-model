@@ -1,14 +1,11 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Defines an interface for reponsible parties declared
- * as part of a Lasting Power of Attorney registration
- *
  * Interface PartyInterface
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 interface PartyInterface
 {

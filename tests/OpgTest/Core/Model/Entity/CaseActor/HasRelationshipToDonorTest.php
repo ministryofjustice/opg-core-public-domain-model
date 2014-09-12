@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brettm
- * Date: 24/03/14
- * Time: 12:22
- */
 
-namespace OpgTest\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
+
+use Opg\Core\Model\Entity\CaseActor\HasRelationshipToDonor;
 
 class HasRelationshipToDonorTest extends \PHPUnit_Framework_TestCase
 {
     public function testInterface()
     {
         $expectedMethods = array('getRelationshipToDonor', 'setRelationshipToDonor');
-        $interfaceMock = $this->getMock('Opg\Core\Model\Entity\CaseItem\Lpa\Party\HasRelationshipToDonor');
+        $interfaceMock = $this->getMock('Opg\Core\Model\Entity\CaseActor\HasRelationshipToDonor');
 
-        $this->assertTrue($interfaceMock instanceof \Opg\Core\Model\Entity\CaseItem\Lpa\Party\HasRelationshipToDonor);
+        $this->assertTrue($interfaceMock instanceof HasRelationshipToDonor);
 
         $classMethods = get_class_methods($interfaceMock);
 

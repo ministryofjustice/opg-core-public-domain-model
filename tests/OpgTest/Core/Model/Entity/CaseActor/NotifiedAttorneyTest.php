@@ -2,10 +2,7 @@
 
 namespace OpgTest\Core\Model\Entity\CaseActor;
 
-
-use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class NotifiedAttorneyTest extends \PHPUnit_Framework_TestCase
@@ -81,5 +78,5 @@ class NotifiedAttorneyTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->na->getNoticeGivenDateString());
     }
-    
+
 }
