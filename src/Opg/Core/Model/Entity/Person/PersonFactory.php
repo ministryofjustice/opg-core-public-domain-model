@@ -38,7 +38,7 @@ class PersonFactory
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Correspondent";
                     break;
                 case "Donor" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Donor";
                     break;
                 case "NotifiedRelative" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NotifiedRelative";

@@ -1,12 +1,12 @@
 <?php
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Warning\Warning;
 use Opg\Core\Validation\Validator\IntegerOutOfRange;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 
 /**
  * ToArray test case.

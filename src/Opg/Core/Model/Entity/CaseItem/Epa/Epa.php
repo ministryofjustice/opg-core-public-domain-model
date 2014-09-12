@@ -6,7 +6,7 @@ use Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;

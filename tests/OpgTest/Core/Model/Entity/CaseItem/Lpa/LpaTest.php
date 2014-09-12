@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
@@ -80,7 +80,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->setDonor($donor);
 
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor',
+            'Opg\Core\Model\Entity\CaseActor\Donor',
             $this->lpa->getDonor()
         );
     }

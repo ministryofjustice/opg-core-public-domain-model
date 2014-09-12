@@ -1,7 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\PowerOfAttorney\Validator;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ApplicantFactory;
+use Opg\Core\Model\Entity\CaseActor\Attorney;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Zend\Validator\AbstractValidator;
 
 /**
@@ -49,9 +50,9 @@ class Applicants extends AbstractValidator
 
         foreach ($applicants as $applicant) {
 
-            if ($applicant instanceof \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor) {
+            if ($applicant instanceof Donor) {
                 $donorCount++;
-            } elseif ($applicant instanceof \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney) {
+            } elseif ($applicant instanceof Attorney) {
                 $attorneyCount++;
             } else {
                 $this->error(self::INVALID_PARTY_TYPE);

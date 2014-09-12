@@ -4,8 +4,6 @@ namespace OpgTest\Core\Model\Entity\Person;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Address\Address;
-use Opg\Core\Model\Entity\Deputyship\DeputyshipCollection;
-use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Person\Person;
 use \Exception;

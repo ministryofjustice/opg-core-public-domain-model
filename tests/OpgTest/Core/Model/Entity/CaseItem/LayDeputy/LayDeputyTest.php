@@ -6,7 +6,7 @@ namespace OpgTest\Common\Model\Entity\CaseItem\LayDeputy;
 
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 
 class LayDeputyTest extends \PHPUnit_Framework_TestCase
 {
