@@ -1,12 +1,9 @@
 <?php
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Zend\InputFilter\InputFilter;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
-use Opg\Common\Exception\UnusedException;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 
 class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
 {

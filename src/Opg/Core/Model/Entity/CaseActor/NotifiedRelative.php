@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
