@@ -2,7 +2,7 @@
 namespace Opg\Core\Model\Entity\CaseItem\Lpa;
 
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
+use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
@@ -16,8 +16,6 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Zend\Filter\FilterChain;
-use Zend\Validator\ValidatorChain;
 
 /**
  * @ORM\Entity

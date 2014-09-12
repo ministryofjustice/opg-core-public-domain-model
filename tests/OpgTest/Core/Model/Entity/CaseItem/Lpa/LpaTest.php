@@ -5,7 +5,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
@@ -13,6 +12,7 @@ use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
+use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 
 /**
  * Lpa test case.

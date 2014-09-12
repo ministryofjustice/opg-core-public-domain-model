@@ -29,7 +29,7 @@ class PersonFactory
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\TrustCorporation";
                     break;
                 case "CertificateProvider" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider";
+                    $personType = "OOpg\\Core\\Model\\Entity\\CaseActor\\CertificateProvider";
                     break;
                 case "NotifiedPerson" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\NotifiedPerson";
