@@ -102,12 +102,12 @@ class NonCaseContact extends BasePerson
         if($fullname != null) {
             $names = explode(' ', $fullname);
             
-            $name_size = sizeof($names);
-            if($name_size > 1) {
+            $no_of_words_in_fullname = sizeof($names);
+            if($no_of_words_in_fullname > 1) {
                 $this->firstname = $names[0];
-                $this->surname = $names[$name_size-1];
+                $this->surname = $names[$no_of_words_in_fullname-1];
                 
-                if($name_size > 2) {
+                if($no_of_words_in_fullname > 2) {
                     array_shift($names);
                     array_pop($names);
                     $this->middlenames = implode(' ', $names);

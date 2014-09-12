@@ -138,7 +138,7 @@ class Epa extends PowerOfAttorney
     /**
      * @param \DateTime $signatureDate
      *
-     * @return $this
+     * @return Epa
      */
     public function setEpaDonorSignatureDate(\DateTime $signatureDate = null)
     {
@@ -166,7 +166,7 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getEpaDonorSignatureDate()
     {
@@ -188,7 +188,7 @@ class Epa extends PowerOfAttorney
     /**
      * @param \DateTime $noticeGivenDate
      *
-     * @return $this
+     * @return Epa
      */
     public function setEpaDonorNoticeGivenDate(\DateTime $noticeGivenDate = null)
     {
@@ -275,7 +275,10 @@ class Epa extends PowerOfAttorney
 
         return $this;
     }
-
+    
+    /**
+     * @return string
+     */
     public function getOtherEpaInfo()
     {
         return $this->otherEpaInfo;
