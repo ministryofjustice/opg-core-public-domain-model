@@ -140,6 +140,13 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $this->attorney->setIsAttorneyApplyingToRegister(false);
         $this->assertFalse($this->attorney->getIsAttorneyApplyingToRegister());
         $this->assertNotEquals(true, $this->attorney->getIsAttorneyApplyingToRegister());
+
+        $this->attorney->setIsAttorneyApplyingToRegister(true);
+        $this->assertTrue($this->attorney->getIsAttorneyApplyingToRegister());
+        $this->assertNotEquals(false, $this->attorney->getIsAttorneyApplyingToRegister());
+
+        $this->attorney->setIsAttorneyApplyingToRegister();
+        $this->assertEquals(Attorney::OPTION_NOT_SET, $this->attorney->getIsAttorneyApplyingToRegister());
     }
 
     public function testUnsetIsAttorneyApplyingToRegister()

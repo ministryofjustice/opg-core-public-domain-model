@@ -37,8 +37,20 @@ class PersonFactory
                 case "Correspondent" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Correspondent";
                     break;
-                default:
+                case "Donor" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
+                    break;
+                case "NotifiedRelative" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NotifiedRelative";
+                    break;
+                case "NotifiedAttorney" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NotifiedAttorney";
+                    break;
+                case "PersonNotifyDonor" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\PersonNotifyDonor";
+                    break;
+                default:
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NonCaseContact";
                     break;
             }
         } else {

@@ -342,6 +342,14 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $applicantType;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCancellationDateString",setter="setCancellationDateString")
+     */
+    protected $cancellationDate;
+
     public function __construct()
     {
         parent::__construct();
@@ -801,6 +809,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function getNotifiedPersons()
     {
+        if (null === $this->notifiedPersons) {
+            $this->notifiedPersons = new ArrayCollection();
+        }
+
         return $this->notifiedPersons;
     }
 
@@ -825,6 +837,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addNotifiedPerson(NotifiedPerson $notifiedPerson)
     {
+        if (is_null($this->notifiedPersons)) {
+            $this->notifiedPersons = new ArrayCollection();
+        }
+
         if (!$this->notifiedPersons->contains($notifiedPerson)) {
             $this->notifiedPersons->add($notifiedPerson);
         }
@@ -837,6 +853,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function getCertificateProviders()
     {
+        if (null === $this->certificateProviders) {
+            $this->certificateProviders = new ArrayCollection();
+        }
+
         return $this->certificateProviders;
     }
 
@@ -861,6 +881,10 @@ abstract class PowerOfAttorney extends CaseItem
      */
     public function addCertificateProvider(CertificateProvider $certificateProvider)
     {
+        if (is_null($this->certificateProviders)) {
+            $this->certificateProviders = new ArrayCollection();
+        }
+
         if (!$this->certificateProviders->contains($certificateProvider)) {
             $this->certificateProviders->add($certificateProvider);
         }
@@ -1512,5 +1536,45 @@ abstract class PowerOfAttorney extends CaseItem
     public function getApplicantType()
     {
         return $this->applicantType;
+    }
+
+    /**
+     * @param \DateTime $cancellationDate
+     * @return PowerOfAttorney
+     */
+    public function setCancellationDate(\DateTime $cancellationDate = null)
+    {
+        $this->cancellationDate = $cancellationDate;
+
+        return $this;
+    }
+
+    /**
+     * @param $cancellationDate
+     * @return PowerOfAttorney
+     */
+    public function setCancellationDateString($cancellationDate)
+    {
+        return $this->setCancellationDate(OPGDateFormat::createDateTime($cancellationDate));
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCancellationDate()
+    {
+        return $this->cancellationDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCancellationDateString()
+    {
+        if ($this->cancellationDate instanceof \DateTime) {
+            return $this->cancellationDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 }

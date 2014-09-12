@@ -24,12 +24,6 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
     use RelationshipToDonor;
 
     /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $occupation;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
@@ -52,26 +46,6 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      * @Accessor(getter="getIsAttorneyApplyingToRegister", setter="setIsAttorneyApplyingToRegister")
      */
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
-
-    /**
-     * @return string $occupation
-     */
-    public function getOccupation()
-    {
-        return $this->occupation;
-    }
-
-    /**
-     * @param string $occupation
-     *
-     * @return Attorney
-     */
-    public function setOccupation($occupation)
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
 
     /**
      * @return void|InputFilterInterface
@@ -216,15 +190,12 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      */
     public function setIsAttorneyApplyingToRegister($isAttorneyApplyingToRegister = null)
     {
-        switch ($isAttorneyApplyingToRegister) {
-            case true:
-                $this->isAttorneyApplyingToRegister = self::OPTION_TRUE;
-                break;
-            case false:
-                $this->isAttorneyApplyingToRegister = self::OPTION_FALSE;
-                break;
-            default:
-                $this->isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
+        if ($isAttorneyApplyingToRegister === true) {
+            $this->isAttorneyApplyingToRegister = self::OPTION_TRUE;
+        } elseif ($isAttorneyApplyingToRegister === false) {
+            $this->isAttorneyApplyingToRegister = self::OPTION_FALSE;
+        } else {
+            $this->isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
         }
 
         return $this;
