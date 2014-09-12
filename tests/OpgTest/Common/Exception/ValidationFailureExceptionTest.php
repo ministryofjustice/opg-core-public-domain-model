@@ -4,7 +4,6 @@ namespace OpgTest\Common\Exception;
 
 use Opg\Common\Exception\InvalidParameterValueException;
 use Opg\Common\Exception\ValidationFailureException;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 
 class ValidationFailureExceptionTest extends \PHPUnit_Framework_TestCase

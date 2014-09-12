@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation\Type;
 
 /**
  * Class AttorneyAbstract
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface
 {

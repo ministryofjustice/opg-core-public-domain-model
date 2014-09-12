@@ -3,6 +3,7 @@ namespace Opg\Core\Model\Entity\CaseActor\Decorators;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 
 /**
  * Class Company
@@ -35,7 +36,7 @@ trait Company
     /**
      * @param string $companyName
      *
-     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
+     * @return PartyInterface
      */
     public function setCompanyName($companyName)
     {
@@ -55,7 +56,7 @@ trait Company
     /**
      * @param string $companyNumber
      *
-     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface
+     * @return PartyInterface
      */
     public function setCompanyNumber($companyNumber)
     {

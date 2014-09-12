@@ -40,15 +40,17 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "lpa_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney",
- *     "lpa_replacement_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney",
- *     "lpa_trust_corporation" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\TrustCorporation",
- *     "lpa_correspondent" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent",
- *     "lpa_donor" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor",
- *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
- *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
+ *     "lpa_attorney" = "Opg\Core\Model\Entity\CaseActor\Attorney",
+ *     "lpa_replacement_attorney" = "Opg\Core\Model\Entity\CaseActor\ReplacementAttorney",
+ *     "lpa_trust_corporation" = "Opg\Core\Model\Entity\CaseActor\TrustCorporation",
+ *     "lpa_correspondent" = "Opg\Core\Model\Entity\CaseActor\Correspondent",
+ *     "lpa_donor" = "Opg\Core\Model\Entity\CaseActor\Donor",
+ *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseActor\NotifiedPerson",
+ *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseActor\CertificateProvider",
  *     "actor_non_case_contact" = "Opg\Core\Model\Entity\CaseActor\NonCaseContact",
- *     "actor_relative" = "Opg\Core\Model\Entity\CaseActor\Relative"
+ *     "actor_relative" = "Opg\Core\Model\Entity\CaseActor\NotifiedRelative",
+ *     "actor_notified_attorney" = "Opg\Core\Model\Entity\CaseActor\NotifiedAttorney",
+ *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor"
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */

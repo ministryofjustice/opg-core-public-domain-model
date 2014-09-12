@@ -2,10 +2,11 @@
 namespace Opg\Core\Model\Entity\CaseActor\Decorators;
 
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Core\Model\Entity\CaseActor\PartyInterface;
 
 /**
  * Class RelationshipToDonor
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Traits
+ * @package Opg\Core\Model\Entity\CaseActor\Decorators
  */
 trait RelationshipToDonor
 {

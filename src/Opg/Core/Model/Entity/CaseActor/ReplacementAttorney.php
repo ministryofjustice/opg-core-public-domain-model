@@ -11,7 +11,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\Entity
  *
  * Class ReplacementAttorney
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 class ReplacementAttorney extends AttorneyAbstract
 {

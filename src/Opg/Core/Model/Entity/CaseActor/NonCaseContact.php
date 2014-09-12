@@ -49,7 +49,7 @@ class NonCaseContact extends BasePerson
 
     /**
      * @param ArrayCollection $cases
-     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface|void
+     * @return PartyInterface|void
      * @throws \LogicException
      */
     public function setCases(ArrayCollection $cases)
