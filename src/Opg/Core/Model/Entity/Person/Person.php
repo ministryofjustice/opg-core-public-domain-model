@@ -48,7 +48,9 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
  *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
  *     "actor_non_case_contact" = "Opg\Core\Model\Entity\CaseActor\NonCaseContact",
- *     "actor_relative" = "Opg\Core\Model\Entity\CaseActor\Relative"
+ *     "actor_notified_relative" = "Opg\Core\Model\Entity\CaseActor\NotifiedRelative",
+ *     "actor_notified_attorney" = "Opg\Core\Model\Entity\CaseActor\NotifiedAttorney",
+ *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor"
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
