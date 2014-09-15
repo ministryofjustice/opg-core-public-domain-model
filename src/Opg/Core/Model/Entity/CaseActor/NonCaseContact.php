@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,7 +34,7 @@ class NonCaseContact extends BasePerson
      * @Exclude
      */
     protected $deputyships = null;
-    
+
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
@@ -85,7 +86,7 @@ class NonCaseContact extends BasePerson
         if(empty($this->fullname) && (!empty($this->surname)||!empty($this->firstname)||!empty($this->middlenames))) {
             $this->fullname = implode(' ', array($this->firstname, $this->middlenames, $this->surname));
         }
-        
+
         return $this->fullname;
     }
 
@@ -98,15 +99,15 @@ class NonCaseContact extends BasePerson
     public function setFullname($fullname)
     {
         $this->fullname = $fullname;
-        
+
         if($fullname != null) {
             $names = explode(' ', $fullname);
-            
+
             $no_of_words_in_fullname = sizeof($names);
             if($no_of_words_in_fullname > 1) {
                 $this->firstname = $names[0];
                 $this->surname = $names[$no_of_words_in_fullname-1];
-                
+
                 if($no_of_words_in_fullname > 2) {
                     array_shift($names);
                     array_pop($names);

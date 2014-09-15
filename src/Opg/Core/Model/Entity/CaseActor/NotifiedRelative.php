@@ -7,6 +7,9 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Party\HasRelationshipToDonor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -14,7 +17,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
 {
     use RelationshipToDonor;
-    
+
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
@@ -23,7 +26,7 @@ class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor
      * @Groups("api-task-list")
      */
     protected $noticeGivenDate;
-    
+
     /**
      * @param \DateTime $noticeGivenDate
      *
