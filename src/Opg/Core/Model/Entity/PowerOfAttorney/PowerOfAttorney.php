@@ -28,6 +28,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  * "lpa" = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa",
+ * "epa" = "Opg\Core\Model\Entity\CaseItem\Epa\Epa",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PowerOfAttorneyRepository")
  */

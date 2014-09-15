@@ -98,7 +98,7 @@ class Address implements EntityInterface, \IteratorAggregate
                 $factory->createInput(
                     array(
                         'name'       => 'postcode',
-                        'required'   => true,
+                        'required'   => false,
                         'filters'    => array(
                             array('name' => 'StripTags'),
                             array('name' => 'StringTrim'),

@@ -8,6 +8,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
