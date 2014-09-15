@@ -6,6 +6,9 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -20,7 +23,7 @@ class NotifiedAttorney extends Attorney
      * @Groups("api-task-list")
      */
     protected $noticeGivenDate;
-    
+
     /**
      * @param \DateTime $noticeGivenDate
      *
