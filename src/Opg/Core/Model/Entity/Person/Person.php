@@ -15,7 +15,6 @@ use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
