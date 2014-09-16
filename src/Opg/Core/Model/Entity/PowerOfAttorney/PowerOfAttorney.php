@@ -50,6 +50,7 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Donor", fetch = "EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var Donor
      * @Groups({"api-poa-list","api-task-list"})
      * @ReadOnly
@@ -58,6 +59,7 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Correspondent", fetch = "EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var Correspondent
      * @ReadOnly
      */
@@ -69,6 +71,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
      * @var ArrayCollection
      */
@@ -80,6 +83,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
      * @var ArrayCollection
      */
@@ -91,6 +95,7 @@ abstract class PowerOfAttorney extends CaseItem
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_person_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
      * @var ArrayCollection
      */

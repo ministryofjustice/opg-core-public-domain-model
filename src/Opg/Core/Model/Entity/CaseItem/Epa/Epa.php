@@ -69,6 +69,7 @@ class Epa extends PowerOfAttorney
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_relative_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
      * @var ArrayCollection
      */
@@ -83,6 +84,7 @@ class Epa extends PowerOfAttorney
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_attorney_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
      * @var ArrayCollection
      */

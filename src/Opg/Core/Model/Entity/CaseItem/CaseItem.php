@@ -144,6 +144,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      * @Serializer\Groups("api-poa-list")
@@ -153,6 +154,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      */
@@ -160,6 +162,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      */
@@ -167,6 +170,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
 
     /**
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      */

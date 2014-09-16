@@ -88,7 +88,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
      * )
-     *
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @MaxDepth(5)
      * @ReadOnly
@@ -101,6 +101,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @MaxDepth(5)
      * @var ArrayCollection
      * @ReadOnly
@@ -113,6 +114,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      */
@@ -124,6 +126,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}
      * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
      */
@@ -178,12 +181,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var \Opg\Core\Model\Entity\Address\Address
      */
     protected $addresses;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      */
     protected $phoneNumbers;
@@ -195,6 +200,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent")
+     * @ORM\OrderBy({"id"="ASC"})
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Person\Person>")
      * @ReadOnly
      */
@@ -202,6 +208,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Accessor(getter="getActiveWarnings")
      */
