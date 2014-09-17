@@ -1,10 +1,10 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
+use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;

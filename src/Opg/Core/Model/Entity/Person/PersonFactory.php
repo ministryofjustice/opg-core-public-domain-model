@@ -20,25 +20,25 @@ class PersonFactory
         if (!empty($data['personType'])) {
             switch ($data['personType']) {
                 case "Attorney" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Attorney";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Attorney";
                     break;
                 case "ReplacementAttorney" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\ReplacementAttorney";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\ReplacementAttorney";
                     break;
                 case "TrustCorporation" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\TrustCorporation";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\TrustCorporation";
                     break;
                 case "CertificateProvider" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\CertificateProvider";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\CertificateProvider";
                     break;
                 case "NotifiedPerson" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\NotifiedPerson";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NotifiedPerson";
                     break;
                 case "Correspondent" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Correspondent";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Correspondent";
                     break;
                 case "Donor" :
-                    $personType = "Opg\\Core\\Model\\Entity\\CaseItem\\Lpa\\Party\\Donor";
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Donor";
                     break;
                 case "NotifiedRelative" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NotifiedRelative";

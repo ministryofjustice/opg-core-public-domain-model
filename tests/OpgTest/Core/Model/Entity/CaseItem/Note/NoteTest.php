@@ -1,14 +1,10 @@
 <?php
 namespace OpgTest\Core\Model\CaseItem\Note;
 
-use Opg\Common\Exception\UnusedException;
-
-use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\User\User;
-use Zend\InputFilter\InputFilterAwareInterface;
 
 /**
  * Note test case.

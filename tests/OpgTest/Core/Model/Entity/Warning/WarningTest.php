@@ -2,9 +2,8 @@
 
 namespace OpgTest\Core\Model\Entity\Warning;
 
-
 use Opg\Common\Model\Entity\DateFormat;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Core\Model\Entity\Warning\Warning;
 use Zend\InputFilter\InputFilter;

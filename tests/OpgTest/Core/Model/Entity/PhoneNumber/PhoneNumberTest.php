@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brettm
- * Date: 24/02/14
- * Time: 20:37
- */
 
 namespace OpgTest\Core\Model\Entity\PhoneNumber;
 
-
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Zend\InputFilter\InputFilter;
 

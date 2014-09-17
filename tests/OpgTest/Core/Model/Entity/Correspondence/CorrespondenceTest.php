@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\Entity\Correspondence;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\Correspondence\Correspondence;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -71,7 +71,7 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
     {
         $donor = new Donor();
         $this->correspondence->setPerson($donor);
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor', $this->correspondence->getPerson());
+        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseActor\Donor', $this->correspondence->getPerson());
     }
 
     public function testSetGetDocumentStoreFilename()

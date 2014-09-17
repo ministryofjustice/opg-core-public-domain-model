@@ -1,11 +1,8 @@
 <?php
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Zend\InputFilter\InputFilter;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
+
+use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 
 class CertificateProviderTest extends \PHPUnit_Framework_TestCase
 {

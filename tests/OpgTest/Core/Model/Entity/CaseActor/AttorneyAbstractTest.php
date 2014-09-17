@@ -1,6 +1,6 @@
 <?php
 
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
 
 class AttorneyAbstractTest extends \PHPUnit_Framework_TestCase
@@ -9,7 +9,7 @@ class AttorneyAbstractTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->attorney = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract');
+        $this->attorney = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\AttorneyAbstract');
     }
 
     public function testGetSetDXNumber()

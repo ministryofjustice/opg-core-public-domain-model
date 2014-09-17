@@ -1,17 +1,16 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\Company;
+use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 
 /**
  * Class AttorneyAbstract
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface
 {

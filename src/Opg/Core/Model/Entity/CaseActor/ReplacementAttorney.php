@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\Entity
  *
  * Class ReplacementAttorney
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 class ReplacementAttorney extends AttorneyAbstract
 {

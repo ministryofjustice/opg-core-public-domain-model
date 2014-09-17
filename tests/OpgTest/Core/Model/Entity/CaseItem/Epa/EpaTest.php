@@ -11,14 +11,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Epa\Epa;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\CaseActor\Attorney;
+use Opg\Core\Model\Entity\CaseActor\Correspondent;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 
 /**
  * Epa test case.
@@ -86,7 +84,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->setDonor($donor);
 
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor',
+            'Opg\Core\Model\Entity\CaseActor\Donor',
             $this->epa->getDonor()
         );
     }
@@ -106,7 +104,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->setCorrespondent($correspondent);
 
         $this->assertInstanceOf(
-            'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent',
+            'Opg\Core\Model\Entity\CaseActor\Correspondent',
             $this->epa->getCorrespondent()
         );
     }
@@ -209,13 +207,13 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $epa->addNotifiedAttorney(new NotifiedAttorney());
         $epa->addDocument($doc = new Document());
         $doc->addPage(new Page());
-        
+
         $this->assertEquals(
             array(
                 'caseType'							        => 'epa',
                 'notifiedRelatives'                         => array(),
                 'notifiedAttorneys'                         => array(),
-                'epaDonorSignatureDate'                     => null, 
+                'epaDonorSignatureDate'                     => null,
                 'donorHasOtherEpas'                         => false,
                 'otherEpaInfo'                              => null,
                 'donor'                                     => array(),
@@ -336,16 +334,16 @@ class EpaTest extends \PHPUnit_Framework_TestCase
             $this->assertFalse($e instanceof UnusedException);
         }
     }
-    
+
     public function testGetSetPersonNotifyDonor()
     {
         $personNotifyDonor = new PersonNotifyDonor();
         $personNotifyDonor->setId('1');
         $this->epa->setPersonNotifyDonor($personNotifyDonor);
         $this->assertEquals($personNotifyDonor, $this->epa->getPersonNotifyDonor());
-        
+
     }
-    
+
     public function testGetSetAddNotifiedAttorney()
     {
         unset($this->epa->notifiedAttorneys);
@@ -353,14 +351,14 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $notifiedAttorney->setId('1');
         $this->epa->addNotifiedAttorney($notifiedAttorney);
         $this->assertEquals($notifiedAttorney, $this->epa->getNotifiedAttorneys()[0]);
-        
+
         unset($this->epa->notifiedAttorneys);
         $notifiedAttorneys = $this->epa->getNotifiedAttorneys();
         $notifiedAttorneys->add($notifiedAttorney);
         $this->epa->setNotifiedAttorneys($notifiedAttorneys);
         $this->assertEquals($notifiedAttorney, $this->epa->getNotifiedAttorneys()[0]);
     }
-    
+
     public function testGetSetAddNotifiedRelative()
     {
         unset($this->epa->notifiedRelatives);
@@ -368,14 +366,14 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $notifiedRelative->setId('1');
         $this->epa->addNotifiedRelative($notifiedRelative);
         $this->assertEquals($notifiedRelative, $this->epa->getNotifiedRelatives()[0]);
-        
+
         unset($this->epa->notifiedRelatives);
         $notifiedRelatives = $this->epa->getNotifiedRelatives();
         $notifiedRelatives->add($notifiedRelative);
         $this->epa->setNotifiedRelatives($notifiedRelatives);
         $this->assertEquals($notifiedRelative, $this->epa->getNotifiedRelatives()[0]);
     }
-    
+
     public function testGetSetDonorSignature()
     {
         $expectedDate          = new \DateTime();
@@ -550,7 +548,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->epa->getApplicantType());
     }
-    
+
     public function testGetSetHasRelativeToNotice()
     {
         $this->assertNull($this->epa->getHasRelativeToNotice());
@@ -559,7 +557,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->setHasRelativeToNotice(false);
         $this->assertFalse($this->epa->getHasRelativeToNotice());
     }
-    
+
     public function testAreAllAttorneysApplyingToRegister()
     {
         $this->assertNull($this->epa->getAreAllAttorneysApplyingToRegister());
@@ -568,7 +566,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->setAreAllAttorneysApplyingToRegister(false);
         $this->assertFalse($this->epa->getAreAllAttorneysApplyingToRegister());
     }
-    
+
     public function testGetSetEpaDonorNoticeGivenDate()
     {
         $expectedDate          = new \DateTime();

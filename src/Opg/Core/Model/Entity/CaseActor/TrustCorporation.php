@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -8,7 +8,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
  * @ORM\Entity
  *
  * Class TrustCorporation
- * @package Opg\Core\Model\Entity\CaseItem\Lpa\Party
+ * @package Opg\Core\Model\Entity\CaseActor
  */
 class TrustCorporation extends AttorneyAbstract
 {

@@ -15,7 +15,6 @@ use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\PartyInterface;
 use Opg\Core\Model\Entity\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
@@ -40,13 +39,13 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "lpa_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney",
- *     "lpa_replacement_attorney" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney",
- *     "lpa_trust_corporation" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\TrustCorporation",
- *     "lpa_correspondent" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent",
- *     "lpa_donor" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor",
- *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson",
- *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider",
+ *     "lpa_attorney" = "Opg\Core\Model\Entity\CaseActor\Attorney",
+ *     "lpa_replacement_attorney" = "Opg\Core\Model\Entity\CaseActor\ReplacementAttorney",
+ *     "lpa_trust_corporation" = "Opg\Core\Model\Entity\CaseActor\TrustCorporation",
+ *     "lpa_correspondent" = "Opg\Core\Model\Entity\CaseActor\Correspondent",
+ *     "lpa_donor" = "Opg\Core\Model\Entity\CaseActor\Donor",
+ *     "lpa_notified_person" = "Opg\Core\Model\Entity\CaseActor\NotifiedPerson",
+ *     "lpa_certificate_provider" = "Opg\Core\Model\Entity\CaseActor\CertificateProvider",
  *     "actor_non_case_contact" = "Opg\Core\Model\Entity\CaseActor\NonCaseContact",
  *     "actor_notified_relative" = "Opg\Core\Model\Entity\CaseActor\NotifiedRelative",
  *     "actor_notified_attorney" = "Opg\Core\Model\Entity\CaseActor\NotifiedAttorney",

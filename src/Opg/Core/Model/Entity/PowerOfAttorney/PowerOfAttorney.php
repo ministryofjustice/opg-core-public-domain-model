@@ -5,12 +5,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Attorney;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\AttorneyAbstract;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson;
+use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
+use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
+use Opg\Core\Model\Entity\CaseActor\Correspondent;
+use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
@@ -50,7 +49,7 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor", fetch = "EAGER")
+     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Donor", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Donor
      * @Groups({"api-poa-list","api-task-list"})
@@ -59,7 +58,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $donor;
 
     /**
-     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent", fetch = "EAGER")
+     * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Correspondent", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Correspondent
      * @ReadOnly
@@ -91,7 +90,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $attorneys;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Party\NotifiedPerson")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedPerson")
      * @ORM\JoinTable(name="pa_notified_persons",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_person_id", referencedColumnName="id")}
@@ -125,7 +124,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $notifiedPersonPermissionBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Lpa\Party\CertificateProvider")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\CertificateProvider")
      * @ORM\JoinTable(name="pa_certificate_provider",
      * joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      * inverseJoinColumns={@ORM\JoinColumn(name="certificate_provider_id",
@@ -682,7 +681,7 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor
+     * @return Donor
      */
     public function getDonor()
     {
@@ -710,7 +709,7 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent $correspondent
+     * @param Correspondent $correspondent
      *
      * @return PowerOfAttorney
      */
@@ -1401,7 +1400,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @param string $noticeGivenDate
      *
-     * @return Lpa
+     * @return PowerOfAttorney
      */
     public function setNoticeGivenDateString($noticeGivenDate)
     {

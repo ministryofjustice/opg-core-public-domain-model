@@ -1,12 +1,16 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
 
-use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
+namespace Opg\Core\Model\Entity\CaseActor;
+
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -14,95 +18,74 @@ use Zend\Validator\Callback;
  * @package Opg Domain Model
  *
  */
-class CertificateProvider extends BasePerson implements PartyInterface, HasRelationshipToDonor
+class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor
 {
     use ToArray;
     use RelationshipToDonor;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
      */
-    protected $certificateProviderStatementType;
+    protected $notifiedDate;
 
     /**
-     * @ORM\Column(type = "string")
-     * @var string
-     */
-    protected $statement;
-
-
-    /**
-     * @ORM\Column(type = "string")
-     * @var string
-     */
-    protected $certificateProviderSkills;
-
-    /**
-     * @return string $certificateProviderStatementType
-     */
-    public function getCertificateProviderStatementType()
-    {
-        return $this->certificateProviderStatementType;
-    }
-
-    /**
-     * @param string $certificateProviderStatementType
+     * @param \DateTime $notifiedDate
      *
-     * @return CertificateProvider
+     * @return Lpa
      */
-    public function setCertificateProviderStatementType(
-        $certificateProviderStatementType
-    ) {
-        $this->certificateProviderStatementType = $certificateProviderStatementType;
+    public function setNotifiedDate(\DateTime $notifiedDate = null)
+    {
+        if (is_null($notifiedDate)) {
+            $notifiedDate = new \DateTime();
+        }
+        $this->notifiedDate = $notifiedDate;
 
         return $this;
     }
 
     /**
-     * @return string $statement
-     */
-    public function getStatement()
-    {
-        return $this->statement;
-    }
-
-    /**
-     * @param string $statement
+     * @param string $notifiedDate
      *
-     * @return CertificateProvider
+     * @return Lpa
      */
-    public function setStatement($statement)
+    public function setNotifiedDateString($notifiedDate)
     {
-        $this->statement = $statement;
+        if (!empty($notifiedDate)) {
+            $notifiedDate = OPGDateFormat::createDateTime($notifiedDate);
+
+            if ($notifiedDate) {
+                $this->setNotifiedDate($notifiedDate);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @param string $certificateProviderSkills
-     *
-     * @return CertificateProvider
+     * @return \DateTime $notifiedDate
      */
-    public function setCertificateProviderSkills($certificateProviderSkills)
+    public function getNotifiedDate()
     {
-        $this->certificateProviderSkills = $certificateProviderSkills;
-
-        return $this;
+        return $this->notifiedDate;
     }
 
     /**
      * @return string
      */
-    public function getCertificateProviderSkills()
+    public function getNotifiedDateString()
     {
-        return $this->certificateProviderSkills;
-    }
+        if (!empty($this->notifiedDate)) {
+            return $this->notifiedDate->format(OPGDateFormat::getDateFormat());
+        }
 
+        return '';
+    }
 
     /**
      * @return InputFilterInterface
-     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {
@@ -125,9 +108,11 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
+                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
                                             return $this->hasAttachedCase();
                                         }
+                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )

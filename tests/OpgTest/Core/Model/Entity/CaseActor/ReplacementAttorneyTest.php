@@ -1,12 +1,15 @@
 <?php
 
-namespace OpgTest\Common\Model\Entity\CaseItem\Lpa\Party;
+namespace OpgTest\Core\Model\Entity\CaseActor;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\ReplacementAttorney;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\CaseActor\ReplacementAttorney;
 
 class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ReplacementAttorney
+     */
     protected $attorney;
 
     public function setUp()

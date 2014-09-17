@@ -1,15 +1,12 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Party;
+namespace Opg\Core\Model\Entity\CaseActor;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
-use JMS\Serializer\Annotation\Accessor;
-use JMS\Serializer\Annotation\Type;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -17,74 +14,95 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor
+class CertificateProvider extends BasePerson implements PartyInterface, HasRelationshipToDonor
 {
     use ToArray;
     use RelationshipToDonor;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
+     * @ORM\Column(type = "string")
+     * @var string
      */
-    protected $notifiedDate;
+    protected $certificateProviderStatementType;
 
     /**
-     * @param \DateTime $notifiedDate
-     *
-     * @return Lpa
+     * @ORM\Column(type = "string")
+     * @var string
      */
-    public function setNotifiedDate(\DateTime $notifiedDate = null)
+    protected $statement;
+
+
+    /**
+     * @ORM\Column(type = "string")
+     * @var string
+     */
+    protected $certificateProviderSkills;
+
+    /**
+     * @return string $certificateProviderStatementType
+     */
+    public function getCertificateProviderStatementType()
     {
-        if (is_null($notifiedDate)) {
-            $notifiedDate = new \DateTime();
-        }
-        $this->notifiedDate = $notifiedDate;
+        return $this->certificateProviderStatementType;
+    }
+
+    /**
+     * @param string $certificateProviderStatementType
+     *
+     * @return CertificateProvider
+     */
+    public function setCertificateProviderStatementType(
+        $certificateProviderStatementType
+    ) {
+        $this->certificateProviderStatementType = $certificateProviderStatementType;
 
         return $this;
     }
 
     /**
-     * @param string $notifiedDate
-     *
-     * @return Lpa
+     * @return string $statement
      */
-    public function setNotifiedDateString($notifiedDate)
+    public function getStatement()
     {
-        if (!empty($notifiedDate)) {
-            $notifiedDate = OPGDateFormat::createDateTime($notifiedDate);
+        return $this->statement;
+    }
 
-            if ($notifiedDate) {
-                $this->setNotifiedDate($notifiedDate);
-            }
-        }
+    /**
+     * @param string $statement
+     *
+     * @return CertificateProvider
+     */
+    public function setStatement($statement)
+    {
+        $this->statement = $statement;
 
         return $this;
     }
 
     /**
-     * @return \DateTime $notifiedDate
+     * @param string $certificateProviderSkills
+     *
+     * @return CertificateProvider
      */
-    public function getNotifiedDate()
+    public function setCertificateProviderSkills($certificateProviderSkills)
     {
-        return $this->notifiedDate;
+        $this->certificateProviderSkills = $certificateProviderSkills;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getNotifiedDateString()
+    public function getCertificateProviderSkills()
     {
-        if (!empty($this->notifiedDate)) {
-            return $this->notifiedDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
+        return $this->certificateProviderSkills;
     }
+
 
     /**
      * @return InputFilterInterface
+     * @codeCoverageIgnore
      */
     public function getInputFilter()
     {
@@ -107,11 +125,9 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
                                         Callback::INVALID_VALUE    => 'This person needs an attached case',
                                         Callback::INVALID_CALLBACK => "An error occurred in the validation"
                                     ),
-                                    // @codeCoverageIgnoreStart
                                     'callback' => function () {
                                             return $this->hasAttachedCase();
                                         }
-                                    // @codeCoverageIgnoreEnd
                                 )
                             )
                         )

@@ -178,7 +178,7 @@ class LpaFilter extends InputFilter
                         array(
                             'name'    => 'IsInstanceOf',
                             'options' => array(
-                                'className' => 'Opg\Core\Model\Entity\CaseItem\Lpa\Party\Correspondent',
+                                'className' => 'Opg\Core\Model\Entity\CaseActor\Correspondent',
                             ),
                         )
                     )

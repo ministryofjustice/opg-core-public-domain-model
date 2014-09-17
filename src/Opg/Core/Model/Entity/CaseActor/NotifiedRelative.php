@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Opg\Core\Model\Entity\CaseActor;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\HasRelationshipToDonor;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Traits\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use JMS\Serializer\Annotation\Accessor;

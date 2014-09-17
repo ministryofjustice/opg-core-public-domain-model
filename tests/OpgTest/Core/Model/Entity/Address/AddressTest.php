@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\Entity\Address;
 
 use Opg\Core\Model\Entity\Address\Address;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Party\Donor;
+use Opg\Core\Model\Entity\CaseActor\Donor;
 
 /**
  * Address test case.
