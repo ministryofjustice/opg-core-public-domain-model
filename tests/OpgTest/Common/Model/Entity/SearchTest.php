@@ -141,10 +141,10 @@ class SearchTest extends \PHPUnit_Framework_TestCase
     public function testQueryMaximumValidationFailureWithMessage()
     {
         $data = array(
-            'query' => str_pad('xyz', 25, 'abc')
+            'query' => str_pad('xyz', 129, 'abc')
         );
 
-        $this->assertEquals(25, strlen($data['query']));
+        $this->assertEquals(129, strlen($data['query']));
 
         $this->search->exchangeArray($data);
 
@@ -155,7 +155,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
         $validationMessage = array(
             'errors' => array(
                 'query' => array(
-                    'stringLengthTooLong' => "The input is more than 24 characters long"
+                    'stringLengthTooLong' => "The input is more than 128 characters long"
                 )
             )
         );

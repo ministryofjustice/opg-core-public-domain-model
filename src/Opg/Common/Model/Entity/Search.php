@@ -60,7 +60,7 @@ class Search implements EntityInterface, \IteratorAggregate
                                 'options' => array(
                                     'encoding' => 'UTF-8',
                                     'min'      => 2,
-                                    'max'      => 24,
+                                    'max'      => 128,
                                 ),
                             )
                         )
