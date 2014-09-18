@@ -180,14 +180,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $surname;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var \Opg\Core\Model\Entity\Address\Address
      */
     protected $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person",cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      */
@@ -207,7 +207,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Accessor(getter="getActiveWarnings")

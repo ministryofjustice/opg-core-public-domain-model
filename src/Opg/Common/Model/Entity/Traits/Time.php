@@ -68,6 +68,6 @@ trait Time
             $createdTime = null;
         }
 
-        return $this->setCreatedTime(new \DateTime($createdTime));
+        return $this->setCreatedTime(OPGDateFormat::createDateTime($createdTime));
     }
 }
