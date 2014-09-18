@@ -17,6 +17,8 @@ final class DateFormat
 
     const REGEXP_MYSQL_DATE_TIME = '/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
 
+    const REGEXP_ElASTICSEARCH_DATE_TIME = '/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}T[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/';
+
     const REGEXP_BANKTEC_FORMAT = '/^\d{8}$/';
     /**
      * @var string
@@ -32,6 +34,11 @@ final class DateFormat
      * @var string
      */
     protected static $DateTimeSqlExport = 'Y-m-d H:i:s';
+
+    /**
+     * @var string
+     */
+    protected static $DateTimeElasticSearch = 'Y-m-d\TH:i:s';
 
     /**
      * @var string
@@ -65,6 +72,14 @@ final class DateFormat
     /**
      * @return string
      */
+    public static function getElasticSearchDateTimeFormat()
+    {
+        return self::$DateTimeElasticSearch;
+    }
+
+    /**
+     * @return string
+     */
     public static function getBanktecFormat()
     {
         return self::$BanktecDateFormat;
@@ -93,6 +108,10 @@ final class DateFormat
 
         if(preg_match(self::REGEXP_BANKTEC_FORMAT, trim($strDateTime))) {
             return \DateTime::createFromFormat(self::getBanktecFormat(), $strDateTime);
+        }
+
+        if(preg_match(self::REGEXP_ElASTICSEARCH_DATE_TIME, trim($strDateTime))) {
+            return \DateTime::createFromFormat(self::getElasticSearchDateTimeFormat(), $strDateTime);
         }
 
         throw new InvalidDateFormatException(

@@ -65,7 +65,7 @@ trait Time
     public function setCreatedTimeString($createdTime)
     {
         if (empty($createdTime)) {
-            $createdTime = null;
+            return $this->setCreatedTime();
         }
 
         return $this->setCreatedTime(OPGDateFormat::createDateTime($createdTime));
