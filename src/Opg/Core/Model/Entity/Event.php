@@ -29,7 +29,7 @@ class Event implements EntityInterface
      * @ORM\Column(type = "integer", options = {"unsigned": true})
      * @ORM\GeneratedValue(strategy = "SEQUENCE")
      * @ORM\Id
-     * @ORM\SequenceGenerator(sequenceName = "events_seq", initialValue = 1, allocationSize = 100)
+     * @ORM\SequenceGenerator(sequenceName = "events_seq", initialValue = 1, allocationSize = 20)
      *
      * @var int $id
      */
