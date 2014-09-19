@@ -316,6 +316,9 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
                             array(
                                 'name'    => 'Identical',
                                 'options' => array(
+                                    'messages' => array(
+                                        \Zend\Validator\Identical::NOT_SAME => 'Passwords do not match'
+                                    ),
                                     'token' => 'password',
                                 ),
                             ),
