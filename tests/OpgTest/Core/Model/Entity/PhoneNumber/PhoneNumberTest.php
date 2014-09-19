@@ -9,6 +9,9 @@ use Zend\InputFilter\InputFilter;
 class PhoneNumberTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var PhoneNumber
+     */
     protected $phoneNumber;
 
     public function setUp()
@@ -34,7 +37,7 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($donor, $this->phoneNumber->getPerson());
     }
 
-    public function testOverwritePersonThrowsException()
+    public function testOverwritePersonSameIdThrowsNoException()
     {
         $donor = new Donor();
         $donor->setId(1);
@@ -44,12 +47,25 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
         $this->phoneNumber->setPerson($donor);
         $this->assertEquals($donor, $this->phoneNumber->getPerson());
 
-        try {
-            $this->phoneNumber->setPerson($donor);
-        }
-        catch(\Exception $e) {
-            $this->assertInstanceOf('\LogicException', $e);
-        }
+        $this->phoneNumber->setPerson($donor);
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testOverwritePersonDifferentIdThrowsException()
+    {
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->phoneNumber->setPerson($donor);
+        $this->assertEquals($donor, $this->phoneNumber->getPerson());
+
+        $secondDonor = new Donor();
+        $secondDonor->setId(2);
+        $this->phoneNumber->setPerson($secondDonor);
     }
 
     public function testGetSetPhoneNumber()

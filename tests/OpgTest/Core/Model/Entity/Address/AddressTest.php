@@ -156,7 +156,7 @@ AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($donor, $this->address->getPerson());
     }
 
-    public function testOverwriteUserThrowsException()
+    public function testOverwritePersonSameIdThrowsNoException()
     {
         $donor = new Donor();
         $donor->setId(1);
@@ -166,12 +166,25 @@ AddressTest extends \PHPUnit_Framework_TestCase
         $this->address->setPerson($donor);
         $this->assertEquals($donor, $this->address->getPerson());
 
-        try {
-            $this->address->setPerson($donor);
-        }
-        catch(\Exception $e) {
-            $this->assertInstanceOf('\LogicException', $e);
-        }
+        $this->address->setPerson($donor);
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testOverwritePersonDifferentIdThrowsException()
+    {
+        $donor = new Donor();
+        $donor->setId(1);
+        $donor->setFirstName('Test');
+
+
+        $this->address->setPerson($donor);
+        $this->assertEquals($donor, $this->address->getPerson());
+
+        $secondDonor = new Donor();
+        $secondDonor->setId(2);
+        $this->address->setPerson($secondDonor);
     }
 
     public function testGetSetType()
