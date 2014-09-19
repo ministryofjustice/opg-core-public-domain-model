@@ -9,6 +9,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -27,6 +28,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
+     * @Groups("api-person-get")
      */
     protected $lpaPartCSignatureDate;
 
@@ -35,6 +37,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpa002SignatureDateString",setter="setLpa002SignatureDateString")
+     * @Groups("api-person-get")
      */
     protected $lpa002SignatureDate;
 
@@ -43,6 +46,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
      * @var int
      * @Type("boolean")
      * @Accessor(getter="getIsAttorneyApplyingToRegister", setter="setIsAttorneyApplyingToRegister")
+     * @Groups("api-person-get")
      */
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 

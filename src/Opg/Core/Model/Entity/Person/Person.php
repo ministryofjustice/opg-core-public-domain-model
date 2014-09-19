@@ -71,14 +71,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $email;
 
@@ -90,7 +90,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * )
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
-     * @MaxDepth(5)
+     * @Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $powerOfAttorneys;
@@ -102,8 +102,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     * @MaxDepth(5)
      * @var ArrayCollection
+     * @Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $deputyships;
@@ -129,6 +129,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
+     * @Groups({"api-poa-get"})
      */
     protected $correspondence;
 
@@ -137,7 +138,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $dob;
 
@@ -146,14 +147,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @var \DateTime
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $dateOfDeath;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
@@ -161,21 +162,21 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $surname;
 
@@ -183,6 +184,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var \Opg\Core\Model\Entity\Address\Address
+     * @Groups({"api-person-get"})
      */
     protected $addresses;
 
@@ -190,11 +192,13 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\PhoneNumber\PhoneNumber", mappedBy="person",cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
+     * @Groups({"api-person-get"})
      */
     protected $phoneNumbers;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children")
+     * @Groups({"api-person-get"})
      */
     private $parent;
 
@@ -203,6 +207,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OrderBy({"id"="ASC"})
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Person\Person>")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     private $children;
 
@@ -211,12 +216,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Accessor(getter="getActiveWarnings")
+     * @Groups({"api-person-get"})
      */
     protected $warnings;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $occupation;
 

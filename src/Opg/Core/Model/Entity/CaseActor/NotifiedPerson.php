@@ -10,6 +10,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -28,6 +29,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
+     * @Groups("api-person-get")
      */
     protected $notifiedDate;
 

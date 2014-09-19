@@ -8,6 +8,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -27,6 +28,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $id;
 
@@ -34,24 +36,28 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
+     * @Groups({"api-person-get"})
      */
     protected $person;
 
     /**
      * @ORM\Column(type = "string", name="phone_number", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $phoneNumber;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $type = 'Work';
 
     /**
      * @ORM\Column(type = "boolean", name="is_default")
      * @var boolean
+     * @Groups({"api-person-get"})
      */
     protected $default = false;
 

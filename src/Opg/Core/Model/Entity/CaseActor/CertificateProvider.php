@@ -7,6 +7,7 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -22,12 +23,14 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-person-get")
      */
     protected $certificateProviderStatementType;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-person-get")
      */
     protected $statement;
 
@@ -35,6 +38,7 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
     /**
      * @ORM\Column(type = "string")
      * @var string
+     * @Groups("api-person-get")
      */
     protected $certificateProviderSkills;
 

@@ -37,7 +37,7 @@ class NonCaseContact extends BasePerson
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $fullname = null;
 

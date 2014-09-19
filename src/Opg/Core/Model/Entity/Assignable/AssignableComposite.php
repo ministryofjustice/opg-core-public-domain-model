@@ -41,7 +41,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @ORM\GeneratedValue(strategy = "AUTO")
      * @ORM\Id
      * @var integer
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getId", setter="setId")
      */
     protected $id;
@@ -91,7 +91,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getName", setter="setName")
      */
     protected $name;
@@ -108,7 +108,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
      * @var string
      * @Type("string")
      * @Accessor(getter="getDisplayName")
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @ReadOnly
      */
     protected $displayName;
