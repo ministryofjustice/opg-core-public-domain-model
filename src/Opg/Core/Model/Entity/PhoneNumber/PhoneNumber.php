@@ -8,6 +8,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -34,6 +35,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
+     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 
