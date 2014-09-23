@@ -83,7 +83,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="person_pas",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
@@ -96,7 +96,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $powerOfAttorneys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="person_deputyships",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
@@ -109,7 +109,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="person_notes",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
@@ -121,7 +121,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="person_correspondence",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}

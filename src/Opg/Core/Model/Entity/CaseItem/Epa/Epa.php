@@ -39,7 +39,7 @@ class Epa extends PowerOfAttorney
     /**
      * The person who is not an attorney and who gives notice to the donor to apply to register the EPA
      *
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor", fetch="EAGER")
      * @ORM\JoinTable(name="pa_person_notify_donor",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_notify_donor_id", referencedColumnName="id")}
@@ -64,7 +64,7 @@ class Epa extends PowerOfAttorney
     /**
      * It must have at least 3 relatives to be notified to create an EPA.
      *
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedRelative")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedRelative", fetch="EAGER")
      * @ORM\JoinTable(name="pa_notified_relatives",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_relative_id", referencedColumnName="id")}
@@ -79,7 +79,7 @@ class Epa extends PowerOfAttorney
      * The attorneys who are not applying to register the EPA. They need to be notified by the attorneys who are
      * applying to register the EPA.
      *
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedAttorney")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedAttorney", fetch="EAGER")
      * @ORM\JoinTable(name="pa_notified_attorneys",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_attorney_id", referencedColumnName="id")}

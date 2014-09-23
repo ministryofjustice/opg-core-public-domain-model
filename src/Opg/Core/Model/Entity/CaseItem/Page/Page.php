@@ -29,7 +29,7 @@ class Page implements EntityInterface, \IteratorAggregate
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", inversedBy = "pages")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", inversedBy = "pages", fetch="EAGER")
      * @var
      */
     private $document;

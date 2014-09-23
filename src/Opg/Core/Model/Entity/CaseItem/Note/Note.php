@@ -54,7 +54,7 @@ class Note implements EntityInterface, \IteratorAggregate
     protected $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
      * @var User $user
      */
     protected $createdByUser;

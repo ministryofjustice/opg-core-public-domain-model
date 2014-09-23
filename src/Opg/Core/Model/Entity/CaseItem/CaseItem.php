@@ -153,7 +153,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $tasks;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
@@ -161,7 +161,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
@@ -169,7 +169,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $documents;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly

@@ -24,7 +24,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     use InputFilter;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AssignableComposite", inversedBy="teams")
+     * @ORM\ManyToMany(targetEntity="AssignableComposite", inversedBy="teams", fetch="EAGER")
      * @ORM\JoinTable(name="assignee_teams")
      * @MaxDepth(2)
      */
@@ -37,7 +37,7 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
     protected $groupName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy = "children")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy = "children", fetch="EAGER")
      */
     protected $parent;
 
