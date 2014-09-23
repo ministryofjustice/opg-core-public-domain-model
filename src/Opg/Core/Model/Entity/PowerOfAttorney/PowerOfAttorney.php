@@ -40,7 +40,7 @@ abstract class PowerOfAttorney extends CaseItem
     const PERMISSION_GIVEN_SINGULAR = 0x01;
 
     /**
-     * Constant for the We portion of I/We question
+     * Constant for the We portion of I/We questions
      */
     const PERMISSION_GIVEN_PLURAL = 0x02;
 
@@ -66,7 +66,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $correspondent;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person", fetch = "EAGER")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person")
      * @ORM\JoinTable(name="pa_applicants",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
@@ -78,7 +78,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $applicants;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person", fetch = "EAGER")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person")
      * @ORM\JoinTable(name="pa_attorneys",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
@@ -90,7 +90,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $attorneys;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedPerson", fetch = "EAGER")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedPerson")
      * @ORM\JoinTable(name="pa_notified_persons",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="notified_person_id", referencedColumnName="id")}
@@ -124,7 +124,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $notifiedPersonPermissionBy = self::PERMISSION_GIVEN_SINGULAR;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\CertificateProvider", fetch = "EAGER")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\CertificateProvider")
      * @ORM\JoinTable(name="pa_certificate_provider",
      * joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      * inverseJoinColumns={@ORM\JoinColumn(name="certificate_provider_id",

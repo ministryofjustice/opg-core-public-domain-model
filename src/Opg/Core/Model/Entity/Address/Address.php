@@ -44,7 +44,7 @@ class Address implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="addresses", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="addresses")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
      * @Type("Opg\Core\Model\Entity\Person\Person")
