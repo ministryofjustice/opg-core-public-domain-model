@@ -4,7 +4,9 @@ namespace OpgTest\Core\Model\Entity\CaseItem\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Opg\Common\Model\Entity\DateFormat;
+use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Core\Model\Entity\User\User;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\CaseItem\Document\Document;
 
@@ -28,6 +30,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
             'numberOfPages' => 0
         ),
         'createdDate'   => null,
+        'direction'     => Document::DOCUMENT_INCOMING_CORRESPONDENCE
     );
 
     public function setUp()
@@ -147,5 +150,47 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->document->setCaseId($expected) instanceof Document);
 
         $this->assertEquals($expected, $this->document->getCaseId());
+    }
+
+    public function testGetSetDirection()
+    {
+        $expected = 'Outgoing';
+
+        $this->assertNotEquals($expected, $this->document->getDirection());
+        $this->assertEquals($expected, $this->document->setDirection($expected)->getDirection());
+
+        $this->assertEquals(Document::DIRECTION_INCOMING,$this->document->setDirection(Document::DIRECTION_INCOMING)->getDirection());
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testGetSetCorrespondent()
+    {
+        $correspondent = (new NonCaseContact())->setId(1);
+
+        $this->assertNull($this->document->getCorrespondent());
+        $this->assertEquals($correspondent, $this->document->setCorrespondent($correspondent)->getCorrespondent());
+        $this->assertEquals($correspondent, $this->document->setCorrespondent($correspondent)->getCorrespondent());
+    }
+
+    public function testGetSetDescription()
+    {
+        $expected =
+            "Bacon ipsum dolor sit amet bresaola porchetta chicken tri-tip. Chuck venison tri-tip ground round corned
+             beef shankle fatback. Sirloin chicken doner t-bone. Andouille kielbasa sausage pork belly biltong drumstick
+             ribeye fatback hamburger corned beef shoulder leberkas.";
+
+        $this->assertNull($this->document->getDescription());
+        $this->assertEquals($expected, $this->document->setDescription($expected)->getDescription());
+    }
+
+    public function testGetSetAssignee()
+    {
+        $user = (new User())->setId(2);
+
+        $this->assertNull($this->document->getAssignee());
+        $this->assertEquals($user, $this->document->setAssignee($user)->getAssignee());
+
     }
 }

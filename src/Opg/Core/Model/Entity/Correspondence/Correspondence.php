@@ -19,35 +19,13 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Correspondence
  */
-class Correspondence implements EntityInterface, \IteratorAggregate
+class Correspondence extends BaseCorrespondence
 {
-    use \Opg\Common\Model\Entity\Traits\InputFilter;
-
-    use \Opg\Common\Model\Entity\Traits\ToArray;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $type;
-
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $systemType;
-
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $filename;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
