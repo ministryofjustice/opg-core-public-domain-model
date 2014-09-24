@@ -41,14 +41,10 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\ManyToMany(
      *      targetEntity="Opg\Core\Model\Entity\Person\Person",
+     *      mappedBy="correspondence",
      *      fetch="EAGER",
      *      cascade={"persist"}
      * )
-     * @ORM\JoinTable(name="person_correspondence",
-     *     joinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
      * @var Person
      */
     protected $correspondent;
