@@ -83,6 +83,14 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     protected $locked;
 
     /**
+     * @ORM\Column(type = "boolean", options={"default":0})
+     * @var boolean
+     * @Type("boolean")
+     * @Groups({"api-person-get"})
+     */
+    protected $suspended;
+
+    /**
      * @param boolean $locked
      * @return User
      */
@@ -137,13 +145,6 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     {
         return $this->getSuspended();
     }
-
-    /**
-     * @ORM\Column(type = "boolean", options={"default":0})
-     * @var boolean
-     * @Type("boolean")
-     */
-    protected $suspended;
 
     public function __construct()
     {
