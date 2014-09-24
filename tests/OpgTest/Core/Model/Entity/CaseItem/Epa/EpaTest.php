@@ -205,7 +205,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $epa->addAttorney(new Attorney());
         $epa->addNotifiedRelative(new NotifiedRelative());
         $epa->addNotifiedAttorney(new NotifiedAttorney());
-        $epa->addDocument($doc = new Document());
+        $epa->addCorrespondence($doc = new Document());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -270,8 +270,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'status'                                    => null,
                 'tasks'                                     => null,
                 'notes'                                     => null,
-                'documents'                                 => array(),
-                'correspondence'                            => null,
+                'correspondence'                            => array(),
                 'caseItems'                                 => null,
                 'taskStatus'                                => array(),
                 'ragRating'                                 => null,

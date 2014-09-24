@@ -397,7 +397,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa->addAttorney(new Attorney());
         $lpa->addCertificateProvider(new CertificateProvider());
         $lpa->addNotifiedPerson(new NotifiedPerson());
-        $lpa->addDocument($doc = new Document());
+        $lpa->addCorrespondence($doc = new Document());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -430,7 +430,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'assignee'                                  => null,
                 'tasks'                                     => array(),
                 'notes'                                     => array(),
-                'documents'                                 => array(),
                 'caseItems'                                 => array(),
                 'uId'                                       => null,
                 'inputFilter'                               => null,
@@ -471,7 +470,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'notificationDate'                          => null,
                 'dispatchDate'                              => null,
                 'noticeGivenDate'                           => null,
-                'correspondence'                            => null,
+                'correspondence'                            => array(),
                 'ragRating'                                 => null,
                 'ragTotal'                                  => null,
                 'paymentRemission'                          => 0,
