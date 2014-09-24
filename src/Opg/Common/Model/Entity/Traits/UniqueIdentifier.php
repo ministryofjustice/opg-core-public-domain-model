@@ -17,7 +17,7 @@ trait UniqueIdentifier
      * @ORM\Column(type = "bigint", options = {"unsigned": true}, unique = true)
      * @var int
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getUidString", setter="setUidString")
      */
     protected $uId;
