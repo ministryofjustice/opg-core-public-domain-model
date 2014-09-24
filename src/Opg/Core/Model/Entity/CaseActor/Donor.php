@@ -37,42 +37,42 @@ class Donor extends BasePerson implements PartyInterface
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $previousNames;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $cannotSignForm;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $applyingForFeeRemission;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $receivingBenefits;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $receivedDamageAward;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $hasLowIncome;
 
@@ -81,21 +81,21 @@ class Donor extends BasePerson implements PartyInterface
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $signatureDate;
 
     /**
      * @ORM\Column(type = "boolean")
      * @var boolean
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $hasPreviousLpa;
 
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $notesForPreviousLpa;
 

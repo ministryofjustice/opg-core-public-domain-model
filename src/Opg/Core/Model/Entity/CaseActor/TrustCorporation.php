@@ -3,6 +3,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -20,24 +21,28 @@ class TrustCorporation extends AttorneyAbstract
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $trustCorporationAppointedAs;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $signatoryOne;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $signatoryTwo;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $companySeal;
 

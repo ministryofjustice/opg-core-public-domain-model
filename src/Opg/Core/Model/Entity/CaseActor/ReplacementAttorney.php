@@ -5,6 +5,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -22,12 +23,14 @@ class ReplacementAttorney extends AttorneyAbstract
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
+     * @Groups({"api-person-get"})
      */
     protected $lpaPartCSignatureDate;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var boolean
+     * @Groups({"api-person-get"})
      */
     protected $isReplacementAttorney = false;
 
