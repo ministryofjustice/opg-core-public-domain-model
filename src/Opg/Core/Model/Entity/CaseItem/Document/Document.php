@@ -1,18 +1,18 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Document;
 
-
+use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Correspondence\BaseCorrespondence;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
-use Opg\Core\Model\Entity\Person\Person;
+
 
 /**
  * @ORM\Entity
@@ -24,8 +24,29 @@ use Opg\Core\Model\Entity\Person\Person;
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document
  */
-class Document extends BaseCorrespondence
+class Document implements EntityInterface, \IteratorAggregate
 {
+    use \Opg\Common\Model\Entity\Traits\InputFilter;
+    use \Opg\Common\Model\Entity\Traits\ToArray;
+
+    /**
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type = "text", nullable = true)
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $type;
+
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
@@ -39,10 +60,10 @@ class Document extends BaseCorrespondence
     protected $sourceDocumentType;
 
     /**
-     * @ORM\Column(type = "text", nullable = true)
+     * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
-    protected $description;
+    protected $title;
 
     /**
      * @ORM\OneToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Page\Page", mappedBy = "document", indexBy = "pageNumber", cascade={"persist"})
@@ -54,16 +75,37 @@ class Document extends BaseCorrespondence
     protected $pages;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
-     * @Accessor(getter="getDirection", setter="setDirection")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @ReadOnly
+     * @Accessor(getter="getCreatedDateString")
      */
-    protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
+    protected $createdDate;
+
+    /**
+     * Non persisted entity
+     * @var int
+     * @Type("integer")
+     * @ReadOnly
+     * @Exclude
+     */
+    protected $caseId;
 
     public function __construct()
     {
         $this->pages = new ArrayCollection();
         $this->setCreatedDate();
+    }
+
+    /**
+     * Fulfil IteratorAggregate interface requirements
+     *
+     * @return \RecursiveArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
     }
 
     /**
@@ -97,6 +139,26 @@ class Document extends BaseCorrespondence
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return Document
+     */
+    public function setId($id)
+    {
+        $this->id = (int)$id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -158,6 +220,97 @@ class Document extends BaseCorrespondence
     }
 
     /**
+     * @param string $title
+     *
+     * @return Document
+     */
+    public function setTitle($title)
+    {
+        $this->title = (string)$title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Document
+     */
+    public function setType($type)
+    {
+        $this->type = (string)$type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string $filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $filename
+     *
+     * @return Document
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $createdDate
+     * @return $this
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (null === $createdDate) {
+            $this->createdDate = new \DateTime();
+        } else {
+            $this->createdDate = $createdDate;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateString()
+    {
+        return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
+    }
+
+    /**
      * @return string
      */
     public function getSourceDocumentType()
@@ -177,20 +330,21 @@ class Document extends BaseCorrespondence
     }
 
     /**
-     * @param string $description
-     * @return Document
+     * @param $caseId
+     * @return $this
      */
-    public function setDescription($description)
+    public function setCaseId($caseId)
     {
-        $this->description = $description;
+        $this->caseId = (int) $caseId;
+
         return $this;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getDescription()
+    public function getCaseId()
     {
-        return $this->description;
+        return $this->caseId;
     }
 }

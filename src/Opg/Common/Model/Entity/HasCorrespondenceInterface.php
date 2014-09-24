@@ -2,7 +2,7 @@
 namespace Opg\Common\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Correspondence\BaseCorrespondence as CorrespondenceEntity;
+use Opg\Core\Model\Entity\Correspondence\Correspondence as CorrespondenceEntity;
 
 /**
  * Interface HasCorrespondenceInterface

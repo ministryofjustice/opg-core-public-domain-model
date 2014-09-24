@@ -1,9 +1,9 @@
 <?php
 namespace Opg\Core\Model\Entity\Correspondence;
 
-use Opg\Core\Model\Entity\Person\Person;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
+use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
@@ -19,13 +19,35 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Correspondence
  */
-class Correspondence extends BaseCorrespondence
+class Correspondence implements EntityInterface, \IteratorAggregate
 {
+    use \Opg\Common\Model\Entity\Traits\InputFilter;
+
+    use \Opg\Common\Model\Entity\Traits\ToArray;
+
+    /**
+     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $type;
+
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
     protected $systemType;
+
+    /**
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     */
+    protected $filename;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -40,11 +62,24 @@ class Correspondence extends BaseCorrespondence
     protected $address;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
-     * @Accessor(getter="getDirection", setter="setDirection")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getCreatedDateString",setter="setCreatedDateString")
      */
-    protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
+    protected $createdDate;
+
+    /**
+     * Don't persist this
+     * @var CaseItem $case
+     */
+    protected $case;
+
+    /**
+     * Non persistable entity, used for validation of create
+     * @var Person person
+     */
+    protected $person;
 
     public function __construct()
     {
@@ -52,7 +87,18 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
-     * @return InputFilter
+     * Fulfil IteratorAggregate interface requirements
+     *
+     * @return \RecursiveArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
+    }
+
+
+    /**
+     * @return InputFilter|InputFilterInterface
      */
     public function getInputFilter()
     {
@@ -85,6 +131,46 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
+     * @param int $id
+     *
+     * @return Correspondence
+     */
+    public function setId($id)
+    {
+        $this->id = (int)$id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string $filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $filename
+     *
+     * @return Correspondence
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
      * @param string $recipientName
      *
      * @return Correspondence
@@ -105,24 +191,60 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
-     * @param Person $person
-     * @return Correspondence
-     * @deprecated use setCorrespondent
+     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
      */
-    public function setPerson(Person $person)
+    public function setCase($case)
     {
-        $this->correspondent = $person;
+        $this->case = $case;
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\CaseItem\CaseItem
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
+     * @param \Opg\Core\Model\Entity\Person\Person $person
+     */
+    public function setPerson($person)
+    {
+        $this->person = $person;
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\Person\Person
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    public function getDocumentStoreFilename()
+    {
+        return $this->getId() . "_" . $this->getFilename();
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Correspondence
+     */
+    public function setType($type)
+    {
+        $this->type = (string)$type;
 
         return $this;
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\Person\Person
-     * @deprecated use getCorrespondent
+     * @return string
      */
-    public function getPerson()
+    public function getType()
     {
-        return $this->correspondent;
+        return $this->type;
     }
 
     /**
@@ -164,6 +286,21 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
+     * @param \DateTime $createdDate
+     *
+     * @return $this
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (is_null($createdDate)) {
+            $createdDate = new \DateTime();
+        }
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    /**
      * @param string $createdDate
      *
      * @return $this
@@ -176,6 +313,22 @@ class Correspondence extends BaseCorrespondence
         }
 
         return $this->setCreatedDate(new \DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDateString()
+    {
+        return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
     }
 
 }
