@@ -12,8 +12,6 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "correspondence")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  *
  * Class Correspondence

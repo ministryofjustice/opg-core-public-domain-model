@@ -16,8 +16,6 @@ use Opg\Core\Model\Entity\Person\Person;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "documents")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  * @ORM\EntityListeners({"BusinessRule\Specification\Document\Listener"})
  *

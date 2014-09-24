@@ -17,7 +17,6 @@ use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
@@ -161,15 +160,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     */
-    protected $documents;
-
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\BaseCorrespondence", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
@@ -228,7 +219,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $this->tasks = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        $this->documents = new ArrayCollection();
+        $this->correspondence = new ArrayCollection();
         $this->caseItems = new ArrayCollection();
         $this->businessRules = new ArrayCollection();
     }
@@ -350,15 +341,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     *
-     * @return ArrayCollection
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-
-    /**
      * @param  Task $task
      *
      * @return $this
@@ -372,24 +354,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  Document $document
-     *
-     * @return $this
-     */
-    public function addDocument(Document $document)
-    {
-        //Only required when we deserialize
-        // @codeCoverageIgnoreStart
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
-        // @codeCoverageIgnoreEnd
-        $this->documents->add($document);
-
-        return $this;
-    }
-
-    /**
      * @param  ArrayCollection $tasks
      *
      * @return CaseItem
@@ -398,20 +362,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         foreach ($tasks as $task) {
             $this->addTask($task);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param  ArrayCollection $documents
-     *
-     * @return CaseItem
-     */
-    public function setDocuments(ArrayCollection $documents)
-    {
-        foreach ($documents as $document) {
-            $this->addDocument($document);
         }
 
         return $this;

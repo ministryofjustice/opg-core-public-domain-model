@@ -21,7 +21,7 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorColumn(name="correspondence_type", type="string")
  * @ORM\DiscriminatorMap({
  *     "incoming_correspondence" = "Opg\Core\Model\Entity\CaseItem\Document\Document",
  *     "outgoing_correspondence" = "Opg\Core\Model\Entity\Correspondence\Correspondence",
@@ -91,7 +91,7 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
     protected $createdDate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true, options={"default"=1})
      * @var int
      * @Accessor(getter="getDirection", setter="setDirection")
      */
