@@ -61,7 +61,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Id
      * @Type("integer")
      * @var int autoincrementID
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $id;
 
@@ -69,7 +69,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
      * @Type("integer")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $oldCaseId;
 
@@ -78,14 +78,14 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $title;
 
@@ -93,7 +93,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getCaseType", setter="setCaseType")
      */
     protected $caseType;
@@ -102,7 +102,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $caseSubtype;
 
@@ -110,7 +110,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "date", nullable = true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getDueDateString", setter="setDueDateString")
      */
     protected $dueDate;
@@ -119,7 +119,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getRegistrationDateString", setter="setRegistrationDateString")
      */
     protected $registrationDate;
@@ -128,7 +128,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getClosedDateString", setter="setClosedDateString")
      */
     protected $closedDate;
@@ -137,7 +137,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $status;
 
@@ -146,7 +146,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
-     * @Serializer\Groups("api-poa-list")
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="filterTasks")
      */
     protected $tasks;
@@ -155,6 +155,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
+     * @Serializer\Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $notes;
@@ -163,6 +164,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\BaseCorrespondence", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
+     * @Serializer\Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $correspondence;
@@ -187,7 +189,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagRating")
-     * @Serializer\Groups("api-poa-list")
+     * @Serializer\Groups({"api-poa-list","api-person-get"})
      */
     protected $ragRating;
 
@@ -196,7 +198,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagTotal")
-     * @Serializer\Groups("api-poa-list")
+     * @Serializer\Groups({"api-poa-list","api-person-get"})
      */
     protected $ragTotal;
 
@@ -204,7 +206,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\Column(type = "datetime", nullable = true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list"})
+     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      * @Accessor(getter="getRejectedDateString", setter="setRejectedDateString")
      */
     protected $rejectedDate;

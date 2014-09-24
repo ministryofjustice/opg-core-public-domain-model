@@ -4,6 +4,7 @@ namespace Opg\Core\Model\Entity\CaseActor\Decorators;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use Opg\Core\Model\Entity\CaseActor\PartyInterface;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class Company
@@ -15,6 +16,7 @@ trait Company
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups({"api-person-get"})
      */
     protected $companyName;
 
@@ -22,6 +24,7 @@ trait Company
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
+     * @Groups({"api-person-get"})
      */
     protected $companyNumber;
 

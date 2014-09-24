@@ -7,6 +7,7 @@ use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class AttorneyAbstract
@@ -21,6 +22,7 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
      * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Type("string")
+     * @Groups("api-person-get")
      */
     protected $dxNumber;
 
@@ -28,6 +30,7 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
      * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Type("string")
+     * @Groups("api-person-get")
      */
     protected $dxExchange;
 

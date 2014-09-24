@@ -18,7 +18,7 @@ class NotifiedAttorney extends Attorney
      * @var \DateTime
      * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
      * @Type("string")
-     * @Groups("api-task-list")
+     * @Groups({"api-task-list","api-person-get"})
      */
     protected $noticeGivenDate;
 

@@ -10,6 +10,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 
 /**
@@ -40,6 +41,7 @@ class Address implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $id;
 
@@ -54,36 +56,42 @@ class Address implements EntityInterface, \IteratorAggregate
     /**
      * @ORM\Column(type = "json_array", name="address_lines", nullable = true)
      * @var array
+     * @Groups({"api-person-get"})
      */
     protected $addressLines = [];
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $town = '';
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $county = '';
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $postcode = '';
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $country = '';
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $type = 'Primary';
 

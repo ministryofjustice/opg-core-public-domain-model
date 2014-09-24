@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterInterface;
 
@@ -37,18 +38,21 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
      * @var int
+     * @Groups({"api-warning-list"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-warning-list"})
      */
     protected $warningType;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
+     * @Groups({"api-warning-list"})
      */
     protected $warningText;
 
@@ -58,6 +62,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      * @Accessor(getter="getDateAddedString", setter="setDateAddedString")
      * @Type("string")
      * @ReadOnly
+     * @Groups({"api-warning-list"})
      */
     protected $dateAdded;
 
@@ -66,6 +71,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      * @var \DateTime
      * @Accessor(getter="getDateClosedString", setter="setDateClosedString")
      * @Type("string")
+     * @Groups({"api-warning-list"})
      */
     protected $dateClosed;
 
@@ -73,6 +79,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
+     * @Groups({"api-warning-list"})
      */
     protected $addedBy;
 
@@ -80,6 +87,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
+     * @Groups({"api-warning-list"})
      */
     protected $closedBy;
 
@@ -88,6 +96,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var PersonEntity
      * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Groups({"api-warning-list"})
      */
     protected $person;
 

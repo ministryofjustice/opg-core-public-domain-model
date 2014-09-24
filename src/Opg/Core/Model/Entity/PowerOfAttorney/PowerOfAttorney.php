@@ -52,7 +52,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Donor", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Donor
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @ReadOnly
      */
     protected $donor;
@@ -61,6 +61,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Correspondent", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Correspondent
+     * @Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $correspondent;
@@ -73,6 +74,7 @@ abstract class PowerOfAttorney extends CaseItem
      * )
      * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
+     * @Groups({"api-person-get"})
      * @var ArrayCollection
      */
     protected $applicants;
@@ -85,6 +87,7 @@ abstract class PowerOfAttorney extends CaseItem
      * )
      * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
+     * @Groups({"api-person-get"})
      * @var ArrayCollection
      */
     protected $attorneys;
@@ -97,6 +100,7 @@ abstract class PowerOfAttorney extends CaseItem
      * )
      * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
+     * @Groups({"api-person-get"})
      * @var ArrayCollection
      */
     protected $notifiedPersons;
@@ -104,12 +108,14 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type = "boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $usesNotifiedPersons = false;
 
     /**
      * @ORM\Column(type = "boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $noNoticeGiven = false;
 
@@ -117,7 +123,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type = "integer",options={"default"=1})
      * @var int
      * @Accessor(getter="getNotifiedPersonPermissionBy",setter="setNotifiedPersonPermissionBy")
-     *
+     * @Groups({"api-person-get"})
      * These accessors are required to convert between the integer type we store the field as and the
      * human readable text passed around the front end
      */
@@ -132,126 +138,147 @@ abstract class PowerOfAttorney extends CaseItem
      * )
      * @var ArrayCollection
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $certificateProviders;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
+     * @Groups({"api-person-get"})
      */
     protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $caseAttorneySingular = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $caseAttorneyJointlyAndSeverally = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $caseAttorneyJointly = false;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
+     * @Groups({"api-person-get"})
      */
     protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
 
     /**
      * @ORM\Column(type = "text", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $cardPaymentContact;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $howAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $howReplacementAttorneysAct;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $attorneyActDecisions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $replacementAttorneyActDecisions;
 
     /**
      * @ORM\Column(type = "text", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $replacementOrder;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $restrictions;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $guidance;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $charges;
 
     /**
      * @ORM\Column(type = "text", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $additionalInfo;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $paymentId;
 
     /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $paymentAmount;
 
@@ -260,18 +287,21 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getPaymentDateString",setter="setPaymentDateString")
+     * @Groups({"api-person-get"})
      */
     protected $paymentDate;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
+     * @Groups({"api-person-get"})
      */
     protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
+     * @Groups({"api-person-get"})
      */
     protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
 
@@ -279,6 +309,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
      * @Accessor(getter="getAttorneyPartyDeclaration",setter="setAttorneyPartyDeclaration")
+     * @Groups({"api-person-get"})
      */
     protected $attorneyPartyDeclaration = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -286,6 +317,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
      * @Accessor(getter="getAttorneyApplicationAssertion",setter="setAttorneyApplicationAssertion")
+     * @Groups({"api-person-get"})
      */
     protected $attorneyApplicationAssertion = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -293,6 +325,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
      * @Accessor(getter="getAttorneyMentalActPermission",setter="setAttorneyMentalActPermission")
+     * @Groups({"api-person-get"})
      */
     protected $attorneyMentalActPermission = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -301,12 +334,14 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getAttorneyDeclarationSignatureDateString",setter="setAttorneyDeclarationSignatureDateString")
+     * @Groups({"api-person-get"})
      */
     protected $attorneyDeclarationSignatureDate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $attorneyDeclarationSignatoryFullName;
 
@@ -314,6 +349,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
      * @Accessor(getter="getCorrespondentComplianceAssertion",setter="setCorrespondentComplianceAssertion")
+     * @Groups({"api-person-get"})
      */
     protected $correspondentComplianceAssertion = self::PERMISSION_GIVEN_SINGULAR;
 
@@ -322,6 +358,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getNotificationDateString",setter="setNotificationDateString")
+     * @Groups({"api-person-get"})
      */
     protected $notificationDate;
 
@@ -330,6 +367,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getDispatchDateString",setter="setDispatchDateString")
+     * @Groups({"api-person-get"})
      */
     protected $dispatchDate;
 
@@ -338,12 +376,14 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getNoticeGivenDateString",setter="setNoticeGivenDateString")
+     * @Groups({"api-person-get"})
      */
     protected $noticeGivenDate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $applicantType;
 
@@ -351,6 +391,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
+     * @Groups({"api-person-get"})
      * @Accessor(getter="getCancellationDateString",setter="setCancellationDateString")
      */
     protected $cancellationDate;
