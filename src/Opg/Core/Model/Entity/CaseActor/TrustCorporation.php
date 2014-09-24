@@ -3,6 +3,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
