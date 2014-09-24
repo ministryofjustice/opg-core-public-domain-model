@@ -9,6 +9,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
@@ -37,6 +38,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\Person\Person
      * @Groups({"api-person-get"})
+     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     protected $person;
 

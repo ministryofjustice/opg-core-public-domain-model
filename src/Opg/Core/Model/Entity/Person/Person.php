@@ -199,6 +199,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children")
      * @Groups({"api-person-get"})
+     * @Type("Opg\Core\Model\Entity\Person\Person")
      */
     private $parent;
 
