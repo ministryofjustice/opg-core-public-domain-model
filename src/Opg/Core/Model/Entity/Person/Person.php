@@ -117,6 +117,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $notes;
 
@@ -129,7 +130,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
-     * @Groups({"api-poa-get"})
+     * @Groups({"api-person-get"})
      */
     protected $correspondence;
 
