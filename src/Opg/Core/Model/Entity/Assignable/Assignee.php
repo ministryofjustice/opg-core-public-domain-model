@@ -19,7 +19,7 @@ trait Assignee
      * @MaxDepth(1)
      * @var AssignableComposite
      * @ReadOnly
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getAssignee", setter="setAssignee")
      */
     protected $assignee;
