@@ -12,7 +12,8 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
-
+use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 
 /**
  * @ORM\Entity

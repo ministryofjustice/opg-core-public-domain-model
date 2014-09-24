@@ -16,6 +16,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 
 /**
+ * @ORM\Entity
  * Class BaseCorrespondence
  * @package Opg\Core\Model\Entity\Correspondence
  */

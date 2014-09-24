@@ -1,7 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\Correspondence;
 
-use Opg\Core\Model\Entity\Person\Person as PersonEntity;
+use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
@@ -52,7 +53,7 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
-     * @return InputFilter|InputFilterInterface
+     * @return InputFilter
      */
     public function getInputFilter()
     {
@@ -105,11 +106,11 @@ class Correspondence extends BaseCorrespondence
     }
 
     /**
-     * @param PersonEntity $person
+     * @param Person $person
      * @return Correspondence
      * @deprecated use setCorrespondent
      */
-    public function setPerson(PersonEntity $person)
+    public function setPerson(Person $person)
     {
         $this->correspondent = $person;
 
