@@ -39,13 +39,26 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\Column(type="Opg\Core\Model\Entity\Person\Person", nullable=true)
+     * @ORM\ManyToMany(
+     *      targetEntity="Opg\Core\Model\Entity\Person\Person",
+     *      fetch="EAGER",
+     *      cascade={"persist"}
+     * )
+     * @ORM\JoinTable(name="person_correspondence",
+     *     joinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @var Person
      */
     protected $correspondent;
 
     /**
-     * @ORM\Column(type="Opg\Core\Model\Entity\Assignable\AssignableComposite", nullable=true)
+     * @ORM\ManyToOne(
+     *      targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite",
+     *      fetch = "EAGER",
+     *      cascade={"persist"}
+     * )
      * @var AssignableComposite
      */
     protected $assignee;

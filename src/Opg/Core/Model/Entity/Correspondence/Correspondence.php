@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\Correspondence;
 
 use Opg\Core\Model\Entity\Person\Person;
-use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
