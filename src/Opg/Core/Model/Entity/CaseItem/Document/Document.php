@@ -60,15 +60,6 @@ class Document extends BaseCorrespondence
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 
-    /**
-     * Non persisted entity
-     * @var int
-     * @Type("integer")
-     * @ReadOnly
-     * @Exclude
-     */
-    protected $caseId;
-
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -202,24 +193,4 @@ class Document extends BaseCorrespondence
     {
         return $this->description;
     }
-
-    /**
-     * @param $caseId
-     * @return $this
-     */
-    public function setCaseId($caseId)
-    {
-        $this->caseId = (int) $caseId;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCaseId()
-    {
-        return $this->caseId;
-    }
-
 }

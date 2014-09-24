@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Core\Model\Entity\User\User;
 use PHPUnit_Framework_TestCase;
@@ -146,10 +147,10 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     {
         $expected = 111;
 
-        $this->assertNull($this->document->getCaseId());
-        $this->assertTrue($this->document->setCaseId($expected) instanceof Document);
+        $this->assertNull($this->document->getCase());
+        $this->assertTrue($this->document->setCase((new Lpa())->setId($expected)) instanceof Document);
 
-        $this->assertEquals($expected, $this->document->getCaseId());
+        $this->assertEquals($expected, $this->document->getCase()->getId());
     }
 
     public function testGetSetDirection()

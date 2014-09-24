@@ -9,6 +9,7 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
@@ -81,6 +82,13 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
      * @var string
      */
     protected $filename;
+
+    /**
+     * Don't persist this
+     * @var CaseItem $case
+     * @Type("Opg\Core\Model\Entity\CaseItem\CaseItem")
+     */
+    protected $case;
 
     /**
      * Fulfil IteratorAggregate interface requirements
@@ -274,5 +282,25 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
     public function getDocumentStoreFilename()
     {
         return $this->getId() . "_" . $this->getFilename();
+    }
+
+    /**
+     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
+     *
+     * @return BaseCorrespondence
+     */
+    public function setCase($case)
+    {
+        $this->case = $case;
+
+        return $this;
+    }
+
+    /**
+     * @return \Opg\Core\Model\Entity\CaseItem\CaseItem
+     */
+    public function getCase()
+    {
+        return $this->case;
     }
 }
