@@ -156,6 +156,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
+     * @Serializer\Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $notes;
@@ -172,6 +173,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
+     * @Serializer\Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $correspondence;

@@ -20,24 +20,28 @@ class TrustCorporation extends AttorneyAbstract
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $trustCorporationAppointedAs;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $signatoryOne;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $signatoryTwo;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $companySeal;
 

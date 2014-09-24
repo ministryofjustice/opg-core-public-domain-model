@@ -22,12 +22,14 @@ class ReplacementAttorney extends AttorneyAbstract
      * @var \DateTime
      * @Type("string")
      * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
+     * @Groups({"api-person-get"})
      */
     protected $lpaPartCSignatureDate;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var boolean
+     * @Groups({"api-person-get"})
      */
     protected $isReplacementAttorney = false;
 
