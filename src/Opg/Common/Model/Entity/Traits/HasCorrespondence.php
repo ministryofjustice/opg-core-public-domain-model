@@ -29,7 +29,10 @@ trait HasCorrespondence
      */
     public function getCorrespondence()
     {
-        return $this->correspondence;
+        return $this->correspondence->filter(function($item){
+                return $item->getDirection() === CorrespondenceEntity::DIRECTION_OUTGOING;
+            }
+        );
     }
 
     /**
@@ -39,8 +42,13 @@ trait HasCorrespondence
      */
     public function setCorrespondence(ArrayCollection $correspondence)
     {
+        $documents = $this->getDocuments();
+
         $this->correspondence = $correspondence;
 
+        foreach ($documents->toArray() as $document) {
+            $this->addDocument($document);
+        }
         return $this;
     }
 
@@ -62,5 +70,41 @@ trait HasCorrespondence
         }
 
         return $this;
+    }
+
+    /**
+     * @param CorrespondenceEntity $document
+     * @return $this
+     */
+    public function addDocument(CorrespondenceEntity $document)
+    {
+        return $this->addCorrespondence($document);
+    }
+
+    /**
+     * @param ArrayCollection $documents
+     * @return HasCorrespondence
+     */
+    public function setDocuments(ArrayCollection $documents)
+    {
+        $correspondence = $this->getCorrespondence();
+        $this->correspondence = $documents;
+
+        foreach ($correspondence->toArray() as $item) {
+            $this->addCorrespondence($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getDocuments()
+    {
+        return $this->correspondence->filter(function($item){
+                return $item->getDirection() === CorrespondenceEntity::DIRECTION_INCOMING;
+            }
+        );
     }
 }

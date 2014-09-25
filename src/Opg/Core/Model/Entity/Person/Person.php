@@ -122,7 +122,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\BaseCorrespondence", cascade={"persist"})
      * @ORM\JoinTable(name="person_correspondence",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="correspondence_id", referencedColumnName="id")}

@@ -216,10 +216,10 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
             $documentCollection->add($document);
         }
 
-        $caseItemMock->setCorrespondence($documentCollection);
+        $caseItemMock->setDocuments($documentCollection);
 
         $expected = 10;
-        $array    = $caseItemMock->getCorrespondence()->toArray();
+        $array    = $caseItemMock->getDocuments()->toArray();
 
         $this->assertEquals($expected, count($array));
 

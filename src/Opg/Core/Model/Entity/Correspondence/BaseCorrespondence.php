@@ -41,6 +41,8 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
 
     const DIRECTION_INCOMING = 'Incoming';
 
+    const DIRECTION_OUTGOING = 'Outgoing';
+
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -231,7 +233,8 @@ abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
      */
     public function getDirection()
     {
-        return ($this->direction === self::DOCUMENT_INCOMING_CORRESPONDENCE) ? 'Incoming' : 'Outgoing';
+        return ($this->direction === self::DOCUMENT_INCOMING_CORRESPONDENCE)
+            ? self::DIRECTION_INCOMING : self::DIRECTION_OUTGOING;
     }
 
     /**

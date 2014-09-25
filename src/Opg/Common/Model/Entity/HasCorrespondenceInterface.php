@@ -29,4 +29,21 @@ interface HasCorrespondenceInterface
      * @return $this
      */
     public function addCorrespondence(CorrespondenceEntity $correspondence);
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getDocuments();
+
+    /**
+     * @param CorrespondenceEntity $document
+     * @return HasCorrespondenceInterface
+     */
+    public function addDocument(CorrespondenceEntity $document);
+
+    /**
+     * @param ArrayCollection $documents
+     * @return HasCorrespondenceInterface
+     */
+    public function setDocuments(ArrayCollection $documents);
 }

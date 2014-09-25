@@ -3,6 +3,7 @@ namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\Traits\HasCorrespondence as HasCorrespondenceTrait;
+use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\Correspondence\Correspondence as CorrespondenceEntity;
 
 /**
@@ -25,8 +26,7 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
         $correspondence->setId(1);
 
         $this->correspondence->add($correspondence);
-
-        $this->assertSame($this->correspondence, $this->getCorrespondence());
+        $this->assertEquals($this->correspondence, $this->getCorrespondence());
     }
 
     public function testSetNotes()
@@ -68,5 +68,38 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($correspondence1, $this->correspondence->get(0));
         $this->assertSame($correspondence2, $this->correspondence->get(1));
+    }
+
+    public function testAddDocumentsPreservesCorrespondence()
+    {
+        $documents = new ArrayCollection();
+        $documents->add((new Document())->setId(1));
+        $documents->add((new Document())->setId(2));
+        $this->assertCount(2, $documents->toArray());
+
+        $correspondence = new ArrayCollection();
+        $correspondence->add((new CorrespondenceEntity())->setId(3));
+        $correspondence->add((new CorrespondenceEntity())->setId(4));
+
+        $this->setCorrespondence($correspondence);
+        $this->assertEquals(2, $this->correspondence->count());
+
+        $retCor = $this->getCorrespondence();
+        $this->assertCount(2, $retCor->toArray());
+        $this->assertCount(2, $correspondence->toArray());
+        foreach($correspondence->toArray() as $correspondenceItem) {
+            $this->assertTrue($retCor->contains($correspondenceItem));
+        }
+        var_dump($documents->toArray());
+        $this->setDocuments($documents);
+        $this->assertEquals(4, $this->correspondence->count());
+
+        $retDoc = $this->getDocuments();
+        $this->assertCount(2, $retDoc->toArray());
+        $this->assertCount(2, $documents->toArray());
+
+        foreach($documents->toArray() as $documentItem) {
+            $this->assertTrue($retDoc->contains($documentItem));
+        }
     }
 }
