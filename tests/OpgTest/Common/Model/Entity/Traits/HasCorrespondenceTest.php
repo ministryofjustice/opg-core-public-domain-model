@@ -47,7 +47,7 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 
         $this->setCorrespondence($correspondence);
 
-        $this->assertSame($correspondence, $this->correspondence);
+        $this->assertEquals($correspondence, $this->correspondence);
     }
 
 
@@ -66,8 +66,8 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 
         $this->addCorrespondence($correspondence2);
 
-        $this->assertSame($correspondence1, $this->correspondence->get(0));
-        $this->assertSame($correspondence2, $this->correspondence->get(1));
+        $this->assertEquals($correspondence1, $this->correspondence->get(0));
+        $this->assertEquals($correspondence2, $this->correspondence->get(1));
     }
 
     public function testAddDocumentsPreservesCorrespondence()
@@ -90,7 +90,6 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
         foreach($correspondence->toArray() as $correspondenceItem) {
             $this->assertTrue($retCor->contains($correspondenceItem));
         }
-        var_dump($documents->toArray());
         $this->setDocuments($documents);
         $this->assertEquals(4, $this->correspondence->count());
 
@@ -100,6 +99,16 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 
         foreach($documents->toArray() as $documentItem) {
             $this->assertTrue($retDoc->contains($documentItem));
+        }
+
+        $this->setCorrespondence($correspondence);
+        $this->assertEquals(4, $this->correspondence->count());
+
+        $retCor = $this->getCorrespondence();
+        $this->assertCount(2, $retCor->toArray());
+        $this->assertCount(2, $correspondence->toArray());
+        foreach($correspondence->toArray() as $correspondenceItem) {
+            $this->assertTrue($retCor->contains($correspondenceItem));
         }
     }
 }

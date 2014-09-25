@@ -44,7 +44,7 @@ trait HasCorrespondence
     {
         $documents = $this->getDocuments();
 
-        $this->correspondence = $correspondence;
+        $this->correspondence = clone $correspondence;
 
         foreach ($documents->toArray() as $document) {
             $this->addDocument($document);
@@ -88,12 +88,11 @@ trait HasCorrespondence
     public function setDocuments(ArrayCollection $documents)
     {
         $correspondence = $this->getCorrespondence();
-        $this->correspondence = $documents;
+        $this->correspondence = clone $documents;
 
         foreach ($correspondence->toArray() as $item) {
             $this->addCorrespondence($item);
         }
-
         return $this;
     }
 
