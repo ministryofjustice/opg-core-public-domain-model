@@ -29,6 +29,10 @@ trait HasCorrespondence
      */
     public function getCorrespondence()
     {
+        if (is_null( $this->correspondence)) {
+            $this->correspondence = new ArrayCollection();
+        }
+
         return $this->correspondence->filter(function($item){
                 return $item->getDirection() === CorrespondenceEntity::DIRECTION_OUTGOING;
             }
@@ -101,6 +105,10 @@ trait HasCorrespondence
      */
     public function getDocuments()
     {
+        if (is_null($this->correspondence)) {
+            $this->correspondence = new ArrayCollection();
+        }
+
         return $this->correspondence->filter(function($item){
                 return $item->getDirection() === CorrespondenceEntity::DIRECTION_INCOMING;
             }

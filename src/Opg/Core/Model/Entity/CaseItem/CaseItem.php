@@ -165,9 +165,18 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Serializer\Groups({"api-person-get"})
+     * @Accessor(getter="getCorrespondence")
      * @ReadOnly
      */
     protected $correspondence;
+
+    /**
+     * @var ArrayCollection
+     * @Accessor(getter="getDocuments")
+     * @ReadOnly
+     * @Type("ArrayCollection")
+     */
+    protected $documents;
 
     // Fields below are NOT persisted
     /**
