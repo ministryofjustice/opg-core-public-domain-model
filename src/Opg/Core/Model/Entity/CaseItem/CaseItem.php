@@ -164,7 +164,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\BaseCorrespondence", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Documents\Document", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Serializer\Groups({"api-person-get"})
@@ -224,7 +224,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         $this->tasks = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        $this->correspondence = new ArrayCollection();
+        $this->documents = new ArrayCollection();
         $this->caseItems = new ArrayCollection();
         $this->businessRules = new ArrayCollection();
     }
