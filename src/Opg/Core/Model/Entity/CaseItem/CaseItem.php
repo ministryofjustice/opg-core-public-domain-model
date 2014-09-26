@@ -5,13 +5,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIncomingDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
-use Opg\Common\Model\Entity\HasCorrespondenceInterface;
+use Opg\Common\Model\Entity\HasOutgoingDocumentsInterface;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\HasIncomingDocuments;
+use Opg\Common\Model\Entity\Traits\HasOutgoingDocuments;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
-use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
@@ -34,13 +36,14 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasCorrespondenceInterface, HasRagRating, IsAssignable
+    HasNotesInterface, HasOutgoingDocumentsInterface, HasIncomingDocumentsInterface, HasRagRating, IsAssignable
 {
     use ToArray;
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
-    use HasCorrespondence;
+    use HasOutgoingDocuments;
+    use HasIncomingDocuments;
     use Assignee;
 
     const APPLICATION_TYPE_CLASSIC = 0;
@@ -165,16 +168,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Serializer\Groups({"api-person-get"})
-     * @Accessor(getter="getCorrespondence")
      * @ReadOnly
-     */
-    protected $correspondence;
-
-    /**
-     * @var ArrayCollection
-     * @Accessor(getter="getDocuments")
-     * @ReadOnly
-     * @Type("ArrayCollection")
      */
     protected $documents;
 
