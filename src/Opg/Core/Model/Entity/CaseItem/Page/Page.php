@@ -4,10 +4,10 @@ namespace Opg\Core\Model\Entity\CaseItem\Page;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Exclude;
+use Opg\Core\Model\Entity\Documents\Document;
 
 /**
  * @ORM\Entity

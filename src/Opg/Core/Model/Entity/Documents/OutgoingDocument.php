@@ -145,7 +145,7 @@ class OutgoingDocument extends Document
     }
 
     /**
-     * @param $systemType
+     * @param string $systemType
      * @return OutgoingDocument
      */
     public function setSystemType($systemType)
