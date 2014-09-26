@@ -1,10 +1,8 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Document;
-
+namespace Opg\Core\Model\Entity\Documents;
 
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Correspondence\BaseCorrespondence;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +20,7 @@ use Opg\Core\Model\Entity\Person\Person;
  * Class Document
  * @package Opg\Core\Model\Entity\CaseItem\Document
  */
-class Document extends BaseCorrespondence
+class IncomingDocument extends Document
 {
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -65,7 +63,7 @@ class Document extends BaseCorrespondence
     }
 
     /**
-     * @return InputFilter|InputFilterInterface
+     * @return InputFilter
      */
     public function getInputFilter()
     {
@@ -138,7 +136,7 @@ class Document extends BaseCorrespondence
     /**
      * @param string $subtype
      *
-     * @return Document
+     * @return IncomingDocument
      */
     public function setSubtype($subtype)
     {
@@ -165,7 +163,7 @@ class Document extends BaseCorrespondence
 
     /**
      * @param $sourceDocumentType
-     * @return $this
+     * @return IncomingDocument
      */
     public function setSourceDocumentType($sourceDocumentType)
     {
@@ -176,11 +174,12 @@ class Document extends BaseCorrespondence
 
     /**
      * @param string $description
-     * @return Document
+     * @return IncomingDocument
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 

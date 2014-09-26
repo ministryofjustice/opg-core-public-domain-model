@@ -1,6 +1,6 @@
 <?php
 
-namespace Opg\Core\Model\Entity\Correspondence;
+namespace Opg\Core\Model\Entity\Documents;
 
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
@@ -17,20 +17,20 @@ use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name = "correspondence")
+ * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="correspondence_type", type="string")
  * @ORM\DiscriminatorMap({
- *     "incoming_correspondence" = "Opg\Core\Model\Entity\CaseItem\Document\Document",
- *     "outgoing_correspondence" = "Opg\Core\Model\Entity\Correspondence\Correspondence",
+ *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
+ *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
  * })
  *
  * Class BaseCorrespondence
  * @package Opg\Core\Model\Entity\Correspondence
  */
-abstract class BaseCorrespondence implements EntityInterface, \IteratorAggregate
+abstract class Document implements EntityInterface, \IteratorAggregate
 {
     use ToArray;
     use InputFilter;

@@ -1,5 +1,6 @@
 <?php
-namespace Opg\Core\Model\Entity\Correspondence;
+
+namespace Opg\Core\Model\Entity\Documents;
 
 use Opg\Core\Model\Entity\Person\Person;
 use Zend\InputFilter\InputFilter;
@@ -17,7 +18,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Correspondence
  */
-class Correspondence extends BaseCorrespondence
+class OutgoingDocument extends Document
 {
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -43,6 +44,7 @@ class Correspondence extends BaseCorrespondence
      * @Accessor(getter="getDirection", setter="setDirection")
      */
     protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
+
 
     public function __construct()
     {
@@ -85,7 +87,7 @@ class Correspondence extends BaseCorrespondence
     /**
      * @param string $recipientName
      *
-     * @return Correspondence
+     * @return OutgoingDocument
      */
     public function setRecipientName($recipientName)
     {
@@ -104,7 +106,7 @@ class Correspondence extends BaseCorrespondence
 
     /**
      * @param Person $person
-     * @return Correspondence
+     * @return OutgoingDocument
      * @deprecated use setCorrespondent
      */
     public function setPerson(Person $person)
@@ -125,7 +127,7 @@ class Correspondence extends BaseCorrespondence
 
     /**
      * @param $address
-     * @return $this
+     * @return OutgoingDocument
      */
     public function setAddress($address)
     {
@@ -144,7 +146,7 @@ class Correspondence extends BaseCorrespondence
 
     /**
      * @param $systemType
-     * @return $this
+     * @return OutgoingDocument
      */
     public function setSystemType($systemType)
     {
@@ -164,12 +166,13 @@ class Correspondence extends BaseCorrespondence
     /**
      * @param string $createdDate
      *
-     * @return $this
+     * @return OutgoingDocument
      */
     public function setCreatedDateString($createdDate)
     {
         if (!empty($createdDate)) {
             $createdDate = OPGDateFormat::createDateTime($createdDate);
+
             return $this->setCreatedDate($createdDate);
         }
 

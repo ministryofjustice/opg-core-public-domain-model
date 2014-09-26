@@ -1,5 +1,5 @@
 <?php
-namespace OpgTest\Core\Model\Entity\CaseItem\Document;
+namespace OpgTest\Core\Model\Entity\Documents;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -9,12 +9,12 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Core\Model\Entity\User\User;
 use PHPUnit_Framework_TestCase;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
+use Opg\Core\Model\Entity\Documents\IncomingDocument;
 
 class DocumentTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Opg\Core\Model\Entity\CaseItem\Document\Document
+     * @var IncomingDocument
      */
     private $document;
 
@@ -31,12 +31,12 @@ class DocumentTest extends PHPUnit_Framework_TestCase
             'numberOfPages' => 0
         ),
         'createdDate'   => null,
-        'direction'     => Document::DOCUMENT_INCOMING_CORRESPONDENCE
+        'direction'     => IncomingDocument::DOCUMENT_INCOMING_CORRESPONDENCE
     );
 
     public function setUp()
     {
-        $this->document = new Document();
+        $this->document = new IncomingDocument();
     }
 
     public function testGetIterator()
