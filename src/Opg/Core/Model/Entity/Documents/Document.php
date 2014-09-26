@@ -23,8 +23,8 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="correspondence_type", type="string")
  * @ORM\DiscriminatorMap({
- *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
- *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
+ *     "incoming_document" = "Opg\Core\Model\Entity\Documents\IncomingDocument",
+ *     "outgoing_document" = "Opg\Core\Model\Entity\Documents\OutgoingDocument",
  * })
  *
  * Class BaseCorrespondence
