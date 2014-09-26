@@ -13,6 +13,7 @@ use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
+use Opg\Core\Model\Entity\Documents\IncomingDocument;
 
 /**
  * Lpa test case.
@@ -397,7 +398,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa->addAttorney(new Attorney());
         $lpa->addCertificateProvider(new CertificateProvider());
         $lpa->addNotifiedPerson(new NotifiedPerson());
-        $lpa->addCorrespondence($doc = new Document());
+        $lpa->addIncomingDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -470,7 +471,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'notificationDate'                          => null,
                 'dispatchDate'                              => null,
                 'noticeGivenDate'                           => null,
-                'correspondence'                            => array(),
+                'documents'                                 => array(),
                 'ragRating'                                 => null,
                 'ragTotal'                                  => null,
                 'paymentRemission'                          => 0,

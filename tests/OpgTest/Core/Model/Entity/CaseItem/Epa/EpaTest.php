@@ -17,6 +17,8 @@ use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\Donor;
+use Opg\Core\Model\Entity\Documents\IncomingDocument;
+use Opg\Core\Model\Entity\Documents\OutgoingDocument;
 
 /**
  * Epa test case.
@@ -205,7 +207,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $epa->addAttorney(new Attorney());
         $epa->addNotifiedRelative(new NotifiedRelative());
         $epa->addNotifiedAttorney(new NotifiedAttorney());
-        $epa->addCorrespondence($doc = new Document());
+        $epa->addIncomingDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -270,7 +272,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'status'                                    => null,
                 'tasks'                                     => null,
                 'notes'                                     => null,
-                'correspondence'                            => array(),
+                'documents'                                 => array(),
                 'caseItems'                                 => null,
                 'taskStatus'                                => array(),
                 'ragRating'                                 => null,
