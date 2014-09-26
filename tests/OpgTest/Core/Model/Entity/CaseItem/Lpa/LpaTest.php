@@ -3,7 +3,6 @@ namespace OpgTest\Core\Model\CaseItem\Lpa;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;

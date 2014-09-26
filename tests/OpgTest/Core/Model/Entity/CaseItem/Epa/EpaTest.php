@@ -9,7 +9,6 @@ use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Epa\Epa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -18,7 +17,6 @@ use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Documents\IncomingDocument;
-use Opg\Core\Model\Entity\Documents\OutgoingDocument;
 
 /**
  * Epa test case.
