@@ -41,7 +41,7 @@ trait HasIncomingDocuments
         $this->documents   = clone $incomingDocuments;
 
         foreach ($outgoingDocuments->toArray() as $item) {
-            $this->addIncomingDocument($item);
+            $this->addOutgoingDocument($item);
         }
 
         return $this;
