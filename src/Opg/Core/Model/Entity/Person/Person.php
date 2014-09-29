@@ -1,4 +1,5 @@
 <?php
+
 namespace Opg\Core\Model\Entity\Person;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -198,20 +199,20 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $phoneNumbers;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children")
+     * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children", cascade={"persist", "remove"})
      * @Groups({"api-person-get"})
      * @Type("Opg\Core\Model\Entity\Person\Person")
      */
-    private $parent;
+    protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent")
+     * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent", cascade={"persist", "remove"})
      * @ORM\OrderBy({"id"="ASC"})
      * @Type("ArrayCollection<Opg\Core\Model\Entity\Person\Person>")
      * @ReadOnly
      * @Groups({"api-person-get"})
      */
-    private $children;
+    protected $children;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
@@ -316,13 +317,34 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     }
 
     /**
+     * @param Person $child
+     * @return Person
+     */
+    public function removeChild(Person $child)
+    {
+        $this->children->removeElement($child);
+
+        return $this;
+    }
+
+    /**
+     * @return Person
+     */
+    public function removeParent()
+    {
+        $this->parent = null;
+
+        return $this;
+    }
+
+    /**
      * @param Person $person
      * @throws \LogicException
      * @internal
      */
     protected function setParent(Person $person)
     {
-        if ($this->parent !== null) {
+        if ($this->parent !== null && $this->parent !== $person) {
             throw new \LogicException('This person is already associated with another parent.');
         }
 
