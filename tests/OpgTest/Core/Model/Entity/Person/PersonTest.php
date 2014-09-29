@@ -323,6 +323,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($otherPerson2->getParent());
         $this->person->addChild($otherPerson2);
         $this->assertSame($this->person, $otherPerson2->getParent());
+
+        $this->assertCount(2, $this->person->getChildren()->toArray());
+
+        $otherPerson1->removeParent();
+        $this->person->removeChild($otherPerson1);
+
+        $this->assertCount(1, $this->person->getChildren()->toArray());
     }
 
     public function testPersonCannotHaveMultipleParents()
