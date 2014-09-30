@@ -36,6 +36,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
 
     /**
      * Non persisted entity, is an alias of $name
+     *
      * @var string
      * @Type("string")
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
@@ -111,6 +112,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
 
     /**
      * Alias for getLocked
+     *
      * @return bool
      */
     public function isLocked()
@@ -188,6 +190,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
+
         return $this->setName($firstname);
     }
 
@@ -320,7 +323,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
                                     'messages' => array(
                                         \Zend\Validator\Identical::NOT_SAME => 'Passwords do not match'
                                     ),
-                                    'token' => 'password',
+                                    'token'    => 'password',
                                 ),
                             ),
                         )
@@ -344,6 +347,23 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
 
                                             return (array_key_exists('OPG User', $keyedRoles) xor
                                                 array_key_exists('COP User', $keyedRoles));
+                                        }
+                                ),
+                            ),
+                            array(
+                                'name'    => 'Callback',
+                                'options' => array(
+                                    'messages' => array(
+                                        \Zend\Validator\Callback::INVALID_VALUE => 'You must not supply a blank role name',
+                                    ),
+                                    'callback' => function ($roles) {
+                                            foreach ($roles as $role) {
+                                                if (empty($role)) {
+                                                    return false;
+                                                }
+                                            }
+
+                                            return true;
                                         }
                                 ),
                             ),
@@ -404,7 +424,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
      */
     public function addRole($roleName)
     {
-        $role               = (string)$roleName;
+        $role = trim((string)$roleName);
         $this->roles[$role] = $roleName;
 
         return $this;
