@@ -327,14 +327,22 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->user->isValid(array('roles')));
     }
 
-     public function testDefaultRoleRequirementsPassOPG() {
+    public function testDefaultRoleRequirementsPassOPG() {
         $this->user->addRole('OPG User');
         $this->assertTrue($this->user->isValid(array('roles')));
     }
 
-     public function testDefaultRoleRequirementsPassCOP() {
+    public function testDefaultRoleRequirementsPassCOP() {
         $this->user->addRole('COP User');
         $this->assertTrue($this->user->isValid(array('roles')));
+    }
+
+    public function testBlankRoleFail() {
+        $this->user->addRole('COP User');
+        $this->assertTrue($this->user->isValid(array('roles')));
+
+        $this->user->addRole('');
+        $this->assertFalse($this->user->isValid(array('roles')));
     }
 
     public function testGetDisplayName()
