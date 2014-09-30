@@ -161,19 +161,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    private function createCaseItemCollection()
-    {
-        $caseItemCollection = new ArrayCollection();
-
-        for ($i = 0; $i < 10; $i++) {
-            $lpa = new Lpa();
-            $lpa->setId($i);
-            $caseItemCollection->add($lpa);
-        }
-
-        return $caseItemCollection;
-    }
-
     public function testToArrayForRoles()
     {
         $this->assertFalse($this->user->hasRole('TestRole1'));
