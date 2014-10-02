@@ -7,13 +7,11 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasIncomingDocumentsInterface;
+use Opg\Common\Model\Entity\HasDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
-use Opg\Common\Model\Entity\HasOutgoingDocumentsInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
-use Opg\Common\Model\Entity\Traits\HasIncomingDocuments;
+use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
-use Opg\Common\Model\Entity\Traits\HasOutgoingDocuments;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
@@ -56,13 +54,12 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
-abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasOutgoingDocumentsInterface, HasIncomingDocumentsInterface
+abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasDocumentsInterface
 {
     use HasNotesTrait;
     use UniqueIdentifier;
     use InputFilterTrait;
-    use HasOutgoingDocuments;
-    use HasIncomingDocuments;
+    use HasDocuments;
 
     /**
      * Constants below are for yes/no radio buttons, we use 0
@@ -124,19 +121,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
      * @Groups({"api-person-get"})
      */
     protected $notes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Documents\Document", cascade={"persist"})
-     * @ORM\JoinTable(name="person_documents",
-     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="document_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Groups({"api-person-get"})
-     */
-    protected $documents;
 
     /**
      * @ORM\Column(type="date", nullable=true)

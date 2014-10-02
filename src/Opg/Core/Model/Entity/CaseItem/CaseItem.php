@@ -5,13 +5,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasIncomingDocumentsInterface;
+use Opg\Common\Model\Entity\HasDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
-use Opg\Common\Model\Entity\HasOutgoingDocumentsInterface;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
-use Opg\Common\Model\Entity\Traits\HasIncomingDocuments;
-use Opg\Common\Model\Entity\Traits\HasOutgoingDocuments;
+use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -36,15 +34,14 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasOutgoingDocumentsInterface, HasIncomingDocumentsInterface, HasRagRating, IsAssignable
+    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable
 {
     use ToArray;
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
-    use HasOutgoingDocuments;
-    use HasIncomingDocuments;
     use Assignee;
+    use HasDocuments;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -163,14 +160,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $notes;
 
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Documents\Document", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Serializer\Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $documents;
 
     // Fields below are NOT persisted
     /**
