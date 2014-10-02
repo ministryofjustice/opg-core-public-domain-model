@@ -103,7 +103,8 @@ abstract class Document implements EntityInterface, \IteratorAggregate
 
 
     /**
-     * non Persistable entity
+     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", nullable=true)
+     * @ORM\JoinColumn(name="correspondent_id", referencedColumnName="id")
      * @var Person
      * @Type("Opg\Core\Model\Entity\Person\Person")
      */
@@ -323,4 +324,5 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     {
         return $this->case;
     }
+
 }

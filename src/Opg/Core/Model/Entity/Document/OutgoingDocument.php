@@ -2,7 +2,6 @@
 
 namespace Opg\Core\Model\Entity\Document;
 
-use Opg\Core\Model\Entity\Person\Person;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,18 +24,6 @@ class OutgoingDocument extends Document
      * @var string
      */
     protected $systemType;
-
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $recipientName;
-
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $address;
 
     /**
      * @ORM\Column(type="integer")
@@ -82,66 +69,6 @@ class OutgoingDocument extends Document
         }
 
         return $this->inputFilter;
-    }
-
-    /**
-     * @param string $recipientName
-     *
-     * @return OutgoingDocument
-     */
-    public function setRecipientName($recipientName)
-    {
-        $this->recipientName = $recipientName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipientName()
-    {
-        return $this->recipientName;
-    }
-
-    /**
-     * @param Person $person
-     * @return OutgoingDocument
-     * @deprecated use setCorrespondent
-     */
-    public function setPerson(Person $person)
-    {
-        $this->correspondent = $person;
-
-        return $this;
-    }
-
-    /**
-     * @return \Opg\Core\Model\Entity\Person\Person
-     * @deprecated use getCorrespondent
-     */
-    public function getPerson()
-    {
-        return $this->correspondent;
-    }
-
-    /**
-     * @param $address
-     * @return OutgoingDocument
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**
