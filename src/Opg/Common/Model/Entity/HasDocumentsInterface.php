@@ -3,7 +3,7 @@
 namespace Opg\Common\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Documents\Document;
+use Opg\Core\Model\Entity\Document\Document;
 
 /**
  * Interface HasDocumentsInterface

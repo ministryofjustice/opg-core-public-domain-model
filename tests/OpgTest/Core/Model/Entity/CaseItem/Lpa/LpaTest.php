@@ -12,7 +12,7 @@ use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
-use Opg\Core\Model\Entity\Documents\IncomingDocument;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 
 /**
  * Lpa test case.

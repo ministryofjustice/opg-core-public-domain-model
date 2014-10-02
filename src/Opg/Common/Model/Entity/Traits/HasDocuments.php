@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\HasDocumentsInterface;
-use Opg\Core\Model\Entity\Documents\Document;
+use Opg\Core\Model\Entity\Document\Document;
 
 /**
  * Class HasDocuments
@@ -16,7 +16,7 @@ use Opg\Core\Model\Entity\Documents\Document;
 trait HasDocuments
 {
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Documents\Document", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Document\Document", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Groups({"api-person-get"})

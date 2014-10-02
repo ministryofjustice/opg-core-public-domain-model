@@ -3,7 +3,7 @@ namespace OpgTest\Core\Model\Entity\CaseItem;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Opg\Core\Model\Entity\Documents\IncomingDocument;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;

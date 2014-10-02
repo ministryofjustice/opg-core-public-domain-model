@@ -1,7 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\Entity\CaseItem\Page;
 
-use Opg\Core\Model\Entity\Documents\IncomingDocument;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 

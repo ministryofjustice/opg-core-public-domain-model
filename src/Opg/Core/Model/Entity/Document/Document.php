@@ -1,6 +1,6 @@
 <?php
 
-namespace Opg\Core\Model\Entity\Documents;
+namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
@@ -23,12 +23,12 @@ use JMS\Serializer\Annotation\ReadOnly;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="correspondence_type", type="string")
  * @ORM\DiscriminatorMap({
- *     "incoming_document" = "Opg\Core\Model\Entity\Documents\IncomingDocument",
- *     "outgoing_document" = "Opg\Core\Model\Entity\Documents\OutgoingDocument",
+ *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
+ *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
  * })
  *
  * Class Document
- * @package Opg\Core\Model\Entity\Documents
+ * @package Opg\Core\Model\Entity\Document
  */
 abstract class Document implements EntityInterface, \IteratorAggregate
 {

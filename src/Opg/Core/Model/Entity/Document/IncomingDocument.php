@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\Documents;
+namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +18,7 @@ use Opg\Core\Model\Entity\Person\Person;
  * @ORM\EntityListeners({"BusinessRule\Specification\Document\Listener"})
  *
  * Class Document
- * @package Opg\Core\Model\Entity\Documents
+ * @package Opg\Core\Model\Entity\Document
  */
 class IncomingDocument extends Document
 {

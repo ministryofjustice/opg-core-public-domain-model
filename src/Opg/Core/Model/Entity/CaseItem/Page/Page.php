@@ -7,7 +7,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Exclude;
-use Opg\Core\Model\Entity\Documents\Document;
+use Opg\Core\Model\Entity\Document\Document;
 
 /**
  * @ORM\Entity
@@ -29,7 +29,7 @@ class Page implements EntityInterface, \IteratorAggregate
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Documents\IncomingDocument", inversedBy = "pages")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Document\IncomingDocument", inversedBy = "pages")
      * @var
      */
     private $document;

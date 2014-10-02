@@ -3,9 +3,9 @@ namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
-use Opg\Core\Model\Entity\Documents\Document;
-use Opg\Core\Model\Entity\Documents\IncomingDocument;
-use Opg\Core\Model\Entity\Documents\OutgoingDocument;
+use Opg\Core\Model\Entity\Document\Document;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
+use Opg\Core\Model\Entity\Document\OutgoingDocument;
 
 /**
  * HasCorrespondence trait test.

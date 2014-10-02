@@ -7,10 +7,10 @@ use Opg\Common\Model\Entity\DateFormat;
 use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
-use Opg\Core\Model\Entity\Documents\Document;
+use Opg\Core\Model\Entity\Document\Document;
 use Opg\Core\Model\Entity\User\User;
 use PHPUnit_Framework_TestCase;
-use Opg\Core\Model\Entity\Documents\IncomingDocument;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 
 class IncomingDocumentTest extends PHPUnit_Framework_TestCase
 {

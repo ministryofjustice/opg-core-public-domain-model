@@ -3,9 +3,9 @@ namespace OpgTest\Core\Model\Entity\Documents;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\Documents\Document;
+use Opg\Core\Model\Entity\Document\Document;
 use PHPUnit_Framework_TestCase;
-use Opg\Core\Model\Entity\Documents\OutgoingDocument;
+use Opg\Core\Model\Entity\Document\OutgoingDocument;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class OutgoingDocumentTest extends PHPUnit_Framework_TestCase

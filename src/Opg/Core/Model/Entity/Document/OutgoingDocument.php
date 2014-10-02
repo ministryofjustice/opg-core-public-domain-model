@@ -1,6 +1,6 @@
 <?php
 
-namespace Opg\Core\Model\Entity\Documents;
+namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Core\Model\Entity\Person\Person;
 use Zend\InputFilter\InputFilter;
@@ -16,7 +16,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  *
  * Class Correspondence
- * @package Opg\Core\Model\Entity\Documents
+ * @package Opg\Core\Model\Entity\Document
  */
 class OutgoingDocument extends Document
 {
