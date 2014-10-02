@@ -205,7 +205,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $epa->addAttorney(new Attorney());
         $epa->addNotifiedRelative(new NotifiedRelative());
         $epa->addNotifiedAttorney(new NotifiedAttorney());
-        $epa->addIncomingDocument($doc = new IncomingDocument());
+        $epa->addDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(

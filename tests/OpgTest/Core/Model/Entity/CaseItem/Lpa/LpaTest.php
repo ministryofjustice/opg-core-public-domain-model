@@ -397,7 +397,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa->addAttorney(new Attorney());
         $lpa->addCertificateProvider(new CertificateProvider());
         $lpa->addNotifiedPerson(new NotifiedPerson());
-        $lpa->addIncomingDocument($doc = new IncomingDocument());
+        $lpa->addDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(

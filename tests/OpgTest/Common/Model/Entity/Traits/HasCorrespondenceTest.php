@@ -2,9 +2,8 @@
 namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Common\Model\Entity\Traits\HasCorrespondence as HasCorrespondenceTrait;
-use Opg\Common\Model\Entity\Traits\HasIncomingDocuments;
-use Opg\Common\Model\Entity\Traits\HasOutgoingDocuments;
+use Opg\Common\Model\Entity\Traits\HasDocuments;
+use Opg\Core\Model\Entity\Documents\Document;
 use Opg\Core\Model\Entity\Documents\IncomingDocument;
 use Opg\Core\Model\Entity\Documents\OutgoingDocument;
 
@@ -13,10 +12,7 @@ use Opg\Core\Model\Entity\Documents\OutgoingDocument;
  */
 class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 {
-    use HasIncomingDocuments;
-    use HasOutgoingDocuments;
-
-    protected $documents;
+    use HasDocuments;
 
     public function setUp()
     {
@@ -40,7 +36,7 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
         $this->documents = null;
         $this->assertNull($this->documents);
 
-        $this->addIncomingDocument($correspondence);
+        $this->addDocument($correspondence);
         $this->assertEquals($this->documents, $this->getIncomingDocuments());
     }
 
@@ -52,7 +48,7 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
         $this->documents = null;
         $this->assertNull($this->documents);
 
-        $this->addOutgoingDocument($correspondence);
+        $this->addDocument($correspondence);
         $this->assertEquals($this->documents, $this->getOutgoingDocuments());
     }
 
@@ -96,5 +92,13 @@ class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
         foreach($correspondence->toArray() as $correspondenceItem) {
             $this->assertTrue($retCor->contains($correspondenceItem));
         }
+
+        $this->setDocuments($documents);
+
+        $this->assertEquals($this->getDocuments(Document::DIRECTION_INCOMING), $documents);
+        $this->assertNotEquals($this->getDocuments(Document::DIRECTION_OUTGOING), $documents);
+
+        $this->documents = null;
+        $this->assertEmpty($this->getDocuments()->toArray());
     }
 }
