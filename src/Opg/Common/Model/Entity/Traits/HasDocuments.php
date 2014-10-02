@@ -49,7 +49,7 @@ trait HasDocuments
     }
 
     /**
-     * @param null $filter
+     * @param int $filter
      * @return ArrayCollection
      */
     public function getDocuments($filter = null)
