@@ -16,7 +16,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  * @ORM\Table(name = "documents")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
