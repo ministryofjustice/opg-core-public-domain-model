@@ -5,19 +5,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
-use Opg\Common\Model\Entity\HasCorrespondenceInterface;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
-use Opg\Common\Model\Entity\Traits\HasCorrespondence;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Person\Person;
@@ -35,14 +34,14 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasCorrespondenceInterface, HasRagRating, IsAssignable
+    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable
 {
     use ToArray;
     use HasNotes;
     use UniqueIdentifier;
     use InputFilter;
-    use HasCorrespondence;
     use Assignee;
+    use HasDocuments;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -161,22 +160,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $notes;
 
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Document\Document", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     */
-    protected $documents;
-
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Correspondence\Correspondence", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Serializer\Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $correspondence;
 
     // Fields below are NOT persisted
     /**
@@ -352,15 +335,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     *
-     * @return ArrayCollection
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
-    }
-
-    /**
      * @param  Task $task
      *
      * @return $this
@@ -374,24 +348,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param  Document $document
-     *
-     * @return $this
-     */
-    public function addDocument(Document $document)
-    {
-        //Only required when we deserialize
-        // @codeCoverageIgnoreStart
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
-        // @codeCoverageIgnoreEnd
-        $this->documents->add($document);
-
-        return $this;
-    }
-
-    /**
      * @param  ArrayCollection $tasks
      *
      * @return CaseItem
@@ -400,20 +356,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     {
         foreach ($tasks as $task) {
             $this->addTask($task);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param  ArrayCollection $documents
-     *
-     * @return CaseItem
-     */
-    public function setDocuments(ArrayCollection $documents)
-    {
-        foreach ($documents as $document) {
-            $this->addDocument($document);
         }
 
         return $this;

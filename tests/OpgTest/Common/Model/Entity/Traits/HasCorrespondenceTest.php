@@ -2,71 +2,103 @@
 namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Common\Model\Entity\Traits\HasCorrespondence as HasCorrespondenceTrait;
-use Opg\Core\Model\Entity\Correspondence\Correspondence as CorrespondenceEntity;
+use Opg\Common\Model\Entity\Traits\HasDocuments;
+use Opg\Core\Model\Entity\Document\Document;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
+use Opg\Core\Model\Entity\Document\OutgoingDocument;
 
 /**
  * HasCorrespondence trait test.
  */
 class HasCorrespondenceTest extends \PHPUnit_Framework_TestCase
 {
-    use HasCorrespondenceTrait;
-
-    protected $correspondence;
+    use HasDocuments;
 
     public function setUp()
     {
-        $this->correspondence = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
-    public function testGetCorrespondence()
+    public function testSetup()
     {
-        $correspondence = new CorrespondenceEntity();
+        $this->documents = null;
+        $this->assertTrue($this->getOutgoingDocuments() instanceof ArrayCollection);
+
+        $this->documents = null;
+        $this->assertTrue($this->getIncomingDocuments() instanceof ArrayCollection);
+    }
+
+    public function testGetSetIncomingDocuments()
+    {
+        $correspondence = new IncomingDocument();
         $correspondence->setId(1);
 
-        $this->correspondence->add($correspondence);
+        $this->documents = null;
+        $this->assertNull($this->documents);
 
-        $this->assertSame($this->correspondence, $this->getCorrespondence());
+        $this->addDocument($correspondence);
+        $this->assertEquals($this->documents, $this->getIncomingDocuments());
     }
 
-    public function testSetNotes()
+    public function testGetSetOutgoingDocuments()
     {
-        $correspondence1 = new CorrespondenceEntity();
-        $correspondence1->setId(1);
+        $correspondence = new OutgoingDocument();
+        $correspondence->setId(1);
 
-        $correspondence2 = new CorrespondenceEntity();
-        $correspondence2->setId(2);
+        $this->documents = null;
+        $this->assertNull($this->documents);
 
-        $correspondence3 = new CorrespondenceEntity();
-        $correspondence3->setId(3);
+        $this->addDocument($correspondence);
+        $this->assertEquals($this->documents, $this->getOutgoingDocuments());
+    }
+
+    public function testAddDocumentsPreservesCorrespondence()
+    {
+        $documents = new ArrayCollection();
+        $documents->add((new IncomingDocument())->setId(1));
+        $documents->add((new IncomingDocument())->setId(2));
+        $this->assertCount(2, $documents->toArray());
 
         $correspondence = new ArrayCollection();
-        $correspondence->add($correspondence1);
-        $correspondence->add($correspondence2);
-        $correspondence->add($correspondence3);
+        $correspondence->add((new OutgoingDocument())->setId(3));
+        $correspondence->add((new OutgoingDocument())->setId(4));
 
-        $this->setCorrespondence($correspondence);
+        $this->setOutgoingDocuments($correspondence);
+        $this->assertEquals(2, $this->documents->count());
 
-        $this->assertSame($correspondence, $this->correspondence);
-    }
+        $retCor = $this->getOutgoingDocuments();
+        $this->assertCount(2, $retCor->toArray());
+        $this->assertCount(2, $correspondence->toArray());
+        foreach($correspondence->toArray() as $correspondenceItem) {
+            $this->assertTrue($retCor->contains($correspondenceItem));
+        }
+        $this->setIncomingDocuments($documents);
+        $this->assertEquals(4, $this->documents->count());
 
+        $retDoc = $this->getIncomingDocuments();
+        $this->assertCount(2, $retDoc->toArray());
+        $this->assertCount(2, $documents->toArray());
 
-    public function testAddNote()
-    {
-        $correspondence1 = new CorrespondenceEntity();
-        $correspondence1->setId(1);
+        foreach($documents->toArray() as $documentItem) {
+            $this->assertTrue($retDoc->contains($documentItem));
+        }
 
-        $this->addCorrespondence($correspondence1);
+        $this->setOutgoingDocuments($correspondence);
+        $this->assertEquals(4, $this->documents->count());
 
-        $this->assertSame($correspondence1, $this->correspondence->get(0));
+        $retCor = $this->getOutgoingDocuments();
+        $this->assertCount(2, $retCor->toArray());
+        $this->assertCount(2, $correspondence->toArray());
+        foreach($correspondence->toArray() as $correspondenceItem) {
+            $this->assertTrue($retCor->contains($correspondenceItem));
+        }
 
-        // Add a second note
-        $correspondence2 = new CorrespondenceEntity();
-        $correspondence2->setId(2);
+        $this->setDocuments($documents);
 
-        $this->addCorrespondence($correspondence2);
+        $this->assertEquals($this->getDocuments(Document::DIRECTION_INCOMING), $documents);
+        $this->assertNotEquals($this->getDocuments(Document::DIRECTION_OUTGOING), $documents);
 
-        $this->assertSame($correspondence1, $this->correspondence->get(0));
-        $this->assertSame($correspondence2, $this->correspondence->get(1));
+        $this->documents = null;
+        $this->assertEmpty($this->getDocuments()->toArray());
     }
 }

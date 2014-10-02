@@ -3,7 +3,6 @@ namespace OpgTest\Core\Model\CaseItem\Lpa;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
@@ -13,6 +12,7 @@ use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 
 /**
  * Lpa test case.
@@ -397,7 +397,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa->addAttorney(new Attorney());
         $lpa->addCertificateProvider(new CertificateProvider());
         $lpa->addNotifiedPerson(new NotifiedPerson());
-        $lpa->addDocument($doc = new Document());
+        $lpa->addDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -430,7 +430,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'assignee'                                  => null,
                 'tasks'                                     => array(),
                 'notes'                                     => array(),
-                'documents'                                 => array(),
                 'caseItems'                                 => array(),
                 'uId'                                       => null,
                 'inputFilter'                               => null,
@@ -471,7 +470,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'notificationDate'                          => null,
                 'dispatchDate'                              => null,
                 'noticeGivenDate'                           => null,
-                'correspondence'                            => null,
+                'documents'                                 => array(),
                 'ragRating'                                 => null,
                 'ragTotal'                                  => null,
                 'paymentRemission'                          => 0,

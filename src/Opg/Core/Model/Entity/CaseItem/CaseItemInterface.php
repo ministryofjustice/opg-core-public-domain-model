@@ -1,10 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem;
 
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
-use Opg\Core\Model\Entity\User\User;
 
 /**
  * Interface CaseItemInterface
@@ -66,12 +64,6 @@ interface CaseItemInterface
 
     /**
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getDocuments();
-
-    /**
-     *
      * @param Task $task
      */
     public function addTask(Task $task);
@@ -82,9 +74,4 @@ interface CaseItemInterface
      */
     public function addNote(Note $note);
 
-    /**
-     *
-     * @param Document $document
-     */
-    public function addDocument(Document $document);
 }

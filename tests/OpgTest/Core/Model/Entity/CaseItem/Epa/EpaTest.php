@@ -9,7 +9,6 @@ use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
 use Opg\Core\Model\Entity\CaseItem\Epa\Epa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -17,6 +16,7 @@ use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\Donor;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 
 /**
  * Epa test case.
@@ -205,7 +205,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $epa->addAttorney(new Attorney());
         $epa->addNotifiedRelative(new NotifiedRelative());
         $epa->addNotifiedAttorney(new NotifiedAttorney());
-        $epa->addDocument($doc = new Document());
+        $epa->addDocument($doc = new IncomingDocument());
         $doc->addPage(new Page());
 
         $this->assertEquals(
@@ -271,7 +271,6 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'tasks'                                     => null,
                 'notes'                                     => null,
                 'documents'                                 => array(),
-                'correspondence'                            => null,
                 'caseItems'                                 => null,
                 'taskStatus'                                => array(),
                 'ragRating'                                 => null,

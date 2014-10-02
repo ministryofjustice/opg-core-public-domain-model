@@ -1,16 +1,17 @@
 <?php
-namespace OpgTest\Core\Model\Entity\Correspondence;
+namespace OpgTest\Core\Model\Entity\Documents;
 
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
+use Opg\Core\Model\Entity\Document\Document;
 use PHPUnit_Framework_TestCase;
-use Opg\Core\Model\Entity\Correspondence\Correspondence;
+use Opg\Core\Model\Entity\Document\OutgoingDocument;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
-class CorrespondenceTest extends PHPUnit_Framework_TestCase
+class OutgoingDocumentTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Opg\Core\Model\Entity\Correspondence\Correspondence;
+     * @var OutgoingDocument
      */
     private $correspondence;
 
@@ -28,7 +29,7 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->correspondence = new Correspondence();
+        $this->correspondence = new OutgoingDocument();
     }
 
     public function testGetIterator()
@@ -103,7 +104,7 @@ class CorrespondenceTest extends PHPUnit_Framework_TestCase
         $expected = 'LP-3A';
 
         $this->assertEmpty($this->correspondence->getSystemType());
-        $this->assertTrue($this->correspondence->setSystemType($expected) instanceof Correspondence);
+        $this->assertTrue($this->correspondence->setSystemType($expected) instanceof Document);
         $this->assertEquals($expected, $this->correspondence->getSystemType());
     }
 

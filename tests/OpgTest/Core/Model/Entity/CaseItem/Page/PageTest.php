@@ -1,7 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\Entity\CaseItem\Page;
 
-use Opg\Core\Model\Entity\CaseItem\Document\Document;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 
@@ -77,7 +77,7 @@ class PageTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetDocument()
     {
-        $expectedDocument = new Document();
+        $expectedDocument = new IncomingDocument();
 
         $this->page->setDocument($expectedDocument);
 
