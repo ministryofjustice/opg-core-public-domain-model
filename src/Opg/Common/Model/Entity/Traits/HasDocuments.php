@@ -19,7 +19,7 @@ trait HasDocuments
      * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Documents\Document", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
-     * @Serializer\Groups({"api-person-get"})
+     * @Groups({"api-person-get"})
      * @ReadOnly
      */
     protected $documents;

@@ -51,17 +51,6 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToMany(
-     *      targetEntity="Opg\Core\Model\Entity\Person\Person",
-     *      mappedBy="correspondence",
-     *      fetch="EAGER",
-     *      cascade={"persist"}
-     * )
-     * @var Person
-     */
-    protected $correspondent;
-
-    /**
      * @ORM\ManyToOne(
      *      targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite",
      *      fetch = "EAGER",
@@ -111,6 +100,14 @@ abstract class Document implements EntityInterface, \IteratorAggregate
      * @Type("Opg\Core\Model\Entity\CaseItem\CaseItem")
      */
     protected $case;
+
+
+    /**
+     * non Persistable entity
+     * @var Person
+     * @Type("Opg\Core\Model\Entity\Person\Person")
+     */
+    protected $correspondent;
 
     /**
      * Fulfil IteratorAggregate interface requirements
