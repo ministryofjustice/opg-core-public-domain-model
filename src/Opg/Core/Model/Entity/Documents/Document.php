@@ -27,7 +27,7 @@ use JMS\Serializer\Annotation\ReadOnly;
  *     "outgoing_document" = "Opg\Core\Model\Entity\Documents\OutgoingDocument",
  * })
  *
- * Class BaseCorrespondence
+ * Class Document
  * @package Opg\Core\Model\Entity\Correspondence
  */
 abstract class Document implements EntityInterface, \IteratorAggregate
