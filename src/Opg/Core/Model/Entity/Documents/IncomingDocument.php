@@ -18,7 +18,7 @@ use Opg\Core\Model\Entity\Person\Person;
  * @ORM\EntityListeners({"BusinessRule\Specification\Document\Listener"})
  *
  * Class Document
- * @package Opg\Core\Model\Entity\CaseItem\Document
+ * @package Opg\Core\Model\Entity\Documents
  */
 class IncomingDocument extends Document
 {

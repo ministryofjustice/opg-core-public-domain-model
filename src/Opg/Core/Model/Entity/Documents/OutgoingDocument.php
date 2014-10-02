@@ -16,7 +16,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * ORM\entity(repositoryClass="Application\Model\Repository\DocumentRepository")
  *
  * Class Correspondence
- * @package Opg\Core\Model\Entity\Correspondence
+ * @package Opg\Core\Model\Entity\Documents
  */
 class OutgoingDocument extends Document
 {
