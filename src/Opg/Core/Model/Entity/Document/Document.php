@@ -103,7 +103,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", nullable=true)
+     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Person\Person")
      * @ORM\JoinColumn(name="correspondent_id", referencedColumnName="id")
      * @var Person
      * @Type("Opg\Core\Model\Entity\Person\Person")
