@@ -1,6 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\Entity\Documents;
 
+use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Document\Document;
@@ -71,8 +72,16 @@ class OutgoingDocumentTest extends PHPUnit_Framework_TestCase
     public function testSetGetPerson()
     {
         $donor = new Donor();
-        $this->correspondence->setPerson($donor);
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseActor\Donor', $this->correspondence->getPerson());
+        $donor->setFirstname('Test')->setSurname('Recipient');
+        $address = new Address();
+        $address->setAddressLine('Test Address')->setTown('Some Town')->setPostcode('Postcode');
+        $donor->addAddress($address);
+
+        $this->correspondence->setCorrespondent($donor);
+        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseActor\Donor', $this->correspondence->getCorrespondent());
+
+        $this->assertEquals($donor, $this->correspondence->getCorrespondent());
+        $this->assertEquals($address, $this->correspondence->getCorrespondent()->getAddresses()->toArray()[0]);
     }
 
     public function testSetGetDocumentStoreFilename()
@@ -81,22 +90,6 @@ class OutgoingDocumentTest extends PHPUnit_Framework_TestCase
         $this->correspondence->setFilename('document');
         $expectedOutput = '10_document';
         $this->assertEquals($expectedOutput, $this->correspondence->getDocumentStoreFilename());
-    }
-
-    public function testGetSetRecipientName()
-    {
-        $expected = 'Test Recipient';
-
-        $this->correspondence->setRecipientName($expected);
-        $this->assertEquals($expected, $this->correspondence->getRecipientName());
-    }
-
-    public function testGetSetAddress()
-    {
-        $expected = 'Test Address, Some Town, Postcode';
-
-        $this->correspondence->setAddress($expected);
-        $this->assertEquals($expected, $this->correspondence->getAddress());
     }
 
     public function testGetSetSystemType()
