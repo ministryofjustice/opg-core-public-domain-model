@@ -48,9 +48,8 @@ class IncomingDocument extends Document
     protected $pages;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
-     * @Accessor(getter="getDirection", setter="setDirection")
+     * @Accessor(getter="getDirection")
+     * @ReadOnly
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 

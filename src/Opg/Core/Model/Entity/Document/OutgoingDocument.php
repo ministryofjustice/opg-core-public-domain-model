@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\ReadOnly;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -26,9 +27,8 @@ class OutgoingDocument extends Document
     protected $systemType;
 
     /**
-     * @ORM\Column(type="integer")
-     * @var int
-     * @Accessor(getter="getDirection", setter="setDirection")
+     * @Accessor(getter="getDirection")
+     * @ReadOnly
      */
     protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
 

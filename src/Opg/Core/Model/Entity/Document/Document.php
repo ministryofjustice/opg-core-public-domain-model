@@ -82,9 +82,9 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     protected $createdDate;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default"=1})
+     * @ORM\Column(type="integer", nullable=true, options={"default"=0})
      * @var int
-     * @Accessor(getter="getDirection", setter="setDirection")
+     * @Accessor(getter="getDirection")
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 
