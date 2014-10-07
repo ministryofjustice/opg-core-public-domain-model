@@ -9,6 +9,7 @@ use JMS\Serializer\Annotation\Accessor;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Validation\InputFilter\PaymentFilter;
 use Zend\InputFilter\Factory as InputFactory;
 
@@ -53,6 +54,13 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
      * @var float
      */
     protected $amount;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseItem\CaseItem", inversedBy="payments")
+     * @ORM\JoinColumn(name="case_id", referencedColumnName="id")
+     * @var \Opg\Core\Model\Entity\CaseItem\CaseItem
+     */
+    protected $case;
 
     /**
      * @return InputFilter|\Zend\InputFilter\InputFilterInterface
@@ -135,5 +143,28 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     public function getFeeNumber()
     {
         return $this->feeNumber;
+    }
+
+    /**
+     * @param CaseItem $case
+     * @return PaymentType
+     * @throws \LogicException
+     */
+    public function setCase(CaseItem $case)
+    {
+        if (null !== $this->case && $this->case = $case) {
+            throw new \LogicException('This payment has already been assigned to a case');
+        }
+        $this->case = $case;
+
+        return $this;
+    }
+
+    /**
+     * @return CaseItem
+     */
+    public function getCase()
+    {
+        return $this->case;
     }
 }

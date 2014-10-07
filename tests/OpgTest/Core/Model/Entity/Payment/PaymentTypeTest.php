@@ -2,14 +2,13 @@
 
 namespace OpgTest\Core\Model\Entity\Payment;
 
+use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 
 /**
  * Class PaymentTypeTest
  * @package OpgTest\Core\Model\Entity\Payment
  */
-class PayStub extends PaymentType{}
-
 class PaymentTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,12 +18,13 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->paymentType = new PayStub; //$this->getMockForAbstractClass('Opg\Core\Model\Entity\Payment\PaymentType');
+        $this->paymentType = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Payment\PaymentType');
     }
 
     public function testSetUp()
     {
         $this->assertTrue($this->paymentType instanceof PaymentType);
+        $this->assertTrue($this->paymentType->getIterator() instanceof \Traversable);
     }
 
     public function testSetGetId()
@@ -89,4 +89,20 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
         $this->paymentType->setAmount('1.00');
         $this->assertTrue($this->paymentType->isValid());
     }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testGetSetCase()
+    {
+        $case  = (new Lpa())->setId(1);
+        $case2 = (new Lpa())->setId(2);
+
+        $this->paymentType->setCase($case);
+        $this->assertEquals($case, $this->paymentType->getCase());
+
+        $this->assertEquals($case, $this->paymentType->setCase($case)->getCase());
+        $this->assertEquals($case, $this->paymentType->setCase($case2)->getCase());
+    }
+
 }
