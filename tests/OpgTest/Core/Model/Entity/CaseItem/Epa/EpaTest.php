@@ -210,7 +210,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                'caseType'							        => 'epa',
+                'caseType'                                  => 'epa',
                 'notifiedRelatives'                         => array(),
                 'notifiedAttorneys'                         => array(),
                 'epaDonorSignatureDate'                     => null,
@@ -218,13 +218,13 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'otherEpaInfo'                              => null,
                 'donor'                                     => array(),
                 'correspondent'                             => null,
-                'applicants'                                => null,
+                'applicants'                                => array(),
                 'attorneys'                                 => array(),
-                'notifiedPersons'                           => null,
-                'usesNotifiedPersons'				        => false,
+                'notifiedPersons'                           => array(),
+                'usesNotifiedPersons'                       => false,
                 'noNoticeGiven'                             => false,
                 'notifiedPersonPermissionBy'                => 1,
-                'certificateProviders'                      => null,
+                'certificateProviders'                      => array(),
                 'paymentByDebitCreditCard'                  => 0,
                 'paymentByCheque'                           => 0,
                 'feeExemptionAppliedFor'                    => 0,
@@ -268,15 +268,15 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'registrationDate'                          => null,
                 'closedDate'                                => null,
                 'status'                                    => null,
-                'tasks'                                     => null,
-                'notes'                                     => null,
+                'tasks'                                     => array(),
+                'notes'                                     => array(),
                 'documents'                                 => array(),
-                'caseItems'                                 => null,
+                'caseItems'                                 => array(),
                 'taskStatus'                                => array(),
                 'ragRating'                                 => null,
                 'ragTotal'                                  => null,
                 'rejectedDate'                              => null,
-                'businessRules'                             => null,
+                'businessRules'                             => array(),
                 'uId'                                       => null,
                 'normalizedUid'                             => null,
                 'inputFilter'                               => null,
@@ -286,6 +286,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'personNotifyDonor'                         => null,
                 'hasRelativeToNotice'                       => null,
                 'areAllAttorneysApplyingToRegister'         => null,
+                'payments'                                  => array(),
             ),
             $epa->toArrayRecursive()
         );
@@ -417,8 +418,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetOtherEpa()
     {
-        $expectedOtherEpas = true;
-        $expectedOtherEpaInfo      = "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
+        $expectedOtherEpas    = true;
+        $expectedOtherEpaInfo = "Bacon ipsum dolor sit amet short ribs pork chop short loin ham hock est.";
 
         $this->assertFalse($this->epa->hasOtherEpas());
 
@@ -568,7 +569,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetEpaDonorNoticeGivenDate()
     {
-        $expectedDate          = new \DateTime();
+        $expectedDate = new \DateTime();
 
         $this->epa->setEpaDonorNoticeGivenDate($expectedDate);
 
@@ -612,7 +613,7 @@ class EpaStub extends Epa
 {
     public function __unset($key)
     {
-        switch($key) {
+        switch ($key) {
             case 'notifiedAttorneys' :
                 $this->notifiedAttorneys = null;
                 break;

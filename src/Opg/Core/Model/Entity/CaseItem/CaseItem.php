@@ -19,6 +19,7 @@ use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
+use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\Person\Person;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -209,6 +210,12 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $businessRules;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Payment\PaymentType", mappedBy="case", cascade={"all"}, fetch="EAGER")
+     * @var ArrayCollection
+     */
+    protected $payments;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -216,6 +223,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->documents = new ArrayCollection();
         $this->caseItems = new ArrayCollection();
         $this->businessRules = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     /**
@@ -823,5 +831,32 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return $this;
+    }
+
+    /**
+     * @param PaymentType $payment
+     * @return CaseItem
+     */
+    public function addPayment(PaymentType $payment)
+    {
+        if (null === $this->payments) {
+            $this->payments = new ArrayCollection();
+        }
+
+        $this->payments->add($payment);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPayments()
+    {
+        if (null === $this->payments) {
+            $this->payments = new ArrayCollection();
+        }
+
+        return $this->payments;
     }
 }

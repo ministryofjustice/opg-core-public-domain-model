@@ -84,6 +84,9 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $np = new NotifiedPerson();
         $this->poa->addNotifiedPerson($np);
         $this->assertEquals($np, $this->poa->getNotifiedPersons()[0]);
+
+        unset($this->poa->notifiedPersons);
+        $this->assertTrue($this->poa->getNotifiedPersons() instanceof ArrayCollection);
     }
 
     public function testGetSetCertificateProviders()
