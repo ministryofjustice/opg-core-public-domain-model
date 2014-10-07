@@ -129,6 +129,7 @@ class Epa extends PowerOfAttorney
 
     public function __construct()
     {
+        parent::__construct();
         $this->notifiedRelatives = new ArrayCollection();
         $this->notifiedAttorneys = new ArrayCollection();
     }

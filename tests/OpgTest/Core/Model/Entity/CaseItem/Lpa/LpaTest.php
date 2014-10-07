@@ -481,7 +481,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'normalizedUid'                             => null,
                 'rejectedDate'                              => null,
                 'applicantType'                             => null,
-                'cancellationDate'                          => null
+                'cancellationDate'                          => null,
+                'payments'                                  => array(),
             ),
             $lpa->toArrayRecursive()
         );

@@ -7,6 +7,7 @@ use Opg\Core\Model\Entity\Document\IncomingDocument;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Payment\ChequePayment;
 use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -23,7 +24,10 @@ class CaseItemStub extends CaseItem
     {
         if ($key === 'tasks') {
             $this->tasks = null;
+        } elseif ($key === 'payments') {
+            $this->payments = null;
         }
+
     }
 
     /**
@@ -515,5 +519,21 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($mock->setRejectedDateString($expected) instanceof CaseItem);
         $this->assertEquals($expected, $mock->getRejectedDateString());
+    }
+
+    public function testGetSetPayments()
+    {
+        $caseItem = new CaseItemStub;
+        $payment = new ChequePayment();
+
+        unset($caseItem->{'payments'});
+        $caseItem->addPayment($payment);
+        $this->assertCount(1, $caseItem->getPayments()->toArray());
+        $caseItem->addPayment($payment);
+        $this->assertCount(2, $caseItem->getPayments()->toArray());
+
+        unset($caseItem->{'payments'});
+
+        $this->assertTrue($caseItem->getPayments() instanceof ArrayCollection);
     }
 }
