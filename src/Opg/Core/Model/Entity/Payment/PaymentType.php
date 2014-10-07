@@ -24,7 +24,7 @@ use Zend\InputFilter\Factory as InputFactory;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "payment_cheque" = "Opg\Core\Model\Entity\Payment\Cheque",
+ *     "payment_cheque" = "Opg\Core\Model\Entity\Payment\ChequePayment",
  * })
  */
 abstract class PaymentType implements EntityInterface, \IteratorAggregate
