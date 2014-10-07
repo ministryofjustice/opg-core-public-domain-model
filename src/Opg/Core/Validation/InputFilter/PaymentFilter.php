@@ -28,7 +28,7 @@ class PaymentFilter extends InputFilter
     protected function setValidators()
     {
         $this->setPaymentAmountValidator();
-       // $this->setPaymentAmountGreaterThanZero();
+        $this->setPaymentAmountGreaterThanZero();
         $this->setFeeNumberValidator();
     }
 
