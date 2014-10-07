@@ -396,6 +396,14 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $cancellationDate;
 
+    /**
+     * Non persisted overload for the serializer to correctly convert this into a string. It seems not to work when declared
+     * on a base class with this type of conversion
+     * @Type("string")
+     * @Accessor(getter="getApplicationType",setter="setApplicationType")
+     */
+    protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
+
     public function __construct()
     {
         parent::__construct();
