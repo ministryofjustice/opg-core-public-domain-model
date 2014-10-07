@@ -211,7 +211,12 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $businessRules;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Payment\PaymentType", mappedBy="case", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Payment\PaymentType", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinTable(name='case_payments',
+     *      joinColumns={@JoinColumn(name="case_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="payment_id", referencedColumnName="id", unique=true)}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      */
     protected $payments;

@@ -6,12 +6,12 @@ namespace Opg\Core\Model\Entity\Payment;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Exclude;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Validation\InputFilter\PaymentFilter;
-use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * Class Payment
@@ -56,8 +56,6 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     protected $amount;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseItem\CaseItem", inversedBy="payments")
-     * @ORM\JoinColumn(name="case_id", referencedColumnName="id")
      * @var \Opg\Core\Model\Entity\CaseItem\CaseItem
      */
     protected $case;
