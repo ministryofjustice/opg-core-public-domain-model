@@ -9,6 +9,8 @@ use JMS\Serializer\Annotation\Accessor;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Validation\InputFilter\PaymentFilter;
+use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * Class Payment
@@ -24,7 +26,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
  *     "payment_cheque" = "Opg\Core\Model\Entity\Payment\Cheque",
  * })
  */
-abstract class PaymentType implements EntityInterface
+abstract class PaymentType implements EntityInterface, \IteratorAggregate
 {
     use ToArray;
     use InputFilter;
@@ -51,6 +53,32 @@ abstract class PaymentType implements EntityInterface
      * @var float
      */
     protected $amount;
+
+    /**
+     * @return InputFilter|\Zend\InputFilter\InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+        if (null === $this->inputFilter) {
+            $this->inputFilter = new \Zend\InputFilter\InputFilter();
+
+            $paymentFilter =  new PaymentFilter();
+
+            foreach ($paymentFilter->getInputs() as $name=>$input) {
+                $this->inputFilter->add($input, $name);
+            }
+        }
+
+        return $this->inputFilter;
+    }
+
+    /**
+     * @return \RecursiveArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->toArray());
+    }
 
     /**
      * @param int $id
