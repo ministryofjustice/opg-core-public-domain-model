@@ -195,4 +195,12 @@ class IncomingDocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($user, $this->document->setAssignee($user)->getAssignee());
 
     }
+
+    public function testGetSetFriendlyDescription()
+    {
+        $expected = 'Test Document';
+        $this->assertEmpty($this->document->getFriendlyDescription());
+
+        $this->assertEquals($expected, $this->document->setFriendlyDescription($expected)->getFriendlyDescription());
+    }
 }

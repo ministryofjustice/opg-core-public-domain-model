@@ -398,6 +398,7 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * Non persisted overload for the serializer to correctly convert this into a string. It seems not to work when declared
+     * on a base class with this type of conversion
      * @ORM\Column(type = "integer", nullable=true)
      * @Type("string")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
