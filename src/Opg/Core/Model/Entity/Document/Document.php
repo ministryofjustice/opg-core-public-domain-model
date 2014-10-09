@@ -332,7 +332,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param $friendlyDescription
+     * @param string $friendlyDescription
      * @return BaseCorrespondence
      */
     public function setFriendlyDescription($friendlyDescription)
