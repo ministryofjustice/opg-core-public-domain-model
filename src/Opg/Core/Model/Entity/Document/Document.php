@@ -67,7 +67,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     protected $type;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable = true)
      * @var string
      */
     protected $friendlyDescription;
