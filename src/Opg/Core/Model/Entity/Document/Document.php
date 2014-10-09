@@ -67,6 +67,12 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     protected $type;
 
     /**
+     * @ORM\Column(type="string", nullable = true)
+     * @var string
+     */
+    protected $friendlyDescription;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      */
@@ -323,6 +329,25 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     public function getCase()
     {
         return $this->case;
+    }
+
+    /**
+     * @param string $friendlyDescription
+     * @return BaseCorrespondence
+     */
+    public function setFriendlyDescription($friendlyDescription)
+    {
+        $this->friendlyDescription = (string)$friendlyDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFriendlyDescription()
+    {
+        return $this->friendlyDescription;
     }
 
 }
