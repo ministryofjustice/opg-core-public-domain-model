@@ -27,6 +27,7 @@ class OutgoingDocument extends Document
     protected $systemType;
 
     /**
+     * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
      */

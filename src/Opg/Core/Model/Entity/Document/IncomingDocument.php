@@ -48,6 +48,7 @@ class IncomingDocument extends Document
     protected $pages;
 
     /**
+     * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
      */
