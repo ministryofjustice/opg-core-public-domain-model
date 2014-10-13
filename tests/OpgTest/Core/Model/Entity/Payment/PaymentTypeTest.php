@@ -2,8 +2,11 @@
 
 namespace OpgTest\Core\Model\Entity\Payment;
 
+use Opg\Common\Model\Entity\DateFormat;
+use Opg\Common\Model\Entity\Exception\InvalidDateFormatException;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\Payment\PaymentType;
+use Zend\I18n\Validator\DateTime;
 
 /**
  * Class PaymentTypeTest
@@ -48,14 +51,14 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->paymentType->getFeeNumber());
     }
 
-    public function testGetSetAmount()
+    public function testGetSetPaymentAmount()
     {
         $expected = 2;
         $expectedResult = number_format($expected, 2, '.', '');
 
-        $this->paymentType->setAmount($expected);
-        $this->assertEquals($expectedResult, $this->paymentType->getAmount());
-        $this->assertEquals($expected, $this->paymentType->getAmount());
+        $this->paymentType->setPaymentAmount($expected);
+        $this->assertEquals($expectedResult, $this->paymentType->getPaymentAmount());
+        $this->assertEquals($expected, $this->paymentType->getPaymentAmount());
     }
 
     public function testValidators()
@@ -65,28 +68,28 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             "Value is required and can't be empty",
-            $this->paymentType->getErrorMessages()['errors']['amount']['isEmpty']
+            $this->paymentType->getErrorMessages()['errors']['paymentAmount']['isEmpty']
         );
         $this->assertEquals(
             "Value is required and can't be empty",
-            $this->paymentType->getErrorMessages()['errors']['feeNumber']['isEmpty']
+            $this->paymentType->getErrorMessages()['errors']['paymentReference']['isEmpty']
         );
 
-        $this->paymentType->setFeeNumber('a');
+        $this->paymentType->setPaymentReference('a');
         $this->assertFalse($this->paymentType->isValid());
         $this->assertCount(2, $this->paymentType->getErrorMessages()['errors']);
-        $this->assertNotEmpty($this->paymentType->getErrorMessages()['errors']['feeNumber']['stringLengthTooShort']);
+        $this->assertNotEmpty($this->paymentType->getErrorMessages()['errors']['paymentReference']['stringLengthTooShort']);
 
-        $this->paymentType->setFeeNumber('aa');
+        $this->paymentType->setPaymentReference('aa');
         $this->assertFalse($this->paymentType->isValid());
         $this->assertCount(1, $this->paymentType->getErrorMessages()['errors']);
 
-        $this->paymentType->setAmount('-1.00');
+        $this->paymentType->setPaymentAmount('-1.00');
         $this->assertFalse($this->paymentType->isValid());
         $this->assertCount(1, $this->paymentType->getErrorMessages()['errors']);
-        $this->assertNotEmpty($this->paymentType->getErrorMessages()['errors']['amount']['notDigits']);
+        $this->assertNotEmpty($this->paymentType->getErrorMessages()['errors']['paymentAmount']['notDigits']);
 
-        $this->paymentType->setAmount('1.00');
+        $this->paymentType->setPaymentAmount('1.00');
         $this->assertTrue($this->paymentType->isValid());
     }
 
@@ -103,6 +106,73 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($case, $this->paymentType->setCase($case)->getCase());
         $this->assertEquals($case, $this->paymentType->setCase($case2)->getCase());
+    }
+
+    public function testGetSetPaymentReference()
+    {
+        $expected = 'Payment Ref';
+
+        $this->assertEmpty($this->paymentType->getPaymentReference());
+        $this->assertEquals(
+            $expected,
+            $this->paymentType->setPaymentReference($expected)->getPaymentReference()
+        );
+    }
+
+    /**
+     * @expectedException \Opg\Common\Model\Entity\Exception\InvalidDateFormatException
+     */
+    public function testGetSetPaymentDate()
+    {
+        $expectedDateTime = new \DateTime();
+        $expectedDateTimeString = $expectedDateTime->format(DateFormat::getDateFormat());
+
+        $this->assertNull($this->paymentType->getPaymentDate());
+        $this->assertEmpty($this->paymentType->getPaymentDateString());
+
+        $this->assertEquals(
+            $expectedDateTime,
+            $this->paymentType->setPaymentDate($expectedDateTime)->getPaymentDate()
+        );
+
+        $this->assertEquals(
+            $expectedDateTimeString,
+            $this->paymentType->setPaymentDateString($expectedDateTimeString)->getPaymentDateString()
+        );
+
+        $this->paymentType->setPaymentDateString('Last thursday around 3pm');
+    }
+
+    public function testGetSetFeeAmount()
+    {
+        $expected = 2;
+        $expectedResult = number_format($expected, 2, '.', '');
+
+        $this->paymentType->setFeeAmount($expected);
+        $this->assertEquals($expectedResult, $this->paymentType->getFeeAmount());
+        $this->assertEquals($expected, $this->paymentType->getFeeAmount());
+    }
+
+    public function testGetSetBurnNumber()
+    {
+        $expected = uniqid('BURN');
+
+        $this->assertEmpty($this->paymentType->getBurnNumber());
+        $this->assertEquals(
+            $expected,
+            $this->paymentType->setBurnNumber($expected)->getBurnNumber()
+        );
+    }
+
+    public function testGetSetBatchNumber()
+    {
+        $expected = '01234ABC';
+
+        $this->assertEmpty($this->paymentType->getBatchNumber());
+        $this->assertEquals(
+            $expected,
+            $this->paymentType->setBatchNumber($expected)->getBatchNumber()
+        );
     }
 
 }
