@@ -3,6 +3,7 @@
 namespace Opg\Core\Model\Entity\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
