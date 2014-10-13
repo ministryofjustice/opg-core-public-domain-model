@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ReadOnly;
+use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -25,12 +27,20 @@ use Opg\Core\Validation\InputFilter\PaymentFilter;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "payment_cheque" = "Opg\Core\Model\Entity\Payment\ChequePayment",
+ *     "payment_online" = "Opg\Core\Model\Entity\Payment\OnlinePayment",
+ *     "payment_card"   = "Opg\Core\Model\Entity\Payment\CardPayment",
+ *     "payment_cash"   = "Opg\Core\Model\Entity\Payment\CashPayment",
  * })
  */
 abstract class PaymentType implements EntityInterface, \IteratorAggregate
 {
     use ToArray;
     use InputFilter;
+
+    const PAYMENT_TYPE_CASH     = 'Cash';
+    const PAYMENT_TYPE_CARD     = 'Card';
+    const PAYMENT_TYPE_ONLINE   = 'Online';
+    const PAYMENT_TYPE_CHEQUE   = 'Cheque';
 
     /**
      * @ORM\Column(
@@ -47,13 +57,51 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $paymentReference;
+
+    /**
+     * @ORM\Column(type="date")
+     * @var \DateTime
+     * @Accessor(getter="getPaymentDateString", setter="setPaymentDateString")
+     */
+    protected $paymentDate;
+
+    /**
+     * @ORM\Column(type="decimal")
+     * @var float
+     */
+    protected $paymentAmount;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $feeNumber;
 
     /**
      * @ORM\Column(type="decimal")
      * @var float
      */
-    protected $amount;
+    protected $feeAmount;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $burnNumber;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $batchNumber;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     * @ReadOnly
+     */
+    protected $paymentType;
 
     /**
      * @var \Opg\Core\Model\Entity\CaseItem\CaseItem
@@ -106,22 +154,85 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param float $amount
+     * @param string $paymentReference
      * @return PaymentType
      */
-    public function setAmount($amount)
+    public function setPaymentReference($paymentReference)
     {
-        $this->amount = (float)$amount;
+        $this->paymentReference = $paymentReference;
 
         return $this;
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getAmount()
+    public function getPaymentReference()
     {
-        return number_format($this->amount, 2, '.', '');
+        return $this->paymentReference;
+    }
+
+    /**
+     * @param \DateTime $paymentDate
+     * @return PaymentType
+     */
+    public function setPaymentDate(\DateTime $paymentDate = null)
+    {
+        $this->paymentDate = $paymentDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $paymentDate
+     * @return PaymentType
+     */
+    public function setPaymentDateString($paymentDate)
+    {
+        if (!empty(trim($paymentDate))) {
+            $this->setPaymentDate(DateFormat::createDateTime($paymentDate));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPaymentDate()
+    {
+        return $this->paymentDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentDateString()
+    {
+        if ($this->paymentDate instanceof \DateTime) {
+            return $this->paymentDate->format(DateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param float $amount
+     * @return PaymentType
+     */
+    public function setPaymentAmount($amount)
+    {
+        $this->paymentAmount = (float)$amount;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentAmount()
+    {
+        return number_format($this->paymentAmount, 2, '.', '');
     }
 
     /**
@@ -141,6 +252,63 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     public function getFeeNumber()
     {
         return $this->feeNumber;
+    }
+
+    /**
+     * @param float $feeAmount
+     * @return PaymentType
+     */
+    public function setFeeAmount($feeAmount)
+    {
+        $this->feeAmount = (float)$feeAmount;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeeAmount()
+    {
+        return number_format($this->feeAmount,2, '.', '');
+    }
+
+    /**
+     * @param string $burnNumber
+     * @return PaymentType
+     */
+    public function setBurnNumber($burnNumber)
+    {
+        $this->burnNumber = $burnNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBurnNumber()
+    {
+        return $this->burnNumber;
+    }
+
+    /**
+     * @param string $batchNumber
+     * @return PaymentType
+     */
+    public function setBatchNumber($batchNumber)
+    {
+        $this->batchNumber = $batchNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBatchNumber()
+    {
+        return $this->batchNumber;
     }
 
     /**
