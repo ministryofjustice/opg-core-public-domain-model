@@ -11,13 +11,12 @@ use JMS\Serializer\Annotation\ReadOnly;
  * Class Cheque
  * @package Opg\Core\Model\Entity\Payment
  */
-class ChequePayment extends PaymentType
+class OnlinePayment extends PaymentType
 {
     /**
      * @ORM\Column(type="string")
      * @var string
      * @ReadOnly
      */
-    protected $paymentType = self::PAYMENT_TYPE_CHEQUE;
-
+    protected $paymentType = self::PAYMENT_TYPE_ONLINE;
 }

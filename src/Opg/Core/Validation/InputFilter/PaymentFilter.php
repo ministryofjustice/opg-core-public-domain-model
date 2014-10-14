@@ -40,7 +40,7 @@ class PaymentFilter extends InputFilter
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'feeNumber',
+                    'name'       => 'paymentReference',
                     'required'   => true,
                     'filters'    => array(
                         array('name' => 'StripTags'),
@@ -68,7 +68,7 @@ class PaymentFilter extends InputFilter
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'amount',
+                    'name'       => 'paymentAmount',
                     'required'   => true,
                     'validators' => array(
                         array(
@@ -88,7 +88,7 @@ class PaymentFilter extends InputFilter
         $this->add(
             $this->inputFactory->createInput(
                 array(
-                    'name'       => 'amount',
+                    'name'       => 'paymentAmount',
                     'required'   => true,
                     'validators' => array(
                         array(
