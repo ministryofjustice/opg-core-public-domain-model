@@ -60,38 +60,41 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     protected $paymentReference;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
+     * @Type("string")
      * @Accessor(getter="getPaymentDateString", setter="setPaymentDateString")
      */
     protected $paymentDate;
 
     /**
      * @ORM\Column(type="decimal")
+     * @Type("float")
      * @var float
      */
     protected $paymentAmount;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $feeNumber;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", nullable=true)
+     * @Type("float")
      * @var float
      */
     protected $feeAmount;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $burnNumber;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $batchNumber;
