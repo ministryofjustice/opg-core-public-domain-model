@@ -227,7 +227,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'certificateProviders'                      => array(),
                 'paymentByDebitCreditCard'                  => 0,
                 'paymentByCheque'                           => 0,
-                'feeExemptionAppliedFor'                    => 0,
+                'wouldLikeToApplyForFeeRemission'           => 0,
                 'feeRemissionAppliedFor'                    => 0,
                 'caseAttorneySingular'                      => false,
                 'caseAttorneyJointlyAndSeverally'           => false,
