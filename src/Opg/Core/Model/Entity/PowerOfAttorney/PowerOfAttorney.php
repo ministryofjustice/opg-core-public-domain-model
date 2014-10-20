@@ -161,14 +161,14 @@ abstract class PowerOfAttorney extends CaseItem
      * @var integer
      * @Groups({"api-person-get"})
      */
-    protected $feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
+    protected $wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var integer
      * @Groups({"api-person-get"})
      */
-    protected $feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET;
+    protected $haveAppliedForFeeRemission= self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
@@ -1220,13 +1220,13 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-     * @param int $feeExemptionAppliedFor
+     * @param int $wouldLikeToApplyForFeeRemission
      *
      * @return PowerOfAttorney
      */
-    public function setFeeExemptionAppliedFor($feeExemptionAppliedFor = self::PAYMENT_OPTION_NOT_SET)
+    public function setWouldLikeToApplyForFeeRemission($wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_NOT_SET)
     {
-        $this->feeExemptionAppliedFor = $feeExemptionAppliedFor;
+        $this->wouldLikeToApplyForFeeRemission = $wouldLikeToApplyForFeeRemission;
 
         return $this;
     }
@@ -1234,19 +1234,19 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @return int
      */
-    public function getFeeExemptionAppliedFor()
+    public function getWouldLikeToApplyForFeeRemission()
     {
-        return $this->feeExemptionAppliedFor;
+        return $this->wouldLikeToApplyForFeeRemission;
     }
 
     /**
-     * @param int $feeRemissionAppliedFor
+     * @param int $haveAppliedForFeeRemission
      *
      * @return PowerOfAttorney
      */
-    public function setFeeRemissionAppliedFor($feeRemissionAppliedFor = self::PAYMENT_OPTION_NOT_SET)
+    public function setHaveAppliedForFeeRemission($haveAppliedForFeeRemission = self::PAYMENT_OPTION_NOT_SET)
     {
-        $this->feeRemissionAppliedFor = $feeRemissionAppliedFor;
+        $this->haveAppliedForFeeRemission = $haveAppliedForFeeRemission;
 
         return $this;
     }
@@ -1254,9 +1254,9 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @return int
      */
-    public function getFeeRemissionAppliedFor()
+    public function getHaveAppliedForFeeRemission()
     {
-        return $this->feeRemissionAppliedFor;
+        return $this->haveAppliedForFeeRemission;
     }
 
     /**
