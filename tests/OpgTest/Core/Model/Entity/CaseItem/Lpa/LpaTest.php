@@ -466,7 +466,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'registrationDate'                          => null,
                 'closedDate'                                => null,
                 'lifeSustainingTreatment'                   => null,
-                'lifeSustainingTreatmentSignatureDate'      => null,
+                'lifeSustainingTreatmentSignatureDateA'     => null,
+                'lifeSustainingTreatmentSignatureDateB'     => null,
                 'notificationDate'                          => null,
                 'dispatchDate'                              => null,
                 'noticeGivenDate'                           => null,
@@ -736,13 +737,13 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lstDate = new \DateTime();
         $lstType = 'Option A';
 
-        $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertNull($this->lpa->getLifeSustainingTreatmentSignatureDateA());
         $this->assertEmpty($this->lpa->hasLifeSustainingTreatment());
 
         $this->lpa->setLifeSustainingTreatment($lstType);
-        $this->lpa->setLifeSustainingTreatmentSignatureDate($lstDate);
+        $this->lpa->setLifeSustainingTreatmentSignatureDateA($lstDate);
 
-        $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDate());
+        $this->assertEquals($lstDate, $this->lpa->getLifeSustainingTreatmentSignatureDateA());
         $this->assertTrue($this->lpa->hasLifeSustainingTreatment());
         $this->assertEquals($lstType, $this->lpa->getLifeSustainingTreatment());
 
@@ -752,32 +753,52 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDate());
-        $this->lpa->setLifeSustainingTreatmentSignatureDate();
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateA());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateA();
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->lpa->getLifeSustainingTreatmentSignatureDate()->format(OPGDateFormat::getDateFormat())
+            $this->lpa->getLifeSustainingTreatmentSignatureDateA()->format(OPGDateFormat::getDateFormat())
+        );
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateB());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateB();
+
+        $this->assertEquals(
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $this->lpa->getLifeSustainingTreatmentSignatureDateB()->format(OPGDateFormat::getDateFormat())
         );
     }
 
     public function testGetSetLifeSustainingTreatmentDateEmptyString()
     {
-        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
-        $this->lpa->setLifeSustainingTreatmentSignatureDateString('');
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateAString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateAString('');
 
-        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateAString());
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateBString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateBString('');
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateBString());
     }
 
     public function testGetSetLifeSustainingTreatmentDateString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
 
-        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateString());
-        $this->lpa->setLifeSustainingTreatmentSignatureDateString($expected);
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateAString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateAString($expected);
 
-        $this->assertEquals($expected, $this->lpa->getLifeSustainingTreatmentSignatureDateString());
+        $this->assertEquals($expected, $this->lpa->getLifeSustainingTreatmentSignatureDateAString());
+
+        $this->assertEmpty($this->lpa->getLifeSustainingTreatmentSignatureDateBString());
+        $this->lpa->setLifeSustainingTreatmentSignatureDateBString($expected);
+
+        $this->assertEquals($expected, $this->lpa->getLifeSustainingTreatmentSignatureDateBString());
     }
+
+
 
     public function testValidatorInvalidNoCaseType()
     {
