@@ -454,7 +454,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'paymentByDebitCreditCard'                  => 0,
                 'paymentByCheque'                           => 0,
                 'wouldLikeToApplyForFeeRemission'           => 0,
-                'feeRemissionAppliedFor'                    => 0,
+                'haveAppliedForFeeRemission'                => 0,
                 'caseAttorneySingular'                      => false,
                 'caseAttorneyJointlyAndSeverally'           => false,
                 'caseAttorneyJointly'                       => false,
