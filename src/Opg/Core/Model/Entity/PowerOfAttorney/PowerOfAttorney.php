@@ -402,6 +402,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type = "integer", nullable=true)
      * @Type("string")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
+     * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
 
