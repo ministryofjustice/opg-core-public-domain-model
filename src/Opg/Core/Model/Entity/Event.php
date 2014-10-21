@@ -92,7 +92,7 @@ class Event implements EntityInterface
 
     /**
      * @ORM\Column(type= "json_array", nullable = true)
-     * @var string $userDetails
+     * @var array $userDetails
      */
     protected $userDetails;
 
@@ -300,7 +300,7 @@ class Event implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getUserDetails()
     {
@@ -308,10 +308,10 @@ class Event implements EntityInterface
     }
 
     /**
-     * @param string $userDetails
+     * @param array $userDetails
      * @return User
      */
-    public function setUserDetails($userDetails)
+    public function setUserDetails(array $userDetails)
     {
         $this->userDetails = $userDetails;
 
