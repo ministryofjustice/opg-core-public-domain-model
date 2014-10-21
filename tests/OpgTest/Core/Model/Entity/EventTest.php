@@ -195,4 +195,11 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->event->getSourceEntityClass());
     }
 
+    public function testSetGetUserDetails()
+    {
+        $data = array('data' => 'test');
+
+        $this->assertInstanceOf('Opg\Core\Model\Entity\Event', $this->event->setUserDetails($data));
+        $this->assertEquals($data, $this->event->getUserDetails());
+    }
 }
