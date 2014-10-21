@@ -90,6 +90,12 @@ class Event implements EntityInterface
      */
     protected $entity;
 
+    /**
+     * @ORM\Column(type= "json_array", nullable = true)
+     * @var string $userDetails
+     */
+    protected $userDetails;
+
     public function __construct($owningEntityId = null, $owningEntityClass = null, array $changeset = null)
     {
         $this->owningEntityId    = $owningEntityId;
@@ -291,5 +297,24 @@ class Event implements EntityInterface
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserDetails()
+    {
+        return $this->userDetails;
+    }
+
+    /**
+     * @param string $userDetails
+     * @return User
+     */
+    public function setUserDetails($userDetails)
+    {
+        $this->userDetails = $userDetails;
+
+        return $this;
     }
 }
