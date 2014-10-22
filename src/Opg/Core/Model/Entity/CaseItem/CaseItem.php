@@ -21,6 +21,7 @@ use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\Queue;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
@@ -205,10 +206,14 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     protected $rejectedDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\BusinessRule", mappedBy="case", cascade={"all"}, fetch="EAGER")
-     * @var \Opg\Core\Model\Entity\CaseItem\BusinessRule
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Queue", cascade={"all"})
+     * @ORM\JoinTable(
+     *      joinColumns={@ORM\JoinColumn(name="case_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="scheduled_job_id", referencedColumnName="id", unique=true)}
+     * )
+     * @var ArrayCollection
      */
-    protected $businessRules;
+    protected $scheduledJobs;
 
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Payment\PaymentType", cascade={"all"}, fetch="EAGER")
@@ -223,7 +228,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->notes = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->caseItems = new ArrayCollection();
-        $this->businessRules = new ArrayCollection();
+        $this->scheduledJobs = new ArrayCollection();
         $this->payments = new ArrayCollection();
     }
 
@@ -724,49 +729,33 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @return ArrayCollection
      */
-    public function getBusinessRules()
+    public function getscheduledJobs()
     {
-        return $this->businessRules;
+        return $this->scheduledJobs;
     }
 
     /**
-     * @param ArrayCollection $businessRules
+     * @param ArrayCollection $scheduledJobs
      *
      * @return CaseItem
      */
-    public function setBusinessRules(ArrayCollection $businessRules)
+    public function setscheduledJobs(ArrayCollection $scheduledJobs)
     {
-        $this->businessRules = $businessRules;
+        $this->scheduledJobs = $scheduledJobs;
 
         return $this;
     }
 
     /**
-     * @param BusinessRule $businessRule
+     * @param ScheduluedJob $scheduluedJob
      *
      * @return CaseItem
      */
-    public function addBusinessRule(BusinessRule $businessRule)
+    public function addScheduluedJob(ScheduluedJob $scheduluedJob)
     {
-        $this->businessRules[] = $businessRule;
+        $this->scheduledJobs[] = $scheduluedJob;
 
         return $this;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return BusinessRule|null
-     */
-    public function getBusinessRule($key)
-    {
-        foreach ($this->getBusinessRules() as $rule) {
-            if ($rule->getKey() == $key) {
-                return $rule;
-            }
-        }
-
-        return null;
     }
 
     /**
