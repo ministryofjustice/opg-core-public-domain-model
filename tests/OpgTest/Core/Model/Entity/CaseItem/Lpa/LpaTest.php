@@ -478,12 +478,12 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'paymentExemption'                          => 0,
                 'trustCorporationSignedAs'                  => null,
                 'noNoticeGiven'                             => false,
-                'businessRules'                             => array(),
+                'scheduledJobs'                             => array(),
                 'normalizedUid'                             => null,
                 'rejectedDate'                              => null,
                 'applicantType'                             => null,
                 'cancellationDate'                          => null,
-                'payments'                                  => array(),
+                'payments'                                  => array()
             ),
             $lpa->toArrayRecursive()
         );

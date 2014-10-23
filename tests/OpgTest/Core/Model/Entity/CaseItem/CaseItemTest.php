@@ -12,6 +12,7 @@ use Opg\Core\Model\Entity\Person\Person;
 use Opg\Core\Model\Entity\User\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\BusinessRule;
+use Opg\Core\Model\Entity\Queue as ScheduledJob;
 
 /**
  * ToArray test case.
@@ -438,63 +439,6 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($caseItemMock->getClosedDateString());
     }
 
-    public function testSetGetBusinessRules()
-    {
-        $mock = $this->getMockedClass();
-
-        $businessRule = new BusinessRule();
-        $businessRule->setKey('testkey');
-        $businessRule->setValue('testvalue');
-
-        $collection = new ArrayCollection();
-        $collection->add($businessRule);
-
-        $mock->setBusinessRules($collection);
-
-        $this->assertEquals($businessRule, $mock->getBusinessRules()->current());
-    }
-
-    public function testAddGetBusinessRules()
-    {
-        $mock = $this->getMockedClass();
-
-        $businessRule = new BusinessRule();
-        $businessRule->setKey('testkey');
-        $businessRule->setValue('testvalue');
-
-        $mock->addBusinessRule($businessRule);
-
-        $this->assertEquals($businessRule, $mock->getBusinessRules()->current());
-    }
-
-    public function testGetBusinessRule()
-    {
-        $key = 'testkey';
-        $mock = $this->getMockedClass();
-
-        $businessRule = new BusinessRule();
-        $businessRule->setKey($key);
-        $businessRule->setValue('testvalue');
-
-        $mock->addBusinessRule($businessRule);
-
-        $this->assertEquals($businessRule, $mock->getBusinessRule($key));
-    }
-
-    public function testGetBusinessRuleNotFound()
-    {
-        $key = 'testkey';
-        $mock = $this->getMockedClass();
-
-        $businessRule = new BusinessRule();
-        $businessRule->setKey($key);
-        $businessRule->setValue('testvalue');
-
-        $mock->addBusinessRule($businessRule);
-
-        $this->assertEquals(null, $mock->getBusinessRule($key . '2'));
-    }
-
     public function testGetSetRejectedDate()
     {
         $expected = new \DateTime();
@@ -535,5 +479,20 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         unset($caseItem->{'payments'});
 
         $this->assertTrue($caseItem->getPayments() instanceof ArrayCollection);
+    }
+
+    public function testGetSetScheduledJobs()
+    {
+        $caseItem = new CaseItemStub;
+        $job = new ScheduledJob();
+
+        unset($caseItem->{'scheduledJobs'});
+        $caseItem->addScheduledJob($job);
+        $this->assertCount(1, $caseItem->getScheduledJobs()->toArray());
+        $caseItem->addScheduledJob($job);
+        $this->assertCount(2, $caseItem->getScheduledJobs()->toArray());
+
+        unset($caseItem->{'scheduledJobs'});
+        $this->assertTrue($caseItem->getScheduledJobs() instanceof ArrayCollection);
     }
 }

@@ -276,7 +276,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'ragRating'                                 => null,
                 'ragTotal'                                  => null,
                 'rejectedDate'                              => null,
-                'businessRules'                             => array(),
+                'scheduledJobs'                             => array(),
                 'uId'                                       => null,
                 'normalizedUid'                             => null,
                 'inputFilter'                               => null,
