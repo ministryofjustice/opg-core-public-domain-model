@@ -485,11 +485,14 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     {
         $caseItem = new CaseItemStub;
         $job = new ScheduledJob();
+
+        unset($caseItem->{'scheduledJobs'});
         $caseItem->addScheduledJob($job);
         $this->assertCount(1, $caseItem->getScheduledJobs()->toArray());
         $caseItem->addScheduledJob($job);
         $this->assertCount(2, $caseItem->getScheduledJobs()->toArray());
 
+        unset($caseItem->{'scheduledJobs'});
         $this->assertTrue($caseItem->getScheduledJobs() instanceof ArrayCollection);
     }
 }

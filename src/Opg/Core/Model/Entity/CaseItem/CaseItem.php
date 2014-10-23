@@ -731,7 +731,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     public function getScheduledJobs()
     {
-        return $this->scheduledJobs;
+        if (null === $this->scheduledJobs) {
+            $this->scheduledJobs = new ArrayCollection();
+        }
+
+        return  $this->scheduledJobs;
     }
 
     /**
