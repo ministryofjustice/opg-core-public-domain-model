@@ -21,7 +21,7 @@ use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\Person\Person;
-use Opg\Core\Model\Entity\Queue;
+use Opg\Core\Model\Entity\Queue as ScheduledJob;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
@@ -729,7 +729,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     /**
      * @return ArrayCollection
      */
-    public function getscheduledJobs()
+    public function getScheduledJobs()
     {
         return $this->scheduledJobs;
     }
@@ -739,7 +739,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      *
      * @return CaseItem
      */
-    public function setscheduledJobs(ArrayCollection $scheduledJobs)
+    public function setScheduledJobs(ArrayCollection $scheduledJobs)
     {
         $this->scheduledJobs = $scheduledJobs;
 
@@ -747,15 +747,20 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param ScheduluedJob $scheduluedJob
+     * @param ScheduledJob $ScheduledJob
      *
      * @return CaseItem
      */
-    public function addScheduluedJob(ScheduluedJob $scheduluedJob)
+    public function addScheduledJob(ScheduledJob $scheduledJob)
     {
-        $this->scheduledJobs[] = $scheduluedJob;
+        if (null === $this->scheduledJobs) {
+            $this->scheduledJobs = new ArrayCollection();
+        }
+
+        $this->scheduledJobs->add($scheduledJob);
 
         return $this;
+
     }
 
     /**
