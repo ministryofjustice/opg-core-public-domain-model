@@ -768,6 +768,13 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
+     * @param ScheduledJob $scheduledJob
+     */
+    public function removeScheduledJob(ScheduledJob $scheduledJob) {
+        $this->scheduledJobs->removeElement($scheduledJob);
+    }
+
+    /**
      * Alias
      * @param AssignableComposite $user
      * @return $this|IsAssignable
