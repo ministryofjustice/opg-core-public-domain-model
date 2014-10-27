@@ -5,6 +5,8 @@ namespace Opg\Common\Model\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\HasSageId;
 use Opg\Common\Model\Entity\LuhnCheckDigit;
 
 trait SageId
@@ -15,16 +17,17 @@ trait SageId
      * @ORM\Column(type = "string", unique=true, nullable=true)
      * @var string
      * @Type("string")
+     * @Accessor(setter="setSageId", getter="getSageId")
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $sageId;
 
     /**
      * @param $uid
-     * @return $this
+     * @return HasSageId
      * @throws \LogicException
      */
-    protected function generateSageId($uid)
+    public function generateSageId($uid)
     {
         $uidBase = '';
 
@@ -48,5 +51,16 @@ trait SageId
             $this->generateSageId($this->uId);
         }
         return $this->sageId;
+    }
+
+    /**
+     * @param $sageId
+     * @return HasSageId
+     */
+    public function setSageId($sageId)
+    {
+        $this->sageId = $sageId;
+
+        return $this;
     }
 }

@@ -8,5 +8,14 @@ namespace Opg\Common\Model\Entity;
  */
 interface HasSageId
 {
+    /**
+     * @return HasSageId
+     */
     public function getSageId();
+
+    /**
+     * @param string $sageId
+     * @return HasSageId
+     */
+    public function setSageId($sageId);
 }

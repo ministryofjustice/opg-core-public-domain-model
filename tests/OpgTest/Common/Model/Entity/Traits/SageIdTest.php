@@ -55,6 +55,13 @@ class SageIdTest extends \PHPUnit_Framework_TestCase {
         $this->stub->getSageId();
     }
 
+    public function testGetSetSageId()
+    {
+        $expected = 'L0000002';
+        $this->assertNull($this->stub->getSageId());
+
+        $this->assertEquals($expected, $this->stub->setSageId($expected)->getSageId());
+    }
 
     public function testConversion()
     {
