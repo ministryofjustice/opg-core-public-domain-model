@@ -1,6 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseActor;
 
+use Opg\Common\Model\Entity\HasSageId;
+use Opg\Common\Model\Entity\Traits\SageId;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Person\Person as BasePerson;
@@ -18,9 +20,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Donor extends BasePerson implements PartyInterface
+class Donor extends BasePerson implements PartyInterface, HasSageId
 {
     use ToArray;
+    use SageId;
 
     /**
      * @return InputFilter|InputFilterInterface

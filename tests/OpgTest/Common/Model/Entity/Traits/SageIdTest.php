@@ -3,6 +3,7 @@
 namespace OpgTest\Common\Model\Entity\Traits;
 
 use Opg\Common\Model\Entity\HasSageId;
+use Opg\Common\Model\Entity\LuhnCheckDigit;
 use Opg\Common\Model\Entity\Traits\SageId;
 
 class SageIdStub implements HasSageId {
@@ -66,4 +67,29 @@ class SageIdTest extends \PHPUnit_Framework_TestCase {
             $this->assertEquals(substr($id,1,10), base_convert(substr($this->stub->getSageId(),1), 36, 10));
         }
     }
+
+   public function testForCollision()
+   {
+        $iterations = 10000;
+        $this->ids = $this->expectedIds = array();
+
+        for ($i = 1; $i<= $iterations; ++$i) {
+            $uid =  sprintf('7%010d', $i);
+            $this->ids[]  = sprintf('%d%d', $uid, LuhnCheckDigit::createCheckSum($uid));
+            $this->expectedIds[] = sprintf('L%07s', strtoupper(base_convert($i, 10, 36)));
+        }
+
+       $this->assertEquals($iterations, count(array_unique($this->expectedIds)));
+       $this->assertEquals($iterations, count(array_unique($this->ids)));
+       $this->assertEquals(count(array_unique($this->ids)), count(array_unique($this->expectedIds)));
+
+       foreach ($this->ids as $key=>$id) {
+           $this->stub->uId = $id;
+           $this->stub->unsetId();
+
+           $this->assertEquals($this->expectedIds[$key], $this->stub->getSageId());
+
+           $this->assertEquals(substr($id,1,10), base_convert(substr($this->stub->getSageId(),1), 36, 10));
+       }
+   }
 }
