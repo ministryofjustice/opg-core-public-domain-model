@@ -18,4 +18,10 @@ interface HasSageId
      * @return HasSageId
      */
     public function setSageId($sageId);
+
+    /**
+     * @param  int $uid
+     * @return string
+     */
+    public function generateSageId($uid);
 }
