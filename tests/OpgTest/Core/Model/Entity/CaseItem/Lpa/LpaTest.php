@@ -485,7 +485,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'cancellationDate'                          => null,
                 'payments'                                  => array(),
                 'applicantsDeclaration'                     => 1,
-                'applicantsDeclarationSignatureDate'        => null
+                'applicantsDeclarationSignatureDate'        => null,
+                'caseAttorneyActionAdditionalInfo'          => false
             ),
             $lpa->toArrayRecursive()
         );

@@ -199,6 +199,13 @@ abstract class PowerOfAttorney extends CaseItem
     protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
 
     /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyActionAdditionalInfo = false;
+
+    /**
      * @ORM\Column(type = "text", nullable=true)
      * @var string
      * @Groups({"api-person-get"})
@@ -1395,6 +1402,25 @@ abstract class PowerOfAttorney extends CaseItem
     public function getCaseAttorneySingular()
     {
         return $this->caseAttorneySingular;
+    }
+
+    /**
+     * @param bool $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
+    {
+        $this->caseAttorneyActionAdditionalInfo = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaseAttorneyActionAdditionalInfo()
+    {
+        return $this->caseAttorneyActionAdditionalInfo;
     }
 
     /**

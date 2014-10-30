@@ -288,7 +288,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'areAllAttorneysApplyingToRegister'         => null,
                 'payments'                                  => array(),
                 'applicantsDeclaration'                     => 1,
-                'applicantsDeclarationSignatureDate'        => null
+                'applicantsDeclarationSignatureDate'        => null,
+                'caseAttorneyActionAdditionalInfo'          => false
             ),
             $epa->toArrayRecursive()
         );
