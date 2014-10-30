@@ -8,7 +8,7 @@ use DateTime;
 /**
  * Queue
  *
- * @ORM\Table(name="queue_default", indexes={@ORM\Index(name="queue_default_idx", columns={"id", "status"})})
+ * @ORM\Table(name="business_rules_queue", indexes={@ORM\Index(name="business_rules_queue_idx", columns={"id", "status"})})
  * @ORM\Entity
  */
 class Queue
