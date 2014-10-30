@@ -406,6 +406,23 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
 
+    /**
+     * @ORM\Column(type = "integer",options={"default"=1})
+     * @var int
+     * @Accessor(getter="getApplicantsDeclaration",setter="setApplicantsDeclaration")
+     * @Groups({"api-person-get"})
+     */
+    protected $applicantsDeclaration = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getApplicationDeclarationSignatureDateString",setter="setApplicationDeclarationSignatureDateString")
+     */
+    protected $applicantsDeclarationSignatureDate;
+
     public function __construct()
     {
         parent::__construct();
@@ -1629,6 +1646,75 @@ abstract class PowerOfAttorney extends CaseItem
     {
         if ($this->cancellationDate instanceof \DateTime) {
             return $this->cancellationDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param string $permissionBy
+     *
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclaration($permissionBy)
+    {
+        $this->applicantsDeclaration =
+            ($permissionBy === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantsDeclaration()
+    {
+        return ($this->applicantsDeclaration === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclarationSignatureDate(\DateTime $signatureDate = null)
+    {
+        $this->applicantsDeclarationSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param  string $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclarationSignatureDateString($signatureDate = null)
+    {
+        if (!empty($signatureDate)) {
+            $this->setApplicantsDeclarationSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getApplicantsDeclarationSignatureDate()
+    {
+        return $this->applicantsDeclarationSignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantsDeclarationSignatureDateString()
+    {
+        if (!empty($this->applicantsDeclarationSignatureDate)) {
+            return $this->applicantsDeclarationSignatureDate->format(OPGDateFormat::getDateFormat());
         }
 
         return '';

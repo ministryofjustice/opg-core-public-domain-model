@@ -287,6 +287,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'hasRelativeToNotice'                       => null,
                 'areAllAttorneysApplyingToRegister'         => null,
                 'payments'                                  => array(),
+                'applicantsDeclaration'                     => 1,
+                'applicantsDeclarationSignatureDate'        => null
             ),
             $epa->toArrayRecursive()
         );

@@ -561,4 +561,28 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($this->poa->getCancellationDate());
         $this->assertTrue($this->poa->setCancellationDateString($expected) instanceof PowerOfAttorney);
     }
+
+    public function testGetSetApplicantDeclarations()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertEquals('I', $this->poa->getApplicantsDeclaration());
+        $this->poa->setApplicantsDeclaration('We');
+        $this->assertEquals('We', $this->poa->getApplicantsDeclaration());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getApplicantsDeclarationSignatureDate());
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getApplicantsDeclarationSignatureDateString());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getApplicantsDeclarationSignatureDate());
+        $this->assertEquals($expectedDateString, $this->poa->getApplicantsDeclarationSignatureDateString());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getApplicantsDeclarationSignatureDateString());
+
+
+    }
 }
