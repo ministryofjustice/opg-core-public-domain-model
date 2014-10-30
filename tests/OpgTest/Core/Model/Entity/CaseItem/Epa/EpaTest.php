@@ -294,6 +294,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'applicationHasGuidance'                    => false,
                 'applicationHasCharges'                     => false,
                 'certificateProviderSignatureDate'          => null,
+                'attorneyStatementDate'                     => null,
             ),
             $epa->toArrayRecursive()
         );

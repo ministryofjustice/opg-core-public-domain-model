@@ -460,6 +460,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $certificateProviderSignatureDate;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getAttorneyStatementDateString",setter="setAttorneyStatementDateString")
+     */
+    protected $attorneyStatementDate;
+
     public function __construct()
     {
         parent::__construct();
@@ -1867,6 +1876,45 @@ abstract class PowerOfAttorney extends CaseItem
     {
         if ($this->certificateProviderSignatureDate) {
             return $this->certificateProviderSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyStatementDate(\DateTime $signatureDate = null)
+    {
+        $this->attorneyStatementDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAttorneyStatementDate()
+    {
+        return $this->attorneyStatementDate;
+    }
+
+    public function setAttorneyStatementDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            return $this->setCertificateProviderSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttorneyStatementDateString()
+    {
+        if ($this->attorneyStatementDate) {
+            return $this->attorneyStatementDate->format(OPGDateFormat::getDateFormat());
         }
 
         return '';
