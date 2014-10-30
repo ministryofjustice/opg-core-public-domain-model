@@ -419,7 +419,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @Accessor(getter="getApplicationDeclarationSignatureDateString",setter="setApplicationDeclarationSignatureDateString")
+     * @Accessor(getter="getApplicantsDeclarationSignatureDateString",setter="setApplicantsDeclarationSignatureDateString")
      */
     protected $applicantsDeclarationSignatureDate;
 
