@@ -590,4 +590,25 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->setCaseAttorneyActionAdditionalInfo(true) instanceof PowerOfAttorney);
         $this->assertTrue($this->poa->getCaseAttorneyActionAdditionalInfo());
     }
+
+    public function testGetSetHasRestrictions()
+    {
+        $this->assertFalse($this->poa->getApplicationHasRestrictions());
+        $this->assertTrue($this->poa->setApplicationHasRestrictions(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasRestrictions());
+    }
+
+    public function testGetSetHasGuidance()
+    {
+        $this->assertFalse($this->poa->getApplicationHasGuidance());
+        $this->assertTrue($this->poa->setApplicationHasGuidance(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasGuidance());
+    }
+
+    public function testGetSetHasCharges()
+    {
+        $this->assertFalse($this->poa->getApplicationHasCharges());
+        $this->assertTrue($this->poa->setApplicationHasCharges(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasCharges());
+    }
 }

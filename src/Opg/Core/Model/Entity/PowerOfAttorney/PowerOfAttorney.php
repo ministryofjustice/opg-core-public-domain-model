@@ -430,6 +430,27 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $applicantsDeclarationSignatureDate;
 
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasRestrictions = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasGuidance = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasCharges = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -1744,5 +1765,62 @@ abstract class PowerOfAttorney extends CaseItem
         }
 
         return '';
+    }
+
+    /**
+     * @param bool $restrictions
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasRestrictions($restrictions = false)
+    {
+        $this->applicationHasRestrictions = $restrictions;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasRestrictions()
+    {
+        return $this->applicationHasRestrictions;
+    }
+
+    /**
+     * @param bool $guidance
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasGuidance($guidance = false)
+    {
+        $this->applicationHasGuidance = $guidance;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasGuidance()
+    {
+        return $this->applicationHasGuidance;
+    }
+
+    /**
+     * @param bool $charges
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasCharges($charges = false)
+    {
+        $this->applicationHasCharges = $charges;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasCharges()
+    {
+        return $this->applicationHasCharges;
     }
 }
