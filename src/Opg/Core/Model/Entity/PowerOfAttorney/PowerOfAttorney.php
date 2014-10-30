@@ -451,6 +451,15 @@ abstract class PowerOfAttorney extends CaseItem
      */
     protected $applicationHasCharges = false;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getCertificateProviderSignatureDateString",setter="setCertificateProviderSignatureDateString")
+     */
+    protected $certificateProviderSignatureDate;
+
     public function __construct()
     {
         parent::__construct();
@@ -1822,5 +1831,44 @@ abstract class PowerOfAttorney extends CaseItem
     public function getApplicationHasCharges()
     {
         return $this->applicationHasCharges;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setCertificateProviderSignatureDate(\DateTime $signatureDate = null)
+    {
+        $this->certificateProviderSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCertificateProviderSignatureDate()
+    {
+        return $this->certificateProviderSignatureDate;
+    }
+
+    public function setCertificateProviderSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            return $this->setCertificateProviderSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCertificateProviderSignatureDateString()
+    {
+        if ($this->certificateProviderSignatureDate) {
+            return $this->certificateProviderSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
     }
 }

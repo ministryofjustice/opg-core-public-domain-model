@@ -490,6 +490,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'applicationHasRestrictions'                => false,
                 'applicationHasGuidance'                    => false,
                 'applicationHasCharges'                     => false,
+                'certificateProviderSignatureDate'          => null,
             ),
             $lpa->toArrayRecursive()
         );

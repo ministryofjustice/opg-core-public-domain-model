@@ -611,4 +611,22 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->setApplicationHasCharges(true) instanceof PowerOfAttorney);
         $this->assertTrue($this->poa->getApplicationHasCharges());
     }
+
+    public function testGetSetCertificateProviderSignatureDate()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getCertificateProviderSignatureDate());
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getCertificateProviderSignatureDateString());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getCertificateProviderSignatureDate());
+        $this->assertEquals($expectedDateString, $this->poa->getCertificateProviderSignatureDateString());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getCertificateProviderSignatureDateString());
+    }
 }
