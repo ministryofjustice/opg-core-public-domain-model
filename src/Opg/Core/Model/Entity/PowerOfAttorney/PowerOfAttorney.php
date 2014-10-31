@@ -144,14 +144,18 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
-     * @var integer
+     * @var int
+     * @Type("boolean")
+     * @Accessor(getter="getPaymentByDebitCreditCardNormalized",setter="setPaymentByDebitCreditCardNormalized")
      * @Groups({"api-person-get"})
      */
     protected $paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
-     * @var integer
+     * @var int
+     * @Type("boolean")
+     * @Accessor(getter="getPaymentByChequeNormalized",setter="setPaymentByChequeNormalized")
      * @Groups({"api-person-get"})
      */
     protected $paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
@@ -1348,11 +1352,45 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+     * @param $value
+     *
+     * @return PowerOfAttorney
+     */
+    public function setPaymentByChequeNormalized($value) {
+        if (is_null($value)) {
+            $this->paymentByCheque = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true ) {
+            $this->paymentByCheque = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->paymentByCheque = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPaymentByCheque()
     {
         return $this->paymentByCheque;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPaymentByChequeNormalized()
+    {
+        switch($this->paymentByCheque) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
     }
 
     /**
@@ -1368,11 +1406,44 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+     * @param $value
+     *
+     * @return PowerOfAttorney
+     */
+    public function setPaymentByDebitCreditCardNormalized($value) {
+        if (is_null($value)) {
+            $this->paymentByDebitCreditCard = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true ) {
+            $this->paymentByDebitCreditCard = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->paymentByDebitCreditCard = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
+    }
+    /**
      * @return boolean
      */
     public function getPaymentByDebitCreditCard()
     {
         return $this->paymentByDebitCreditCard;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPaymentByDebitCreditCardNormalized()
+    {
+        switch($this->paymentByDebitCreditCard) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
     }
 
     /**
