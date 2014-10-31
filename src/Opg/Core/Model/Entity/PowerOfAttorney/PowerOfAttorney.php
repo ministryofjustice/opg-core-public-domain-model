@@ -1729,7 +1729,6 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
-<<<<<<< HEAD
      * @param string $permissionBy
      *
      * @return PowerOfAttorney
@@ -1932,7 +1931,7 @@ abstract class PowerOfAttorney extends CaseItem
 
         return '';
     }
-    
+
     /**
      * @return bool|null
      */
