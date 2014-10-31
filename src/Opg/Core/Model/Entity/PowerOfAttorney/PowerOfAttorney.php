@@ -158,14 +158,20 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
-     * @var integer
+     * @var int
+     * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
+     * @Accessor(getter="getNormalFeeApplyForRemission", setter="setNormalFeeApplyForRemission")
      * @Groups({"api-person-get"})
      */
     protected $wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
-     * @var integer
+     * @var int
+     * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
+     * @Accessor(getter="getNormalHaveAppliedForRemission", setter="setNormalHaveAppliedForRemission")
      * @Groups({"api-person-get"})
      */
     protected $haveAppliedForFeeRemission= self::PAYMENT_OPTION_NOT_SET;
@@ -301,6 +307,9 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
+     * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
+     * @Accessor(getter="getNormalPaymentRemission", setter="setNormalPaymentRemission")
      * @Groups({"api-person-get"})
      */
     protected $paymentRemission = self::PAYMENT_OPTION_NOT_SET;
@@ -308,6 +317,9 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
+     * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
+     * @Accessor(getter="getNormalPaymentExemption", setter="setNormalPaymentExemption")
      * @Groups({"api-person-get"})
      */
     protected $paymentExemption = self::PAYMENT_OPTION_NOT_SET;
@@ -1717,6 +1729,7 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+<<<<<<< HEAD
      * @param string $permissionBy
      *
      * @return PowerOfAttorney
@@ -1830,7 +1843,6 @@ abstract class PowerOfAttorney extends CaseItem
     public function setApplicationHasCharges($charges = false)
     {
         $this->applicationHasCharges = $charges;
-
         return $this;
     }
 
@@ -1908,6 +1920,7 @@ abstract class PowerOfAttorney extends CaseItem
         return $this;
     }
 
+
     /**
      * @return string
      */
@@ -1918,5 +1931,141 @@ abstract class PowerOfAttorney extends CaseItem
         }
 
         return '';
+    }
+    
+    /**
+     * @return bool|null
+     */
+    public function getNormalFeeApplyForRemission()
+    {
+        switch($this->wouldLikeToApplyForFeeRemission) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return PowerOfAttorney
+     */
+    public function setNormalFeeApplyForRemission($value)
+    {
+        if (is_null($value)) {
+            $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true) {
+            $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getNormalHaveAppliedForRemission()
+    {
+        switch($this->haveAppliedForFeeRemission) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return PowerOfAttorney
+     */
+    public function setNormalHaveAppliedForRemission($value)
+    {
+        if (is_null($value)) {
+            $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true) {
+            $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getNormalPaymentRemission()
+    {
+        switch($this->paymentRemission) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return PowerOfAttorney
+     */
+    public function setNormalPaymentRemission($value)
+    {
+        if (is_null($value)) {
+            $this->paymentRemission = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true) {
+            $this->paymentRemission = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->paymentRemission = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getNormalPaymentExemption()
+    {
+        switch($this->paymentExemption) {
+            case self::PAYMENT_OPTION_FALSE:
+                return false;
+                break;
+            case self::PAYMENT_OPTION_TRUE:
+                return true;
+                break;
+            default :
+                return null;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return PowerOfAttorney
+     */
+    public function setNormalPaymentExemption($value)
+    {
+        if (is_null($value)) {
+            $this->paymentExemption = self::PAYMENT_OPTION_NOT_SET;
+        } elseif ($value === true) {
+            $this->paymentExemption = self::PAYMENT_OPTION_TRUE;
+        } else {
+            $this->paymentExemption = self::PAYMENT_OPTION_FALSE;
+        }
+
+        return $this;
     }
 }
