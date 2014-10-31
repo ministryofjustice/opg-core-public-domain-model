@@ -80,18 +80,18 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($notfiedPersons, $this->poa->getNotifiedPersons());
 
-        unset($this->poa->notifiedPersons);
+        unset($this->poa->{'notifiedPersons'});
         $np = new NotifiedPerson();
         $this->poa->addNotifiedPerson($np);
         $this->assertEquals($np, $this->poa->getNotifiedPersons()[0]);
 
-        unset($this->poa->notifiedPersons);
+        unset($this->poa->{'notifiedPersons'});
         $this->assertTrue($this->poa->getNotifiedPersons() instanceof ArrayCollection);
     }
 
     public function testGetSetCertificateProviders()
     {
-        unset($this->poa->certificateProviders);
+        unset($this->poa->{'certificateProviders'});
         $certificateProviders = $this->poa->getCertificateProviders();
 
         for($i=0;$i<5;$i++) {
@@ -102,7 +102,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($certificateProviders, $this->poa->getCertificateProviders());
 
-        unset($this->poa->certificateProviders);
+        unset($this->poa->{'certificateProviders'});
         $cp = new CertificateProvider();
         $this->poa->addCertificateProvider($cp);
         $this->assertEquals($cp, $this->poa->getCertificateProviders()[0]);
@@ -621,5 +621,35 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->poa->setNormalPaymentExemption(true);
         $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentExemption());
         $this->assertTrue($this->poa->getNormalPaymentExemption());
+    }
+
+    public function testGetSetNormalPaymentByCheque()
+    {
+        $this->poa->setPaymentByChequeNormalized(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentByCheque());
+        $this->assertNull($this->poa->getPaymentByChequeNormalized());
+
+        $this->poa->setPaymentByChequeNormalized(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getPaymentByCheque());
+        $this->assertFalse($this->poa->getPaymentByChequeNormalized());
+
+        $this->poa->setPaymentByChequeNormalized(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentByCheque());
+        $this->assertTrue($this->poa->getPaymentByChequeNormalized());
+    }
+
+    public function testGetSetPaymentByDebitCreditCardNormalized()
+    {
+        $this->poa->setPaymentByDebitCreditCardNormalized(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentByDebitCreditCard());
+        $this->assertNull($this->poa->getPaymentByDebitCreditCardNormalized());
+
+        $this->poa->setPaymentByDebitCreditCardNormalized(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getPaymentByDebitCreditCard());
+        $this->assertFalse($this->poa->getPaymentByDebitCreditCardNormalized());
+
+        $this->poa->setPaymentByDebitCreditCardNormalized(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentByDebitCreditCard());
+        $this->assertTrue($this->poa->getPaymentByDebitCreditCardNormalized());
     }
 }
