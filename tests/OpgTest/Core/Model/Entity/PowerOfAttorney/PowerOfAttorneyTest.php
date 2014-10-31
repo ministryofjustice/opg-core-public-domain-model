@@ -561,4 +561,65 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($this->poa->getCancellationDate());
         $this->assertTrue($this->poa->setCancellationDateString($expected) instanceof PowerOfAttorney);
     }
+
+    public function testGetSetNormalFeeApplyForRemission()
+    {
+        $this->poa->setNormalFeeApplyForRemission(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getWouldLikeToApplyForFeeRemission());
+        $this->assertNull($this->poa->getNormalFeeApplyForRemission());
+
+        $this->poa->setNormalFeeApplyForRemission(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getWouldLikeToApplyForFeeRemission());
+        $this->assertFalse($this->poa->getNormalFeeApplyForRemission());
+
+        $this->poa->setNormalFeeApplyForRemission(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getWouldLikeToApplyForFeeRemission());
+        $this->assertTrue($this->poa->getNormalFeeApplyForRemission());
+    }
+
+    public function testGetSetNormalHaveAppliedForRemission()
+    {
+        $this->poa->setNormalHaveAppliedForRemission(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getHaveAppliedForFeeRemission());
+        $this->assertNull($this->poa->getNormalHaveAppliedForRemission());
+
+        $this->poa->setNormalHaveAppliedForRemission(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getHaveAppliedForFeeRemission());
+        $this->assertFalse($this->poa->getNormalHaveAppliedForRemission());
+
+        $this->poa->setNormalHaveAppliedForRemission(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getHaveAppliedForFeeRemission());
+        $this->assertTrue($this->poa->getNormalHaveAppliedForRemission());
+    }
+
+    public function testGetSetNormalPaymentRemission()
+    {
+        $this->poa->setNormalPaymentRemission(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentRemission());
+        $this->assertNull($this->poa->getNormalPaymentRemission());
+
+        $this->poa->setNormalPaymentRemission(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getPaymentRemission());
+        $this->assertFalse($this->poa->getNormalPaymentRemission());
+
+        $this->poa->setNormalPaymentRemission(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentRemission());
+        $this->assertTrue($this->poa->getNormalPaymentRemission());
+    }
+
+
+    public function testGetSetNormalPaymentExemption()
+    {
+        $this->poa->setNormalPaymentExemption(null);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_NOT_SET, $this->poa->getPaymentExemption());
+        $this->assertNull($this->poa->getNormalPaymentExemption());
+
+        $this->poa->setNormalPaymentExemption(false);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_FALSE, $this->poa->getPaymentExemption());
+        $this->assertFalse($this->poa->getNormalPaymentExemption());
+
+        $this->poa->setNormalPaymentExemption(true);
+        $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentExemption());
+        $this->assertTrue($this->poa->getNormalPaymentExemption());
+    }
 }
