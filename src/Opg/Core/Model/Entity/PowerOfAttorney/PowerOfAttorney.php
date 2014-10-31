@@ -158,8 +158,9 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
-     * @var integer
+     * @var int
      * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
      * @Accessor(getter="getNormalFeeApplyForRemission", setter="setNormalFeeApplyForRemission")
      * @Groups({"api-person-get"})
      */
@@ -167,8 +168,9 @@ abstract class PowerOfAttorney extends CaseItem
 
     /**
      * @ORM\Column(type="integer",options={"default"=0})
-     * @var integer
+     * @var int
      * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
      * @Accessor(getter="getNormalHaveAppliedForRemission", setter="setNormalHaveAppliedForRemission")
      * @Groups({"api-person-get"})
      */
@@ -299,6 +301,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
      * @Accessor(getter="getNormalPaymentRemission", setter="setNormalPaymentRemission")
      * @Groups({"api-person-get"})
      */
@@ -308,6 +311,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="integer",options={"default"=0})
      * @var int
      * @Type("boolean")
+     * The discrepancy here is the serializer casts this to a bool and needs the type annotation to enforce this
      * @Accessor(getter="getNormalPaymentExemption", setter="setNormalPaymentExemption")
      * @Groups({"api-person-get"})
      */
@@ -1669,7 +1673,7 @@ abstract class PowerOfAttorney extends CaseItem
             $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
         } elseif ($value === true) {
             $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_TRUE;
-        } elseif ($value === false) {
+        } else {
             $this->wouldLikeToApplyForFeeRemission = self::PAYMENT_OPTION_FALSE;
         }
 
@@ -1703,7 +1707,7 @@ abstract class PowerOfAttorney extends CaseItem
             $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_NOT_SET;
         } elseif ($value === true) {
             $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_TRUE;
-        } elseif ($value === false) {
+        } else {
             $this->haveAppliedForFeeRemission = self::PAYMENT_OPTION_FALSE;
         }
 
@@ -1737,7 +1741,7 @@ abstract class PowerOfAttorney extends CaseItem
             $this->paymentRemission = self::PAYMENT_OPTION_NOT_SET;
         } elseif ($value === true) {
             $this->paymentRemission = self::PAYMENT_OPTION_TRUE;
-        } elseif ($value === false) {
+        } else {
             $this->paymentRemission = self::PAYMENT_OPTION_FALSE;
         }
 
@@ -1771,7 +1775,7 @@ abstract class PowerOfAttorney extends CaseItem
             $this->paymentExemption = self::PAYMENT_OPTION_NOT_SET;
         } elseif ($value === true) {
             $this->paymentExemption = self::PAYMENT_OPTION_TRUE;
-        } elseif ($value === false) {
+        } else {
             $this->paymentExemption = self::PAYMENT_OPTION_FALSE;
         }
 
