@@ -80,18 +80,18 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($notfiedPersons, $this->poa->getNotifiedPersons());
 
-        unset($this->poa->notifiedPersons);
+        unset($this->poa->{'notifiedPersons'});
         $np = new NotifiedPerson();
         $this->poa->addNotifiedPerson($np);
         $this->assertEquals($np, $this->poa->getNotifiedPersons()[0]);
 
-        unset($this->poa->notifiedPersons);
+        unset($this->poa->{'notifiedPersons'});
         $this->assertTrue($this->poa->getNotifiedPersons() instanceof ArrayCollection);
     }
 
     public function testGetSetCertificateProviders()
     {
-        unset($this->poa->certificateProviders);
+        unset($this->poa->{'certificateProviders'});
         $certificateProviders = $this->poa->getCertificateProviders();
 
         for($i=0;$i<5;$i++) {
@@ -102,7 +102,7 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($certificateProviders, $this->poa->getCertificateProviders());
 
-        unset($this->poa->certificateProviders);
+        unset($this->poa->{'certificateProviders'});
         $cp = new CertificateProvider();
         $this->poa->addCertificateProvider($cp);
         $this->assertEquals($cp, $this->poa->getCertificateProviders()[0]);
