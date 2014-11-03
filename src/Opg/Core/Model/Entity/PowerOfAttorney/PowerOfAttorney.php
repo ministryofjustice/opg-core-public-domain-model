@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\PowerOfAttorney\Decorator\DonorCannotSignForm;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
@@ -34,6 +35,8 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 abstract class PowerOfAttorney extends CaseItem
 {
+
+    use DonorCannotSignForm;
     /**
      * Constant for the I portion of I/We questions
      */
@@ -207,6 +210,13 @@ abstract class PowerOfAttorney extends CaseItem
      * @Groups({"api-person-get"})
      */
     protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyActionAdditionalInfo = false;
 
     /**
      * @ORM\Column(type = "text", nullable=true)
@@ -421,6 +431,62 @@ abstract class PowerOfAttorney extends CaseItem
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
+
+    /**
+     * @ORM\Column(type = "integer",options={"default"=1})
+     * @var int
+     * @Accessor(getter="getApplicantsDeclaration",setter="setApplicantsDeclaration")
+     * @Groups({"api-person-get"})
+     */
+    protected $applicantsDeclaration = self::PERMISSION_GIVEN_SINGULAR;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getApplicantsDeclarationSignatureDateString",setter="setApplicantsDeclarationSignatureDateString")
+     */
+    protected $applicantsDeclarationSignatureDate;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasRestrictions = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasGuidance = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $applicationHasCharges = false;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getCertificateProviderSignatureDateString",setter="setCertificateProviderSignatureDateString")
+     */
+    protected $certificateProviderSignatureDate;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Groups({"api-person-get"})
+     * @Accessor(getter="getAttorneyStatementDateString",setter="setAttorneyStatementDateString")
+     */
+    protected $attorneyStatementDate;
 
     public function __construct()
     {
@@ -1464,6 +1530,25 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+     * @param bool $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
+    {
+        $this->caseAttorneyActionAdditionalInfo = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaseAttorneyActionAdditionalInfo()
+    {
+        return $this->caseAttorneyActionAdditionalInfo;
+    }
+
+    /**
      * @param \DateTime $dispatchDate
      *
      * @return PowerOfAttorney
@@ -1718,6 +1803,210 @@ abstract class PowerOfAttorney extends CaseItem
     }
 
     /**
+     * @param string $permissionBy
+     *
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclaration($permissionBy)
+    {
+        $this->applicantsDeclaration =
+            ($permissionBy === 'I') ?
+                self::PERMISSION_GIVEN_SINGULAR :
+                self::PERMISSION_GIVEN_PLURAL;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantsDeclaration()
+    {
+        return ($this->applicantsDeclaration === self::PERMISSION_GIVEN_SINGULAR)
+            ? 'I'
+            : 'We';
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclarationSignatureDate(\DateTime $signatureDate = null)
+    {
+        $this->applicantsDeclarationSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param  string $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setApplicantsDeclarationSignatureDateString($signatureDate = null)
+    {
+        if (!empty($signatureDate)) {
+            $this->setApplicantsDeclarationSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getApplicantsDeclarationSignatureDate()
+    {
+        return $this->applicantsDeclarationSignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantsDeclarationSignatureDateString()
+    {
+        if (!empty($this->applicantsDeclarationSignatureDate)) {
+            return $this->applicantsDeclarationSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param bool $restrictions
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasRestrictions($restrictions = false)
+    {
+        $this->applicationHasRestrictions = $restrictions;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasRestrictions()
+    {
+        return $this->applicationHasRestrictions;
+    }
+
+    /**
+     * @param bool $guidance
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasGuidance($guidance = false)
+    {
+        $this->applicationHasGuidance = $guidance;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasGuidance()
+    {
+        return $this->applicationHasGuidance;
+    }
+
+    /**
+     * @param bool $charges
+     * @return PowerOfAttorney
+     */
+    public function setApplicationHasCharges($charges = false)
+    {
+        $this->applicationHasCharges = $charges;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplicationHasCharges()
+    {
+        return $this->applicationHasCharges;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setCertificateProviderSignatureDate(\DateTime $signatureDate = null)
+    {
+        $this->certificateProviderSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCertificateProviderSignatureDate()
+    {
+        return $this->certificateProviderSignatureDate;
+    }
+
+    public function setCertificateProviderSignatureDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            return $this->setCertificateProviderSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCertificateProviderSignatureDateString()
+    {
+        if ($this->certificateProviderSignatureDate) {
+            return $this->certificateProviderSignatureDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyStatementDate(\DateTime $signatureDate = null)
+    {
+        $this->attorneyStatementDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAttorneyStatementDate()
+    {
+        return $this->attorneyStatementDate;
+    }
+
+    public function setAttorneyStatementDateString($signatureDate)
+    {
+        if (!empty($signatureDate)) {
+            return $this->setCertificateProviderSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAttorneyStatementDateString()
+    {
+        if ($this->attorneyStatementDate) {
+            return $this->attorneyStatementDate->format(OPGDateFormat::getDateFormat());
+        }
+
+        return '';
+    }
+
+    /**
      * @return bool|null
      */
     public function getNormalFeeApplyForRemission()
@@ -1852,5 +2141,4 @@ abstract class PowerOfAttorney extends CaseItem
 
         return $this;
     }
-
 }

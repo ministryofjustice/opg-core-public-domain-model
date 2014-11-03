@@ -287,6 +287,16 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'hasRelativeToNotice'                       => null,
                 'areAllAttorneysApplyingToRegister'         => null,
                 'payments'                                  => array(),
+                'applicantsDeclaration'                     => 1,
+                'applicantsDeclarationSignatureDate'        => null,
+                'caseAttorneyActionAdditionalInfo'          => false,
+                'applicationHasRestrictions'                => false,
+                'applicationHasGuidance'                    => false,
+                'applicationHasCharges'                     => false,
+                'certificateProviderSignatureDate'          => null,
+                'attorneyStatementDate'                     => null,
+                'signingOnBehalfDate'                       => null,
+                'signingOnBehalfFullName'                   => null,
             ),
             $epa->toArrayRecursive()
         );
@@ -346,13 +356,13 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetAddNotifiedAttorney()
     {
-        unset($this->epa->notifiedAttorneys);
+        unset($this->epa->{'notifiedAttorneys'});
         $notifiedAttorney = new NotifiedAttorney();
         $notifiedAttorney->setId('1');
         $this->epa->addNotifiedAttorney($notifiedAttorney);
         $this->assertEquals($notifiedAttorney, $this->epa->getNotifiedAttorneys()[0]);
 
-        unset($this->epa->notifiedAttorneys);
+        unset($this->epa->{'notifiedAttorneys'});
         $notifiedAttorneys = $this->epa->getNotifiedAttorneys();
         $notifiedAttorneys->add($notifiedAttorney);
         $this->epa->setNotifiedAttorneys($notifiedAttorneys);
@@ -361,13 +371,13 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetAddNotifiedRelative()
     {
-        unset($this->epa->notifiedRelatives);
+        unset($this->epa->{'notifiedRelatives'});
         $notifiedRelative = new NotifiedRelative();
         $notifiedRelative->setId('1');
         $this->epa->addNotifiedRelative($notifiedRelative);
         $this->assertEquals($notifiedRelative, $this->epa->getNotifiedRelatives()[0]);
 
-        unset($this->epa->notifiedRelatives);
+        unset($this->epa->{'notifiedRelatives'});
         $notifiedRelatives = $this->epa->getNotifiedRelatives();
         $notifiedRelatives->add($notifiedRelative);
         $this->epa->setNotifiedRelatives($notifiedRelatives);

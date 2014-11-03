@@ -513,5 +513,16 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $caseItem->getScheduledJobs()->toArray());
         $this->assertTrue($caseItem->getScheduledJobs()->contains($job));
 
+
+        $jobs = new ArrayCollection();
+        $jobs->add($job);
+        $jobs->add($job2);
+
+        unset($caseItem->{'scheduledJobs'});
+        $this->assertTrue($caseItem->getScheduledJobs() instanceof ArrayCollection);
+        $this->assertCount(0, $caseItem->getScheduledJobs()->toArray());
+        $caseItem->setScheduledJobs($jobs);
+
+        $this->assertEquals($jobs, $caseItem->getScheduledJobs());
     }
 }

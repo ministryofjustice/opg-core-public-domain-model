@@ -562,6 +562,118 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->setCancellationDateString($expected) instanceof PowerOfAttorney);
     }
 
+    public function testGetSetApplicantDeclarations()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertEquals('I', $this->poa->getApplicantsDeclaration());
+        $this->poa->setApplicantsDeclaration('We');
+        $this->assertEquals('We', $this->poa->getApplicantsDeclaration());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getApplicantsDeclarationSignatureDate());
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getApplicantsDeclarationSignatureDateString());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getApplicantsDeclarationSignatureDate());
+        $this->assertEquals($expectedDateString, $this->poa->getApplicantsDeclarationSignatureDateString());
+
+        $this->assertTrue($this->poa->setApplicantsDeclarationSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getApplicantsDeclarationSignatureDateString());
+    }
+
+    public function testGetSetCaseAttorneyActionAdditionalInfo()
+    {
+        $this->assertFalse($this->poa->getCaseAttorneyActionAdditionalInfo());
+        $this->assertTrue($this->poa->setCaseAttorneyActionAdditionalInfo(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getCaseAttorneyActionAdditionalInfo());
+    }
+
+    public function testGetSetHasRestrictions()
+    {
+        $this->assertFalse($this->poa->getApplicationHasRestrictions());
+        $this->assertTrue($this->poa->setApplicationHasRestrictions(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasRestrictions());
+    }
+
+    public function testGetSetHasGuidance()
+    {
+        $this->assertFalse($this->poa->getApplicationHasGuidance());
+        $this->assertTrue($this->poa->setApplicationHasGuidance(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasGuidance());
+    }
+
+    public function testGetSetHasCharges()
+    {
+        $this->assertFalse($this->poa->getApplicationHasCharges());
+        $this->assertTrue($this->poa->setApplicationHasCharges(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getApplicationHasCharges());
+    }
+
+    public function testGetSetCertificateProviderSignatureDate()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getCertificateProviderSignatureDate());
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getCertificateProviderSignatureDateString());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getCertificateProviderSignatureDate());
+        $this->assertEquals($expectedDateString, $this->poa->getCertificateProviderSignatureDateString());
+
+        $this->assertTrue($this->poa->setCertificateProviderSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getCertificateProviderSignatureDateString());
+    }
+
+    public function testGetSetAttorneyStatementDate()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertTrue($this->poa->setAttorneyStatementDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getAttorneyStatementDate());
+        $this->assertTrue($this->poa->setAttorneyStatementDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getAttorneyStatementDateString());
+
+        $this->assertTrue($this->poa->setAttorneyStatementDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getAttorneyStatementDate());
+        $this->assertEquals($expectedDateString, $this->poa->getAttorneyStatementDateString());
+
+        $this->assertTrue($this->poa->setAttorneyStatementDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getAttorneyStatementDateString());
+    }
+
+    public function testGetSetSigningOnBehalfDate()
+    {
+        $expectedDate = new \DateTime();
+        $expectedDateString = $expectedDate->format(OPGDateFormat::getDateFormat());
+
+        $this->assertTrue($this->poa->setSigningOnBehalfDate() instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getSigningOnBehalfDate());
+        $this->assertTrue($this->poa->setSigningOnBehalfDateString('') instanceof PowerOfAttorney);
+        $this->assertEmpty($this->poa->getSigningOnBehalfDateString());
+
+        $this->assertTrue($this->poa->setSigningOnBehalfDate($expectedDate) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDate, $this->poa->getSigningOnBehalfDate());
+        $this->assertEquals($expectedDateString, $this->poa->getSigningOnBehalfDateString());
+
+        $this->assertTrue($this->poa->setSigningOnBehalfDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getSigningOnBehalfDateString());
+    }
+
+    public function testGetSetSigningOnBehalfFullName()
+    {
+        $expected = 'test signee';
+
+        $this->assertEmpty($this->poa->getSigningOnBehalfFullName());
+        $this->assertEquals($expected, $this->poa->setSigningOnBehalfFullName($expected)->getSigningOnBehalfFullName());
+    }
+
     public function testGetSetNormalFeeApplyForRemission()
     {
         $this->poa->setNormalFeeApplyForRemission(null);
