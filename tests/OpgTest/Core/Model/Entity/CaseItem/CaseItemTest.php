@@ -27,6 +27,8 @@ class CaseItemStub extends CaseItem
             $this->tasks = null;
         } elseif ($key === 'payments') {
             $this->payments = null;
+        } elseif ($key === 'scheduledJobs') {
+            $this->scheduledJobs = null;
         }
 
     }
@@ -481,7 +483,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($caseItem->getPayments() instanceof ArrayCollection);
     }
 
-    public function testGetSetScheduledJobs()
+    public function testGetSetRemoveScheduledJobs()
     {
         $caseItem = new CaseItemStub;
         $job = new ScheduledJob();
@@ -494,5 +496,22 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         unset($caseItem->{'scheduledJobs'});
         $this->assertTrue($caseItem->getScheduledJobs() instanceof ArrayCollection);
+
+        $job = new ScheduledJob();
+        $job->setId(10);
+
+        $job2 = new ScheduledJob();
+        $job2->setId(20);
+
+        $caseItem->addScheduledJob($job);
+        $caseItem->addScheduledJob($job2);
+
+        $this->assertCount(2, $caseItem->getScheduledJobs()->toArray());
+
+        $caseItem->removeScheduledJob($job2);
+
+        $this->assertCount(1, $caseItem->getScheduledJobs()->toArray());
+        $this->assertTrue($caseItem->getScheduledJobs()->contains($job));
+
     }
 }
