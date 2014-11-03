@@ -11,6 +11,7 @@ use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\PowerOfAttorney\Decorator\DonorCannotSignForm;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
@@ -34,6 +35,8 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  */
 abstract class PowerOfAttorney extends CaseItem
 {
+
+    use DonorCannotSignForm;
     /**
      * Constant for the I portion of I/We questions
      */
