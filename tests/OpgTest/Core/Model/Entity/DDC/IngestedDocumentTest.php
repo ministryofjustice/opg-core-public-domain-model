@@ -21,6 +21,7 @@ class IngestedDocumentTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->stub instanceof IngestedDocument);
         $this->assertEquals($expectedDate, $this->stub->getIngestedDateTime()->format('d-m-Y'));
+        $this->assertFalse($this->stub->getProcessed());
     }
 
     public function testGetSetId()
@@ -48,5 +49,14 @@ class IngestedDocumentTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->stub->getId());
         $this->assertTrue($this->stub->setIngestedDateTime($expected) instanceof IngestedDocument);
         $this->assertEquals($expected, $this->stub->getIngestedDateTime());
+    }
+
+    public function testGetSetProcessed()
+    {
+        $expected = true;
+
+        $this->assertFalse($this->stub->getProcessed());
+        $this->assertTrue($this->stub->setProcessed($expected) instanceof IngestedDocument);
+        $this->assertEquals($expected, $this->stub->getProcessed());
     }
 }

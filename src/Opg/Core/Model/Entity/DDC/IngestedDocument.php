@@ -29,14 +29,21 @@ class IngestedDocument implements HasUidInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="datetime");
+     * @ORM\Column(type="datetime")
      * @var \DateTime
      */
     protected $ingestedDateTime;
 
+    /**
+     * @ORM\Column(type="boolean",options={"default":0})
+     * @var boolean
+     */
+    protected $processed;
+
     public function __construct()
     {
         $this->ingestedDateTime = new \DateTime();
+        $this->processed = false;
     }
 
     /**
@@ -75,6 +82,25 @@ class IngestedDocument implements HasUidInterface
     public function getIngestedDateTime()
     {
         return $this->ingestedDateTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
+    }
+
+    /**
+     * @param  bool $processed
+     * @return IngestedDocument
+     */
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+
+        return $this;
     }
 
 
