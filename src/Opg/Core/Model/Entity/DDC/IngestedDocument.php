@@ -24,7 +24,7 @@ class IngestedDocument implements HasUidInterface
      * @ORM\Column(type = "integer", options = {"unsigned": true})
      * @ORM\GeneratedValue(strategy = "SEQUENCE")
      * @ORM\Id
-     * @ORM\SequenceGenerator(sequenceName = "events_seq", initialValue = 1, allocationSize = 20)
+     * @ORM\SequenceGenerator(sequenceName = "ingested_documents_seq", initialValue = 1, allocationSize = 1)
      *
      * @var int
      */
