@@ -1,5 +1,6 @@
 <?php
 namespace Opg\Common\Model\Entity\Traits;
+
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
