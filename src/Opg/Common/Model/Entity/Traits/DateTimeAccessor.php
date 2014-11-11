@@ -18,11 +18,7 @@ trait DateTimeAccessor
      */
     public function getDateAsString($propertyName)
     {
-        if (isset($this->{$propertyName}) && $this->{$propertyName} instanceof \DateTime) {
-            return $this->{$propertyName}->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
+        return $this->getFormattedDateTime($propertyName);
     }
 
     /**
@@ -31,8 +27,26 @@ trait DateTimeAccessor
      */
     public function getDateTimeAsString($propertyName)
     {
-        if (isset($this->{$propertyName}) && $this->{$propertyName} instanceof \DateTime) {
-            return $this->{$propertyName}->format(OPGDateFormat::getDateTimeFormat());
+        return $this->getFormattedDateTime($propertyName, true);
+    }
+
+    /**
+     * @param      $propertyName
+     * @param bool $includeTime
+     * @return string
+     */
+    protected function getFormattedDateTime($propertyName, $includeTime = false)
+    {
+        if (
+            property_exists(get_class($this), $propertyName) &&
+            isset($this->{$propertyName})
+            && $this->{$propertyName} instanceof \DateTime) {
+
+            if ( true === $includeTime) {
+                return $this->{$propertyName}->format(OPGDateFormat::getDateTimeFormat());
+            } else {
+                return $this->{$propertyName}->format(OPGDateFormat::getDateFormat());
+            }
         }
 
         return '';
