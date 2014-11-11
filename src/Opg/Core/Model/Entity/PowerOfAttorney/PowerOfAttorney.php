@@ -360,7 +360,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", parameterName="attorneyDeclarationSignatureDate")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="attorneyDeclarationSignatureDate")
      * @Groups({"api-person-get"})
      */
     protected $attorneyDeclarationSignatureDate;
@@ -384,7 +384,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", parameterName="notificationDate")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="notificationDate")
      * @Groups({"api-person-get"})
      */
     protected $notificationDate;
@@ -393,7 +393,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", parameterName="dispatchDate")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="dispatchDate")
      * @Groups({"api-person-get"})
      */
     protected $dispatchDate;
@@ -402,7 +402,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", parameterName="noticeGivenDate")
+     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="noticeGivenDate")
      * @Groups({"api-person-get"})
      */
     protected $noticeGivenDate;
@@ -419,7 +419,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", parameterName="cancellationDate")
+     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="cancellationDate")
      */
     protected $cancellationDate;
 
@@ -446,7 +446,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", parameterName="applicantsDeclarationSignatureDate")
+     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="applicantsDeclarationSignatureDate")
      */
     protected $applicantsDeclarationSignatureDate;
 
@@ -476,7 +476,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", parameterName="certificateProviderSignatureDate")
+     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="certificateProviderSignatureDate")
      */
     protected $certificateProviderSignatureDate;
 
@@ -485,7 +485,7 @@ abstract class PowerOfAttorney extends CaseItem
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", parameterName="attorneyStatementDate")
+     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="attorneyStatementDate")
      */
     protected $attorneyStatementDate;
 
