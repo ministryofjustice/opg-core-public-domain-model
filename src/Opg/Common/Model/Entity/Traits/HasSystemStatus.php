@@ -13,6 +13,7 @@ trait HasSystemStatus
      * @ORM\Column(type = "boolean",options={"default":1})
      * @var bool
      * @Type("boolean")
+     * @Groups("api-person-get")
      */
     protected $systemStatus = true;
 
