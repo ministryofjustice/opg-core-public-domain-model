@@ -15,6 +15,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\GenericAccessor;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -48,7 +49,7 @@ class Lpa extends PowerOfAttorney
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getLpaDonorSignatureDateString",setter="setLpaDonorSignatureDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaDonorSignatureDate")
      * @Type("string")
      * @Groups({"api-task-list","api-person-get"})
      */
@@ -79,7 +80,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getDonorDeclarationSignatureDateString", setter="setDonorDeclarationSignatureDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaDonorDeclarationSignatureDate")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $lpaDonorDeclarationSignatureDate;
@@ -95,7 +96,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLpaCreatedDateString",setter="setLpaCreatedDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaCreatedDate")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $lpaCreatedDate;
@@ -104,7 +105,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLpaReceiptDateString",setter="setLpaReceiptDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaReceiptDate")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $lpaReceiptDate;
@@ -120,7 +121,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLifeSustainingTreatmentSignatureDateAString",setter="setLifeSustainingTreatmentSignatureDateAString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lifeSustainingTreatmentSignatureDateA")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $lifeSustainingTreatmentSignatureDateA;
@@ -129,7 +130,7 @@ class Lpa extends PowerOfAttorney
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getLifeSustainingTreatmentSignatureDateBString",setter="setLifeSustainingTreatmentSignatureDateBString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lifeSustainingTreatmentSignatureDateB")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $lifeSustainingTreatmentSignatureDateB;
@@ -183,38 +184,11 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $signatureDate
-     *
-     * @return Lpa
-     */
-    public function setLpaDonorSignatureDateString($signatureDate)
-    {
-        if (!empty($signatureDate)) {
-            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-            $this->setLpaDonorSignatureDate($signatureDate);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getLpaDonorSignatureDate()
     {
         return $this->lpaDonorSignatureDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLpaDonorSignatureDateString()
-    {
-        if (!empty($this->lpaDonorSignatureDate)) {
-            return $this->lpaDonorSignatureDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -253,38 +227,11 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $signatureDate
-     *
-     * @return Lpa
-     */
-    public function setDonorDeclarationSignatureDateString($signatureDate)
-    {
-        if (!empty($signatureDate)) {
-            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-            $this->setDonorDeclarationSignatureDate($signatureDate);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getDonorDeclarationSignatureDate()
     {
         return $this->lpaDonorDeclarationSignatureDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDonorDeclarationSignatureDateString()
-    {
-        if (!empty($this->lpaDonorDeclarationSignatureDate)) {
-            return $this->lpaDonorDeclarationSignatureDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -411,38 +358,11 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $lpaCreatedDate
-     *
-     * @return Lpa
-     */
-    public function setLpaCreatedDateString($lpaCreatedDate)
-    {
-        if (!empty($lpaCreatedDate)) {
-            $lpaCreatedDate = OPGDateFormat::createDateTime($lpaCreatedDate);
-            return $this->setLpaCreatedDate($lpaCreatedDate);
-        }
-
-        return $this->setLpaCreatedDate(new \DateTime());
-    }
-
-    /**
      * @return string
      */
     public function getLpaCreatedDate()
     {
         return $this->lpaCreatedDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLpaCreatedDateString()
-    {
-        if (!empty($this->lpaCreatedDate)) {
-            return $this->lpaCreatedDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -461,38 +381,11 @@ class Lpa extends PowerOfAttorney
     }
 
     /**
-     * @param string $lpaReceiptDate
-     *
-     * @return Lpa
-     */
-    public function setLpaReceiptDateString($lpaReceiptDate)
-    {
-        if (!empty($lpaReceiptDate)) {
-            $lpaReceiptDate = OPGDateFormat::createDateTime($lpaReceiptDate);
-            return $this->setLpaReceiptDate($lpaReceiptDate);
-        }
-
-        return $this->setLpaReceiptDate(new \DateTime($lpaReceiptDate));
-    }
-
-    /**
      * @return \DateTime
      */
     public function getLpaReceiptDate()
     {
         return $this->lpaReceiptDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLpaReceiptDateString()
-    {
-        if (!empty($this->lpaReceiptDate)) {
-            return $this->lpaReceiptDate->format(OPGDateFormat::getDateTimeFormat());
-        }
-
-        return '';
     }
 
     /**

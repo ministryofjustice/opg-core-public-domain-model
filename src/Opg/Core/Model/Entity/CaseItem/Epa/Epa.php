@@ -17,7 +17,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\GenericAccessor;
 
 /**
  * @ORM\Entity
@@ -95,7 +95,7 @@ class Epa extends PowerOfAttorney
      *
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getEpaDonorSignatureDateString",setter="setEpaDonorSignatureDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="epaDonorSignatureDate")
      * @Type("string")
      * @Groups("api-task-list")
      */
@@ -106,7 +106,7 @@ class Epa extends PowerOfAttorney
      *
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getEpaDonorNoticeGivenDateString",setter="setEpaDonorNoticeGivenDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="epaDonorNoticeGivenDate")
      * @Type("string")
      * @Groups("api-task-list")
      *
@@ -150,38 +150,11 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param string $signatureDate
-     *
-     * @return Epa
-     */
-    public function setEpaDonorSignatureDateString($signatureDate)
-    {
-        if (!empty($signatureDate)) {
-            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-            $this->setEpaDonorSignatureDate($signatureDate);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getEpaDonorSignatureDate()
     {
         return $this->epaDonorSignatureDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEpaDonorSignatureDateString()
-    {
-        if (!empty($this->epaDonorSignatureDate)) {
-            return $this->epaDonorSignatureDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -200,38 +173,11 @@ class Epa extends PowerOfAttorney
     }
 
     /**
-     * @param string $noticeGivenDate
-     *
-     * @return Epa
-     */
-    public function setEpaDonorNoticeGivenDateString($noticeGivenDate)
-    {
-        if (!empty($noticeGivenDate)) {
-            $noticeGivenDate = OPGDateFormat::createDateTime($noticeGivenDate);
-            $this->setEpaDonorNoticeGivenDate($noticeGivenDate);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getEpaDonorNoticeGivenDate()
     {
         return $this->epaDonorNoticeGivenDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEpaDonorNoticeGivenDateString()
-    {
-        if (!empty($this->epaDonorNoticeGivenDate)) {
-            return $this->epaDonorNoticeGivenDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
