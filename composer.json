@@ -1,37 +1,45 @@
 {
-	"name" : "ministryofjustice/opg-core-public-domain-model",
-	"description" : "Domain model for the OPG Core project",
-	"type" : "library",
-	"authors" : [{
-			"name" : "Office of the Public Guardian",
-			"email" : "opg@opg.dsd.io"
-		}
-	],
-	"keywords" : [
-		"opg-core"
-	],
-	"require" : {
-		"php" : ">=5.4",
-		"zendframework/zend-validator" : ">=2.2.5",
-		"zendframework/zend-inputfilter" : ">=2.2.5",
+    "name": "ministryofjustice/opg-core-public-domain-model",
+    "description": "Domain model for the OPG Core project",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Office of the Public Guardian",
+            "email": "opg@opg.dsd.io"
+        }
+    ],
+    "keywords": [
+        "opg-core"
+    ],
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zend-validator": ">=2.2.5",
+        "zendframework/zend-inputfilter": ">=2.2.5",
         "doctrine/orm": "~2.4"
-	},
-	"require-dev" : {
-		"phpunit/phpunit": "3.7.*",
-		"mockery/mockery" : "0.8.0",
-		"phpdocumentor/phpdocumentor" : "2.*",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "mockery/mockery": "0.8.0",
+        "phpdocumentor/phpdocumentor": "2.*",
         "satooshi/php-coveralls": "dev-master",
-        "phpmd/phpmd" : "1.4.*",
-        "pdepend/pdepend" : "1.1.0",
-        "phploc/phploc"   : "2.0.5",
+        "phpmd/phpmd": "1.4.*",
+        "pdepend/pdepend": "1.1.0",
+        "phploc/phploc": "2.0.5",
         "squizlabs/php_codesniffer": "1.5.3",
         "sebastian/phpdcd": "1.0.2",
         "sebastian/phpcpd": "2.0.1",
-        "mayflower/php-codebrowser": "1.1.0"
-	},
-	"autoload" : {
-		"psr-0" : {
-			"Opg" : "src/"
-		}
-	}
+        "mayflower/php-codebrowser": "1.1.0",
+        "jms/serializer": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Opg": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:brettminnie/serializer.git"
+        }
+    ]
 }
