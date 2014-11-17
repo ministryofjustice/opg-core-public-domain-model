@@ -313,6 +313,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
+     * @Type("string")
      * @Accessor(getter="getAttorneyPartyDeclaration",setter="setAttorneyPartyDeclaration")
      * @Groups({"api-person-get"})
      */
@@ -321,6 +322,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
+     * @Type("string")
      * @Accessor(getter="getAttorneyApplicationAssertion",setter="setAttorneyApplicationAssertion")
      * @Groups({"api-person-get"})
      */
@@ -329,6 +331,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
+     * @Type("string")
      * @Accessor(getter="getAttorneyMentalActPermission",setter="setAttorneyMentalActPermission")
      * @Groups({"api-person-get"})
      */
@@ -353,6 +356,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type="integer",options={"default":1})
      * @var int
+     * @Type("string")
      * @Accessor(getter="getCorrespondentComplianceAssertion",setter="setCorrespondentComplianceAssertion")
      * @Groups({"api-person-get"})
      */
@@ -414,6 +418,7 @@ abstract class PowerOfAttorney extends CaseItem
     /**
      * @ORM\Column(type = "integer",options={"default"=1})
      * @var int
+     * @Type("string")
      * @Accessor(getter="getApplicantsDeclaration",setter="setApplicantsDeclaration")
      * @Groups({"api-person-get"})
      */
