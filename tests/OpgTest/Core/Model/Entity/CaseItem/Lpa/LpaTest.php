@@ -229,42 +229,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetRestrictions()
-    {
-        $expected = "You can't do that";
-
-        $this->lpa->setRestrictions($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getRestrictions()
-        );
-    }
-
-    public function testGetSetGuidance()
-    {
-        $expected = "Please do this if possible";
-
-        $this->lpa->setGuidance($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getGuidance()
-        );
-    }
-
-    public function testGetSetCharges()
-    {
-        $expected = "Please pay all my attorneys 100 pounds a month";
-
-        $this->lpa->setCharges($expected);
-
-        $this->assertEquals(
-            $expected,
-            $this->lpa->getCharges()
-        );
-    }
-
     public function testGetSetAdditionalInfo()
     {
         $expected = "Here's something you might need to know";
@@ -414,9 +378,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'attorneyActDecisions'                      => null,
                 'replacementAttorneyActDecisions'           => null,
                 'replacementOrder'                          => null,
-                'restrictions'                              => null,
-                'guidance'                                  => null,
-                'charges'                                   => null,
                 'additionalInfo'                            => null,
                 'paymentId'                                 => null,
                 'paymentAmount'                             => null,
