@@ -3,6 +3,8 @@
 namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
@@ -14,6 +16,7 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\GenericAccessor;
 
 /**
  * @ORM\Entity(repositoryClass="Application\Model\Repository\DocumentRepository")
@@ -30,10 +33,11 @@ use JMS\Serializer\Annotation\ReadOnly;
  * Class Document
  * @package Opg\Core\Model\Entity\Document
  */
-abstract class Document implements EntityInterface, \IteratorAggregate
+abstract class Document implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor
 {
     use ToArray;
     use InputFilter;
+    use DateTimeAccessor;
 
     const DOCUMENT_INCOMING_CORRESPONDENCE = 0;
 
@@ -83,7 +87,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate
      * @var \DateTime
      * @Type("string")
      * @ReadOnly
-     * @Accessor(getter="getCreatedDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="paymentDate")
      */
     protected $createdDate;
 
@@ -207,14 +211,6 @@ abstract class Document implements EntityInterface, \IteratorAggregate
     public function getCreatedDate()
     {
         return $this->createdDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedDateString()
-    {
-        return $this->createdDate->format(OPGDateFormat::getDateTimeFormat());
     }
 
     /**
