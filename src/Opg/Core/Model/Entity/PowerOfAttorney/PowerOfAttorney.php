@@ -261,27 +261,6 @@ abstract class PowerOfAttorney extends CaseItem
     protected $replacementOrder;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
-     * @Groups({"api-person-get"})
-     */
-    protected $restrictions;
-
-    /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
-     * @Groups({"api-person-get"})
-     */
-    protected $guidance;
-
-    /**
-     * @ORM\Column(type = "string", nullable=true)
-     * @var string
-     * @Groups({"api-person-get"})
-     */
-    protected $charges;
-
-    /**
      * @ORM\Column(type = "text", nullable=true)
      * @var string
      * @Groups({"api-person-get"})
@@ -628,70 +607,6 @@ abstract class PowerOfAttorney extends CaseItem
     public function setReplacementOrder($replacementOrder)
     {
         $this->replacementOrder = $replacementOrder;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return string $restrictions
-     */
-    public function getRestrictions()
-    {
-        return $this->restrictions;
-    }
-
-    /**
-     *
-     * @param string $restrictions
-     *
-     * @return PowerOfAttorney
-     */
-    public function setRestrictions($restrictions)
-    {
-        $this->restrictions = $restrictions;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return string $guidance
-     */
-    public function getGuidance()
-    {
-        return $this->guidance;
-    }
-
-    /**
-     * @param string $guidance
-     *
-     * @return PowerOfAttorney
-     */
-    public function setGuidance($guidance)
-    {
-        $this->guidance = $guidance;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return string $charges
-     */
-    public function getCharges()
-    {
-        return $this->charges;
-    }
-
-    /**
-     * @param string $charges
-     *
-     * @return PowerOfAttorney
-     */
-    public function setCharges($charges)
-    {
-        $this->charges = $charges;
 
         return $this;
     }
