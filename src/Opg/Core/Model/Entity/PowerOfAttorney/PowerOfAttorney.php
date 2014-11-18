@@ -269,6 +269,22 @@ abstract class PowerOfAttorney extends CaseItem
     protected $additionalInfo;
 
     /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $additionalInfoDonorSignature = false;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString",propertyName="additionalInfoDonorSignatureDate")
+     * @Groups({"api-person-get"})
+     */
+    protected $additionalInfoDonorSignatureDate;
+
+    /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
      * @Groups({"api-person-get"})
@@ -346,6 +362,13 @@ abstract class PowerOfAttorney extends CaseItem
      * @Groups({"api-person-get"})
      */
     protected $attorneyDeclarationSignatureDate;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $attorneyDeclarationSignatureWitness = false;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -636,6 +659,44 @@ abstract class PowerOfAttorney extends CaseItem
         $this->additionalInfo = $additionalInfo;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAdditionalInfoDonorSignature()
+    {
+        return $this->additionalInfoDonorSignature;
+    }
+
+    /**
+     * @param bool $signature
+     * @return PowerOfAttorney
+     */
+    public function setAdditionalInfoDonorSignature($signature = false)
+    {
+        $this->additionalInfoDonorSignature = (bool)$signature;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAdditionalInfoDonorSignatureDate(\DateTime $signatureDate)
+    {
+        $this->additionalInfoDonorSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAdditionalInfoDonorSignatureDate()
+    {
+        return $this->additionalInfoDonorSignatureDate;
     }
 
     /**
@@ -1086,6 +1147,33 @@ abstract class PowerOfAttorney extends CaseItem
     public function getAttorneyDeclarationSignatureDate()
     {
         return $this->attorneyDeclarationSignatureDate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAttorneyDeclarationSignatureWitnessed()
+    {
+        return ($this->getAttorneyDeclarationSignatureWitnessed() === true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAttorneyDeclarationSignatureWitnessed()
+    {
+        return $this->attorneyDeclarationSignatureWitness;
+    }
+
+    /**
+     * @param bool $witness
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyDeclarationSignatureWitnessed($witness = false)
+    {
+        $this->attorneyDeclarationSignatureWitness = $witness;
+
+        return $this;
     }
 
     /**
