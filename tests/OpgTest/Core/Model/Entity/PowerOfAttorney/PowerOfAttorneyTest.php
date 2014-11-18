@@ -764,4 +764,15 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(PowerOfAttorney::PAYMENT_OPTION_TRUE, $this->poa->getPaymentByDebitCreditCard());
         $this->assertTrue($this->poa->getPaymentByDebitCreditCardNormalized());
     }
+
+    public function testGetSetDonorSignatureWitnessed()
+    {
+        $this->assertFalse($this->poa->isAttorneyDeclarationSignatureWitnessed());
+        $this->assertFalse($this->poa->getAttorneyDeclarationSignatureWitnessed());
+
+        $this->assertTrue($this->poa->setAttorneyDeclarationSignatureWitnessed(true) instanceof PowerOfAttorney);
+
+        $this->assertTrue($this->poa->isAttorneyDeclarationSignatureWitnessed());
+        $this->assertTrue($this->poa->getAttorneyDeclarationSignatureWitnessed());
+    }
 }

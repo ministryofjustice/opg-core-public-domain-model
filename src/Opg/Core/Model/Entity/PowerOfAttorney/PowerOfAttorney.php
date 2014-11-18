@@ -347,6 +347,13 @@ abstract class PowerOfAttorney extends CaseItem
     protected $attorneyDeclarationSignatureDate;
 
     /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $attorneyDeclarationSignatureWitness = false;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Groups({"api-person-get"})
@@ -1145,6 +1152,33 @@ abstract class PowerOfAttorney extends CaseItem
         }
 
         return '';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAttorneyDeclarationSignatureWitnessed()
+    {
+        return ($this->getAttorneyDeclarationSignatureWitnessed() === true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAttorneyDeclarationSignatureWitnessed()
+    {
+        return $this->attorneyDeclarationSignatureWitness;
+    }
+
+    /**
+     * @param bool $witness
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyDeclarationSignatureWitnessed($witness = false)
+    {
+        $this->attorneyDeclarationSignatureWitness = $witness;
+
+        return $this;
     }
 
     /**

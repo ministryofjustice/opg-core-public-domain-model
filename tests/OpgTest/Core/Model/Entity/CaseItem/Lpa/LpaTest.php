@@ -456,6 +456,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'signingOnBehalfDate'                       => null,
                 'signingOnBehalfFullName'                   => null,
                 'donorSignatureWitnessed'                   => false,
+                'attorneyDeclarationSignatureWitness'       => false,
             ),
             $lpa->toArrayRecursive()
         );
