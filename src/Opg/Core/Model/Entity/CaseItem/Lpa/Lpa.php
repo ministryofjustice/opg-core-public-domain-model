@@ -55,6 +55,13 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorSignatureDate;
 
     /**
+     * @ORM\Column(type = "boolean",options={"default":0})
+     * @var bool
+     * @Groups({"api-task-list","api-person-get"})
+     */
+    protected $donorSignatureWitnessed = false;
+
+    /**
      * @ORM\Column(type = "string")
      * @var string
      * @Groups({"api-task-list","api-person-get"})
@@ -215,6 +222,33 @@ class Lpa extends PowerOfAttorney
         }
 
         return '';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDonorSignatureWitnessed()
+    {
+        return ($this->getDonorSignatureWitnessed() === true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDonorSignatureWitnessed()
+    {
+        return $this->donorSignatureWitnessed;
+    }
+
+    /**
+     * @param $witnessed
+     * @return Lpa
+     */
+    public function setDonorSignatureWitnessed($witnessed = false)
+    {
+        $this->donorSignatureWitnessed = (bool) $witnessed;
+
+        return $this;
     }
 
     /**
