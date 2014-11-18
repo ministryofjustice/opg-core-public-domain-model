@@ -455,6 +455,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'attorneyStatementDate'                     => null,
                 'signingOnBehalfDate'                       => null,
                 'signingOnBehalfFullName'                   => null,
+                'donorSignatureWitnessed'                   => false,
             ),
             $lpa->toArrayRecursive()
         );
@@ -978,5 +979,16 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->setApplicantType($expected);
 
         $this->assertEquals($expected, $this->lpa->getApplicantType());
+    }
+
+    public function testGetSetDonorSignatureWitnessed()
+    {
+        $this->assertFalse($this->lpa->isDonorSignatureWitnessed());
+        $this->assertFalse($this->lpa->getDonorSignatureWitnessed());
+
+        $this->assertTrue($this->lpa->setDonorSignatureWitnessed(true) instanceof Lpa);
+
+        $this->assertTrue($this->lpa->isDonorSignatureWitnessed());
+        $this->assertTrue($this->lpa->getDonorSignatureWitnessed());
     }
 }
