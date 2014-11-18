@@ -268,6 +268,22 @@ abstract class PowerOfAttorney extends CaseItem
     protected $additionalInfo;
 
     /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $additionalInfoDonorSignature = false;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @Accessor(getter="getPaymentDateString",setter="setPaymentDateString")
+     * @Groups({"api-person-get"})
+     */
+    protected $additionalInfoDonorSignatureDate;
+
+    /**
      * @ORM\Column(type = "string", nullable=true)
      * @var string
      * @Groups({"api-person-get"})
@@ -642,6 +658,67 @@ abstract class PowerOfAttorney extends CaseItem
         $this->additionalInfo = $additionalInfo;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAdditionalInfoDonorSignature()
+    {
+        return $this->additionalInfoDonorSignature;
+    }
+
+    /**
+     * @param bool $signature
+     * @return PowerOfAttorney
+     */
+    public function setAdditionalInfoDonorSignature($signature = false)
+    {
+        $this->additionalInfoDonorSignature = (bool)$signature;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAdditionalInfoDonorSignatureDate(\DateTime $signatureDate)
+    {
+        $this->additionalInfoDonorSignatureDate = $signatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @param string $signatureDate
+     * @return PowerOfAttorney
+     */
+    public function setAdditionalInfoDonorSignatureDateString($signatureDate = '')
+    {
+        if (!empty($signatureDate)) {
+            $this->setAdditionalInfoDonorSignatureDate(OPGDateFormat::createDateTime($signatureDate));
+        }
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAdditionalInfoDonorSignatureDate()
+    {
+        return $this->additionalInfoDonorSignatureDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalInfoDonorSignatureDateString()
+    {
+        if (null !== $this->getAdditionalInfoDonorSignatureDate()) {
+            return $this->getAdditionalInfoDonorSignatureDate()->format(OPGDateFormat::getDateFormat());
+        }
+        return '';
     }
 
     /**

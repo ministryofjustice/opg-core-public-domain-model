@@ -775,4 +775,26 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->isAttorneyDeclarationSignatureWitnessed());
         $this->assertTrue($this->poa->getAttorneyDeclarationSignatureWitnessed());
     }
+
+    public function testGEtSetAdditionalInfo()
+    {
+        $expected = 'test data';
+        $expectedDate = new \DateTime();
+        $expectedDateString = date('d/m/Y');
+
+        $this->assertEmpty($this->poa->getAdditionalInfo());
+        $this->assertEmpty($this->poa->getAdditionalInfoDonorSignatureDate());
+        $this->assertFalse($this->poa->getAdditionalInfoDonorSignature());
+
+        $this->assertTrue($this->poa->setAdditionalInfoDonorSignature(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->setAdditionalInfo($expected) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->setAdditionalInfoDonorSignatureDate($expectedDate) instanceof PowerOfAttorney);
+
+        $this->assertEquals($expected, $this->poa->getAdditionalInfo());
+        $this->assertEquals($expectedDate, $this->poa->getAdditionalInfoDonorSignatureDate());
+
+        $this->assertTrue($this->poa->setAdditionalInfoDonorSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
+        $this->assertEquals($expectedDateString, $this->poa->getAdditionalInfoDonorSignatureDateString());
+
+    }
 }
