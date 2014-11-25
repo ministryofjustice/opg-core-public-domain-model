@@ -442,7 +442,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetCompletedDateEmptyString()
     {
-        $this->assertEmpty($this->task->getCompletedDateString());
+        $this->assertEmpty($this->task->getDateAsString('completedDate'));
         $expectedDate = new \DateTime();
         $this->task->setDefaultDateTimeFromString('', 'completedDate');
         $returnedDate = $this->task->getCompletedDate();
