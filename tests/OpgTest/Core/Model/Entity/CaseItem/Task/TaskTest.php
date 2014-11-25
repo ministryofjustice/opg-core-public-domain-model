@@ -161,7 +161,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->task->getDueDate());
-        $this->assertEmpty($this->task->getDueDateString());
+        $this->assertEmpty($this->task->getDateAsString('dueDate'));
 
         $this->task->setDueDate($expectedDate);
         $this->assertEquals($expectedDate, $this->task->getDueDate());
@@ -183,13 +183,13 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetSetDueDateEmptyString()
     {
 
-        $this->assertEmpty($this->task->getDueDateString());
-        $this->task->setDueDateString('');
+        $this->assertEmpty($this->task->getDateAsString('dueDate'));
+        $this->task->setDateFromString('','dueDate');
 
         $returnedDate =
             \DateTime::createFromFormat(
                 OPGDateFormat::getDateTimeFormat(),
-                $this->task->getDueDateString()
+                $this->task->getDateAsString('dueDate')
             );
 
         $this->assertEmpty(
@@ -202,7 +202,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->task->getActiveDate());
-        $this->assertEmpty($this->task->getActiveDateString());
+        $this->assertEmpty($this->task->getDateAsString('activeDate'));
 
         $this->task->setActiveDate($expectedDate);
         $this->assertEquals($expectedDate, $this->task->getActiveDate());
@@ -225,7 +225,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDate = OPGDateFormat::createDateTime(date(OPGDateFormat::getDateFormat().' 00:00:00'));
 
-        $this->assertEmpty($this->task->getActiveDateString());
+        $this->assertEmpty($this->task->getDateAsString('activeDate'));
         $this->task->setDefaultDateFromString('', 'activeDate');
 
         $returnedDate = $this->task->getActiveDate();
@@ -240,10 +240,10 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDate = date(OPGDateFormat::getDateFormat());
 
-        $this->assertEmpty($this->task->getActiveDateString());
-        $this->task->setActiveDateString($expectedDate);
+        $this->assertEmpty($this->task->getDateAsString('activeDate'));
+        $this->task->setDateFromString($expectedDate, 'activeDate');
 
-        $returnedDate = $this->task->getActiveDateString();
+        $returnedDate = $this->task->getDateAsString('activeDate');
 
         $this->assertEquals(
             $expectedDate,
@@ -387,15 +387,15 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expected = date('d/m/Y');
 
-        $this->task->setDueDateString($expected);
+        $this->task->setDateFromString($expected, 'dueDate');
 
-        $this->assertEquals($expected, $this->task->getDueDateString());
+        $this->assertEquals($expected, $this->task->getDateAsString('dueDate'));
     }
 
     public function testGetRagRatingGreen()
     {
         $expectedDueDate = date('d/m/Y', strtotime('+2 weeks'));
-        $this->task->setDueDateString($expectedDueDate);
+        $this->task->setDateFromString($expectedDueDate, 'dueDate');
 
         $this->assertEquals(1, $this->task->getRagRating());
     }
@@ -403,7 +403,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetRagRatingRed()
     {
         $expectedDueDate = date('d/m/Y', strtotime('-2 weeks'));
-        $this->task->setDueDateString($expectedDueDate);
+        $this->task->setDateFromString($expectedDueDate, 'dueDate');
 
         $this->assertEquals(3, $this->task->getRagRating());
     }
@@ -411,7 +411,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetRagRatingAmber()
     {
         $expectedDueDate = date('d/m/Y');
-        $this->task->setDueDateString($expectedDueDate);
+        $this->task->setDateFromString($expectedDueDate, 'dueDate');
 
         $this->assertEquals(2, $this->task->getRagRating());
     }
@@ -435,7 +435,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     public function testGetSetCompletedDateString()
     {
         $expected = date(OPGDateFormat::getDateTimeFormat());
-        $this->task->setCompletedDateString($expected);
+        $this->task->setDateTimeFromString($expected, 'completedDate');
         $this->assertEquals($expected, $this->task->getDateTimeAsString('completedDate'));
     }
 
@@ -444,7 +444,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEmpty($this->task->getDateAsString('completedDate'));
         $expectedDate = new \DateTime();
-        $this->task->setDefaultDateTimeFromString('', 'completedDate');
+        $this->task->setDefaultDateFromString('', 'completedDate');
         $returnedDate = $this->task->getCompletedDate();
 
         $this->assertEquals(
