@@ -797,5 +797,9 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->setAdditionalInfoDonorSignatureDateString($expectedDateString) instanceof PowerOfAttorney);
         $this->assertEquals($expectedDateString, $this->poa->getAdditionalInfoDonorSignatureDateString());
 
+        $this->assertFalse($this->poa->getAnyOtherInfo());
+        $this->assertTrue($this->poa->setAnyOtherInfo(true) instanceof PowerOfAttorney);
+        $this->assertTrue($this->poa->getAnyOtherInfo());
+
     }
 }
