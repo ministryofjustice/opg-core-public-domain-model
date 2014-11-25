@@ -38,8 +38,8 @@ trait DateTimeAccessor
     protected function getFormattedDateTime($propertyName, $includeTime = false)
     {
         if (
-            property_exists(get_class($this), $propertyName) &&
-            isset($this->{$propertyName})
+            property_exists(get_class($this), $propertyName)
+            && isset($this->{$propertyName})
             && $this->{$propertyName} instanceof \DateTime) {
 
             if ( true === $includeTime) {
@@ -76,6 +76,20 @@ trait DateTimeAccessor
         return $this->setDateTimeFromString($value, $propertyName);
     }
 
+    /**
+     * @param $value
+     * @param $propertyName
+     * @return HasDateTimeAccessor
+     */
+    public function setDefaultDateFromString($value, $propertyName)
+    {
+        if (property_exists(get_class($this), $propertyName) && empty($value)) {
+            $this->{$propertyName} = new \DateTime();
+            return $this;
+        } else {
+            return $this->setDateTimeFromString($value, $propertyName);
+        }
+    }
     /**
      * @param $methodName
      * @param $params

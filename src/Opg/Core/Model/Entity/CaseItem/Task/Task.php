@@ -16,9 +16,12 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
@@ -33,7 +36,7 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @author  Chris Moreton
  *
  */
-class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable
+class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable, HasDateTimeAccessor
 {
 
     const STATUS_COMPLETED = 'completed';
@@ -44,6 +47,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
     use Assignee;
+    use DateTimeAccessor;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
@@ -84,7 +88,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getDueDateString",setter="setDueDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="dueDate")
      * @Type("string")
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
@@ -93,7 +97,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
-     * @Accessor(getter="getActiveDateString",setter="setActiveDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="activeDate")
      * @Type("string")
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
      */
@@ -117,7 +121,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getCompletedDateString",setter="setCompletedDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="completedDate")
      * @Groups({"api-person-get"})
      */
     protected $completedDate;
@@ -182,41 +186,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @param string $dueDate
-     *
-     * @return Task
-     */
-    public function setDueDateString($dueDate)
-    {
-        if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime($dueDate . ' 23:59:59');
-
-            if ($dueDate) {
-                $this->setDueDate($dueDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime $dueDate
      */
     public function getDueDate()
     {
         return $this->dueDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDueDateString()
-    {
-        if (!empty($this->dueDate)) {
-            return $this->getDueDate()->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -235,21 +209,6 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @param string $activeDate
-     *
-     * @return Task
-     */
-    public function setActiveDateString($activeDate)
-    {
-        if (!empty($activeDate)) {
-            $activeDate = OPGDateFormat::createDateTime($activeDate . ' 00:00:00');
-            return $this->setActiveDate($activeDate);
-        }
-
-        return $this->setActiveDate();
-    }
-
-    /**
      * @return \DateTime $activeDate
      */
     public function getActiveDate()
@@ -258,19 +217,8 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @return string
-     */
-    public function getActiveDateString()
-    {
-        if (!empty($this->activeDate)) {
-            return $this->getActiveDate()->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
-    }
-
-    /**
      * @param string $priority
+     *
      *
      * @return Task
      */
@@ -585,37 +533,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @param string $completedDate
-     *
-     * @return $this
-     */
-    public function setCompletedDateString($completedDate)
-    {
-        if (!empty($completedDate)) {
-            $completedDate = OPGDateFormat::createDateTime($completedDate);
-            return $this->setCompletedDate($completedDate);
-        }
-        return $this->setCompletedDate(new \DateTime());
-    }
-
-    /**
      * @return string
      */
     public function getCompletedDate()
     {
         return $this->completedDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompletedDateString()
-    {
-        if (!empty($this->completedDate)) {
-            return $this->completedDate->format(OPGDateFormat::getDateTimeFormat());
-        }
-
-        return '';
     }
 
     /**

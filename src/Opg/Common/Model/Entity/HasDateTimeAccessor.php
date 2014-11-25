@@ -34,4 +34,11 @@ interface HasDateTimeAccessor
      * @return HasDateTimeAccessor
      */
     public function setDateFromString($value, $propertyName);
+
+    /**
+     * @param string $value
+     * @param string $propertyName
+     * @return HasDateTimeAccessor
+     */
+    public function setDefaultDateFromString($value, $propertyName);
 }

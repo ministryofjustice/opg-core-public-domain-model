@@ -86,8 +86,8 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $data = array();
         $data['completedDate'] = '04/06/2014 11:23:45';
-        $this->task->setCompletedDateString($data['completedDate']);
-        $this->assertEquals('04/06/2014 11:23:45', $this->task->getCompletedDateString());
+        $this->task->setDateFromString($data['completedDate'], 'completedDate');
+        $this->assertEquals('04/06/2014 11:23:45', $this->task->getDateTimeAsString('completedDate'));
     }
 
     public function testGetSetId()
@@ -226,13 +226,13 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $expectedDate = OPGDateFormat::createDateTime(date(OPGDateFormat::getDateFormat().' 00:00:00'));
 
         $this->assertEmpty($this->task->getActiveDateString());
-        $this->task->setActiveDateString('');
+        $this->task->setDefaultDateFromString('', 'activeDate');
 
         $returnedDate = $this->task->getActiveDate();
 
         $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
-            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
+            $expectedDate->format(OPGDateFormat::getDateFormat()),
+            $returnedDate->format(OPGDateFormat::getDateFormat())
         );
     }
 
@@ -436,7 +436,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $expected = date(OPGDateFormat::getDateTimeFormat());
         $this->task->setCompletedDateString($expected);
-        $this->assertEquals($expected, $this->task->getCompletedDateString());
+        $this->assertEquals($expected, $this->task->getDateTimeAsString('completedDate'));
     }
 
 
@@ -444,7 +444,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEmpty($this->task->getCompletedDateString());
         $expectedDate = new \DateTime();
-        $this->task->setCompletedDateString(null);
+        $this->task->setDefaultDateTimeFromString('', 'completedDate');
         $returnedDate = $this->task->getCompletedDate();
 
         $this->assertEquals(
