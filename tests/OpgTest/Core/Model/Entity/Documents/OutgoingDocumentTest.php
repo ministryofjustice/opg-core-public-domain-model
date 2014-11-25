@@ -112,7 +112,7 @@ class OutgoingDocumentTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetSetCreatedDateString()
+    public function testGetSetCreatedDate()
     {
         $expected = date(OPGDateFormat::getDateTimeFormat());
         $this->correspondence->setDateTimeFromString($expected, 'createdDate');

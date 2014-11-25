@@ -9,10 +9,12 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
  * @ORM\Entity
@@ -20,10 +22,11 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Donor extends BasePerson implements PartyInterface, HasSageId
+class Donor extends BasePerson implements PartyInterface, HasSageId, HasDateTimeAccessor
 {
     use ToArray;
     use SageId;
+    use DateTimeAccessor;
 
     /**
      * @return InputFilter|InputFilterInterface
@@ -83,7 +86,7 @@ class Donor extends BasePerson implements PartyInterface, HasSageId
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getSignatureDateString",setter="setSignatureDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="signatureDate")
      * @Groups({"api-task-list","api-person-get"})
      */
     protected $signatureDate;
@@ -238,41 +241,11 @@ class Donor extends BasePerson implements PartyInterface, HasSageId
     }
 
     /**
-     * @param string $signatureDate
-     *
-     * @return Lpa
-     */
-    public function setSignatureDateString($signatureDate)
-    {
-        if (!empty($signatureDate)) {
-            $signatureDate = OPGDateFormat::createDateTime($signatureDate);
-
-            if ($signatureDate) {
-                $this->setSignatureDate($signatureDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime $signatureDate
      */
     public function getSignatureDate()
     {
         return $this->signatureDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSignatureDateString()
-    {
-        if (!empty($this->signatureDate)) {
-            return $this->signatureDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**

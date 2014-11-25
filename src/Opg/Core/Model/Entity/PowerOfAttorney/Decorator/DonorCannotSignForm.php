@@ -8,6 +8,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 
 trait DonorCannotSignForm
 {
@@ -16,7 +17,7 @@ trait DonorCannotSignForm
      * @var \DateTime
      * @Type("string")
      * @Groups({"api-person-get"})
-     * @Accessor(getter="getSigningOnBehalfDateString",setter="setSigningOnBehalfDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="signingOnBehalfDate")
      */
     protected $signingOnBehalfDate;
 
@@ -39,36 +40,11 @@ trait DonorCannotSignForm
     }
 
     /**
-     * @param string $signingOnBehalfDate
-     * @return $this
-     */
-    public function setSigningOnBehalfDateString($signingOnBehalfDate = '')
-    {
-        if (!empty($signingOnBehalfDate)) {
-            $this->setSigningOnBehalfDate(OPGDateFormat::createDateTime($signingOnBehalfDate));
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getSigningOnBehalfDate()
     {
         return $this->signingOnBehalfDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSigningOnBehalfDateString()
-    {
-        if (null !== $this->getSigningOnBehalfDate()) {
-            return $this->getSigningOnBehalfDate()->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -17,15 +18,6 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 class ReplacementAttorney extends AttorneyAbstract
 {
     use ToArray;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @Accessor(getter="getLpaPartCSignatureDateString",setter="setLpaPartCSignatureDateString")
-     * @Groups({"api-person-get"})
-     */
-    protected $lpaPartCSignatureDate;
 
     /**
      * @ORM\Column(type = "boolean",options={"default":0})
@@ -58,58 +50,5 @@ class ReplacementAttorney extends AttorneyAbstract
         $this->isReplacementAttorney = $isReplacementAttorney;
 
         return $this;
-    }
-
-    /**
-     * @param \DateTime $lpaPartCSignatureDate
-     *
-     * @return Lpa
-     */
-    public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
-    {
-        if (is_null($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = new \DateTime();
-        }
-        $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
-
-        return $this;
-    }
-
-    /**
-     * @param string $lpaPartCSignatureDate
-     *
-     * @return Lpa
-     */
-    public function setLpaPartCSignatureDateString($lpaPartCSignatureDate)
-    {
-        if (!empty($lpaPartCSignatureDate)) {
-            $lpaPartCSignatureDate = OPGDateFormat::createDateTime($lpaPartCSignatureDate);
-
-            if ($lpaPartCSignatureDate) {
-                $this->setLpaPartCSignatureDate($lpaPartCSignatureDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getLpaPartCSignatureDate()
-    {
-        return $this->lpaPartCSignatureDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLpaPartCSignatureDateString()
-    {
-        if (!empty($this->lpaPartCSignatureDate)) {
-            return $this->lpaPartCSignatureDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 }

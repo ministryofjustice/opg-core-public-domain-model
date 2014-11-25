@@ -9,9 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
  * @ORM\Entity
@@ -19,16 +22,17 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor
+class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor, HasDateTimeAccessor
 {
     use ToArray;
     use RelationshipToDonor;
+    use DateTimeAccessor;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getNotifiedDateString",setter="setNotifiedDateString")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="notifiedDate")
      * @Groups("api-person-get")
      */
     protected $notifiedDate;
@@ -49,41 +53,11 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
     }
 
     /**
-     * @param string $notifiedDate
-     *
-     * @return Lpa
-     */
-    public function setNotifiedDateString($notifiedDate)
-    {
-        if (!empty($notifiedDate)) {
-            $notifiedDate = OPGDateFormat::createDateTime($notifiedDate);
-
-            if ($notifiedDate) {
-                $this->setNotifiedDate($notifiedDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime $notifiedDate
      */
     public function getNotifiedDate()
     {
         return $this->notifiedDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNotifiedDateString()
-    {
-        if (!empty($this->notifiedDate)) {
-            return $this->notifiedDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**

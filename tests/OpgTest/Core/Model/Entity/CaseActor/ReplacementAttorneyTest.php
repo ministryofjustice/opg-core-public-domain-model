@@ -48,7 +48,7 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->attorney->getLpaPartCSignatureDate());
-        $this->attorney->setLpaPartCSignatureDate();
+        $this->attorney->setDefaultDateFromString('', 'lpaPartCSignatureDate');
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),

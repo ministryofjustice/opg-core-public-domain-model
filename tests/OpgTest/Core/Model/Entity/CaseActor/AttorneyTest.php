@@ -43,7 +43,7 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->attorney->getLpa002SignatureDate());
-        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+        $this->assertEmpty($this->attorney->getDateAsString('lpa002SignatureDate'));
 
         $this->attorney->setLpa002SignatureDate($expectedDate);
         $this->assertEquals($expectedDate, $this->attorney->getLpa002SignatureDate());
@@ -67,20 +67,20 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
             $this->assertEquals("'asdfadsfsa' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
-        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+        $this->assertEmpty($this->attorney->getDateAsString('lpa002SignatureDate'));
     }
 
     public function testGetSetLpa002SignatureString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
-        $this->attorney->setLpa002SignatureDateString($expected);
-        $this->assertEquals($expected, $this->attorney->getLpa002SignatureDateString());
+        $this->attorney->setDateFromString($expected, 'lpa002SignatureDate');
+        $this->assertEquals($expected, $this->attorney->getDateAsString('lpa002SignatureDate'));
     }
 
     public function testGetSetLpa002SignatureEmptyString()
     {
-        $this->attorney->setLpa002SignatureDateString('');
-        $this->assertEmpty($this->attorney->getLpa002SignatureDateString());
+        $this->attorney->setDateFromString('', 'lpa002SignatureDate');
+        $this->assertEmpty($this->attorney->getDateAsString('lpa002SignatureDate'));
     }
 
     public function testGetSetLpaPartCSignatureDate()
