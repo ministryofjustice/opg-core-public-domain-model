@@ -226,13 +226,13 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $expectedDate = OPGDateFormat::createDateTime(date(OPGDateFormat::getDateFormat().' 00:00:00'));
 
         $this->assertEmpty($this->task->getDateAsString('activeDate'));
-        $this->task->setDefaultDateFromString('', 'activeDate');
+        $this->task->setDateTimeFromString($expectedDate->format(OPGDateFormat::getDateTimeFormat()), 'activeDate');
 
         $returnedDate = $this->task->getActiveDate();
 
         $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
+            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
+            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
         );
     }
 

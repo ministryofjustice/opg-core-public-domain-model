@@ -140,7 +140,7 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
             $this->paymentType->setDateFromString($expectedDateTimeString,'paymentDate')->getDateAsString('paymentDate')
         );
 
-        $this->paymentType->setPaymentDateString('Last thursday around 3pm');
+        $this->paymentType->setDateFromString('Last thursday around 3pm', 'paymentDate');
     }
 
     public function testGetSetFeeAmount()
