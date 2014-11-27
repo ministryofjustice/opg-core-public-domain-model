@@ -5,6 +5,8 @@ namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
@@ -28,9 +30,11 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  *
  * @ORM\Entity
  */
-abstract class PowerOfAttorney extends CaseItem
+abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
 {
     use DonorCannotSignForm;
+    use NoticeGivenDate;
+    
     /**
      * Constant for the I portion of I/We questions
      */
@@ -403,15 +407,6 @@ abstract class PowerOfAttorney extends CaseItem
      * @Groups({"api-person-get"})
      */
     protected $dispatchDate;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="noticeGivenDate")
-     * @Groups({"api-person-get"})
-     */
-    protected $noticeGivenDate;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -1533,29 +1528,6 @@ abstract class PowerOfAttorney extends CaseItem
     public function getDispatchDate()
     {
         return $this->dispatchDate;
-    }
-
-    /**
-     * @param \DateTime $noticeGivenDate
-     *
-     * @return PowerOfAttorney
-     */
-    public function setNoticeGivenDate(\DateTime $noticeGivenDate = null)
-    {
-        if (is_null($noticeGivenDate)) {
-            $noticeGivenDate = new \DateTime();
-        }
-        $this->noticeGivenDate = $noticeGivenDate;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNoticeGivenDate()
-    {
-        return $this->noticeGivenDate;
     }
 
     /**
