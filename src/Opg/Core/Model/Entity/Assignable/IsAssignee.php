@@ -26,61 +26,7 @@ interface IsAssignee
     public function setName( $name );
 
     /**
-     * @param CaseEntity $case
-     *
-     * @return IsAssignee
+     * @return string
      */
-    public function addCase( CaseEntity $case );
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getCases();
-
-    /**
-     * @param PowerOfAttorneyEntity $poa
-     *
-     * @return IsAssignee
-     */
-    public function addPowerOfAttorney( PowerOfAttorneyEntity $poa );
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPowerOfAttorneys();
-
-    /**
-     * @param DeputyshipEntity $poa
-     *
-     * @return IsAssignee
-     */
-    public function addDeputyship( DeputyshipEntity $poa );
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDeputyships();
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return IsAssignee
-     */
-    public function setCases( ArrayCollection $cases );
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return IsAssignee
-     * Alias function
-     */
-    public function setPowerOfAttorneys( ArrayCollection $cases );
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return IsAssignee
-     * Alias function
-     */
-    public function setDeputyships( ArrayCollection $cases );
+    public function getDisplayName();
 }

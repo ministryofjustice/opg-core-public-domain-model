@@ -124,22 +124,25 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $case = new Lpa();
         $this->person->addCase($case);
 
-        $collection = $this->person->getPowerOfAttorneys();
+        $collection = $this->person->getCases();
 
         $collection = $collection->toArray();
         $this->assertEquals(count($collection), 1);
 
         $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
         $this->person->addCase($case);
-        $collection2 = $this->person->getDeputyships();
+        $collection = $this->person->getCases();
+
+        $collection = $collection->toArray();
+        $this->assertEquals(count($collection), 2);
 
     }
 
     public function testAddCaseCollection ()
     {
 
-        $collection = $this->person->getPowerOfAttorneys();
-        $collection2 = $this->person->getDeputyships();
+        $collection = $this->person->getCases();
+        $collection2 = new ArrayCollection();
 
         for($i=0;$i<5; $i++) {
             $case = new Lpa();
@@ -148,7 +151,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->person->setCases($collection);
 
-        $collection3 = $this->person->getPowerOfAttorneys();
+        $collection3 = $this->person->getCases();
 
         $this->assertEquals($collection, $collection3);
 
@@ -159,31 +162,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->person->setCases($collection2);
 
-        $collection4 = $this->person->getDeputyships();
+        $collection4 = $this->person->getCases();
 
         $this->assertEquals($collection4, $collection2);
 
-        $this->assertEquals(array($collection, $collection2), $this->person->getCases());
-
         $cases = $this->person->getCases();
-        $this->assertTrue(count($cases) == 2);
-        $this->assertEquals($collection3, $cases[0]);
+        $this->assertTrue(count($cases) == 5);
     }
-
-    public function testFailOnInvalidCaseType()
-    {
-        $invalidCase = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\CaseItem');
-        $expectedMessage = 'A case can only be of type PowerOfAttorney or DeputyShip';
-
-        try {
-            $this->person->addCase($invalidCase);
-        }
-        catch(Exception $e) {
-            $this->assertTrue($e instanceof Exception);
-            $this->assertEquals($expectedMessage, $e->getMessage());
-        }
-    }
-
 
     public function testGetSetUniqueIdentifier()
     {

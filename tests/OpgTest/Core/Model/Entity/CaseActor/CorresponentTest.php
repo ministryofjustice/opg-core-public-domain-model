@@ -2,6 +2,7 @@
 namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasCasesInterface;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 
@@ -21,7 +22,7 @@ class CorrespondentTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $this->assertTrue($this->correspondent instanceof Correspondent);
-        $this->assertTrue($this->correspondent instanceof PartyInterface);
+        $this->assertTrue($this->correspondent instanceof HasCasesInterface);
         $this->assertTrue($this->correspondent instanceof EntityInterface);
     }
 

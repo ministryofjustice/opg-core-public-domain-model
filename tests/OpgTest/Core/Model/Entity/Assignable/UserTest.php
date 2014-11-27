@@ -272,7 +272,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($roles, $this->user->getNormalisedRoles());
     }
 
-    public function testSetGetPowerOfAttorneys()
+    public function testGetSetCases()
     {
         $poaCollection = new ArrayCollection();
 
@@ -282,25 +282,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
             $poaCollection->add($poa);
         }
 
-        $this->user->setPowerOfAttorneys($poaCollection);
+        $this->user->setCases($poaCollection);
 
-        $this->assertEquals($poaCollection, $this->user->getPowerOfAttorneys());
-
-    }
-
-    public function testSetGetDeputyShips()
-    {
-        $deputyCollection = new ArrayCollection();
-
-        for ($count = 1; $count <= 5; $count++ ) {
-            $dep = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
-            $dep->setId($count);
-            $deputyCollection->add($dep);
-        }
-
-        $this->user->setDeputyships($deputyCollection);
-
-        $this->assertEquals($deputyCollection, $this->user->getDeputyships());
+        $this->assertEquals($poaCollection, $this->user->getCases());
 
     }
 

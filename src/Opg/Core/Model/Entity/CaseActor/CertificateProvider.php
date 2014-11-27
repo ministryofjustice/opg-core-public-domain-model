@@ -4,7 +4,6 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
-use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
@@ -17,7 +16,7 @@ use JMS\Serializer\Annotation\Groups;
  * @package Opg Domain Model
  *
  */
-class CertificateProvider extends BasePerson implements PartyInterface, HasRelationshipToDonor
+class CertificateProvider extends BasePerson implements HasRelationshipToDonor
 {
     use ToArray;
     use RelationshipToDonor;
@@ -120,7 +119,7 @@ class CertificateProvider extends BasePerson implements PartyInterface, HasRelat
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(

@@ -6,7 +6,6 @@ use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
-use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +25,7 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
+class NotifiedPerson extends BasePerson implements HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
 {
     use ToArray;
     use RelationshipToDonor;
@@ -46,7 +45,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(

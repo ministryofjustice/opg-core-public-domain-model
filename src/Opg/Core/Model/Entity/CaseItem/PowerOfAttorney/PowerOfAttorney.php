@@ -34,7 +34,7 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
 {
     use DonorCannotSignForm;
     use NoticeGivenDate;
-    
+
     /**
      * Constant for the I portion of I/We questions
      */

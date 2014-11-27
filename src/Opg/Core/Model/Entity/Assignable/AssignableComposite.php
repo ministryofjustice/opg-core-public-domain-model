@@ -2,8 +2,10 @@
 
 namespace Opg\Core\Model\Entity\Assignable;
 
+use Opg\Common\Model\Entity\HasCasesInterface;
 use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasTasksInterface;
+use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -35,39 +37,12 @@ use JMS\Serializer\Annotation\MaxDepth;
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
  */
-abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, HasTasksInterface, HasIdInterface
+abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, HasTasksInterface, HasIdInterface, HasCasesInterface
 {
     use ToArray;
     use HasTasks;
     use HasId;
-
-    /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney")
-     * @ORM\JoinTable(
-     *      name="assigned_powerofattorneys",
-     *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="poa_id", referencedColumnName="id", unique=true)}
-     * )
-     *
-     * @var ArrayCollection
-     * @Exclude
-     * @ReadOnly
-     */
-    protected $powerOfAttorneys;
-
-    /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship")
-     * @ORM\JoinTable(
-     *      name="assigned_deputyships",
-     *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id", unique=true)}
-     * )
-     *
-     * @var ArrayCollection
-     * @Exclude
-     * @ReadOnly
-     */
-    protected $deputyships;
+    use HasCases;
 
     /**
      * @ORM\Column(type = "string")
@@ -96,134 +71,9 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
 
     public function __construct()
     {
-        $this->deputyships      = new ArrayCollection();
-        $this->powerOfAttorneys = new ArrayCollection();
+        $this->cases            = new ArrayCollection();
         $this->tasks            = new ArrayCollection();
         $this->teams            = new ArrayCollection();
-    }
-
-    /**
-     * @param CaseEntity $case
-     *
-     * @return $this
-     */
-    public function addCase( CaseEntity $case )
-    {
-        if ($case instanceof PowerOfAttorneyEntity) {
-            return $this->addPowerOfAttorney( $case );
-        } else {
-            return $this->addDeputyship( $case );
-        }
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getCases()
-    {
-        $cases = new ArrayCollection();
-        foreach ($this->getPowerOfAttorneys() as $case) {
-            $cases->add( $case );
-        }
-        foreach ($this->getDeputyships() as $case) {
-            $cases->add( $case );
-        }
-
-        return $cases;
-    }
-
-    /**
-     * @param PowerOfAttorneyEntity $poa
-     *
-     * @return AssignableComposite
-     */
-    public function addPowerOfAttorney( PowerOfAttorneyEntity $poa )
-    {
-        if (null === $this->powerOfAttorneys) {
-            $this->powerOfAttorneys = new ArrayCollection();
-        }
-
-        $this->powerOfAttorneys->add( $poa );
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPowerOfAttorneys()
-    {
-        if (null === $this->powerOfAttorneys) {
-            $this->powerOfAttorneys = new ArrayCollection();
-        }
-
-        return $this->powerOfAttorneys;
-    }
-
-    /**
-     * @param DeputyshipEntity $poa
-     *
-     * @return AssignableComposite
-     */
-    public function addDeputyship( DeputyshipEntity $poa )
-    {
-        if (null === $this->deputyships) {
-            $this->deputyships = new ArrayCollection();
-        }
-
-        $this->deputyships->add( $poa );
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDeputyships()
-    {
-        if (null === $this->deputyships) {
-            $this->deputyships = new ArrayCollection();
-        }
-
-        return $this->deputyships;
-    }
-
-    /**
-     * @param ArrayCollection $cases
-     *
-     * @return AssignableComposite
-     */
-    public function setCases( ArrayCollection $cases )
-    {
-        foreach ($cases as $case) {
-            $this->addCase( $case );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Alias function
-     *
-     * @param ArrayCollection $cases
-     *
-     * @return AssignableComposite
-     */
-    public function setPowerOfAttorneys( ArrayCollection $cases )
-    {
-        return $this->setCases( $cases );
-    }
-
-    /**
-     * Alias function
-     *
-     * @param ArrayCollection $cases
-     *
-     * @return AssignableComposite
-     */
-    public function setDeputyships( ArrayCollection $cases )
-    {
-        return $this->setCases( $cases );
     }
 
     /**

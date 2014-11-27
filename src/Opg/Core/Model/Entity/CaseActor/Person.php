@@ -5,17 +5,14 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
+use Opg\Common\Model\Entity\HasCasesInterface;
+use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
-use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
-use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
@@ -51,8 +48,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
-abstract class Person extends LegalEntity implements PartyInterface
+abstract class Person extends LegalEntity implements HasCasesInterface
 {
+    use HasCases;
+
     /**
      * Constants below are for yes/no radio buttons, we use 0
      * as default
@@ -67,32 +66,6 @@ abstract class Person extends LegalEntity implements PartyInterface
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $email;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney", cascade={"persist"})
-     * @ORM\JoinTable(name="person_pas",
-     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $powerOfAttorneys;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship", cascade={"persist"})
-     * @ORM\JoinTable(name="person_deputyships",
-     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $deputyships;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -191,8 +164,6 @@ abstract class Person extends LegalEntity implements PartyInterface
 
     public function __construct()
     {
-        $this->deputyships      = new ArrayCollection();
-        $this->powerOfAttorneys = new ArrayCollection();
         $this->addresses        = new ArrayCollection();
         $this->phoneNumbers     = new ArrayCollection();
         $this->notes            = new ArrayCollection();
@@ -200,6 +171,7 @@ abstract class Person extends LegalEntity implements PartyInterface
         $this->documents        = new ArrayCollection();
         $this->children         = new ArrayCollection();
         $this->warnings         = new ArrayCollection();
+        $this->cases            = new ArrayCollection();
     }
 
     /**
@@ -589,89 +561,6 @@ abstract class Person extends LegalEntity implements PartyInterface
     }
 
     /**
-     *
-     * @param  \Opg\Core\Model\Entity\CaseItem\CaseItemInterface $case
-     *
-     * @throws Exception
-     * @return Person
-     */
-    public function addCase(CaseItemInterface $case)
-    {
-        if ($case instanceof PowerOfAttorney) {
-            // @codeCoverageIgnoreStart
-            // requires PersonFactory to test
-            if (is_null($this->powerOfAttorneys)) {
-                $this->powerOfAttorneys = new ArrayCollection();
-            }
-            // @codeCoverageIgnoreEnd
-            if (!$this->powerOfAttorneys->contains($case)) {
-                $this->powerOfAttorneys->add($case);
-            }
-        } elseif ($case instanceof Deputyship) {
-            // @codeCoverageIgnoreStart
-            // requires PersonFactory to test
-            if (is_null($this->powerOfAttorneys)) {
-                $this->deputyships = new ArrayCollection();
-            }
-            // @codeCoverageIgnoreEnd
-            if (!$this->deputyships->contains($case)) {
-                $this->deputyships->add($case);
-            }
-        } else {
-            throw new Exception('A case can only be of type PowerOfAttorney or DeputyShip');
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPowerOfAttorneys()
-    {
-        // @codeCoverageIgnoreStart
-        // requires PersonFactory to test
-        if (is_null($this->powerOfAttorneys)) {
-            $this->powerOfAttorneys = new ArrayCollection();
-        }
-
-        // @codeCoverageIgnoreEnd
-        return $this->powerOfAttorneys;
-    }
-
-    public function getCases()
-    {
-        return array($this->getPowerOfAttorneys(), $this->getDeputyships());
-    }
-
-    /**
-     * @param  ArrayCollection $cases
-     *
-     * @return PartyInterface
-     */
-    public function setCases(ArrayCollection $cases)
-    {
-        foreach ($cases as $case) {
-            $this->addCase($case);
-        }
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDeputyships()
-    {
-        // @codeCoverageIgnoreStart
-        // requires PersonFactory to test
-        if (is_null($this->deputyships)) {
-            $this->deputyships = new ArrayCollection();
-        }
-
-        // @codeCoverageIgnoreEnd
-        return $this->deputyships;
-    }
-
-    /**
      * @param  PhoneNumber $phoneNumber
      *
      * @return $this
@@ -746,22 +635,6 @@ abstract class Person extends LegalEntity implements PartyInterface
         return $this->inputFilter;
     }
 
-
-    /**
-     * Method to validate a person in the input filter, where required
-     * This is a bitwise or comparison, if either condition is true, it returns true
-     * @return bool
-     *
-     */
-    public function hasAttachedCase()
-    {
-        return
-            (bool)(
-                ($this->getPowerOfAttorneys()->count() > 0)
-                |
-                ($this->getDeputyships()->count() > 0)
-            );
-    }
 
     /**
      * @return ArrayCollection

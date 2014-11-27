@@ -2,7 +2,6 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +21,7 @@ use JMS\Serializer\Annotation\GenericAccessor;
  * @package Opg Core
  *
  */
-class Attorney extends AttorneyAbstract implements PartyInterface
+class Attorney extends AttorneyAbstract
 {
     use ToArray;
 
@@ -57,7 +56,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(
