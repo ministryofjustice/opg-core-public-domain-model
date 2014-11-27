@@ -1,7 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\LayDeputy;
 
-use Opg\Core\Model\Entity\Deputyship\Deputyship;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Zend\InputFilter\InputFilterInterface;
 use Doctrine\ORM\Mapping as ORM;

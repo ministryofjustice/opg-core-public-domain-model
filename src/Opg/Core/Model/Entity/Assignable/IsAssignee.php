@@ -5,7 +5,7 @@ namespace Opg\Core\Model\Entity\Assignable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
-use Opg\Core\Model\Entity\Deputyship\Deputyship as DeputyshipEntity;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship as DeputyshipEntity;
 
 /**
  * Interface IsAssignee

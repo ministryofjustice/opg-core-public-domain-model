@@ -8,7 +8,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Opg\Core\Model\Entity\Deputyship\Deputyship as DeputyshipEntity;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship as DeputyshipEntity;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
@@ -49,7 +49,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
     protected $id;
 
     /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney")
      * @ORM\JoinTable(
      *      name="assigned_powerofattorneys",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
@@ -63,7 +63,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
     protected $powerOfAttorneys;
 
     /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship")
+     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship")
      * @ORM\JoinTable(
      *      name="assigned_deputyships",
      *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},

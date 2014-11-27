@@ -366,7 +366,16 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                'donor'                                     => array(),
+                'donor'                                     => array (
+                    'id'                                    => null,
+                    'uId'                                   => null,
+                    'normalizedUid'                         => null,
+                    'documents'                             => array (),
+                    'notes'                                 => array (),
+                    'tasks'                                 => array (),
+                    'inputFilter'                           => null,
+                    'errorMessages'                         => array(),
+                ),
                 'correspondent'                             => null,
                 'applicants'                                => array(),
                 'attorneys'                                 => array(),

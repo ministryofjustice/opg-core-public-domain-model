@@ -22,6 +22,7 @@ use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Queue as ScheduledJob;
@@ -36,20 +37,22 @@ use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 
 /**
- * @ORM\MappedSuperclass
- * @package Opg\Core\Model\Entity\CaseItem
+ * @ORM\Entity
+ * @ORM\Table(name = "cases")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ * "lpa" = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa",
+ * "epa" = "Opg\Core\Model\Entity\CaseItem\Epa\Epa",
+ * "lay" = "Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy",
+ * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable, HasDateTimeAccessor, HasTasksInterface
+abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRagRating, IsAssignable
 {
-    use ToArray;
-    use HasNotes;
-    use UniqueIdentifier;
-    use InputFilter;
     use Assignee;
-    use HasDocuments;
-    use DateTimeAccessor;
-    use HasTasks;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;

@@ -293,7 +293,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $deputyCollection = new ArrayCollection();
 
         for ($count = 1; $count <= 5; $count++ ) {
-            $dep = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Deputyship\Deputyship');
+            $dep = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
             $dep->setId($count);
             $deputyCollection->add($dep);
         }

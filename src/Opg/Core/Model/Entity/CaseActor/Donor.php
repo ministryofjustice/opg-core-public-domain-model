@@ -23,11 +23,10 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Core
  *
  */
-class Donor extends BasePerson implements PartyInterface, HasSageId, HasDateTimeAccessor
+class Donor extends BasePerson implements HasSageId
 {
     use ToArray;
     use SageId;
-    use DateTimeAccessor;
 
     /**
      * @return InputFilter

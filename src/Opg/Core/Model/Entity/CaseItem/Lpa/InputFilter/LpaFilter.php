@@ -5,7 +5,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseSubtype;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\HowAttorneysAct;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\PaymentMethod;
-use Opg\Core\Model\Entity\PowerOfAttorney\Validator\Applicants;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Validator\Applicants;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 

@@ -11,7 +11,7 @@ use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
 use Opg\Core\Model\Entity\CaseActor\Person;
-use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;

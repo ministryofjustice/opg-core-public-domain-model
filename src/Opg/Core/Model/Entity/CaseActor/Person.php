@@ -6,19 +6,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasDocumentsInterface;
-use Opg\Common\Model\Entity\HasNotesInterface;
-use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Core\Model\Entity\Address\Address;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\Deputyship\Deputyship;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
-use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
@@ -26,10 +23,10 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use Opg\Core\Model\Entity\Warning\Warning;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
-use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
@@ -54,13 +51,8 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
-abstract class Person implements HasUidInterface, HasNotesInterface, EntityInterface, \IteratorAggregate, HasDocumentsInterface
+abstract class Person extends LegalEntity implements PartyInterface
 {
-    use HasNotesTrait;
-    use UniqueIdentifier;
-    use InputFilterTrait;
-    use HasDocuments;
-
     /**
      * Constants below are for yes/no radio buttons, we use 0
      * as default
@@ -70,13 +62,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     const OPTION_TRUE    = 2;
 
     /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
-     */
-    protected $id;
-
-    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
@@ -84,7 +69,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney", cascade={"persist"})
      * @ORM\JoinTable(name="person_pas",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")}
@@ -97,7 +82,7 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $powerOfAttorneys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Deputyship\Deputyship", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship", cascade={"persist"})
      * @ORM\JoinTable(name="person_deputyships",
      *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="deputyship_id", referencedColumnName="id")}
@@ -211,6 +196,8 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         $this->addresses        = new ArrayCollection();
         $this->phoneNumbers     = new ArrayCollection();
         $this->notes            = new ArrayCollection();
+        $this->tasks            = new ArrayCollection();
+        $this->documents        = new ArrayCollection();
         $this->children         = new ArrayCollection();
         $this->warnings         = new ArrayCollection();
     }
@@ -386,28 +373,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     public function setEmail($email)
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return string $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     *
-     * @param  string $id
-     *
-     * @return PartyInterface
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
 
         return $this;
     }
@@ -781,11 +746,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
         return $this->inputFilter;
     }
 
-    // Fulfil IteratorAggregate interface requirements
-    public function getIterator()
-    {
-        return new \RecursiveArrayIterator($this->toArray());
-    }
 
     /**
      * Method to validate a person in the input filter, where required
