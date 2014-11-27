@@ -272,6 +272,13 @@ abstract class PowerOfAttorney extends CaseItem
      * @var bool
      * @Groups({"api-person-get"})
      */
+    protected $anyOtherInfo = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
     protected $additionalInfoDonorSignature = false;
 
     /**
@@ -658,6 +665,25 @@ abstract class PowerOfAttorney extends CaseItem
         $this->additionalInfo = $additionalInfo;
 
         return $this;
+    }
+
+    /**
+     * @param bool $info
+     * @return $this
+     */
+    public function setAnyOtherInfo($info = false)
+    {
+        $this->anyOtherInfo = $info;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAnyOtherInfo()
+    {
+        return $this->anyOtherInfo;
     }
 
     /**
