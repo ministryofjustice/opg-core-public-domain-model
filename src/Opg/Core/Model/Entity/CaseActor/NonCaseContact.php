@@ -5,7 +5,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;

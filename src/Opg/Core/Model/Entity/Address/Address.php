@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\Address;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
@@ -46,10 +46,10 @@ class Address implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="addresses")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="addresses")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
-     * @var \Opg\Core\Model\Entity\Person\Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @var \Opg\Core\Model\Entity\CaseActor\Person
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      */
     protected $person;
 

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
@@ -113,10 +113,10 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Person\Person")
+     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person")
      * @ORM\JoinColumn(name="correspondent_id", referencedColumnName="id")
      * @var Person
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      */
     protected $correspondent;
 
@@ -253,7 +253,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\Person\Person
+     * @return \Opg\Core\Model\Entity\CaseActor\Person
      */
     public function getCorrespondent()
     {

@@ -335,7 +335,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $this->epa->addPerson($correspondent);
         $this->assertEquals($correspondent, $this->epa->getCorrespondent());
 
-        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
         $person->setId('1');
 
         try {

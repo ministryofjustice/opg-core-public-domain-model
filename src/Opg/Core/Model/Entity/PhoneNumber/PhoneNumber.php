@@ -5,7 +5,7 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
@@ -34,11 +34,11 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
-     * @var \Opg\Core\Model\Entity\Person\Person
+     * @var \Opg\Core\Model\Entity\CaseActor\Person
      * @Groups({"api-person-get"})
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      */
     protected $person;
 

@@ -10,7 +10,7 @@ use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;

@@ -492,7 +492,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->lpa->addPerson($correspondent);
         $this->assertEquals($correspondent, $this->lpa->getCorrespondent());
 
-        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
         $person->setId('1');
 
         try {

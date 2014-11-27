@@ -8,7 +8,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\Payment\ChequePayment;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\CaseItem\BusinessRule;

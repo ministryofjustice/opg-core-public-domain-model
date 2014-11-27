@@ -5,7 +5,7 @@ namespace OpgTest\Core\Model\Entity\Person;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use \Exception;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -21,7 +21,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp ()
     {
-        $this->person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $this->person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
     }
 
     public function testCreate()
@@ -313,8 +313,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testAddPerson()
     {
-        $otherPerson1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
-        $otherPerson2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $otherPerson1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $otherPerson2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
 
         $this->assertNull($otherPerson1->getParent());
         $this->person->addChild($otherPerson1);
@@ -334,8 +334,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testPersonCannotHaveMultipleParents()
     {
-        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
-        $parent2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $parent2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
 
         $parent1->addChild($this->person);
 
@@ -345,7 +345,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testGetChildren()
     {
-        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
 
         $parent1->addChild($this->person);
 
@@ -354,7 +354,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFiltered()
     {
-        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Person\Person');
+        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
 
         $testCollection = new ArrayCollection();
         $testActiveCollection = new ArrayCollection();

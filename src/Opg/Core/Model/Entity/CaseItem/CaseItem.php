@@ -22,7 +22,7 @@ use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Payment\PaymentType;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Queue as ScheduledJob;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;

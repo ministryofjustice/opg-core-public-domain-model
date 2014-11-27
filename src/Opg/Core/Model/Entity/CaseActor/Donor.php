@@ -5,7 +5,7 @@ use Opg\Common\Model\Entity\HasSageId;
 use Opg\Common\Model\Entity\Traits\SageId;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;

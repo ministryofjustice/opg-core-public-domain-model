@@ -6,7 +6,7 @@ namespace OpgTest\Core\Model\Entity\PowerOfAttorney;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseActor\Attorney;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Opg\Core\Model\Entity\Person;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\ClassUtils;
@@ -188,14 +188,14 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     /**
      * @ORM\ManyToOne(targetEntity = "Person", inversedBy = "children", cascade={"persist", "remove"})
      * @Groups({"api-person-get"})
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      */
     protected $parent;
 
     /**
      * @ORM\OneToMany(targetEntity = "Person", mappedBy = "parent", cascade={"persist", "remove"})
      * @ORM\OrderBy({"id"="ASC"})
-     * @Type("ArrayCollection<Opg\Core\Model\Entity\Person\Person>")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\CaseActor\Person>")
      * @ReadOnly
      * @Groups({"api-person-get"})
      */

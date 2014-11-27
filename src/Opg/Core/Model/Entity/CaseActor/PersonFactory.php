@@ -1,11 +1,11 @@
 <?php
-namespace Opg\Core\Model\Entity\Person;
+namespace Opg\Core\Model\Entity\CaseActor;
 
 use JMS\Serializer\Serializer;
 
 /**
  * Class PersonFactory
- * @package Opg\Core\Model\Entity\Person
+ * @package Opg\Core\Model\Entity\CaseActor
  * @codeCoverageIgnore
  * serializer to be mocked out
  */

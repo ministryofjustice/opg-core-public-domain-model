@@ -7,7 +7,7 @@ use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;

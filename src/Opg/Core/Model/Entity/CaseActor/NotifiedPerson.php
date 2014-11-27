@@ -3,7 +3,7 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;

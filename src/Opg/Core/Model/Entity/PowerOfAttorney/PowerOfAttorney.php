@@ -11,7 +11,7 @@ use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\PowerOfAttorney\Decorator\DonorCannotSignForm;
 use Opg\Core\Model\Entity\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
@@ -71,7 +71,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $correspondent;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Person")
      * @ORM\JoinTable(name="pa_applicants",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
@@ -84,7 +84,7 @@ abstract class PowerOfAttorney extends CaseItem
     protected $applicants;
 
     /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Person\Person")
+     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Person")
      * @ORM\JoinTable(name="pa_attorneys",
      *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}

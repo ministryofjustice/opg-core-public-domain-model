@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Assignable\User as UserEntity;
-use Opg\Core\Model\Entity\Person\Person as PersonEntity;
+use Opg\Core\Model\Entity\CaseActor\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -92,10 +92,10 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $closedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="warnings")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="warnings")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var PersonEntity
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      * @Groups({"api-warning-list"})
      */
     protected $person;

@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\CaseItem\Note;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Assignable\User;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
@@ -271,7 +271,7 @@ class Note implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\Person\Person $person
+     * @param \Opg\Core\Model\Entity\CaseActor\Person $person
      */
     public function setPerson($person)
     {
@@ -279,7 +279,7 @@ class Note implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\Person\Person
+     * @return \Opg\Core\Model\Entity\CaseActor\Person
      */
     public function getPerson()
     {
