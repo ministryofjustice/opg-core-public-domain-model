@@ -10,6 +10,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Exclude;
 use Opg\Core\Model\Entity\Document\Document;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * @ORM\Entity
@@ -69,14 +70,12 @@ class Page implements EntityInterface, \IteratorAggregate, HasIdInterface
     }
 
     /**
-     * @return InputFilter|InputFilterInterface
+     * @return InputFilterInterface
      */
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
-            $factory     = new InputFactory();
-
             $this->inputFilter = $inputFilter;
         }
 

@@ -1355,10 +1355,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->paymentByCheque) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }
@@ -1408,10 +1406,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->paymentByDebitCreditCard) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }
@@ -1806,10 +1802,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->wouldLikeToApplyForFeeRemission) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }
@@ -1840,10 +1834,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->haveAppliedForFeeRemission) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }
@@ -1874,10 +1866,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->paymentRemission) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }
@@ -1908,10 +1898,8 @@ abstract class PowerOfAttorney extends CaseItem
         switch($this->paymentExemption) {
             case self::PAYMENT_OPTION_FALSE:
                 return false;
-                break;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-                break;
             default :
                 return null;
         }

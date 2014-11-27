@@ -19,6 +19,8 @@ use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Common\Model\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * Class LegalEntity

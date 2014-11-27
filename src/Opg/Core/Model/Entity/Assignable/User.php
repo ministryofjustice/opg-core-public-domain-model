@@ -5,8 +5,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
-use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Exclude;

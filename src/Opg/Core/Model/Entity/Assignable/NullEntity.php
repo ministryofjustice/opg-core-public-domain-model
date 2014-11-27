@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class NullEntity extends AssignableComposite implements EntityInterface, IsAssignee
 {
 
-    const NULL_USER_ID = null;
+    const NULL_USER_ID = 0;
 
     const NULL_USER_NAME = 'Unassigned';
 
