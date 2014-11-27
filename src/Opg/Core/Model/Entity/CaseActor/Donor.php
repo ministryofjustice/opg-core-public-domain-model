@@ -3,6 +3,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\HasSageId;
 use Opg\Common\Model\Entity\Traits\SageId;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
@@ -29,7 +30,7 @@ class Donor extends BasePerson implements PartyInterface, HasSageId, HasDateTime
     use DateTimeAccessor;
 
     /**
-     * @return InputFilter|InputFilterInterface
+     * @return InputFilter
      */
     public function getInputFilter()
     {

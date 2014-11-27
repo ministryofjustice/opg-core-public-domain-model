@@ -3,16 +3,18 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 

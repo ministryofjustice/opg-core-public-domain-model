@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseActor;
+namespace Opg\Core\Model\Entity\CaseActor\Interfaces;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

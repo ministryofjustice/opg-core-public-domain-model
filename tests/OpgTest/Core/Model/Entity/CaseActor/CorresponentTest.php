@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Core\Model\Entity\CaseActor\PartyInterface;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 
 

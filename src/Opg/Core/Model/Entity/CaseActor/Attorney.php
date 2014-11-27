@@ -2,6 +2,8 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
+use Opg\Core\Model\Entity\CaseActor\HasRelationshipToDonor;
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +12,6 @@ use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * @ORM\Entity
@@ -18,10 +19,9 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract implements PartyInterface
 {
     use ToArray;
-    use RelationshipToDonor;
 
     /**
      * @ORM\Column(type="date", nullable=true)
