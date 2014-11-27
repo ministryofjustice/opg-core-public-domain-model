@@ -2,13 +2,14 @@
 
 namespace Opg\Core\Model\Entity\Assignable;
 
+use Opg\Common\Model\Entity\HasTasksInterface;
+use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
-use Opg\Core\Model\Entity\CaseItem\Task\Task as TaskEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Core\Model\Entity\Deputyship\Deputyship as DeputyshipEntity;
-use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
@@ -32,9 +33,10 @@ use JMS\Serializer\Annotation\MaxDepth;
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
  */
-abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
+abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, HasTasksInterface
 {
     use ToArray;
+    use HasTasks;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true})
@@ -75,20 +77,6 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\Task\Task")
-     * @ORM\JoinTable(
-     *      name="assigned_tasks",
-     *      joinColumns={@ORM\JoinColumn(name="assignee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id", unique=true)}
-     * )
-     *
-     * @var ArrayCollection
-     * @Exclude
-     * @ReadOnly
-     */
-    protected $tasks;
-
-    /**
      * @ORM\Column(type = "string")
      * @var string
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
@@ -119,48 +107,6 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate
         $this->powerOfAttorneys = new ArrayCollection();
         $this->tasks            = new ArrayCollection();
         $this->teams            = new ArrayCollection();
-    }
-
-    /**
-     * @param TaskEntity $task
-     *
-     * @return AssignableComposite
-     */
-    public function addTask( TaskEntity $task )
-    {
-        if (null === $this->tasks) {
-            $this->tasks = new ArrayCollection();
-        }
-
-        $this->tasks->add( $task );
-
-        return $this;
-    }
-
-    /**
-     * @param ArrayCollection $tasks
-     *
-     * @return AssignableComposite
-     */
-    public function setTasks( ArrayCollection $tasks )
-    {
-        foreach ($tasks->toArray() as $task) {
-            $this->addTask( $task );
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getTasks()
-    {
-        if (null === $this->tasks) {
-            $this->tasks = new ArrayCollection();
-        }
-
-        return $this->tasks;
     }
 
     /**

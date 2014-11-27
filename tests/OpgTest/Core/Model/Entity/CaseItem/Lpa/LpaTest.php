@@ -7,7 +7,7 @@ use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;

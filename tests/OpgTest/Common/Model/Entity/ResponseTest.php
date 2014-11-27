@@ -1,8 +1,6 @@
 <?php
 namespace OpgTest\Common\Model\Entity;
 
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
-
 use Opg\Common\Model\Entity\Response;
 
 /**

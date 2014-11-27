@@ -4,8 +4,7 @@ namespace Opg\Core\Model\Entity\Assignable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
-use Opg\Core\Model\Entity\CaseItem\Task\Task as TaskEntity;
-use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
 use Opg\Core\Model\Entity\Deputyship\Deputyship as DeputyshipEntity;
 
 /**
@@ -37,25 +36,6 @@ interface IsAssignee
      * @return IsAssignee
      */
     public function setName( $name );
-
-    /**
-     * @param TaskEntity $task
-     *
-     * @return IsAssignee
-     */
-    public function addTask( TaskEntity $task );
-
-    /**
-     * @param ArrayCollection $tasks
-     *
-     * @return IsAssignee
-     */
-    public function setTasks( ArrayCollection $tasks );
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getTasks();
 
     /**
      * @param CaseEntity $case

@@ -12,7 +12,7 @@ use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Epa\Epa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\Donor;

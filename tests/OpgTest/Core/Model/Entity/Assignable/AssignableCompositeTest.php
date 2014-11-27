@@ -7,7 +7,7 @@ use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Team;
 use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Task\Task;
 
 
 class AssignableCompositeStub extends AssignableComposite

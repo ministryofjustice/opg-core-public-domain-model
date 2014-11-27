@@ -8,9 +8,11 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasRagRating;
+use Opg\Common\Model\Entity\HasTasksInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
+use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -19,7 +21,6 @@ use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\CaseActor\Person;
@@ -39,7 +40,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable, HasDateTimeAccessor
+    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable, HasDateTimeAccessor, HasTasksInterface
 {
     use ToArray;
     use HasNotes;
@@ -48,6 +49,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use Assignee;
     use HasDocuments;
     use DateTimeAccessor;
+    use HasTasks;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -146,16 +148,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $status;
-
-    /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="filterTasks")
-     */
-    protected $tasks;
 
     // Fields below are NOT persisted
     /**
@@ -299,42 +291,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return ArrayCollection
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param  Task $task
-     *
-     * @return $this
-     */
-    public function addTask(Task $task)
-    {
-        if (is_null($this->tasks)) {
-            $this->tasks = new ArrayCollection();
-        }
-        $this->tasks->add($task);
-    }
-
-    /**
-     * @param  ArrayCollection $tasks
-     *
-     * @return CaseItem
-     */
-    public function setTasks(ArrayCollection $tasks)
-    {
-        foreach ($tasks as $task) {
-            $this->addTask($task);
-        }
 
         return $this;
     }

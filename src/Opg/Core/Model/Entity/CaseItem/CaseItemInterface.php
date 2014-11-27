@@ -1,9 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem;
 
-use Opg\Core\Model\Entity\Note\Note;
-use Opg\Core\Model\Entity\Task\Task;
-
 /**
  * Interface CaseItemInterface
  * @package Opg\Core\Model\Entity\CaseItem
@@ -49,29 +46,5 @@ interface CaseItemInterface
      * @param string $status
      */
     public function setStatus($status);
-
-    /**
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getTasks();
-
-    /**
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getNotes();
-
-    /**
-     *
-     * @param Task $task
-     */
-    public function addTask(Task $task);
-
-    /**
-     *
-     * @param Note $note
-     */
-    public function addNote(Note $note);
 
 }
