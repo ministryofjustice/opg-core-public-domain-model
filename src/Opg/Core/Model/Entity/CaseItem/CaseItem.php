@@ -157,16 +157,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      */
     protected $tasks;
 
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Serializer\Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $notes;
-
-
     // Fields below are NOT persisted
     /**
      * @var ArrayCollection

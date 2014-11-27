@@ -110,19 +110,6 @@ abstract class Person implements HasUidInterface, HasNotesInterface, EntityInter
     protected $deputyships;
 
     /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
-     * @ORM\JoinTable(name="person_notes",
-     *     joinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Groups({"api-person-get"})
-     */
-    protected $notes;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")

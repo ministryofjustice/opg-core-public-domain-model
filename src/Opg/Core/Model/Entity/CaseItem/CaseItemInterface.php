@@ -1,8 +1,8 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem;
 
-use Opg\Core\Model\Entity\CaseItem\Note\Note;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\Note\Note;
+use Opg\Core\Model\Entity\Task\Task;
 
 /**
  * Interface CaseItemInterface

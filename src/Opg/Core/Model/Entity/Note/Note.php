@@ -1,7 +1,8 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Note;
+namespace Opg\Core\Model\Entity\Note;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\Traits\Time;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseActor\Person;
@@ -24,7 +25,7 @@ use JMS\Serializer\Annotation\Accessor;
  */
 class Note implements EntityInterface, \IteratorAggregate
 {
-    use \Opg\Common\Model\Entity\Traits\Time;
+    use Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use \Opg\Common\Model\Entity\Traits\IteratorAggregate;
     use ToArray;
