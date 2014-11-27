@@ -91,9 +91,9 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
     {
         $caseItemMock = $this->getMockedClass();
 
-        $caseItemMock->setDueDateString('');
+        $caseItemMock->setDueDate();
         $this->assertEmpty($caseItemMock->getDueDate());
-        $this->assertEmpty($caseItemMock->getDueDateString());
+        $this->assertEmpty($caseItemMock->getDateAsString('dueDate'));
 
         $expected     = new \DateTime('2014-09-25');
 
@@ -102,7 +102,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $expectedString = '2014-09-25';
         try {
-            $caseItemMock->setDueDateString($expectedString);
+            $caseItemMock->setDateFromString($expectedString, 'dueDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
@@ -116,8 +116,8 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $caseItemMock = $this->getMockedClass();
 
-        $caseItemMock->setDueDateString($expected);
-        $this->assertEquals($expected, $caseItemMock->getDueDateString());
+        $caseItemMock->setDateFromString($expected, 'dueDate');
+        $this->assertEquals($expected, $caseItemMock->getDateAsString('dueDate'));
     }
 
     public function testSetGetAssignee()
@@ -347,7 +347,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItemMock = $this->getMockedClass();
 
         try {
-            $caseItemMock->setRegistrationDateString('');
+            $caseItemMock->setDateFromString('', 'registrationDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
@@ -355,7 +355,7 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEmpty($caseItemMock->getRegistrationDate());
-        $this->assertEmpty($caseItemMock->getRegistrationDateString());
+        $this->assertEmpty($caseItemMock->getDateAsString('registrationDate'));
 
         $expected     = new \DateTime('2014-09-25');
 
@@ -365,18 +365,18 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $expectedString = '2014-09-25';
 
         try {
-            $caseItemMock->setRegistrationDateString($expectedString);
+            $caseItemMock->setDateFromString($expectedString, 'registrationDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
             $this->assertEquals("'2014-09-25' was not in the expected format d/m/Y H:i:s", $e->getMessage());
         }
         $expected     = new \DateTime($expectedString);
-        $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getRegistrationDateString());
+        $this->assertEquals($expected->format('d/m/Y'), $caseItemMock->getDateAsString('registrationDate'));
 
         $expectedString = date(OPGDateFormat::getDateFormat());
-        $caseItemMock->setRegistrationDateString($expectedString);
-        $this->assertEquals($expectedString, $caseItemMock->getRegistrationDateString());
+        $caseItemMock->setDateFromString($expectedString, 'registrationDate');
+        $this->assertEquals($expectedString, $caseItemMock->getDateAsString('registrationDate'));
 
     }
 
@@ -410,8 +410,9 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $caseItemMock = $this->getMockedClass();
 
-        $caseItemMock->setClosedDateString($expected);
-        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
+        $caseItemMock->setDateFromString($expected, 'closedDate');
+        $this->assertEquals($expected, $caseItemMock->getDateAsString('closedDate'));
+        $this->assertEquals($caseItemMock->getDateAsString('closedDate'), $caseItemMock->getClosedDateString());
     }
 
     public function testGetSetClosedDateStringNull()
@@ -420,18 +421,18 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $caseItemMock = $this->getMockedClass();
 
-        $caseItemMock->setClosedDateString($expected);
-        $this->assertEquals($expected, $caseItemMock->getClosedDateString());
-        $this->assertEmpty($caseItemMock->getClosedDateString());
+        $caseItemMock->setDateFromString($expected, 'closedDate');
+        $this->assertEquals($expected, $caseItemMock->getDateAsString('closedDate'));
+        $this->assertEmpty($caseItemMock->getDateAsString('closedDate'));
     }
 
     public function testGetSetClosedDateStringInvalidDate()
     {
         $caseItemMock = $this->getMockedClass();
 
-        $this->assertEmpty($caseItemMock->getClosedDateString());
+        $this->assertEmpty($caseItemMock->getDateAsString('closedDate'));
         try {
-            $caseItemMock->setClosedDateString('');
+            $caseItemMock->setDateFromString('','closedDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
@@ -459,12 +460,12 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $expected = (new \DateTime())->format(OPGDateFormat::getDateFormat()) . ' 00:00:01';
         $mock = $this->getMockedClass();
 
-        $this->assertEmpty($mock->getRejectedDateString());
-        $this->assertTrue($mock->setRejectedDateString('') instanceof CaseItem);
-        $this->assertEmpty($mock->getRejectedDateString());
+        $this->assertEmpty($mock->getDateAsString('rejectedDate'));
+        $this->assertTrue($mock->setDateFromString('','rejectedDate') instanceof CaseItem);
+        $this->assertEmpty($mock->getDateAsString('rejectedDate'));
 
-        $this->assertTrue($mock->setRejectedDateString($expected) instanceof CaseItem);
-        $this->assertEquals($expected, $mock->getRejectedDateString());
+        $this->assertTrue($mock->setDateFromString($expected,'rejectedDate') instanceof CaseItem);
+        $this->assertEquals($expected, $mock->getDateTimeAsString('rejectedDate'));
     }
 
     public function testGetSetPayments()

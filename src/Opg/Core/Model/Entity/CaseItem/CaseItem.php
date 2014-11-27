@@ -9,11 +9,13 @@ use Opg\Common\Model\Entity\HasDocumentsInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
@@ -25,6 +27,7 @@ use Opg\Core\Model\Entity\Queue as ScheduledJob;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -36,7 +39,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @package Opg\Core\Model\Entity\CaseItem
  */
 abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable
+    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable, HasDateTimeAccessor
 {
     use ToArray;
     use HasNotes;
@@ -44,6 +47,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     use InputFilter;
     use Assignee;
     use HasDocuments;
+    use DateTimeAccessor;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -113,7 +117,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="getDueDateString", setter="setDueDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="dueDate")
      */
     protected $dueDate;
 
@@ -122,7 +126,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="getRegistrationDateString", setter="setRegistrationDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="registrationDate")
      */
     protected $registrationDate;
 
@@ -131,7 +135,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="getClosedDateString", setter="setClosedDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="closedDate")
      */
     protected $closedDate;
 
@@ -201,7 +205,7 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @var \DateTime
      * @Type("string")
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="getRejectedDateString", setter="setRejectedDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="rejectedDate")
      */
     protected $rejectedDate;
 
@@ -241,18 +245,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @return string
-     */
-    public function getDueDateString()
-    {
-        if (!empty($this->dueDate)) {
-            return $this->dueDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
-    }
-
-    /**
      * @param \DateTime $dueDate
      *
      * @return CaseItem
@@ -260,24 +252,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setDueDate(\DateTime $dueDate = null)
     {
         $this->dueDate = $dueDate;
-
-        return $this;
-    }
-
-    /**
-     * @param $dueDate
-     *
-     * @return $this
-     */
-    public function setDueDateString($dueDate)
-    {
-        if (!empty($dueDate)) {
-            $dueDate = OPGDateFormat::createDateTime($dueDate);
-
-            if ($dueDate) {
-                $this->setDueDate($dueDate);
-            }
-        }
 
         return $this;
     }
@@ -566,41 +540,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $closedDate
-     *
-     * @return Lpa
-     */
-    public function setClosedDateString($closedDate)
-    {
-        if (!empty($closedDate)) {
-            $closedDate = OPGDateFormat::createDateTime($closedDate);
-
-            if ($closedDate) {
-                $this->setClosedDate($closedDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getClosedDate()
     {
         return $this->closedDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClosedDateString()
-    {
-        if (!empty($this->closedDate)) {
-            return $this->closedDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -616,42 +560,11 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     * @param string $registrationDate
-     *
-     * @return CaseItem
-     */
-    public function setRegistrationDateString($registrationDate = null)
-    {
-        if (!empty($registrationDate)) {
-
-            $registrationDate = OPGDateFormat::createDateTime($registrationDate);
-
-            if ($registrationDate) {
-                $this->setRegistrationDate($registrationDate);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getRegistrationDate()
     {
         return $this->registrationDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRegistrationDateString()
-    {
-        if (!empty($this->registrationDate)) {
-            return $this->registrationDate->format(OPGDateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**
@@ -810,31 +723,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     public function setRejectedDate(\DateTime $rejectedDate = null)
     {
         $this->rejectedDate = $rejectedDate;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRejectedDateString()
-    {
-        if (null !== $this->rejectedDate) {
-            return $this->rejectedDate->format(OPGDateFormat::getDateTimeFormat());
-        }
-
-        return '';
-    }
-
-    /**
-     * @param $rejectedDate
-     * @return $this|CaseItem
-     */
-    public function setRejectedDateString($rejectedDate)
-    {
-        if (strlen(trim($rejectedDate))) {
-            return $this->setRejectedDate(OPGDateFormat::createDateTime($rejectedDate));
-        }
 
         return $this;
     }

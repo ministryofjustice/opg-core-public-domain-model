@@ -91,20 +91,4 @@ class OutgoingDocument extends Document
         return $this->systemType;
     }
 
-    /**
-     * @param string $createdDate
-     *
-     * @return OutgoingDocument
-     */
-    public function setCreatedDateString($createdDate)
-    {
-        if (!empty($createdDate)) {
-            $createdDate = OPGDateFormat::createDateTime($createdDate);
-
-            return $this->setCreatedDate($createdDate);
-        }
-
-        return $this->setCreatedDate(new \DateTime());
-    }
-
 }

@@ -8,15 +8,20 @@ use Opg\Core\Model\Entity\Person\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
  * Class AttorneyAbstract
  * @package Opg\Core\Model\Entity\CaseActor
  */
-abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface
+abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface, HasDateTimeAccessor
 {
     use Company;
     use HasSystemStatus;
+    use DateTimeAccessor;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -33,6 +38,15 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
      * @Groups("api-person-get")
      */
     protected $dxExchange;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="lpaPartCSignatureDate")
+     * @Groups("api-person-get")
+     */
+    protected $lpaPartCSignatureDate;
 
     /**
      * @param string $dxExchange
@@ -72,5 +86,25 @@ abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInt
     public function getDxNumber()
     {
         return $this->dxNumber;
+    }
+
+    /**
+     * @param \DateTime $lpaPartCSignatureDate
+     *
+     * @return Attorney
+     */
+    public function setLpaPartCSignatureDate(\DateTime $lpaPartCSignatureDate = null)
+    {
+        $this->lpaPartCSignatureDate = $lpaPartCSignatureDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLpaPartCSignatureDate()
+    {
+        return $this->lpaPartCSignatureDate;
     }
 }

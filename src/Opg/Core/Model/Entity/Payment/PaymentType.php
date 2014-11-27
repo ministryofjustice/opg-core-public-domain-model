@@ -6,10 +6,13 @@ namespace Opg\Core\Model\Entity\Payment;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -32,10 +35,11 @@ use Opg\Core\Validation\InputFilter\PaymentFilter;
  *     "payment_cash"   = "Opg\Core\Model\Entity\Payment\CashPayment",
  * })
  */
-abstract class PaymentType implements EntityInterface, \IteratorAggregate
+abstract class PaymentType implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor
 {
     use ToArray;
     use InputFilter;
+    use DateTimeAccessor;
 
     const PAYMENT_TYPE_CASH     = 'Cash';
     const PAYMENT_TYPE_CARD     = 'Card';
@@ -63,7 +67,7 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Accessor(getter="getPaymentDateString", setter="setPaymentDateString")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="paymentDate")
      */
     protected $paymentDate;
 
@@ -187,36 +191,11 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @param string $paymentDate
-     * @return PaymentType
-     */
-    public function setPaymentDateString($paymentDate)
-    {
-        if (!empty(trim($paymentDate))) {
-            $this->setPaymentDate(DateFormat::createDateTime($paymentDate));
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getPaymentDate()
     {
         return $this->paymentDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPaymentDateString()
-    {
-        if ($this->paymentDate instanceof \DateTime) {
-            return $this->paymentDate->format(DateFormat::getDateFormat());
-        }
-
-        return '';
     }
 
     /**

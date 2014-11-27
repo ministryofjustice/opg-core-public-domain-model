@@ -411,20 +411,20 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetEpaDonorSignatureDateEmptyString()
     {
-        $this->assertEmpty($this->epa->getEpaDonorSignatureDateString());
-        $this->epa->setEpaDonorSignatureDateString('');
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorSignatureDate'));
+        $this->epa->setDateFromString('','epaSignatureDate');
 
-        $this->assertEmpty($this->epa->getEpaDonorSignatureDateString());
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorSignatureDate'));
     }
 
-    public function testGetSetEpaDonorSignatureDateString()
+    public function testGetSetEpaDonorSignatureDateFromString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
 
-        $this->assertEmpty($this->epa->getEpaDonorSignatureDateString());
-        $this->epa->setEpaDonorSignatureDateString($expected);
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorSignatureDate'));
+        $this->epa->setDateFromString($expected, 'epaDonorSignatureDate');
 
-        $this->assertEquals($expected, $this->epa->getEpaDonorSignatureDateString());
+        $this->assertEquals($expected, $this->epa->getDateAsString('epaDonorSignatureDate'));
     }
 
     public function testGetSetOtherEpa()
@@ -444,7 +444,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
     public function testGetRagRatingRed()
     {
         $task = new Task();
-        $task->setDueDateString(date('d/m/Y', strtotime('Last Week')));
+        $task->setDateFromString(date('d/m/Y', strtotime('Last Week')),'dueDate');
 
         $this->epa->addTask($task);
         $this->epa->addTask($task);
@@ -456,7 +456,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
     public function testGetRagRatingAmber()
     {
         $task = new Task();
-        $task->setDueDateString(date('d/m/Y'));
+        $task->setDateFromString(date('d/m/Y'),'dueDate');
 
         $this->epa->addTask($task);
         $this->epa->addTask($task);
@@ -468,7 +468,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
     public function testGetRagRatingGreen()
     {
         $task = new Task();
-        $task->setDueDateString(date('d/m/Y', strtotime('Next Week')));
+        $task->setDateFromString(date('d/m/Y', strtotime('Next Week')),'dueDate');
 
         $this->epa->addTask($task);
         $this->epa->addTask($task);
@@ -480,19 +480,18 @@ class EpaTest extends \PHPUnit_Framework_TestCase
     public function testFilterTasks()
     {
         $task = new Task();
-        $task->setDueDateString(date('d/m/Y', strtotime('next week')));
+        $task->setDateTimeFromString(date('d/m/Y 00:00:00', strtotime('next week')),'activeDate');
         $this->epa->addTask($task);
 
         $task2 = new Task();
-        $task2->setActiveDateString(date('d/m/Y', strtotime('tomorrow')));
+        $task2->setDateTimeFromString(date('d/m/Y 00:00:00', strtotime('tomorrow')),'activeDate');
         $this->epa->addTask($task2);
 
         $task3 = new Task();
-        $task3->setActiveDateString(date('d/m/Y', strtotime('yesterday')));
+        $task3->setDateTimeFromString(date('d/m/Y 00:00:00', strtotime('yesterday')),'activeDate');
         $this->epa->addTask($task3);
 
-
-        $this->assertEquals(2, count($this->epa->filterTasks()));
+        $this->assertEquals(1, count($this->epa->filterTasks()));
     }
 
     public function testUIDValidatorPassesInvalidChecksum()
@@ -603,20 +602,20 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetEpaDonorNoticeGivenDateEmptyString()
     {
-        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
-        $this->epa->setEpaDonorNoticeGivenDateString('');
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorNoticeGivenDate'));
+        $this->epa->setdateFromString('', 'epaDonorNoticeGivenDate');
 
-        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorNoticeGivenDate'));
     }
 
-    public function testGetSetEpaDonorNoticeGivenDateString()
+    public function testGetSetEpaDonorNoticeGivenDateFromString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
 
-        $this->assertEmpty($this->epa->getEpaDonorNoticeGivenDateString());
-        $this->epa->setEpaDonorNoticeGivenDateString($expected);
+        $this->assertEmpty($this->epa->getDateAsString('epaDonorNoticeGivenDate'));
+        $this->epa->setdateFromString($expected, 'epaDonorNoticeGivenDate');
 
-        $this->assertEquals($expected, $this->epa->getEpaDonorNoticeGivenDateString());
+        $this->assertEquals($expected, $this->epa->getDateAsString('epaDonorNoticeGivenDate'));
     }
 }
 

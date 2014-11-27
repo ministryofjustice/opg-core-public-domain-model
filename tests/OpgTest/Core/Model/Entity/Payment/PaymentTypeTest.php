@@ -128,7 +128,7 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
         $expectedDateTimeString = $expectedDateTime->format(DateFormat::getDateFormat());
 
         $this->assertNull($this->paymentType->getPaymentDate());
-        $this->assertEmpty($this->paymentType->getPaymentDateString());
+        $this->assertEmpty($this->paymentType->getDateAsString('paymentDate'));
 
         $this->assertEquals(
             $expectedDateTime,
@@ -137,10 +137,10 @@ class PaymentTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expectedDateTimeString,
-            $this->paymentType->setPaymentDateString($expectedDateTimeString)->getPaymentDateString()
+            $this->paymentType->setDateFromString($expectedDateTimeString,'paymentDate')->getDateAsString('paymentDate')
         );
 
-        $this->paymentType->setPaymentDateString('Last thursday around 3pm');
+        $this->paymentType->setDateFromString('Last thursday around 3pm', 'paymentDate');
     }
 
     public function testGetSetFeeAmount()

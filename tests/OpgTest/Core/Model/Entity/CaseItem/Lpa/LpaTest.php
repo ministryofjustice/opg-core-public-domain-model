@@ -530,10 +530,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetSetDonorDeclarationDateEmptyString()
     {
-        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
-        $this->lpa->setDonorDeclarationSignatureDateString('');
+        $this->assertEmpty($this->lpa->getLpaDonorDeclarationSignatureDateString());
+        $this->lpa->setLpaDonorDeclarationSignatureDateString('');
 
-        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
+        $this->assertEmpty($this->lpa->getLpaDonorDeclarationSignatureDateString());
 
     }
 
@@ -541,10 +541,10 @@ class LpaTest extends \PHPUnit_Framework_TestCase
     {
         $expected = date(OPGDateFormat::getDateFormat());
 
-        $this->assertEmpty($this->lpa->getDonorDeclarationSignatureDateString());
-        $this->lpa->setDonorDeclarationSignatureDateString($expected);
+        $this->assertEmpty($this->lpa->getLpaDonorDeclarationSignatureDateString());
+        $this->lpa->setLpaDonorDeclarationSignatureDateString($expected);
 
-        $this->assertEquals($expected, $this->lpa->getDonorDeclarationSignatureDateString());
+        $this->assertEquals($expected, $this->lpa->getLpaDonorDeclarationSignatureDateString());
     }
 
     public function testGetSetDonorSignature()
@@ -653,10 +653,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $returnedDate = $this->lpa->getLpaCreatedDate();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateTimeFormat()),
-            $returnedDate->format(OPGDateFormat::getDateTimeFormat())
-        );
+        $this->assertNull($returnedDate);
     }
 
     public function testGetSetLpaReceiptDate()
@@ -692,10 +689,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $returnedDate = $this->lpa->getLpaReceiptDate();
 
-        $this->assertEquals(
-            $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $returnedDate->format(OPGDateFormat::getDateFormat())
-        );
+        $this->assertEmpty($returnedDate);
     }
 
     public function testGetSetLpaReceiptDateString()
@@ -705,7 +699,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->lpa->getLpaReceiptDateString());
         $this->lpa->setLpaReceiptDateString($expectedDate);
 
-        $this->assertEquals($expectedDate, $this->lpa->getLpaReceiptDateString());
+        $this->assertEquals($expectedDate, $this->lpa->getDateTimeAsString('lpaReceiptDate'));
     }
 
     public function testGetSetLifeSustainingTreatment()

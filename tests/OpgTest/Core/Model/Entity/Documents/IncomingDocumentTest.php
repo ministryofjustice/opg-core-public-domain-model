@@ -119,7 +119,7 @@ class IncomingDocumentTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->document->setCreatedDate() instanceof Document);
         $this->assertNotEmpty($this->document->getCreatedDate());
-        $this->assertNotEmpty($this->document->getCreatedDateString());
+        $this->assertNotEmpty($this->document->getDateTimeAsString('createdDate'));
     }
 
     public function testGetCreatedDate()
@@ -130,7 +130,7 @@ class IncomingDocumentTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->document->setCreatedDate($expectedDate) instanceof Document);
         $this->assertEquals($expectedDate, $this->document->getCreatedDate());
-        $this->assertEquals($expected, $this->document->getCreatedDateString());
+        $this->assertEquals($expected, $this->document->getDateTimeAsString('createdDate'));
     }
 
     public function testGetSetSourceDocumentType()
