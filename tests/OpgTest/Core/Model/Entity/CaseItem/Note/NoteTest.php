@@ -4,7 +4,7 @@ namespace OpgTest\Core\Model\CaseItem\Note;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseItem\Note\Note;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 
 /**
  * Note test case.

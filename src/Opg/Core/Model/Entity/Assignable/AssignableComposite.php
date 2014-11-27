@@ -24,7 +24,7 @@ use JMS\Serializer\Annotation\MaxDepth;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "assignee_user" = "Opg\Core\Model\Entity\User\User",
+ *     "assignee_user" = "Opg\Core\Model\Entity\Assignable\User",
  *     "assignee_team" = "Opg\Core\Model\Entity\Assignable\Team",
  *     "assignee_null" = "Opg\Core\Model\Entity\Assignable\NullEntity"
  * })

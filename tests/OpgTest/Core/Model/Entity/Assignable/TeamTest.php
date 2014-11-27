@@ -5,7 +5,7 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\Team;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use Zend\InputFilter\InputFilter;
 
 class TeamStub extends Team

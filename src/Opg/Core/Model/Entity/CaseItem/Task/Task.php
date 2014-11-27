@@ -8,7 +8,6 @@ use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\Assignable\NullEntity;
-use Opg\Core\Model\Entity\User\User;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;

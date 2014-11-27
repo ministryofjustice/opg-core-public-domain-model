@@ -8,7 +8,7 @@ use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseItem\Page\Page;
 use Opg\Core\Model\Entity\Document\Document;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use PHPUnit_Framework_TestCase;
 use Opg\Core\Model\Entity\Document\IncomingDocument;
 

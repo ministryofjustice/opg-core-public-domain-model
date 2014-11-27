@@ -5,7 +5,7 @@ use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\Person\Person;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use Doctrine\ORM\Mapping as ORM;
 use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
@@ -54,7 +54,7 @@ class Note implements EntityInterface, \IteratorAggregate
     protected $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\User")
      * @var User $user
      */
     protected $createdByUser;

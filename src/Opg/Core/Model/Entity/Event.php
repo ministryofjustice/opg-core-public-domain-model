@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
@@ -48,7 +48,7 @@ class Event implements EntityInterface
     protected $sourceEntityClass;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\User", fetch="EAGER")
      * @var User $user
      */
     protected $user;
@@ -278,7 +278,7 @@ class Event implements EntityInterface
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getUser()
     {

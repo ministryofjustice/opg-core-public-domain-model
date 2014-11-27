@@ -9,7 +9,7 @@ use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\User\User as UserEntity;
+use Opg\Core\Model\Entity\Assignable\User as UserEntity;
 use Opg\Core\Model\Entity\Person\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
@@ -76,7 +76,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $dateClosed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
      * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
      * @Groups({"api-warning-list"})
@@ -84,7 +84,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $addedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
      * @Groups({"api-warning-list"})
@@ -106,7 +106,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\User\User $addedBy
+     * @param \Opg\Core\Model\Entity\Assignable\User $addedBy
      *
      * @return Warning
      */
@@ -118,7 +118,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getAddedBy()
     {
@@ -126,7 +126,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\User\User $closedBy
+     * @param \Opg\Core\Model\Entity\Assignable\User $closedBy
      *
      * @return Warning
      */
@@ -138,7 +138,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getClosedBy()
     {

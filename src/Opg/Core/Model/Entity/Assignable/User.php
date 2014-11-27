@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\User;
+namespace Opg\Core\Model\Entity\Assignable;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
@@ -14,8 +14,6 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
-use Opg\Core\Model\Entity\Assignable\AssignableComposite;
-use Opg\Core\Model\Entity\Assignable\IsAssignee;
 
 /**
  * @ORM\Entity
