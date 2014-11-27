@@ -2,6 +2,7 @@
 namespace Opg\Core\Model\Entity\CaseActor\Decorators;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
@@ -15,7 +16,7 @@ trait NoticeGivenDate
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString". propertyName="noticeGivenDate")
+     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="noticeGivenDate")
      * @Type("string")
      * @Groups({"api-task-list","api-person-get"})
      */

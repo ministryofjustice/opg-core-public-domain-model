@@ -2,7 +2,9 @@
 
 namespace Opg\Core\Model\Entity\CaseActor;
 
+use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
@@ -24,43 +26,12 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor, HasDateTimeAccessor
+class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
 {
     use ToArray;
     use RelationshipToDonor;
     use DateTimeAccessor;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="notifiedDate")
-     * @Groups("api-person-get")
-     */
-    protected $notifiedDate;
-
-    /**
-     * @param \DateTime $notifiedDate
-     *
-     * @return Lpa
-     */
-    public function setNotifiedDate(\DateTime $notifiedDate = null)
-    {
-        if (is_null($notifiedDate)) {
-            $notifiedDate = new \DateTime();
-        }
-        $this->notifiedDate = $notifiedDate;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime $notifiedDate
-     */
-    public function getNotifiedDate()
-    {
-        return $this->notifiedDate;
-    }
+    use NoticeGivenDate;
 
     /**
      * @return InputFilterInterface

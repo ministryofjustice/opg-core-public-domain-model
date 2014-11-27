@@ -17,44 +17,44 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
         $this->notifiedPerson = new NotifiedPerson();
     }
 
-    public function testSetGetNotifiedDate()
+    public function testGetSetNoticeGivenDate()
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        $this->assertEmpty($this->notifiedPerson->getNoticeGivenDate());
+        $this->assertEmpty($this->notifiedPerson->getDateAsString('noticeGivenDate'));
 
-        $this->notifiedPerson->setNotifiedDate($expectedDate);
-        $this->assertEquals($expectedDate, $this->notifiedPerson->getNotifiedDate());
+        $this->notifiedPerson->setNoticeGivenDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->notifiedPerson->getNoticeGivenDate());
     }
 
     public function testSetGetNotifiedDateNulls()
     {
         $expectedDate = new \DateTime();
 
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDate());
-        $this->notifiedPerson->setNotifiedDate();
+        $this->assertEmpty($this->notifiedPerson->getNoticeGivenDate());
+        $this->notifiedPerson->setNoticeGivenDate();
 
         $this->assertEquals(
             $expectedDate->format(OPGDateFormat::getDateFormat()),
-            $this->notifiedPerson->getNotifiedDate()->format(OPGDateFormat::getDateFormat())
+            $this->notifiedPerson->getNoticeGivenDate()->format(OPGDateFormat::getDateFormat())
         );
     }
 
     //remember date format for this one
     public function testSetGetNotifiedDateEmptyString()
     {
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
-        $this->notifiedPerson->setNotifiedDateString('');
+        $this->assertEmpty($this->notifiedPerson->getDateAsString('noticeGivenDate'));
+        $this->notifiedPerson->setDateFromString('', 'noticeGivenDate');
 
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        $this->assertEmpty($this->notifiedPerson->getDateTimeAsString('noticeGivenDate'));
     }
 
     public function testSetGetNotifiedDateInvalidString()
     {
-        $this->assertEmpty($this->notifiedPerson->getNotifiedDateString());
+        $this->assertEmpty($this->notifiedPerson->getDateTimeAsString('noticeGivenDate'));
         try {
-            $this->notifiedPerson->setNotifiedDateString('asddasdsdas');
+            $this->notifiedPerson->setDateTimeFromString('asddasdsdas', 'noticeGivenDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);
@@ -65,8 +65,8 @@ class NotifiedPersonTest extends \PHPUnit_Framework_TestCase
     public function testSetGetNotifiedDateString()
     {
         $expected = date(OPGDateFormat::getDateFormat());
-        $this->notifiedPerson->setNotifiedDateString($expected);
-        $this->assertEquals($expected, $this->notifiedPerson->getNotifiedDateString());
+        $this->notifiedPerson->setDateFromString($expected,'noticeGivenDate');
+        $this->assertEquals($expected, $this->notifiedPerson->getDateAsString('noticeGivenDate'));
 
     }
 

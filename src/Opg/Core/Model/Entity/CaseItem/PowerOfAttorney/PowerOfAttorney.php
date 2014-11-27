@@ -1408,7 +1408,7 @@ abstract class PowerOfAttorney extends CaseItem
                 return false;
             case self::PAYMENT_OPTION_TRUE:
                 return true;
-            default :
+            default:
                 return null;
         }
     }

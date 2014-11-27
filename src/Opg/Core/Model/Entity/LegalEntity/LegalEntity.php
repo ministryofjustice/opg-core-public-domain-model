@@ -17,7 +17,9 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Opg\Common\Model\Entity\EntityInterface;
+
 use Doctrine\ORM\Mapping as ORM;
+
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Exclude;
@@ -27,8 +29,8 @@ use JMS\Serializer\Annotation\Exclude;
  * @package Opg\Core\Model\LegalEntity
  */
 abstract class LegalEntity
-    implements HasUidInterface, EntityInterface, HasDateTimeAccessor, HasDocumentsInterface, HasNotesInterface,
-    \IteratorAggregate, HasTasksInterface, HasIdInterface
+    implements HasIdInterface, HasUidInterface, EntityInterface, HasDateTimeAccessor, HasDocumentsInterface, HasNotesInterface,
+    \IteratorAggregate, HasTasksInterface
 {
     use ToArray;
     use UniqueIdentifier;
