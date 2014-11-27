@@ -129,7 +129,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $collection = $collection->toArray();
         $this->assertEquals(count($collection), 1);
 
-        $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Deputyship\Deputyship');
+        $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
         $this->person->addCase($case);
         $collection2 = $this->person->getDeputyships();
 
@@ -153,7 +153,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($collection, $collection3);
 
         for($i=0;$i<5; $i++) {
-            $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\Deputyship\Deputyship');
+            $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
             $collection2->add($case);
         }
 

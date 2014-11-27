@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Core\Model\Entity\Document\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Task\Task;
 use Opg\Core\Model\Entity\CaseActor\Attorney;

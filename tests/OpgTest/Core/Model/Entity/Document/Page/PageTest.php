@@ -1,14 +1,14 @@
 <?php
-namespace OpgTest\Core\Model\Entity\CaseItem\Page;
+namespace OpgTest\Core\Model\Entity\Document\Page;
 
 use Opg\Core\Model\Entity\Document\IncomingDocument;
 use PHPUnit_Framework_TestCase;
-use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Core\Model\Entity\Document\Page\Page;
 
 class PageTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Opg\Core\Model\Entity\CaseItem\Page\Page
+     * @var Opg\Core\Model\Entity\Document\Page\Page
      */
     private $page;
 
@@ -28,7 +28,7 @@ class PageTest extends PHPUnit_Framework_TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Page\Page', $this->page);
+        $this->assertInstanceOf('Opg\Core\Model\Entity\Document\Page\Page', $this->page);
     }
 
     public function testGetIterator()

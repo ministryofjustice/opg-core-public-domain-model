@@ -1,5 +1,5 @@
 <?php
-namespace OpgTest\Core\Model\Entity\Documents;
+namespace OpgTest\Core\Model\Entity\Document;
 
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
