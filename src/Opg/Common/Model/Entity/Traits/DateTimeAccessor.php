@@ -86,9 +86,9 @@ trait DateTimeAccessor
         if (property_exists(get_class($this), $propertyName) && empty($value)) {
             $this->{$propertyName} = new \DateTime();
             return $this;
-        } else {
-            return $this->setDateTimeFromString($value, $propertyName);
         }
+
+        return $this;
     }
     /**
      * @param $methodName
