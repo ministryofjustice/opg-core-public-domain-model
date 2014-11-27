@@ -10,16 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface PartyInterface
 {
     /**
-     * @return string $id
-     */
-    public function getId();
-
-    /**
-     * @param string $id
-     */
-    public function setId($id);
-
-    /**
      * @return ArrayCollection
      */
     public function getCases();

@@ -12,7 +12,9 @@ use JMS\Serializer\Annotation\ReadOnly;
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -35,27 +37,17 @@ use Opg\Core\Validation\InputFilter\PaymentFilter;
  *     "payment_cash"   = "Opg\Core\Model\Entity\Payment\CashPayment",
  * })
  */
-abstract class PaymentType implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor
+abstract class PaymentType implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor, HasIdInterface
 {
     use ToArray;
     use InputFilter;
     use DateTimeAccessor;
+    use HasId;
 
     const PAYMENT_TYPE_CASH     = 'Cash';
     const PAYMENT_TYPE_CARD     = 'Card';
     const PAYMENT_TYPE_ONLINE   = 'Online';
     const PAYMENT_TYPE_CHEQUE   = 'Cheque';
-
-    /**
-     * @ORM\Column(
-     *      type = "integer",
-     *      options = {"unsigned": true}
-     * )
-     * @ORM\GeneratedValue(strategy = "AUTO")
-     * @ORM\Id
-     * @var integer
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type="string")
@@ -139,25 +131,6 @@ abstract class PaymentType implements EntityInterface, \IteratorAggregate, HasDa
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
-    }
-
-    /**
-     * @param int $id
-     * @return PaymentType
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

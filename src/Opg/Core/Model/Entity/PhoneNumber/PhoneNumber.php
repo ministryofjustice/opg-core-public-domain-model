@@ -2,6 +2,8 @@
 namespace Opg\Core\Model\Entity\PhoneNumber;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -20,18 +22,12 @@ use JMS\Serializer\Annotation\Type;
  * Class PhoneNumber
  * @package Opg\Core\Model\Entity\PhoneNumber
  */
-class PhoneNumber implements EntityInterface, \IteratorAggregate
+class PhoneNumber implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     * @Groups({"api-person-get"})
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="phoneNumbers")
@@ -81,26 +77,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     public function getDefault()
     {
         return (bool)$this->default;
-    }
-
-    /**
-     * @param integer $id
-     *
-     * @return PhoneNumber
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

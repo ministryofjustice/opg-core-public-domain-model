@@ -67,16 +67,6 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
 
 
     /**
-     * @ORM\Column(type = "integer")
-     * @ORM\GeneratedValue(strategy = "AUTO")
-     * @ORM\Id
-     * @Type("integer")
-     * @var int autoincrementID
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     */
-    protected $id;
-
-    /**
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
      * @Type("integer")
@@ -324,26 +314,6 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
         $this->title = $title;
 
         return $this;
-    }
-
-    /**
-     * @param  int $id
-     *
-     * @return CaseItem
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

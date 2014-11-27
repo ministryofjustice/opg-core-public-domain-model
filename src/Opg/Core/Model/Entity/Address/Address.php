@@ -2,6 +2,8 @@
 namespace Opg\Core\Model\Entity\Address;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Person;
@@ -21,11 +23,12 @@ use JMS\Serializer\Annotation\Type;
  * Class Address
  * @package Opg\Core\Model\Entity\Address
  */
-class Address implements EntityInterface, \IteratorAggregate
+class Address implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
+    use HasId;
 
     // Flags
     const INCLUDE_PERSON = 1;
@@ -36,14 +39,6 @@ class Address implements EntityInterface, \IteratorAggregate
     const FIRSTNAME      = 0b010;
     const SURNAME        = 0b100;
     const DEFAULT_FORMAT = 0b101;
-
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     * @Groups({"api-person-get"})
-     */
-    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="addresses")
@@ -272,26 +267,6 @@ class Address implements EntityInterface, \IteratorAggregate
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Address
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

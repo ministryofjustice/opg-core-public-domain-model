@@ -3,6 +3,8 @@ namespace Opg\Core\Model\Entity\Document\Page;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -17,16 +19,11 @@ use Opg\Core\Model\Entity\Document\Document;
  * Class Page
  * @package Opg\Core\Model\Entity\Document\Page
  */
-class Page implements EntityInterface, \IteratorAggregate
+class Page implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var string
-     */
-    private $id;
+    use HasId;
 
     /**
      * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Document\IncomingDocument", inversedBy = "pages")
@@ -84,26 +81,6 @@ class Page implements EntityInterface, \IteratorAggregate
         }
 
         return $this->inputFilter;
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return Page
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

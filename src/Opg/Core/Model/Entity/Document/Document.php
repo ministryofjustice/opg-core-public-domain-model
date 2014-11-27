@@ -4,7 +4,9 @@ namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
@@ -33,11 +35,12 @@ use JMS\Serializer\Annotation\GenericAccessor;
  * Class Document
  * @package Opg\Core\Model\Entity\Document
  */
-abstract class Document implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor
+abstract class Document implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor, HasIdInterface
 {
     use ToArray;
     use InputFilter;
     use DateTimeAccessor;
+    use HasId;
 
     const DOCUMENT_INCOMING_CORRESPONDENCE = 0;
 
@@ -47,12 +50,6 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     const DIRECTION_OUTGOING = 'Outgoing';
 
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     */
-    protected $id;
 
     /**
      * @ORM\ManyToOne(
@@ -128,26 +125,6 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     public function getIterator()
     {
         return new \RecursiveArrayIterator($this->toArray());
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return BaseCorrespondence
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

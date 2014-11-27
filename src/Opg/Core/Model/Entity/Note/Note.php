@@ -2,6 +2,8 @@
 namespace Opg\Core\Model\Entity\Note;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\Time;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
@@ -23,18 +25,13 @@ use JMS\Serializer\Annotation\Accessor;
  *
  * @package Opg Core
  */
-class Note implements EntityInterface, \IteratorAggregate
+class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use \Opg\Common\Model\Entity\Traits\IteratorAggregate;
     use ToArray;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int $id
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}, nullable = true)
@@ -132,14 +129,6 @@ class Note implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return string $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @return User $createdByUser
      */
     public function getCreatedByUser()
@@ -153,18 +142,6 @@ class Note implements EntityInterface, \IteratorAggregate
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return Note
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
     }
 
     /**

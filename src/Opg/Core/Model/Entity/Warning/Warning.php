@@ -4,7 +4,9 @@ namespace Opg\Core\Model\Entity\Warning;
 
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\InputFilter;
@@ -29,18 +31,12 @@ use Zend\InputFilter\InputFilterInterface;
  *
  * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
  */
-class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAggregate
+class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use HasSystemStatus;
     use ToArray;
     use InputFilter;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int
-     * @Groups({"api-warning-list"})
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -237,26 +233,6 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
         }
 
         return '';
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Warning
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

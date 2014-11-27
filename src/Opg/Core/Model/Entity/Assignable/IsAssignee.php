@@ -14,18 +14,6 @@ use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship as DeputyshipEntity;
 interface IsAssignee
 {
     /**
-     * @return int
-     */
-    public function getId();
-
-    /**
-     * @param int $id
-     *
-     * @return IsAssignee
-     */
-    public function setId( $id );
-
-    /**
      * @return string
      */
     public function getName();

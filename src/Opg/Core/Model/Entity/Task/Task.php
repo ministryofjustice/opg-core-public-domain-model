@@ -1,7 +1,10 @@
 <?php
 namespace Opg\Core\Model\Entity\Task;
 
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasRagRating;
+use Opg\Common\Model\Entity\Traits\HasId;
+use Opg\Common\Model\Entity\Traits\Time;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
@@ -21,7 +24,6 @@ use JMS\Serializer\Annotation\Type;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
-
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 
 /**
@@ -31,29 +33,20 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\entity(repositoryClass="Application\Model\Repository\TaskRepository")
  *
- * @package Opg Core
- * @author  Chris Moreton
- *
  */
-class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable, HasDateTimeAccessor
+class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssignable, HasDateTimeAccessor, HasIdInterface
 {
 
     const STATUS_COMPLETED = 'completed';
     const MIN_TASK_NAME_LENGTH = 5;
     const MAX_TASK_NAME_LENGTH = 255;
 
-    use \Opg\Common\Model\Entity\Traits\Time;
+    use Time;
     use \Opg\Common\Model\Entity\Traits\InputFilter;
     use ToArray;
     use Assignee;
     use DateTimeAccessor;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int $id
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -241,31 +234,11 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     }
 
     /**
-     * @return int $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string $status
      */
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Task
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
     }
 
     /**

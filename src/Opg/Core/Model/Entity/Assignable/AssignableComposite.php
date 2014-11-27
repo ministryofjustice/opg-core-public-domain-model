@@ -2,7 +2,9 @@
 
 namespace Opg\Core\Model\Entity\Assignable;
 
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasTasksInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
@@ -33,20 +35,11 @@ use JMS\Serializer\Annotation\MaxDepth;
  * Class Composite
  * @package Opg\Core\Model\Entity\Composite
  */
-abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, HasTasksInterface
+abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, HasTasksInterface, HasIdInterface
 {
     use ToArray;
     use HasTasks;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true})
-     * @ORM\GeneratedValue(strategy = "AUTO")
-     * @ORM\Id
-     * @var integer
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
-     * @Accessor(getter="getId", setter="setId")
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\ManyToMany(cascade={"all"}, targetEntity="Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney")
@@ -231,26 +224,6 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
     public function setDeputyships( ArrayCollection $cases )
     {
         return $this->setCases( $cases );
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return AssignableComposite
-     */
-    public function setId( $id )
-    {
-        $this->id = (int) $id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
