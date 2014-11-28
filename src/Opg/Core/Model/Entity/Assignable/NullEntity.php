@@ -5,8 +5,10 @@ namespace Opg\Core\Model\Entity\Assignable;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
+
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

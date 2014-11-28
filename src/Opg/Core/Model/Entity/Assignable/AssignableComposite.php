@@ -9,11 +9,10 @@ use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\CaseItem\CaseItem as CaseEntity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship as DeputyshipEntity;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney as PowerOfAttorneyEntity;
+
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;

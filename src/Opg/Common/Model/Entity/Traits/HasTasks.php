@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use Opg\Common\Model\Entity\HasTasksInterface;
 use Opg\Core\Model\Entity\Task\Task;
 
 /**
@@ -40,7 +41,7 @@ trait HasTasks
     /**
      * @param ArrayCollection $tasks
      *
-     * @return HasTasks
+     * @return HasTasksInterface
      */
     public function setTasks( ArrayCollection $tasks )
     {
@@ -54,7 +55,7 @@ trait HasTasks
     /**
      * @param Task $task
      *
-     * @return HasTasks
+     * @return HasTasksInterface
      */
     public function addTask( Task $task )
     {

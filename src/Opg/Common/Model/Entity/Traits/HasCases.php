@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Opg\Common\Model\Entity\Traits;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\HasCasesInterface;
@@ -46,6 +44,19 @@ trait HasCases
     }
 
     /**
+     * @param ArrayCollection $caseCollection
+     * @return HasCasesInterface
+     */
+    public function addCases(ArrayCollection $caseCollection)
+    {
+        foreach ($caseCollection as $case) {
+            $this->addCase($case);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param CaseItem $caseItem
      * @return HasCasesInterface
      */
@@ -76,16 +87,6 @@ trait HasCases
     }
 
     /**
-     * @internal
-     */
-    protected function initCases()
-    {
-        if (null === $this->cases) {
-            $this->cases = new ArrayCollection();
-        }
-    }
-
-    /**
      * Method to validate a person in the input filter, where required
      * This is a bitwise or comparison, if either condition is true, it returns true
      * @return bool
@@ -96,4 +97,42 @@ trait HasCases
         return (bool)($this->getCases()->count() > 0);
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getPowerOfAttorneys()
+    {
+        return $this->filterCases(HasCasesInterface::CASE_TYPE_POA);
+    }
+
+
+    public function getDeputyships()
+    {
+        return $this->filterCases(HasCasesInterface::CASE_TYPE_DEP);
+    }
+
+    /**
+     * @internal
+     */
+    protected function initCases()
+    {
+        if (null === $this->cases) {
+            $this->cases = new ArrayCollection();
+        }
+    }
+
+    /**
+     * @internal
+     * @param string $caseFilter
+     * @return ArrayCollection
+     */
+    protected function filterCases($caseFilter)
+    {
+        return
+            $this->cases->filter(
+                function ($item) use ($caseFilter) {
+                    return ($item instanceof $caseFilter);
+                }
+            );
+    }
 }

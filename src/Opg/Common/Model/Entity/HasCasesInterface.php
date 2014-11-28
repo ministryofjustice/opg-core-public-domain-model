@@ -1,4 +1,5 @@
 <?php
+
 namespace Opg\Common\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,6 +11,12 @@ use Opg\Core\Model\Entity\CaseItem\CaseItem;
  */
 interface HasCasesInterface
 {
+    /**
+     * Constants required for filtering
+     */
+    const CASE_TYPE_POA = "";
+    const CASE_TYPE_DEP = "";
+
     /**
      * @return ArrayCollection
      */
@@ -29,6 +36,12 @@ interface HasCasesInterface
     public function addCase(CaseItem $caseItem);
 
     /**
+     * @param ArrayCollection $caseCollection
+     * @return HasCasesInterface
+     */
+    public function addCases(ArrayCollection $caseCollection);
+
+    /**
      * @param CaseItem $caseItem
      * @return HasCasesInterface
      */
@@ -38,4 +51,14 @@ interface HasCasesInterface
      * @return bool
      */
     public function hasAttachedCase();
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPowerOfAttorneys();
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDeputyShips();
 }

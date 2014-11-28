@@ -10,7 +10,7 @@ interface HasIdInterface
 {
     /**
      * @param int $id
-     * @return HasId
+     * @return HasIdInterface
      */
     public function setId($id);
 
