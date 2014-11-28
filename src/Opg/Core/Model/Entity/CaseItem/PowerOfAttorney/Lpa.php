@@ -1,15 +1,14 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa;
+namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney;
 
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType as CaseTypeValidator;
 use Opg\Core\Model\Entity\CaseActor\Person;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
-use Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter\LpaFilter;
+use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\LpaFilter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;

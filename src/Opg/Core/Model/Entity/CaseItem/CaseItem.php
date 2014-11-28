@@ -4,12 +4,8 @@ namespace Opg\Core\Model\Entity\CaseItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasDocumentsInterface;
-use Opg\Common\Model\Entity\HasNotesInterface;
+
 use Opg\Common\Model\Entity\HasRagRating;
-use Opg\Common\Model\Entity\HasTasksInterface;
-use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\HasTasks;
@@ -17,7 +13,6 @@ use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
@@ -26,13 +21,14 @@ use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Queue as ScheduledJob;
+
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 
@@ -44,9 +40,9 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- * "lpa" = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa",
+ * "lpa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa",
  * "epa" = "Opg\Core\Model\Entity\CaseItem\Epa\Epa",
- * "lay" = "Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy",
+ * "lay" = "Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
  */

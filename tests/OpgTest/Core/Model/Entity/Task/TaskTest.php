@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\CaseItem\Task;
 
 use Opg\Core\Model\Entity\Assignable\NullEntity;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\Task\Task;
 use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;

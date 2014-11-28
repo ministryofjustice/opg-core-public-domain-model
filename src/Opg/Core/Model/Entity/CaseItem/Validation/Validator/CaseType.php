@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Validator;
+namespace Opg\Core\Model\Entity\CaseItem\Validation\Validator;
 
 use Zend\Validator\InArray;
 

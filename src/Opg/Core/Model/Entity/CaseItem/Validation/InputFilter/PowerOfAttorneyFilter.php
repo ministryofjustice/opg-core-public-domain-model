@@ -1,7 +1,7 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\InputFilter;
+namespace Opg\Core\Model\Entity\CaseItem\Validation\InputFilter;
 
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Validator\Applicants;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\Applicants;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 

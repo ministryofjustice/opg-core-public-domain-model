@@ -5,7 +5,7 @@ namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 
 class NoneCaseContactTest extends \PHPUnit_Framework_TestCase
 {

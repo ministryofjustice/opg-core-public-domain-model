@@ -1,11 +1,11 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter;
+namespace Opg\Core\Model\Entity\CaseItem\Validation\InputFilter;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseSubtype;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\HowAttorneysAct;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\PaymentMethod;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Validator\Applicants;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseSubtype;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\HowAttorneysAct;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\PaymentMethod;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\Applicants;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 

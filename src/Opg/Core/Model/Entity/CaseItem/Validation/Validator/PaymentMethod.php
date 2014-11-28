@@ -1,25 +1,24 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\Lpa\Validator;
+namespace Opg\Core\Model\Entity\CaseItem\Validation\Validator;
 
 use Zend\Validator\InArray;
 
 /**
- * Class HowAttorneysAct
+ * Class PaymentMethod
  *
  * @package Opg\Core\Model\Entity\CaseItem\Lpa\Validator
  */
-class HowAttorneysAct extends InArray
+class PaymentMethod extends InArray
 {
-
     public function __construct()
     {
         $this->setStrict(InArray::COMPARE_STRICT);
 
         $this->setHaystack(
             [
-                'JOINTLY',
-                'SEVERALLY',
-                'JOINTLY_AND_SEVERALLY',
+                'CARD',
+                'CHEQUE',
+                'BACS',
             ]
         );
     }

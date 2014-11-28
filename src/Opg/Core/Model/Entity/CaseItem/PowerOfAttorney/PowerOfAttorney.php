@@ -4,6 +4,7 @@ namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
@@ -15,14 +16,13 @@ use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Decorator\DonorCannotSignForm;
-use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\InputFilter\PowerOfAttorneyFilter;
+use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\GenericAccessor;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 /**
  * Class PowerOfAttorney

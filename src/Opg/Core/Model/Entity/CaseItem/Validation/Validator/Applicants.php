@@ -1,5 +1,5 @@
 <?php
-namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Validator;
+namespace Opg\Core\Model\Entity\CaseItem\Validation\Validator;
 
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Donor;

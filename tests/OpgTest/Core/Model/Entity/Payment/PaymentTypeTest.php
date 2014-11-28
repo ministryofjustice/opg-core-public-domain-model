@@ -4,7 +4,7 @@ namespace OpgTest\Core\Model\Entity\Payment;
 
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\Exception\InvalidDateFormatException;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\Payment\PaymentType;
 use Zend\I18n\Validator\DateTime;
 

@@ -1,7 +1,7 @@
 <?php
 namespace OpgTest\Core\Model\Note;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Note\Note;
 use Opg\Core\Model\Entity\Assignable\User;

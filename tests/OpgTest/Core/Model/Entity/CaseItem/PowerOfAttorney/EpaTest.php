@@ -1,15 +1,12 @@
 <?php
-namespace OpgTest\Core\Model\CaseItem\Epa;
+namespace OpgTest\Core\Model\CaseItem\PowerOfAttorney;
 
 use Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor;
-
 use Opg\Core\Model\Entity\CaseActor\NotifiedAttorney;
-
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Epa\Epa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Epa;
 use Opg\Core\Model\Entity\Document\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Task\Task;
@@ -527,8 +524,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $lpa = unserialize(
             sprintf(
                 'O:%d:"%s":0:{}',
-                strlen('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'),
-                'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
+                strlen('Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'),
+                'Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'
             )
         );
 
@@ -552,8 +549,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
         $lpa = unserialize(
             sprintf(
                 'O:%d:"%s":0:{}',
-                strlen('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'),
-                'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
+                strlen('Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'),
+                'Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'
             )
         );
 

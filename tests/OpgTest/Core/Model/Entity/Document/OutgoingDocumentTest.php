@@ -2,7 +2,7 @@
 namespace OpgTest\Core\Model\Entity\Document;
 
 use Opg\Core\Model\Entity\Address\Address;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Document\Document;
 use PHPUnit_Framework_TestCase;
@@ -66,7 +66,7 @@ class OutgoingDocumentTest extends PHPUnit_Framework_TestCase
     {
         $case = new Lpa();
         $this->correspondence->setCase($case);
-        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa', $this->correspondence->getCase());
+        $this->assertInstanceOf('Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa', $this->correspondence->getCase());
     }
 
     public function testSetGetPerson()

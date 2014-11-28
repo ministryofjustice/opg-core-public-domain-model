@@ -1,9 +1,10 @@
 <?php
-namespace OpgTest\Core\Model\CaseItem\Lpa;
+
+namespace OpgTest\Core\Model\CaseItem\PowerOfAttorney;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\Document\Page\Page;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
@@ -817,7 +818,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testConstantsExist()
     {
-        $class = "Opg\Core\Model\Entity\CaseItem\Lpa\Lpa";
+        $class = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa";
         $this->assertEquals($class::HW_FULLTEXTNAME, "Health and Welfare");
         $this->assertEquals($class::PF_FULLTEXTNAME, "Property and Financial Affairs");
     }
@@ -947,8 +948,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa = unserialize(
             sprintf(
                 'O:%d:"%s":0:{}',
-                strlen('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'),
-                'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
+                strlen('Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'),
+                'Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'
             )
         );
 
@@ -972,8 +973,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         $lpa = unserialize(
             sprintf(
                 'O:%d:"%s":0:{}',
-                strlen('Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'),
-                'Opg\Core\Model\Entity\CaseItem\Lpa\Lpa'
+                strlen('Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'),
+                'Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa'
             )
         );
 

@@ -3,7 +3,7 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\User;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 
 /**
  * User test case.
