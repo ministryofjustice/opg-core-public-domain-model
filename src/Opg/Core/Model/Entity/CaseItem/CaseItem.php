@@ -41,7 +41,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  * "lpa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa",
- * "epa" = "Opg\Core\Model\Entity\CaseItem\Epa\Epa",
+ * "epa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Epa",
  * "lay" = "Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
