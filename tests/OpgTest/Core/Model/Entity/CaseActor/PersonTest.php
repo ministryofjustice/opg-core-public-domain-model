@@ -4,7 +4,6 @@ namespace OpgTest\Core\Model\Entity\Person;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Address\Address;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use \Exception;
@@ -15,6 +14,17 @@ use Opg\Core\Model\Entity\Warning\Warning;
 /**
  * Person test case.
  */
+
+class PersonStub extends Person
+{
+    public function __unset($key) {
+        switch($key) {
+            case 'warnings' :
+                $this->warnings = null;
+                break;
+        }
+    }
+}
 class PersonTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -22,7 +32,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp ()
     {
-        $this->person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $this->person = new PersonStub();
     }
 
     public function testCreate()
@@ -151,7 +161,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->person->setCases($collection);
 
-        $collection3 = $this->person->getCases();
+        $collection3 = $this->person->getPowerOfAttorneys();
 
         $this->assertEquals($collection, $collection3);
 
@@ -159,15 +169,18 @@ class PersonTest extends \PHPUnit_Framework_TestCase
             $case = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship');
             $collection2->add($case);
         }
-
         $this->person->addCases($collection2);
 
-        $collection4 = $this->person->getCases();
-        $this->markTestSkipped('Need to refactor the dep and poa bases to get the filter to work here');
 
-        $this->assertEquals($collection4->toArray(), array_merge($collection->toArray(), $collection2->toArray()));
+        $cases = $this->person->getCases()->toArray();
+        $deps  = $this->person->getDeputyShips()->toArray();
+        $poas  = $this->person->getPowerOfAttorneys()->toArray();
+        $caseComp = array_merge($poas, $deps);
 
-        $this->assertCount(10, $collection4->toArray());
+        $this->assertEquals($cases, $caseComp);
+
+        $this->assertCount(10, $cases);
+        $this->assertCount(10, $caseComp);
     }
 
     public function testRemoveCase()
@@ -314,8 +327,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testAddPerson()
     {
-        $otherPerson1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
-        $otherPerson2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $otherPerson1 = new PersonStub();
+        $otherPerson2 = new PersonStub();
 
         $this->assertNull($otherPerson1->getParent());
         $this->person->addChild($otherPerson1);
@@ -335,8 +348,8 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testPersonCannotHaveMultipleParents()
     {
-        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
-        $parent2 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $parent1 = new PersonStub();
+        $parent2 = new PersonStub();
 
         $parent1->addChild($this->person);
 
@@ -346,7 +359,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testGetChildren()
     {
-        $parent1 = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
+        $parent1 = new PersonStub();
 
         $parent1->addChild($this->person);
 
@@ -355,11 +368,11 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFiltered()
     {
-        $person = $this->getMockForAbstractClass('Opg\Core\Model\Entity\CaseActor\Person');
-
         $testCollection = new ArrayCollection();
         $testActiveCollection = new ArrayCollection();
 
+        unset($this->person->{'warnings'});
+        $this->assertEmpty($this->person->getWarnings()->toArray());
         $warning1 = (new Warning())->setWarningText('Test Warning 1')->setSystemStatus(true);
         $testCollection->add($warning1);
         $testActiveCollection->add($warning1);
@@ -371,11 +384,11 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $warning3 = (new Warning())->setWarningText('Test Warning 3')->setSystemStatus(false);
         $testCollection->add($warning3);
 
-        $person->setWarnings($testCollection);
+        $this->person->setWarnings($testCollection);
 
-        $this->assertEquals($testCollection, $person->getWarnings());
+        $this->assertEquals($testCollection, $this->person->getWarnings());
 
-        $this->assertEquals($testActiveCollection, $person->getActiveWarnings());
+        $this->assertEquals($testActiveCollection, $this->person->getActiveWarnings());
 
     }
   }

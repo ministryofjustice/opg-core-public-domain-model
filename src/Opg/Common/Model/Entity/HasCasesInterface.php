@@ -14,8 +14,8 @@ interface HasCasesInterface
     /**
      * Constants required for filtering
      */
-    const CASE_TYPE_POA = "";
-    const CASE_TYPE_DEP = "";
+    const CASE_TYPE_POA = 'Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney';
+    const CASE_TYPE_DEP = 'Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship';
 
     /**
      * @return ArrayCollection
