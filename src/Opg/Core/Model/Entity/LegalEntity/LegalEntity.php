@@ -8,11 +8,13 @@ use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\HasTasksInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\HasWarningsInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
 use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\HasTasks;
+use Opg\Common\Model\Entity\Traits\HasWarnings;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
@@ -30,7 +32,7 @@ use JMS\Serializer\Annotation\Exclude;
  */
 abstract class LegalEntity
     implements HasIdInterface, HasUidInterface, EntityInterface, HasDateTimeAccessor, HasDocumentsInterface, HasNotesInterface,
-    \IteratorAggregate, HasTasksInterface
+    \IteratorAggregate, HasTasksInterface, HasWarningsInterface
 {
     use ToArray;
     use UniqueIdentifier;
@@ -40,6 +42,7 @@ abstract class LegalEntity
     use InputFilter;
     use HasTasks;
     use HasId;
+    use HasWarnings;
 
     // Fulfil IteratorAggregate interface requirements
     public function getIterator()

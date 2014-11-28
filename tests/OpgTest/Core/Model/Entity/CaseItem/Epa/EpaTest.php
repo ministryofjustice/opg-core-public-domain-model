@@ -225,6 +225,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                     'tasks'                                 => array (),
                     'inputFilter'                           => null,
                     'errorMessages'                         => array(),
+                    'warnings'                              => array(),
                 ),
                 'correspondent'                             => null,
                 'applicants'                                => array(),
@@ -307,6 +308,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'additionalInfoDonorSignature'              => false,
                 'additionalInfoDonorSignatureDate'          => null,
                 'anyOtherInfo'                              => false,
+                'warnings'                                  => null,
             ),
             $epa->toArrayRecursive()
         );

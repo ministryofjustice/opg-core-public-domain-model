@@ -147,15 +147,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     protected $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Accessor(getter="getActiveWarnings")
-     * @Groups({"api-person-get","api-warning-list"})
-     */
-    protected $warnings;
-
-    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Groups({"api-person-get","api-warning-list"})
@@ -172,47 +163,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
         $this->children         = new ArrayCollection();
         $this->warnings         = new ArrayCollection();
         $this->cases            = new ArrayCollection();
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getWarnings()
-    {
-        // @codeCoverageIgnoreStart
-        if (empty($this->warnings)) {
-            $this->warnings = new ArrayCollection();
-        }
-        // @codeCoverageIgnoreEnd
-        return $this->warnings;
-    }
-
-    /**
-     * @param ArrayCollection $warnings
-     * @return $this
-     */
-    public function setWarnings(ArrayCollection $warnings)
-    {
-        $this->warnings = $warnings;
-
-        return $this;
-    }
-
-    /**
-     * @param Warning $warning
-     * @return $this
-     */
-    public function addWarning(Warning $warning)
-    {
-        // @codeCoverageIgnoreStart
-        if (empty($this->warnings)) {
-            $this->warnings = new ArrayCollection();
-        }
-        // @codeCoverageIgnoreEnd
-        $this->warnings->add($warning);
-        $warning->setPerson($this);
-
-        return $this;
     }
 
     /**
@@ -340,7 +290,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      *
      * @param  string $email
      *
-     * @return PartyInterface
+     * @return Person
      */
     public function setEmail($email)
     {
@@ -452,7 +402,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @return string $title
      */
     public function getTitle()
@@ -461,10 +410,8 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @param  string $salutation
-     *
-     * @return PartyInterface
+     * @return Person
      */
     public function setTitle($salutation)
     {
@@ -474,7 +421,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @return string $salutation
      */
     public function getSalutation()
@@ -483,10 +429,8 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @param  string $salutation
-     *
-     * @return PartyInterface
+     * @return Person
      */
     public function setSalutation($salutation)
     {
@@ -496,7 +440,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @return string $firstname
      */
     public function getFirstname()
@@ -505,10 +448,8 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @param  string $firstname
-     *
-     * @return PartyInterface
+     * @return Person
      */
     public function setFirstname($firstname)
     {
@@ -518,7 +459,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @return string $middlenames
      */
     public function getMiddlename()
@@ -527,10 +467,8 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @param  string $middlenames
-     *
-     * @return PartyInterface
+     * @return Person
      */
     public function setMiddlename($middlenames)
     {
@@ -540,7 +478,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     *
      * @return string $surname
      */
     public function getSurname()
@@ -550,8 +487,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param string
-     *
-     * @return PartyInterface
+     * @return Person
      */
     public function setSurname($surname)
     {
@@ -562,8 +498,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param  PhoneNumber $phoneNumber
-     *
-     * @return $this
+     * @return Person
      */
     public function addPhoneNumber(PhoneNumber $phoneNumber)
     {
@@ -575,8 +510,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param  ArrayCollection $phoneNumbers
-     *
-     * @return $this
+     * @return Person
      */
     public function setPhoneNumbers(ArrayCollection $phoneNumbers)
     {
@@ -586,7 +520,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     * @return ArrayCollection|\Opg\Core\Model\Entity\Address\PhoneNumber
+     * @return ArrayCollection
      */
     public function getPhoneNumbers()
     {
@@ -594,7 +528,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     * @return $this
+     * @return Person
      */
     public function clearPhoneNumbers()
     {
@@ -605,8 +539,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param  InputFilterInterface $inputFilter
-     *
-     * @return return               Person
+     * @return Person
      */
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -635,24 +568,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
         return $this->inputFilter;
     }
 
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getActiveWarnings()
-    {
-        $warningBucket = new ArrayCollection();
-
-        if (null !== $this->warnings) {
-            foreach ($this->warnings as $warning) {
-                if ($warning->isActive()) {
-                    $warningBucket->add($warning);
-                }
-            }
-        }
-        return $warningBucket;
-    }
-
     /**
      * @return string $occupation
      */
@@ -663,7 +578,6 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param string $occupation
-     *
      * @return Attorney
      */
     public function setOccupation($occupation)

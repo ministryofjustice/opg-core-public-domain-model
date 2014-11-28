@@ -375,6 +375,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                     'tasks'                                 => array (),
                     'inputFilter'                           => null,
                     'errorMessages'                         => array(),
+                    'warnings'                              => array(),
                 ),
                 'correspondent'                             => null,
                 'applicants'                                => array(),
@@ -469,6 +470,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'additionalInfoDonorSignature'              => false,
                 'additionalInfoDonorSignatureDate'          => null,
                 'anyOtherInfo'                              => false,
+                'warnings'                                  => null,
             ),
             $lpa->toArrayRecursive()
         );
