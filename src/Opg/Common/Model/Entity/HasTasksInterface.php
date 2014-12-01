@@ -27,4 +27,9 @@ interface HasTasksInterface
      * @return HasTasksInterface
      */
     public function setTasks(ArrayCollection $tasks);
+
+    /**
+     * @return ArrayCollection
+     */
+    public function filterTasks();
 }

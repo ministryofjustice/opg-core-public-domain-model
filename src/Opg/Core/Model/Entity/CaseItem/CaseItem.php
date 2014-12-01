@@ -532,31 +532,6 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @return ArrayCollection
      */
-    public function filterTasks()
-    {
-        $activeTasks = new ArrayCollection();
-
-        if(!empty($this->tasks)) {
-            foreach ($this->tasks as $taskItem) {
-                if($taskItem->getActiveDate() !== null) {
-                    $now = time();
-                    $taskTime = $taskItem->getActiveDate()->getTimestamp();
-
-                    if ($now >= $taskTime) {
-                        $activeTasks->add($taskItem);
-                    }
-                }
-                else {
-                    $activeTasks->add($taskItem);
-                }
-            }
-        }
-        return $activeTasks;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
     public function getScheduledJobs()
     {
         if (null === $this->scheduledJobs) {
