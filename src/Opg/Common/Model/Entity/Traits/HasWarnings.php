@@ -81,7 +81,7 @@ trait HasWarnings
     }
 
     /**
-     * @internals
+     * @internal
      */
     protected function initWarnings()
     {
