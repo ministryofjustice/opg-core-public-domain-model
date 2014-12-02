@@ -1,33 +1,20 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Validation\InputFilter;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseSubtype;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\HowAttorneysAct;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\PaymentMethod;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\Applicants;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
 
 /**
  * Class LpaFilter
  * @package Opg\Core\Model\Entity\CaseItem\Lpa\InputFilter
  */
-class LpaFilter extends InputFilter
+class LpaFilter extends BaseInputFilter
 {
-    /**
-     * @var \Zend\InputFilter\Factory
-     */
-    private $inputFactory;
-
-    public function __construct()
-    {
-        $this->inputFactory = new InputFactory();
-
-        $this->setValidators();
-    }
-
-    private function setValidators()
+    protected  function setValidators()
     {
         $this->setStatusValidator();
         $this->setDonorValidator();

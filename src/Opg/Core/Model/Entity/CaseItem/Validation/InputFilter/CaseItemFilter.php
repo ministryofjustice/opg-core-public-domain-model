@@ -1,30 +1,17 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Validation\InputFilter;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseItems;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * Class CaseItemFilter
  *
  * @package Opg\Core\Model\Entity\CaseItem\Validation\InputFilter
  */
-class CaseItemFilter extends InputFilter
+class CaseItemFilter extends BaseInputFilter
 {
-    /**
-     * @var \Zend\InputFilter\Factory
-     */
-    private $inputFactory;
-
-    public function __construct()
-    {
-        $this->inputFactory = new InputFactory();
-
-        $this->setValidators();
-    }
-
-    private function setValidators()
+    protected  function setValidators()
     {
         $this->setMinimumValidator();
     }

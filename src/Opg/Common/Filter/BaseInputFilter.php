@@ -2,6 +2,7 @@
 
 namespace Opg\Common\Filter;
 
+use Zend\InputFilter\Factory;
 use Zend\InputFilter\InputFilter;
 
 /**
@@ -10,6 +11,9 @@ use Zend\InputFilter\InputFilter;
  */
 class BaseInputFilter extends InputFilter
 {
+    /** @var Factory */
+    protected  $inputFactory;
+
     protected function addValidator($inputName, $className, $required = false)
     {
         $this->add(
@@ -37,6 +41,13 @@ class BaseInputFilter extends InputFilter
         );
     }
 
+    public function __construct()
+    {
+        $this->inputFactory = new Factory();
+
+        $this->setValidators();
+    }
+
     /**
      * @param InputFilter $filter
      */
@@ -45,5 +56,10 @@ class BaseInputFilter extends InputFilter
         foreach ($filter->getInputs() as $input) {
             $this->add($input);
         }
+    }
+
+    protected function setValidators()
+    {
+
     }
 }

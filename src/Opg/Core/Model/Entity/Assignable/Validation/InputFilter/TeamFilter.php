@@ -3,18 +3,16 @@
 
 namespace Opg\Core\Model\Entity\Assignable\Validation\InputFilter;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Model\Entity\Assignable\Validation\Validator\TeamName;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * Class TeamFilter
  * @package Opg\Core\Model\Entity\Assignable\Validation\InputFilter
  */
-class TeamFilter extends InputFilter
+class TeamFilter extends BaseInputFilter
 {
-    private $inputFactory;
-
     public function __construct()
     {
         $this->inputFactory = new InputFactory();
@@ -22,23 +20,8 @@ class TeamFilter extends InputFilter
         $this->setValidators();
     }
 
-    private function setValidators()
+    protected function setValidators()
     {
-        $this->setNameValidator();
-    }
-
-    private function setNameValidator()
-    {
-        $this->add(
-            $this->inputFactory->createInput(
-                array(
-                    'name'       => 'name',
-                    'required'   => true,
-                    'validators' => array(
-                        new TeamName()
-                    )
-                )
-            )
-        );
+        $this->addValidator('name','Opg\Core\Model\Entity\Assignable\Validation\Validator\TeamName', true);
     }
 }
