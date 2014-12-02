@@ -2,14 +2,14 @@
 
 namespace Opg\Core\Validation\InputFilter;
 
-use Zend\InputFilter\InputFilter;
+use Opg\Common\Filter\BaseInputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 
 /**
  * Class PaymentFilter
  * @package Opg\Core\Validation\InputFilter
  */
-class PaymentFilter extends InputFilter
+class PaymentFilter extends BaseInputFilter
 {
     /**
      * @var \Zend\InputFilter\Factory

@@ -2,11 +2,15 @@
 
 namespace Opg\Core\Validation\InputFilter;
 
-use Zend\InputFilter\InputFilter;
+use Opg\Common\Filter\BaseInputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Opg\Core\Validation\Validator\UniqueIdentifier;
 
-class UidFilter extends InputFilter
+/**
+ * Class UidFilter
+ * @package Opg\Core\Validation\InputFilter
+ */
+class UidFilter extends BaseInputFilter
 {
     /**
      * @var \Zend\InputFilter\Factory

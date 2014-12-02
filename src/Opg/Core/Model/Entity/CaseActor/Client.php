@@ -34,12 +34,7 @@ class Client extends Donor implements HasCaseRecNumber, HasClientAccommodation, 
     {
         if (!$this->inputFilter) {
             $this->inputFilter = parent::getInputFilter();
-
-            $clientFilter = new ClientFilter();
-
-            foreach ($clientFilter->getInputs() as $input) {
-                $this->inputFilter->add($input);
-            }
+            $this->inputFilter->merge(new ClientFilter());
         }
 
         return $this->inputFilter;

@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Common\Model\Entity\Traits;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Exception\UnusedException;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -15,7 +16,7 @@ trait InputFilter
 {
 
     /**
-     * @var InputFilter|InputFilterInterface
+     * @var BaseInputFilter
      * @Exclude
      */
     protected $inputFilter;

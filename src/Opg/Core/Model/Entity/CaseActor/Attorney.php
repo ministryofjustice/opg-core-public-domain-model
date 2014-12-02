@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseActor;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Common\Model\Entity\Traits\ToArray;
 
@@ -44,7 +45,7 @@ class Attorney extends AttorneyAbstract
     protected $isAttorneyApplyingToRegister = self::OPTION_NOT_SET;
 
     /**
-     * @return void|InputFilterInterface
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {
@@ -79,7 +80,7 @@ class Attorney extends AttorneyAbstract
                 )
             );
 
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter->merge($inputFilter);
         }
 
         return $this->inputFilter;

@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 
 /**
  * @ORM\Entity
@@ -79,7 +80,7 @@ class NonCaseContact extends BasePerson
      *
      * @param  string $fullname
      *
-     * @return PartyInterface
+     * @return LegalEntity
      */
     public function setFullname($fullname)
     {
