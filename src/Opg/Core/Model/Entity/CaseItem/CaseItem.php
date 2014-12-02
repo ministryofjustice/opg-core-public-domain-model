@@ -199,6 +199,41 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      */
     protected $payments;
 
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneySingular = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointly = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyActionAdditionalInfo = false;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -644,5 +679,104 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
         }
 
         return $this->payments;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointly($caseAttorney = false)
+    {
+        $this->caseAttorneyJointly = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointly()
+    {
+        return $this->caseAttorneyJointly;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndJointlyAndSeverally = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndSeverally = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneySingular($caseAttorney = false)
+    {
+        $this->caseAttorneySingular = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneySingular()
+    {
+        return $this->caseAttorneySingular;
+    }
+
+    /**
+     * @param bool $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
+    {
+        $this->caseAttorneyActionAdditionalInfo = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaseAttorneyActionAdditionalInfo()
+    {
+        return $this->caseAttorneyActionAdditionalInfo;
     }
 }
