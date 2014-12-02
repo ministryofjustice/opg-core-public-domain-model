@@ -43,7 +43,7 @@ class Search implements EntityInterface, \IteratorAggregate
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
+            $inputFilter = new BaseInputFilter();
             $factory     = new InputFactory();
 
             $inputFilter->add(
@@ -69,7 +69,7 @@ class Search implements EntityInterface, \IteratorAggregate
                 )
             );
 
-            $this->inputFilter->merge($inputFilter);
+            $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
