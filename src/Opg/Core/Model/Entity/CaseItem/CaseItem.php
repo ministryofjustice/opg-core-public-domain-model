@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
@@ -384,26 +385,16 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     }
 
     /**
-     * @return InputFilter|CaseItemFilter|\Zend\InputFilter\InputFilterInterface
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {
-        $this->inputFilter = new \Zend\InputFilter\InputFilter();
+        $this->inputFilter = new BaseInputFilter();
 
-        $caseItemFilter =  new CaseItemFilter();
-        foreach($caseItemFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
+        $this->inputFilter->merge(new CaseItemFilter());
+        $this->inputFilter->merge(new UidFilter());
+        $this->inputFilter->merge(new IdentifierFilter());
 
-        $uidFilter =  new UidFilter();
-        foreach($uidFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
-
-        $idFilter = new IdentifierFilter();
-        foreach($idFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
         return $this->inputFilter;
     }
 
