@@ -6,6 +6,7 @@ use Opg\Common\Model\Entity\HasIdInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Class HasId
@@ -19,6 +20,7 @@ trait HasId
      * @ORM\Id
      * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getId", setter="setId")
+     * @Type("integer")
      * @var int $id
      */
     protected $id;
