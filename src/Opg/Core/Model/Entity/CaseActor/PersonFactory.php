@@ -49,6 +49,12 @@ class PersonFactory
                 case "PersonNotifyDonor" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\PersonNotifyDonor";
                     break;
+                case "Client" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Client";
+                    break;
+                case "Deputy" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Deputy";
+                    break;
                 default:
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NonCaseContact";
                     break;
