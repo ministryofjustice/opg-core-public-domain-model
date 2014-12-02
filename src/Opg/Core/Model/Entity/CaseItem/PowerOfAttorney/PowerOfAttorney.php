@@ -28,7 +28,8 @@ use JMS\Serializer\Annotation\GenericAccessor;
  * Class PowerOfAttorney
  * @package Opg\Core\Model\Entity\CaseItem\PowerOfAttorney
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Model\Repository\PowerOfAttorneyRepository")
+ *
  */
 abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
 {

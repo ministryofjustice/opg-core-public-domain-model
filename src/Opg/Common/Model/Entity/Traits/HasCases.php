@@ -128,6 +128,8 @@ trait HasCases
      */
     protected function filterCases($caseFilter)
     {
+        $this->initCases();
+
         return
             $this->cases->filter(
                 function ($item) use ($caseFilter) {
