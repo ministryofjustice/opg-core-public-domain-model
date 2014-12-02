@@ -2,17 +2,20 @@
 
 namespace Opg\Core\Model\Entity\CaseActor;
 
+use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
@@ -22,43 +25,12 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationshipToDonor, HasDateTimeAccessor
+class NotifiedPerson extends BasePerson implements HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
 {
     use ToArray;
     use RelationshipToDonor;
     use DateTimeAccessor;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @var \DateTime
-     * @Type("string")
-     * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="notifiedDate")
-     * @Groups("api-person-get")
-     */
-    protected $notifiedDate;
-
-    /**
-     * @param \DateTime $notifiedDate
-     *
-     * @return Lpa
-     */
-    public function setNotifiedDate(\DateTime $notifiedDate = null)
-    {
-        if (is_null($notifiedDate)) {
-            $notifiedDate = new \DateTime();
-        }
-        $this->notifiedDate = $notifiedDate;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime $notifiedDate
-     */
-    public function getNotifiedDate()
-    {
-        return $this->notifiedDate;
-    }
+    use NoticeGivenDate;
 
     /**
      * @return InputFilterInterface
@@ -73,7 +45,7 @@ class NotifiedPerson extends BasePerson implements PartyInterface, HasRelationsh
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(

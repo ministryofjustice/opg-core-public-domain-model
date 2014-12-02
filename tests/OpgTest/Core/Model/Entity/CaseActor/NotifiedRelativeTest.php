@@ -5,7 +5,7 @@ namespace OpgTest\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\CaseActor\NotifiedRelative;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 
 class NotifiedRelativeTest extends \PHPUnit_Framework_TestCase
@@ -81,5 +81,5 @@ class NotifiedRelativeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->na->getNoticeGivenDateString());
     }
-    
+
 }

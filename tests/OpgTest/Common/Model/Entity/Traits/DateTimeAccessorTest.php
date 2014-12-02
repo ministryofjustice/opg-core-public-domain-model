@@ -45,6 +45,19 @@ class DateTimeAccessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->stub->getDateAsString('todaysDate'), $this->stub->getTodaysDateString('todaysDate'));
     }
 
+    public function testDefaultDateTimeSets()
+    {
+        $now = new \DateTime();
+        $future = clone $now;
+        $future->add(new \DateInterval('P10D'));
+        $this->assertTrue($this->stub->setDefaultDateFromString('', 'todaysDate') instanceof HasDateTimeAccessor);
+        $this->assertEquals($now->format(DateFormat::getDateTimeFormat()), $this->stub->getDateTimeAsString('todaysDate'));
+
+        $this->assertTrue($this->stub->setDefaultDateFromString($future->format(DateFormat::getDateTimeFormat()), 'todaysDate') instanceof HasDateTimeAccessor);
+        $this->assertNotEquals($future->format(DateFormat::getDateTimeFormat()), $this->stub->getDateTimeAsString('todaysDate'));
+        $this->assertEquals($now->format(DateFormat::getDateTimeFormat()), $this->stub->getDateTimeAsString('todaysDate'));
+    }
+
     /**
      * @expectedException \LogicException
      */

@@ -4,50 +4,53 @@ namespace Opg\Core\Model\Entity\CaseItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasDocumentsInterface;
-use Opg\Common\Model\Entity\HasNotesInterface;
+
 use Opg\Common\Model\Entity\HasRagRating;
-use Opg\Common\Model\Entity\HasUidInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
+use Opg\Common\Model\Entity\Traits\HasTasks;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\CaseItemFilter;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Model\Entity\Payment\PaymentType;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Queue as ScheduledJob;
+
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 
 /**
- * @ORM\MappedSuperclass
- * @package Opg\Core\Model\Entity\CaseItem
+ * @ORM\Entity
+ * @ORM\Table(name = "cases")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ * "lpa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa",
+ * "epa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Epa",
+ * "poa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney",
+ * "dep" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship",
+ * "lay" = "Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy",
+ * })
+ * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
  */
-abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItemInterface, HasUidInterface,
-    HasNotesInterface, HasDocumentsInterface, HasRagRating, IsAssignable, HasDateTimeAccessor
+abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRagRating, IsAssignable
 {
-    use ToArray;
-    use HasNotes;
-    use UniqueIdentifier;
-    use InputFilter;
     use Assignee;
-    use HasDocuments;
-    use DateTimeAccessor;
 
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
@@ -60,16 +63,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     const PAYMENT_OPTION_FALSE   = 1;
     const PAYMENT_OPTION_TRUE    = 2;
 
-
-    /**
-     * @ORM\Column(type = "integer")
-     * @ORM\GeneratedValue(strategy = "AUTO")
-     * @ORM\Id
-     * @Type("integer")
-     * @var int autoincrementID
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type = "integer", nullable=true)
@@ -146,26 +139,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
      * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
      */
     protected $status;
-
-    /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseItem\Task\Task", fetch="EAGER")
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @Accessor(getter="filterTasks")
-     */
-    protected $tasks;
-
-    /**
-     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Note\Note", cascade={"persist"})
-     * @ORM\OrderBy({"id"="ASC"})
-     * @var ArrayCollection
-     * @Serializer\Groups({"api-person-get"})
-     * @ReadOnly
-     */
-    protected $notes;
-
 
     // Fields below are NOT persisted
     /**
@@ -314,42 +287,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
     }
 
     /**
-     *
-     * @return ArrayCollection
-     */
-    public function getTasks()
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param  Task $task
-     *
-     * @return $this
-     */
-    public function addTask(Task $task)
-    {
-        if (is_null($this->tasks)) {
-            $this->tasks = new ArrayCollection();
-        }
-        $this->tasks->add($task);
-    }
-
-    /**
-     * @param  ArrayCollection $tasks
-     *
-     * @return CaseItem
-     */
-    public function setTasks(ArrayCollection $tasks)
-    {
-        foreach ($tasks as $task) {
-            $this->addTask($task);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -375,26 +312,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         $this->title = $title;
 
         return $this;
-    }
-
-    /**
-     * @param  int $id
-     *
-     * @return CaseItem
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -612,31 +529,6 @@ abstract class CaseItem implements EntityInterface, \IteratorAggregate, CaseItem
         }
 
         return $total;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function filterTasks()
-    {
-        $activeTasks = new ArrayCollection();
-
-        if(!empty($this->tasks)) {
-            foreach ($this->tasks as $taskItem) {
-                if($taskItem->getActiveDate() !== null) {
-                    $now = time();
-                    $taskTime = $taskItem->getActiveDate()->getTimestamp();
-
-                    if ($now >= $taskTime) {
-                        $activeTasks->add($taskItem);
-                    }
-                }
-                else {
-                    $activeTasks->add($taskItem);
-                }
-            }
-        }
-        return $activeTasks;
     }
 
     /**

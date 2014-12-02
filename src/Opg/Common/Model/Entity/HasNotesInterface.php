@@ -2,7 +2,7 @@
 namespace Opg\Common\Model\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
+use Opg\Core\Model\Entity\Note\Note as NoteEntity;
 
 /**
  * Interface HasNotesInterface

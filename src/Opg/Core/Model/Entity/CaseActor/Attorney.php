@@ -2,15 +2,18 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\Traits\ToArray;
+
 use Doctrine\ORM\Mapping as ORM;
+
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Callback;
+use Zend\InputFilter\InputFilterInterface;
+
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\GenericAccessor;
 
 /**
  * @ORM\Entity
@@ -18,10 +21,9 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationshipToDonor
+class Attorney extends AttorneyAbstract
 {
     use ToArray;
-    use RelationshipToDonor;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -54,7 +56,7 @@ class Attorney extends AttorneyAbstract implements PartyInterface, HasRelationsh
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(

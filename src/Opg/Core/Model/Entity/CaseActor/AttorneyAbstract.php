@@ -4,7 +4,9 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
@@ -17,11 +19,12 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * Class AttorneyAbstract
  * @package Opg\Core\Model\Entity\CaseActor
  */
-abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface, HasDateTimeAccessor
+abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface, HasDateTimeAccessor, HasRelationshipToDonor
 {
     use Company;
     use HasSystemStatus;
     use DateTimeAccessor;
+    use RelationshipToDonor;
 
     /**
      * @ORM\Column(type="string", nullable=true)

@@ -3,7 +3,7 @@ namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
-use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
+use Opg\Core\Model\Entity\Note\Note as NoteEntity;
 
 /**
  * HasNotes trait test.
@@ -11,8 +11,6 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
 class HasNotesTest extends \PHPUnit_Framework_TestCase
 {
     use HasNotesTrait;
-
-    protected $notes;
 
     public function setUp()
     {

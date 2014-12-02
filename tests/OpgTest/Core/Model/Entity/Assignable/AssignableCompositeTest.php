@@ -5,9 +5,9 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Team;
-use Opg\Core\Model\Entity\CaseItem\LayDeputy\LayDeputy;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
-use Opg\Core\Model\Entity\CaseItem\Task\Task;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
+use Opg\Core\Model\Entity\Task\Task;
 
 
 class AssignableCompositeStub extends AssignableComposite
@@ -22,11 +22,8 @@ class AssignableCompositeStub extends AssignableComposite
             case 'teams' :
                 $this->teams = null;
                 break;
-            case 'deputyships':
-                $this->deputyships = null;
-                break;
-            case 'poas':
-                $this->powerOfAttorneys = null;
+            case 'cases':
+                $this->cases = null;
                 break;
         }
     }
@@ -80,8 +77,7 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
     public function testGetSetCases()
     {
 
-        unset($this->assignable->{'deputyships'});
-        unset($this->assignable->{'poas'});
+        unset($this->assignable->{'cases'});
 
         $lpa = new Lpa();
 
@@ -97,8 +93,7 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($cases, $this->assignable->getCases());
 
-        unset($this->assignable->{'deputyships'});
-        unset($this->assignable->{'poas'});
+        unset($this->assignable->{'cases'});
 
         $this->assertEmpty($this->assignable->getCases()->toArray());
     }

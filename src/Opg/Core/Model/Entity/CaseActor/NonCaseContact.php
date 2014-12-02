@@ -4,8 +4,9 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\CaseItemInterface;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
@@ -41,13 +42,6 @@ class NonCaseContact extends BasePerson
      */
     protected $fullname = null;
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->powerOfAttorneys = null;
-        $this->deputyships = null;
-    }
-
     /**
      * @param ArrayCollection $cases
      * @return PartyInterface|void
@@ -55,25 +49,17 @@ class NonCaseContact extends BasePerson
      */
     public function setCases(ArrayCollection $cases)
     {
-        throw new \LogicException('Non case contacts cannot have cases assigned to them');
+        return $this;
     }
 
     /**
-     * @param CaseItemInterface $case
+     * @param CaseItem $case
      * @return BasePerson|void
      * @throws \LogicException
      */
-    public function addCase(CaseItemInterface $case)
+    public function addCase(CaseItem $case)
     {
-        throw new \LogicException('Non case contacts cannot have cases assigned to them');
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getCases()
-    {
-        return null;
+        return $this;
     }
 
     /**

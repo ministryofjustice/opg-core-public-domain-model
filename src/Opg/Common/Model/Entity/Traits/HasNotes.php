@@ -2,7 +2,8 @@
 namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
+use Opg\Core\Model\Entity\Note\Note as NoteEntity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class HasNotes
@@ -19,7 +20,14 @@ use Opg\Core\Model\Entity\CaseItem\Note\Note as NoteEntity;
  */
 trait HasNotes
 {
-
+    /**
+     * @ORM\ManyToMany(targetEntity = "Opg\Core\Model\Entity\Note\Note", cascade={"persist"})
+     * @ORM\OrderBy({"id"="ASC"})
+     * @var ArrayCollection
+     * @ReadOnly
+     * @Groups({"api-person-get"})
+     */
+    protected $notes;
     /**
      * @return ArrayCollection|null
      */

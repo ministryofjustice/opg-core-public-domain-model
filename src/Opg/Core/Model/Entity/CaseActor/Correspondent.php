@@ -3,11 +3,15 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Opg\Core\Model\Entity\CaseActor\Decorators\Company;
 use Opg\Common\Model\Entity\Traits\ToArray;
+
 use Doctrine\ORM\Mapping as ORM;
+
 use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\Callback;
 use JMS\Serializer\Annotation\Type;
 
@@ -16,7 +20,7 @@ use JMS\Serializer\Annotation\Type;
  *
  * @package Opg Domain Model
  */
-class Correspondent extends BasePerson implements PartyInterface, EntityInterface, HasRelationshipToDonor
+class Correspondent extends BasePerson implements EntityInterface, HasRelationshipToDonor
 {
     use Company;
     use ToArray;
@@ -36,7 +40,7 @@ class Correspondent extends BasePerson implements PartyInterface, EntityInterfac
             $inputFilter->add(
                 $factory->createInput(
                     array(
-                        'name'       => 'powerOfAttorneys',
+                        'name'       => 'cases',
                         'required'   => true,
                         'validators' => array(
                             array(

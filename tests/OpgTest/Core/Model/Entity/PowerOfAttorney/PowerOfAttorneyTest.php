@@ -1,14 +1,14 @@
 <?php
 
-namespace OpgTest\Core\Model\Entity\PowerOfAttorney;
+namespace OpgTest\Core\Model\Entity\CaseItem\PowerOfAttorney;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Lpa\Lpa;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Donor;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
-use Opg\Core\Model\Entity\PowerOfAttorney\PowerOfAttorney;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;

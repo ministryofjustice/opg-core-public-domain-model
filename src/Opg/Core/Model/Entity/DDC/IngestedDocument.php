@@ -2,7 +2,9 @@
 
 namespace Opg\Core\Model\Entity\DDC;
 
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasUidInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\UniqueIdentifier;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
@@ -16,19 +18,10 @@ use JMS\Serializer\Annotation\ReadOnly;
  * Class IngestedDocument
  * @package Opg\Core\Model\Entity\DDC
  */
-class IngestedDocument implements HasUidInterface
+class IngestedDocument implements HasUidInterface, HasIdInterface
 {
     use UniqueIdentifier;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true})
-     * @ORM\GeneratedValue(strategy = "SEQUENCE")
-     * @ORM\Id
-     * @ORM\SequenceGenerator(sequenceName = "ingested_documents_seq", initialValue = 1, allocationSize = 1)
-     *
-     * @var int
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type="datetime")
@@ -46,25 +39,6 @@ class IngestedDocument implements HasUidInterface
     {
         $this->ingestedDateTime = new \DateTime();
         $this->processed = false;
-    }
-
-    /**
-     * @param int $id
-     * @return IngestedDocument
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

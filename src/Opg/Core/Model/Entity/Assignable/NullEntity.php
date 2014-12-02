@@ -5,8 +5,10 @@ namespace Opg\Core\Model\Entity\Assignable;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
+
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class NullEntity extends AssignableComposite implements EntityInterface, IsAssignee
 {
 
-    const NULL_USER_ID = null;
+    const NULL_USER_ID = 0;
 
     const NULL_USER_NAME = 'Unassigned';
 

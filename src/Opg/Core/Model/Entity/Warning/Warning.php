@@ -4,13 +4,15 @@ namespace Opg\Core\Model\Entity\Warning;
 
 use Opg\Common\Model\Entity\DateFormat;
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasSystemStatusInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\HasSystemStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\User\User as UserEntity;
-use Opg\Core\Model\Entity\Person\Person as PersonEntity;
+use Opg\Core\Model\Entity\Assignable\User as UserEntity;
+use Opg\Core\Model\Entity\CaseActor\Person as PersonEntity;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -29,18 +31,12 @@ use Zend\InputFilter\InputFilterInterface;
  *
  * @ORM\entity(repositoryClass="Application\Model\Repository\WarningRepository")
  */
-class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAggregate
+class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use HasSystemStatus;
     use ToArray;
     use InputFilter;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var int
-     * @Groups({"api-warning-list"})
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -76,7 +72,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $dateClosed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
      * @ORM\JoinColumn(name="added_by", referencedColumnName="id")
      * @var UserEntity
      * @Groups({"api-warning-list"})
@@ -84,7 +80,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $addedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\User\User")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Assignable\User")
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id")
      * @var UserEntity
      * @Groups({"api-warning-list"})
@@ -92,10 +88,10 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     protected $closedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="warnings")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="warnings")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      * @var PersonEntity
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      * @Groups({"api-warning-list"})
      */
     protected $person;
@@ -106,7 +102,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\User\User $addedBy
+     * @param \Opg\Core\Model\Entity\Assignable\User $addedBy
      *
      * @return Warning
      */
@@ -118,7 +114,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getAddedBy()
     {
@@ -126,7 +122,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\User\User $closedBy
+     * @param \Opg\Core\Model\Entity\Assignable\User $closedBy
      *
      * @return Warning
      */
@@ -138,7 +134,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getClosedBy()
     {
@@ -237,26 +233,6 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
         }
 
         return '';
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Warning
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

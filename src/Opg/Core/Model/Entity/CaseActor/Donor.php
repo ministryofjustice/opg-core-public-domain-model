@@ -3,9 +3,10 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Common\Model\Entity\HasSageId;
 use Opg\Common\Model\Entity\Traits\SageId;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
 use Zend\InputFilter\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person as BasePerson;
+use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
@@ -22,14 +23,13 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Core
  *
  */
-class Donor extends BasePerson implements PartyInterface, HasSageId, HasDateTimeAccessor
+class Donor extends BasePerson implements HasSageId
 {
     use ToArray;
     use SageId;
-    use DateTimeAccessor;
 
     /**
-     * @return InputFilter|InputFilterInterface
+     * @return InputFilter
      */
     public function getInputFilter()
     {

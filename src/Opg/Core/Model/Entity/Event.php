@@ -2,9 +2,11 @@
 namespace Opg\Core\Model\Entity;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\User\User;
+use Opg\Core\Model\Entity\Assignable\User;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
@@ -20,20 +22,11 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * @package Opg Core
  *
  */
-class Event implements EntityInterface
+class Event implements EntityInterface, HasIdInterface
 {
     use ToArray;
     use InputFilter;
-
-    /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true})
-     * @ORM\GeneratedValue(strategy = "SEQUENCE")
-     * @ORM\Id
-     * @ORM\SequenceGenerator(sequenceName = "events_seq", initialValue = 1, allocationSize = 20)
-     *
-     * @var int $id
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @ORM\Column(type = "string", options = {"unsigned": true})
@@ -48,7 +41,7 @@ class Event implements EntityInterface
     protected $sourceEntityClass;
 
     /**
-     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\User\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity = "Opg\Core\Model\Entity\Assignable\User", fetch="EAGER")
      * @var User $user
      */
     protected $user;
@@ -160,18 +153,6 @@ class Event implements EntityInterface
     }
 
     /**
-     * @param string $id
-     *
-     * @return Event
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
      * @throws \LogicException
      * @return array
      */
@@ -187,14 +168,6 @@ class Event implements EntityInterface
     public function hasChangeset()
     {
         return !empty($this->changeset);
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -278,7 +251,7 @@ class Event implements EntityInterface
     }
 
     /**
-     * @return \Opg\Core\Model\Entity\User\User
+     * @return \Opg\Core\Model\Entity\Assignable\User
      */
     public function getUser()
     {

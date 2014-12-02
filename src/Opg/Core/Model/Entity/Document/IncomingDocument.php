@@ -1,7 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\Document;
 
-use Opg\Core\Model\Entity\CaseItem\Page\Page;
+use Opg\Core\Model\Entity\Document\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
@@ -39,7 +39,7 @@ class IncomingDocument extends Document
     protected $description;
 
     /**
-     * @ORM\OneToMany(targetEntity = "Opg\Core\Model\Entity\CaseItem\Page\Page", mappedBy = "document", indexBy = "pageNumber", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity = "Opg\Core\Model\Entity\Document\Page\Page", mappedBy = "document", indexBy = "pageNumber", cascade={"persist"})
      * @ORM\OrderBy({"pageNumber" = "ASC"})
      *
      * @var ArrayCollection

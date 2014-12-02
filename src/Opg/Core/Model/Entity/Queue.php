@@ -4,6 +4,8 @@ namespace Opg\Core\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 
 /**
  * Queue
@@ -11,16 +13,9 @@ use DateTime;
  * @ORM\Table(name="queue_business_rules", indexes={@ORM\Index(name="queue_business_rules_idx", columns={"id", "status"})})
  * @ORM\Entity
  */
-class Queue
+class Queue implements HasIdInterface
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    protected $id;
+    use HasId;
 
     /**
      * @var string
@@ -84,28 +79,6 @@ class Queue
      * @ORM\Column(name="trace", type="text", nullable=true)
      */
     protected $trace;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return Queue
-     */
-    public function setId( $id )
-    {
-        $this->id = (int) $id;
-
-        return $this;
-    }
 
     /**
      * Set queue

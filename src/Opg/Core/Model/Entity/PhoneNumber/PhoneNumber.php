@@ -2,10 +2,12 @@
 namespace Opg\Core\Model\Entity\PhoneNumber;
 
 use Opg\Common\Model\Entity\EntityInterface;
+use Opg\Common\Model\Entity\HasIdInterface;
+use Opg\Common\Model\Entity\Traits\HasId;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\Person\Person;
+use Opg\Core\Model\Entity\CaseActor\Person;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Groups;
@@ -20,25 +22,19 @@ use JMS\Serializer\Annotation\Type;
  * Class PhoneNumber
  * @package Opg\Core\Model\Entity\PhoneNumber
  */
-class PhoneNumber implements EntityInterface, \IteratorAggregate
+class PhoneNumber implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use ToArray;
     use IteratorAggregate;
     use InputFilterTrait;
+    use HasId;
 
     /**
-     * @ORM\Column(type = "integer", options = {"unsigned": true}) @ORM\GeneratedValue(strategy = "AUTO") @ORM\Id
-     * @var integer
-     * @Groups({"api-person-get"})
-     */
-    protected $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\Person\Person", inversedBy="phoneNumbers")
+     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="phoneNumbers")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
-     * @var \Opg\Core\Model\Entity\Person\Person
+     * @var \Opg\Core\Model\Entity\CaseActor\Person
      * @Groups({"api-person-get"})
-     * @Type("Opg\Core\Model\Entity\Person\Person")
+     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
      */
     protected $person;
 
@@ -81,26 +77,6 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate
     public function getDefault()
     {
         return (bool)$this->default;
-    }
-
-    /**
-     * @param integer $id
-     *
-     * @return PhoneNumber
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
