@@ -5,10 +5,9 @@ namespace OpgTest\Core\Model\Entity\Assignable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\Assignable\AssignableComposite;
 use Opg\Core\Model\Entity\Assignable\Team;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Order;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\Task\Task;
-
 
 class AssignableCompositeStub extends AssignableComposite
 {
@@ -81,7 +80,7 @@ class AssignableCompositeTest extends \PHPUnit_Framework_TestCase
 
         $lpa = new Lpa();
 
-        $deputyship = new LayDeputy();
+        $deputyship = new Order();
 
         $cases = new ArrayCollection();
 

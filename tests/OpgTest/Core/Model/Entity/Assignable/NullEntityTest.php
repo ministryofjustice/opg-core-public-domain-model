@@ -2,10 +2,9 @@
 
 namespace OpgTest\Core\Model\Entity\Assignable;
 
-
 use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Order;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\Task\Task;
 use Zend\InputFilter\InputFilter;
@@ -46,7 +45,7 @@ class NullEntityTest extends \PHPUnit_Framework_TestCase
     {
         $lpa = new Lpa();
 
-        $deputyship = new LayDeputy();
+        $deputyship = new Order();
 
         $cases = new ArrayCollection();
 
