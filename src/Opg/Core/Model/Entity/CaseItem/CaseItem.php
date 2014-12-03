@@ -45,7 +45,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * "epa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Epa",
  * "poa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney",
  * "dep" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship",
- * "lay" = "Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy",
+ * "order" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Order",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
  */
