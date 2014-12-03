@@ -3,22 +3,22 @@
 namespace OpgTest\Core\Model\CaseItem\Deputyship;
 
 use Opg\Common\Exception\UnusedException;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Order;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 
-class LayDeputyTest extends \PHPUnit_Framework_TestCase
+class OrderTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $layDeputy;
 
     public function setUp()
     {
-        $this->layDeputy = new LayDeputy();
+        $this->layDeputy = new Order();
     }
 
     public function testSetUp()
     {
-        $this->assertTrue($this->layDeputy instanceof LayDeputy);
+        $this->assertTrue($this->layDeputy instanceof Order);
     }
 
     public function testSetId()
@@ -35,6 +35,7 @@ class LayDeputyTest extends \PHPUnit_Framework_TestCase
         try {
             $this->layDeputy->setInputFilter($mockInputFilter);
         } catch (\Exception $e) {
+            var_dump($e->getMessage(), get_class($e));
             $this->assertTrue($e instanceof \LogicException);
             $this->assertFalse($e instanceof UnusedException);
         }
@@ -49,7 +50,6 @@ class LayDeputyTest extends \PHPUnit_Framework_TestCase
 
     public function testAddPerson()
     {
-
         try {
             $this->layDeputy->addPerson(new Donor());
         } catch (\Exception $e) {
