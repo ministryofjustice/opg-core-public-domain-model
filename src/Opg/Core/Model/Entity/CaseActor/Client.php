@@ -4,6 +4,8 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Common\Model\Entity\HasStatusDate;
+use Opg\Common\Model\Entity\Traits\StatusDate;
 use Opg\Core\Model\Entity\CaseActor\Decorators\CaseRecNumber;
 use Opg\Core\Model\Entity\CaseActor\Decorators\ClientAccommodation;
 use Opg\Core\Model\Entity\CaseActor\Decorators\ClientStatus;
@@ -20,12 +22,14 @@ use Opg\Core\Model\Entity\CaseActor\Validation\InputFilter\ClientFilter;
  *
  * @ORM\Entity
  */
-class Client extends Donor implements HasCaseRecNumber, HasClientAccommodation, HasMaritalStatus, HasClientStatus
+class Client extends Donor
+    implements HasCaseRecNumber, HasClientAccommodation, HasMaritalStatus, HasClientStatus, HasStatusDate
 {
     use CaseRecNumber;
     use ClientAccommodation;
     use MaritalStatus;
     use ClientStatus;
+    use StatusDate;
 
     /**
      * @return \Opg\Common\Model\Entity\Traits\InputFilter|\Zend\InputFilter\InputFilter|\Zend\InputFilter\InputFilterInterface

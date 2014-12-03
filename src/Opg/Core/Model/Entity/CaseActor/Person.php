@@ -48,6 +48,7 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor"
  *     "actor_client" = "Opg\Core\Model\Entity\CaseActor\Client"
  *     "actor_deputy" = "Opg\Core\Model\Entity\CaseActor\Deputy"
+ *     "actor_fee_payer" = "Opg\Core\Model\Entity\CaseActor\FeePayer"
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */

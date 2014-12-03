@@ -4,6 +4,10 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Common\Model\Entity\HasStatusDate;
+use Opg\Common\Model\Entity\Traits\StatusDate;
+use Opg\Core\Model\Entity\CaseActor\Decorators\CaseRecNumber;
+use Opg\Core\Model\Entity\CaseActor\Interfaces\HasCaseRecNumber;
 use Opg\Core\Model\Entity\CaseActor\Validation\InputFilter\DeputyFilter;
 
 /**
@@ -12,8 +16,11 @@ use Opg\Core\Model\Entity\CaseActor\Validation\InputFilter\DeputyFilter;
  *
  * @ORM\Entity
  */
-class Deputy extends Attorney
+class Deputy extends Attorney implements HasStatusDate, HasCaseRecNumber
 {
+    use CaseRecNumber;
+    use StatusDate;
+
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
