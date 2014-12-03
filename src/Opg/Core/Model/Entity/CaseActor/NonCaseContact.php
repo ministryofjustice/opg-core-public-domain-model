@@ -27,14 +27,7 @@ class NonCaseContact extends BasePerson
      * @ReadOnly
      * @Exclude
      */
-    protected $powerOfAttorneys = null;
-
-    /**
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Exclude
-     */
-    protected $deputyships = null;
+    protected $cases = null;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
