@@ -41,6 +41,8 @@ trait HasFees
      */
     public function setFees(ArrayCollection $fees)
     {
+        $this->fees = new ArrayCollection();
+
         foreach ($fees as $fee) {
             $this->addFee($fee);
         }
