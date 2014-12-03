@@ -34,15 +34,15 @@ abstract class LegalEntity
     implements HasIdInterface, HasUidInterface, EntityInterface, HasDateTimeAccessor, HasDocumentsInterface, HasNotesInterface,
     \IteratorAggregate, HasTasksInterface, HasWarningsInterface
 {
-    use ToArray;
+    use HasId;
     use UniqueIdentifier;
-    use DateTimeAccessor;
     use HasDocuments;
     use HasNotes;
-    use InputFilter;
     use HasTasks;
-    use HasId;
     use HasWarnings;
+    use ToArray;
+    use DateTimeAccessor;
+    use InputFilter;
 
     // Fulfil IteratorAggregate interface requirements
     public function getIterator()
