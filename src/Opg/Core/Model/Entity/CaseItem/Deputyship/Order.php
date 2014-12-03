@@ -86,7 +86,6 @@ class Order extends Deputyship implements HasCourtFundsInterface, HasAnnualRepor
         return $this->feePayer;
     }
 
-
     /**
      * @return \Opg\Common\Filter\BaseInputFilter
      */

@@ -45,15 +45,6 @@ class CourtFund implements HasIdInterface
     protected $lastUpdatedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
-     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="orderDate")
-     * @Type("string")
-     */
-    protected $fundStatus;
-
-    /**
      * @param float $accountBalance
      * @return CourtFund
      */
@@ -70,25 +61,6 @@ class CourtFund implements HasIdInterface
     public function getAccountBalance()
     {
         return $this->accountBalance;
-    }
-
-    /**
-     * @param string $fundStatus
-     * @return CourtFund
-     */
-    public function setFundsStatus($fundStatus)
-    {
-        $this->fundStatus = $fundStatus;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFundStatus()
-    {
-        return $this->fundStatus;
     }
 
     /**
