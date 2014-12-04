@@ -10,6 +10,7 @@ use Opg\Common\Model\Entity\HasIdInterface;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Exclude;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasId;
 use Doctrine\ORM\Mapping as ORM;

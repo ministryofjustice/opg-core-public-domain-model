@@ -11,6 +11,8 @@ use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseActor\Decorators\CaseRecNumber;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasCaseRecNumber;
 use Opg\Core\Model\Entity\CaseActor\Validation\InputFilter\DeputyFilter;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class Deputy

@@ -45,10 +45,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  *     "actor_non_case_contact" = "Opg\Core\Model\Entity\CaseActor\NonCaseContact",
  *     "actor_notified_relative" = "Opg\Core\Model\Entity\CaseActor\NotifiedRelative",
  *     "actor_notified_attorney" = "Opg\Core\Model\Entity\CaseActor\NotifiedAttorney",
- *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor"
- *     "actor_client" = "Opg\Core\Model\Entity\CaseActor\Client"
- *     "actor_deputy" = "Opg\Core\Model\Entity\CaseActor\Deputy"
- *     "actor_fee_payer" = "Opg\Core\Model\Entity\CaseActor\FeePayer"
+ *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor",
+ *     "actor_client" = "Opg\Core\Model\Entity\CaseActor\Client",
+ *     "actor_deputy" = "Opg\Core\Model\Entity\CaseActor\Deputy",
+ *     "actor_fee_payer" = "Opg\Core\Model\Entity\CaseActor\FeePayer",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */

@@ -12,6 +12,8 @@ use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasAnnualReportsInterfac
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasCourtFunds;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasCourtFundsInterface;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\OrderFilter;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ReadOnly;
 
 /**
  * @ORM\Entity
@@ -36,7 +38,7 @@ class Order extends Deputyship implements HasCourtFundsInterface, HasAnnualRepor
     protected $fileLocationDescription;
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Address\Address", nullable=true)
+     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Address\Address")
      * @ORM\JoinColumn(name="filelocation_id", referencedColumnName="id")
      * @var Address
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
