@@ -4,6 +4,7 @@ namespace OpgTest\Core\Model\Entity\Documents;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Opg\Common\Model\Entity\DateFormat;
+use Opg\Core\Model\Entity\Assignable\NullEntity;
 use Opg\Core\Model\Entity\CaseActor\NonCaseContact;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\Document\Page\Page;
@@ -191,7 +192,7 @@ class IncomingDocumentTest extends PHPUnit_Framework_TestCase
     {
         $user = (new User())->setId(2);
 
-        $this->assertNull($this->document->getAssignee());
+        $this->assertTrue($this->document->getAssignee() instanceof NullEntity);
         $this->assertEquals($user, $this->document->setAssignee($user)->getAssignee());
 
     }
