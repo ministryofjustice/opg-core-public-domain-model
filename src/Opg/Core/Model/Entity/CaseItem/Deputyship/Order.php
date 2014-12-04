@@ -8,7 +8,6 @@ use Opg\Core\Model\Entity\CaseActor\FeePayer;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasAnnualReportsInterface;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasCourtFunds;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasCourtFundsInterface;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\OrderFilter;
@@ -18,7 +17,7 @@ use JMS\Serializer\Annotation\ReadOnly;
 /**
  * @ORM\Entity
  */
-class Order extends Deputyship implements HasCourtFundsInterface, HasAnnualReportsInterface
+class Order extends Deputyship implements HasCourtFundsInterface
 {
     use HasCourtFunds;
 

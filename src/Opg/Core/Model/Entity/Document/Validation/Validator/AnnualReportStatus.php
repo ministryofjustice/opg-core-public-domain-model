@@ -1,11 +1,13 @@
 <?php
 
-
-namespace Opg\Core\Model\Entity\CaseItem\Deputyship\Report\Validation\Validator;
-
+namespace Opg\Core\Model\Entity\Document\Validation\Validator;
 
 use Zend\Validator\InArray;
 
+/**
+ * Class AnnualReportStatus
+ * @package Opg\Core\Model\Entity\Document\Validation\Validator
+ */
 class AnnualReportStatus extends InArray
 {
     static $reportStatus = array(

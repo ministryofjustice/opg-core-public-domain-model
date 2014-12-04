@@ -2,8 +2,7 @@
 
 namespace OpgTest\Core\Model\CaseItem\Deputyship\Report;
 
-
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Report\AnnualReport;
+use Opg\Core\Model\Entity\Document\AnnualReport;
 use Opg\Core\Model\Entity\Document\IncomingDocument;
 use Opg\Core\Model\Entity\Document\OutgoingDocument;
 
@@ -21,20 +20,6 @@ class AnnualReportTest extends \PHPUnit_Framework_TestCase {
     {
         $this->assertTrue($this->report instanceof AnnualReport);
         $this->assertTrue($this->report->getIterator() instanceof \RecursiveArrayIterator);
-    }
-
-    public function testGetSetDocuments()
-    {
-        $incDoc = new IncomingDocument();
-        $outGoingDoc = new OutgoingDocument();
-        $expectedCount = 1;
-
-        $this->assertEmpty($this->report->getDocuments()->toArray());
-        $this->assertTrue($this->report->addDocument($incDoc) instanceof AnnualReport);
-        $this->assertTrue($this->report->addDocument($outGoingDoc) instanceof AnnualReport);
-
-        $this->assertCount(2, $this->report->getDocuments()->toArray());
-        $this->assertEquals($expectedCount, $this->report->getCorrespondenceCount());
     }
 
     public function testGetSetDueDate()

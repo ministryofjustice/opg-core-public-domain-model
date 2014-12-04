@@ -1,6 +1,6 @@
 <?php
 
-namespace Opg\Core\Model\Entity\CaseItem\Deputyship\Report;
+namespace Opg\Core\Model\Entity\Document;
 
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Filter\BaseInputFilter;
@@ -17,20 +17,26 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Exclude;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Report\Validation\InputFilter\AnnualReportFilter;
+use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
+use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
+use Opg\Core\Model\Entity\Document\Validation\InputFilter\AnnualReportFilter;
 
 /**
  * Class AnnualReport
- * @package Opg\Core\Model\Entity\CaseItem\Report
+ * @package Opg\Core\Model\Entity\Document
  *
  * @ORM\Entity
  */
-class AnnualReport implements HasIdInterface, HasDocumentsInterface, EntityInterface, \IteratorAggregate
+class AnnualReport extends Document implements EntityInterface, HasAssetLog
 {
-    use HasId;
-    use HasDocuments;
-    use InputFilter;
-    use ToArray;
+    use AssetLog;
+
+    /**
+     * @Type("string")
+     * @Accessor(getter="getDirection")
+     * @ReadOnly
+     */
+    protected $direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -80,22 +86,6 @@ class AnnualReport implements HasIdInterface, HasDocumentsInterface, EntityInter
      * @var string
      */
     protected $status;
-
-    /**
-     * None persisted entity
-     * @var int
-     * @ReadOnly
-     * @Accessor(getter="getCorrespondenceCount")
-     */
-    protected $chaseCorrespondence;
-
-    /**
-     * @return int
-     */
-    public function getCorrespondenceCount()
-    {
-        return $this->getOutgoingDocuments()->count();
-    }
 
     /**
      * @param \DateTime $dueDate

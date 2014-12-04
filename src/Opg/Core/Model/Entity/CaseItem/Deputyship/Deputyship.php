@@ -16,7 +16,6 @@ use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
-use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasAnnualReports;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasDeputies;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasDeputiesInterface;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasFees;
@@ -31,7 +30,6 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     use CaseRecNumber;
     use HasFees;
     use HasDeputies;
-    use HasAnnualReports;
 
     /**
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Client", fetch = "EAGER")
