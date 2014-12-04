@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brettm
- * Date: 02/12/14
- * Time: 14:59
- */
 
 namespace OpgTest\Common\Model\Entity\CaseActor;
 
 
+use Opg\Core\Model\Entity\Assignable\NullEntity;
+use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Core\Model\Entity\CaseActor\Deputy;
 
 class DeputyTest extends \PHPUnit_Framework_TestCase
@@ -49,5 +45,17 @@ class DeputyTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->actor->getDeputyReferenceNumber());
         $this->assertTrue($this->actor->setDeputyReferenceNumber($expected) instanceof Deputy);
         $this->assertEquals($expected, $this->actor->getDeputyReferenceNumber());
+    }
+
+    public function testDeputyCanBeAssigned()
+    {
+        $assignee = (new User())->setId(1);
+
+        $this->assertFalse($this->actor->isAssigned());
+        $this->assertTrue($this->actor->getAssignee() instanceof NullEntity);
+        $this->assertTrue($this->actor->assign($assignee) instanceof Deputy);
+
+        $this->assertTrue($this->actor->isAssigned());
+        $this->assertEquals($assignee, $this->actor->getAssignee());
     }
 }
