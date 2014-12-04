@@ -24,15 +24,19 @@ trait HasDocuments
      */
     protected $documents;
 
+    protected function initDocuments()
+    {
+        if (is_null($this->documents)) {
+            $this->documents = new ArrayCollection();
+        }
+    }
+
     /**
      * @return ArrayCollection
      */
     public function getIncomingDocuments()
     {
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
-
+        $this->initDocuments();
         return $this->getFilteredDocuments(Document::DIRECTION_INCOMING);
     }
 
@@ -41,10 +45,7 @@ trait HasDocuments
      */
     public function getOutgoingDocuments()
     {
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
-
+        $this->initDocuments();
         return $this->getFilteredDocuments(Document::DIRECTION_OUTGOING);
     }
 
@@ -54,9 +55,7 @@ trait HasDocuments
      */
     public function getDocuments($filter = null)
     {
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
+        $this->initDocuments();
 
         if ($filter) {
             return $this->getFilteredDocuments($filter);
@@ -71,7 +70,11 @@ trait HasDocuments
      */
     public function setDocuments(ArrayCollection $documents)
     {
-        $this->documents = $documents;
+        $this->documents = new ArrayCollection();
+
+        foreach ($documents as $document) {
+            $this->addDocument($document);
+        }
 
         return $this;
     }
@@ -82,9 +85,7 @@ trait HasDocuments
      */
     public function addDocument(Document $document)
     {
-        if (is_null($this->documents)) {
-            $this->documents = new ArrayCollection();
-        }
+        $this->initDocuments();
 
         if (false == $this->documents->contains($document)) {
             $this->documents->add($document);
