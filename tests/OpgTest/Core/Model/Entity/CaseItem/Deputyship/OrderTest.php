@@ -2,11 +2,13 @@
 
 namespace OpgTest\Core\Model\CaseItem\Deputyship;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Exception\UnusedException;
 use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\Client;
 use Opg\Core\Model\Entity\CaseActor\Deputy;
+use Opg\Core\Model\Entity\CaseActor\FeePayer;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseItem\Deputyship\Order;
@@ -71,7 +73,26 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->layDeputy->addPerson(new Client()) instanceof CaseItem);
         $this->assertTrue($this->layDeputy->addPerson(new Deputy()) instanceof CaseItem);
+        $this->assertTrue($this->layDeputy->addPerson(new FeePayer()) instanceof CaseItem);
 
+        $this->assertTrue($this->layDeputy->getClient() instanceof Client);
+        $this->assertTrue($this->layDeputy->getDeputies() instanceof ArrayCollection);
+        $this->assertTrue($this->layDeputy->getFeePayer() instanceof FeePayer);
     }
 
+    public function testGetSetOrderStatus()
+    {
+        $expected = 'True';
+
+        $this->assertEmpty($this->layDeputy->getOrderStatus());
+        $this->assertTrue($this->layDeputy->setOrderStatus($expected) instanceof Order);
+        $this->assertEquals($expected, $this->layDeputy->getOrderStatus());
+        $this->assertFalse($this->layDeputy->isValid(array('orderStatus')));
+
+        $expected = 'Active';
+
+        $this->assertTrue($this->layDeputy->setOrderStatus($expected) instanceof Order);
+        $this->assertEquals($expected, $this->layDeputy->getOrderStatus());
+        $this->assertTrue($this->layDeputy->isValid(array('orderStatus')));
+    }
 }

@@ -203,6 +203,14 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     }
 
     /**
+     * @return bool
+     */
+    public function hasSecurityBond()
+    {
+        return (true === $this->getSecurityBond());
+    }
+
+    /**
      * @param Client $client
      * @return Deputyship
      * @throws \LogicException
