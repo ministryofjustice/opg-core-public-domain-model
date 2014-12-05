@@ -34,6 +34,7 @@ use JMS\Serializer\Annotation\GenericAccessor;
  *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
  *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
  *     "lodging_checklist" = "Opg\Core\Model\Entity\Document\LodgingChecklist",
+ *     "annual_report"     = "Opg\Core\Model\Entity\Document\AnnualReport",
  * })
  *
  * Class Document
