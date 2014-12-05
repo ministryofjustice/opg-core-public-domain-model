@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brettm
- * Date: 03/12/14
- * Time: 16:28
- */
 
 namespace OpgTest\Common\Model\Entity\Traits;
 
