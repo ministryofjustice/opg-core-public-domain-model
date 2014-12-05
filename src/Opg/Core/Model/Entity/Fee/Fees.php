@@ -2,7 +2,6 @@
 
 namespace Opg\Core\Model\Entity\Fee;
 
-use Guzzle\Common\ToArrayInterface;
 use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
@@ -32,7 +31,7 @@ use Opg\Common\Model\Entity\Traits\ToArray;
  * })
  */
 abstract class Fees
-    implements HasIdInterface, HasDateTimeAccessor, EntityInterface, \IteratorAggregate, ToArrayInterface
+    implements HasIdInterface, HasDateTimeAccessor, EntityInterface, \IteratorAggregate
 {
     use HasId;
     use DateTimeAccessor;
