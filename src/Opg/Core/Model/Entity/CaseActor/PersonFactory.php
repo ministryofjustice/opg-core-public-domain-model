@@ -55,6 +55,9 @@ class PersonFactory
                 case "Deputy" :
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\Deputy";
                     break;
+                case "FeePayer" :
+                    $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\FeePayer";
+                    break;
                 default:
                     $personType = "Opg\\Core\\Model\\Entity\\CaseActor\\NonCaseContact";
                     break;
