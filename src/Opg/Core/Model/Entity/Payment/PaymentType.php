@@ -39,10 +39,10 @@ use Opg\Core\Validation\InputFilter\PaymentFilter;
  */
 abstract class PaymentType implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor, HasIdInterface
 {
+    use HasId;
     use ToArray;
     use InputFilter;
     use DateTimeAccessor;
-    use HasId;
 
     const PAYMENT_TYPE_CASH     = 'Cash';
     const PAYMENT_TYPE_CARD     = 'Card';

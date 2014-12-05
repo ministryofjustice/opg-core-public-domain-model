@@ -7,8 +7,12 @@ use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Lpa;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use \Exception;
+use Opg\Core\Model\Entity\Document\IncomingDocument;
+use Opg\Core\Model\Entity\Document\OutgoingDocument;
+use Opg\Core\Model\Entity\Note\Note;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Core\Model\Entity\Task\Task;
 use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
@@ -28,6 +32,7 @@ class PersonStub extends Person
 class PersonTest extends \PHPUnit_Framework_TestCase
 {
 
+    /** @var  PersonStub */
     private $person;
 
     protected function setUp ()
@@ -389,7 +394,42 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($testCollection, $this->person->getWarnings());
 
         $this->assertEquals($testActiveCollection, $this->person->getActiveWarnings());
+    }
 
+    public function testPersonCanHaveDocuments()
+    {
+        $collection = new ArrayCollection();
+        $collection->add(new IncomingDocument());
+        $collection->add(new IncomingDocument());
+        $collection->add(new OutgoingDocument());
+        $collection->add(new OutgoingDocument());
+
+        $this->person->setDocuments($collection);
+
+        $this->assertCount(2, $this->person->getIncomingDocuments()->toArray());
+        $this->assertCount(2, $this->person->getOutgoingDocuments()->toArray());
+    }
+
+    public function testPersonCanHaveTasks()
+    {
+        $collection = new ArrayCollection();
+        $collection->add(new Task());
+        $collection->add(new Task());
+
+        $this->person->setTasks($collection);
+
+        $this->assertCount(2, $this->person->getTasks()->toArray());
+    }
+
+    public function testPersonCanHaveNotes()
+    {
+        $collection = new ArrayCollection();
+        $collection->add(new Note());
+        $collection->add(new Note());
+
+        $this->person->setNotes($collection);
+
+        $this->assertCount(2, $this->person->getNotes()->toArray());
     }
   }
 

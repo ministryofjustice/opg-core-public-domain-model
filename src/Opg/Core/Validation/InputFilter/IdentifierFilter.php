@@ -2,8 +2,8 @@
 
 namespace Opg\Core\Validation\InputFilter;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Core\Validation\Validator\IntegerOutOfRange;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 
 
@@ -11,7 +11,7 @@ use Zend\InputFilter\Factory as InputFactory;
  * Class IdentifierFilter
  * @package Opg\Core\Validation\InputFilter
  */
-class IdentifierFilter extends InputFilter
+class IdentifierFilter extends BaseInputFilter
 {
 
     /**

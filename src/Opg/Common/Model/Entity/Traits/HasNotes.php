@@ -28,6 +28,7 @@ trait HasNotes
      * @Groups({"api-person-get"})
      */
     protected $notes;
+    
     /**
      * @return ArrayCollection|null
      */

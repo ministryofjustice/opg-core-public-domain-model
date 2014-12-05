@@ -3,8 +3,6 @@ namespace Opg\Core\Model\Entity\Document;
 
 use Opg\Core\Model\Entity\Document\Page\Page;
 use Doctrine\Common\Collections\ArrayCollection;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
@@ -58,39 +56,6 @@ class IncomingDocument extends Document
     {
         $this->pages = new ArrayCollection();
         $this->setCreatedDate();
-    }
-
-    /**
-     * @return InputFilter
-     */
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-            $factory     = new InputFactory();
-
-            $inputFilter->add(
-                $factory->createInput(
-                    array(
-                        'name'       => 'id',
-                        'required'   => true,
-                        'filters'    => array(
-                            array('name' => 'StripTags'),
-                            array('name' => 'StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name' => 'Digits'
-                            )
-                        )
-                    )
-                )
-            );
-
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
     }
 
     /**

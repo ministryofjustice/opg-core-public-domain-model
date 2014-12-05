@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasRagRating;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
@@ -44,7 +45,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * "epa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Epa",
  * "poa" = "Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\PowerOfAttorney",
  * "dep" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship",
- * "lay" = "Opg\Core\Model\Entity\CaseItem\Deputyship\LayDeputy",
+ * "order" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Order",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
  */
@@ -199,6 +200,41 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      */
     protected $payments;
 
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneySingular = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointly = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyJointlyAndJointlyAndSeverally = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $caseAttorneyActionAdditionalInfo = false;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -349,26 +385,16 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     }
 
     /**
-     * @return InputFilter|CaseItemFilter|\Zend\InputFilter\InputFilterInterface
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {
-        $this->inputFilter = new \Zend\InputFilter\InputFilter();
+        $this->inputFilter = new BaseInputFilter();
 
-        $caseItemFilter =  new CaseItemFilter();
-        foreach($caseItemFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
+        $this->inputFilter->merge(new CaseItemFilter());
+        $this->inputFilter->merge(new UidFilter());
+        $this->inputFilter->merge(new IdentifierFilter());
 
-        $uidFilter =  new UidFilter();
-        foreach($uidFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
-
-        $idFilter = new IdentifierFilter();
-        foreach($idFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
         return $this->inputFilter;
     }
 
@@ -644,5 +670,104 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
         }
 
         return $this->payments;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointly($caseAttorney = false)
+    {
+        $this->caseAttorneyJointly = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointly()
+    {
+        return $this->caseAttorneyJointly;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndJointlyAndSeverally = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyJointlyAndSeverally($caseAttorney = false)
+    {
+        $this->caseAttorneyJointlyAndSeverally = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneyJointlyAndSeverally()
+    {
+        return $this->caseAttorneyJointlyAndSeverally;
+    }
+
+    /**
+     * @param boolean $caseAttorney
+     *
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneySingular($caseAttorney = false)
+    {
+        $this->caseAttorneySingular = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCaseAttorneySingular()
+    {
+        return $this->caseAttorneySingular;
+    }
+
+    /**
+     * @param bool $caseAttorney
+     * @return PowerOfAttorney
+     */
+    public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
+    {
+        $this->caseAttorneyActionAdditionalInfo = $caseAttorney;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCaseAttorneyActionAdditionalInfo()
+    {
+        return $this->caseAttorneyActionAdditionalInfo;
     }
 }

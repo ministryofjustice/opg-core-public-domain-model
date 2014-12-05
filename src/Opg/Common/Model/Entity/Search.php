@@ -1,6 +1,7 @@
 <?php
 namespace Opg\Common\Model\Entity;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\Traits\InputFilter as InputFilterTrait;
 use Opg\Common\Model\Entity\Traits\IteratorAggregate;
 use Opg\Common\Model\Entity\Traits\ToArray;
@@ -37,12 +38,12 @@ class Search implements EntityInterface, \IteratorAggregate
     }
 
     /**
-     * @return \Zend\InputFilter\InputFilterInterface
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
+            $inputFilter = new BaseInputFilter();
             $factory     = new InputFactory();
 
             $inputFilter->add(

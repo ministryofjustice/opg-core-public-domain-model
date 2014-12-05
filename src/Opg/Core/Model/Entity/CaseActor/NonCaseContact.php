@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 
 /**
  * @ORM\Entity
@@ -26,14 +27,7 @@ class NonCaseContact extends BasePerson
      * @ReadOnly
      * @Exclude
      */
-    protected $powerOfAttorneys = null;
-
-    /**
-     * @var ArrayCollection
-     * @ReadOnly
-     * @Exclude
-     */
-    protected $deputyships = null;
+    protected $cases = null;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -79,7 +73,7 @@ class NonCaseContact extends BasePerson
      *
      * @param  string $fullname
      *
-     * @return PartyInterface
+     * @return LegalEntity
      */
     public function setFullname($fullname)
     {

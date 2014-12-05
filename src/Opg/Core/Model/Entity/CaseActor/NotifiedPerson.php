@@ -68,7 +68,7 @@ class NotifiedPerson extends BasePerson implements HasRelationshipToDonor, HasDa
                 )
             );
 
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter->merge($inputFilter);
         }
 
         return $this->inputFilter;

@@ -140,7 +140,7 @@ class CertificateProvider extends BasePerson implements HasRelationshipToDonor
                 )
             );
 
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter->merge($inputFilter);
         }
 
         return $this->inputFilter;

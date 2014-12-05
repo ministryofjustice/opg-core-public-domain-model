@@ -5,6 +5,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasCasesInterface;
 use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Common\Model\Entity\Traits\HasDocuments;
@@ -44,7 +45,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  *     "actor_non_case_contact" = "Opg\Core\Model\Entity\CaseActor\NonCaseContact",
  *     "actor_notified_relative" = "Opg\Core\Model\Entity\CaseActor\NotifiedRelative",
  *     "actor_notified_attorney" = "Opg\Core\Model\Entity\CaseActor\NotifiedAttorney",
- *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor"
+ *     "actor_notified_donor" = "Opg\Core\Model\Entity\CaseActor\PersonNotifyDonor",
+ *     "actor_client" = "Opg\Core\Model\Entity\CaseActor\Client",
+ *     "actor_deputy" = "Opg\Core\Model\Entity\CaseActor\Deputy",
+ *     "actor_fee_payer" = "Opg\Core\Model\Entity\CaseActor\FeePayer",
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
@@ -549,21 +553,14 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
-     * @return \Zend\InputFilter\InputFilter|InputFilterInterface
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {
-        $this->inputFilter = new \Zend\InputFilter\InputFilter();
+        $this->inputFilter = new BaseInputFilter();
 
-        $uidFilter =  new UidFilter();
-        foreach($uidFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
-
-        $idFilter = new IdentifierFilter();
-        foreach($idFilter->getInputs() as $name=>$input) {
-            $this->inputFilter->add($input, $name);
-        }
+        $this->inputFilter->merge(new UidFilter());
+        $this->inputFilter->merge(new IdentifierFilter());
 
         return $this->inputFilter;
     }

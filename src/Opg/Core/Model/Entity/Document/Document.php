@@ -2,7 +2,7 @@
 
 namespace Opg\Core\Model\Entity\Document;
 
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
@@ -12,8 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Common\Model\Entity\Traits\ToArray;
+use Opg\Core\Model\Entity\Assignable\Assignee;
+use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
+use Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
@@ -30,36 +33,32 @@ use JMS\Serializer\Annotation\GenericAccessor;
  * @ORM\DiscriminatorMap({
  *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
  *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
+ *     "lodging_checklist" = "Opg\Core\Model\Entity\Document\LodgingChecklist",
+ *     "annual_report"     = "Opg\Core\Model\Entity\Document\AnnualReport",
  * })
  *
  * Class Document
  * @package Opg\Core\Model\Entity\Document
  */
-abstract class Document implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor, HasIdInterface
+abstract class Document implements EntityInterface, \IteratorAggregate, HasDateTimeAccessor, HasIdInterface, IsAssignable
 {
     use ToArray;
     use InputFilter;
     use DateTimeAccessor;
     use HasId;
+    use Assignee;
 
     const DOCUMENT_INCOMING_CORRESPONDENCE = 0;
 
     const DOCUMENT_OUTGOING_CORRESPONDENCE = 1;
 
+    const DOCUMENT_INTERNAL_CORRESPONDENCE = 2;
+
     const DIRECTION_INCOMING = 'Incoming';
 
     const DIRECTION_OUTGOING = 'Outgoing';
 
-
-    /**
-     * @ORM\ManyToOne(
-     *      targetEntity = "Opg\Core\Model\Entity\Assignable\AssignableComposite",
-     *      fetch = "EAGER",
-     *      cascade={"persist"}
-     * )
-     * @var AssignableComposite
-     */
-    protected $assignee;
+    const DIRECTION_INTERNAL = 'Internal';
 
     /**
      * @ORM\Column(type = "string", nullable = true)
@@ -128,9 +127,42 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     }
 
     /**
+     * @return InputFilter
+     */
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new BaseInputFilter();
+            $factory     = new InputFactory();
+
+            $inputFilter->add(
+                $factory->createInput(
+                    array(
+                        'name'       => 'id',
+                        'required'   => true,
+                        'filters'    => array(
+                            array('name' => 'StripTags'),
+                            array('name' => 'StringTrim'),
+                        ),
+                        'validators' => array(
+                            array(
+                                'name' => 'Digits'
+                            )
+                        )
+                    )
+                )
+            );
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
+
+    /**
      * @param string $title
      *
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setTitle($title)
     {
@@ -150,7 +182,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @param string $type
      *
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setType($type)
     {
@@ -169,7 +201,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @param \DateTime $createdDate
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setCreatedDate(\DateTime $createdDate = null)
     {
@@ -192,14 +224,16 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @param $direction
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setDirection($direction)
     {
         if (0 === strcasecmp($direction, self::DIRECTION_INCOMING)) {
             $this->direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
-        } else {
+        } elseif (0 === strcasecmp($direction, self::DIRECTION_OUTGOING)) {
             $this->direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
+        } else {
+            $this->direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
         }
 
         return $this;
@@ -210,13 +244,19 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      */
     public function getDirection()
     {
-        return ($this->direction === self::DOCUMENT_INCOMING_CORRESPONDENCE)
-            ? self::DIRECTION_INCOMING : self::DIRECTION_OUTGOING;
+        switch ($this->direction) {
+            case self::DOCUMENT_INTERNAL_CORRESPONDENCE:
+                return self::DIRECTION_INTERNAL;
+            case self::DOCUMENT_OUTGOING_CORRESPONDENCE:
+                return self::DIRECTION_OUTGOING;
+            default:
+                return self::DIRECTION_INCOMING;
+        }
     }
 
     /**
      * @param Person $correspondent
-     * @return BaseCorrespondence
+     * @return Document
      * @throws \LogicException
      */
     public function setCorrespondent(Person $correspondent = null)
@@ -239,21 +279,11 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @param AssignableComposite $assignee
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setAssignee(AssignableComposite $assignee = null)
     {
-        $this->assignee = $assignee;
-
-        return $this;
-    }
-
-    /**
-     * @return AssignableComposite
-     */
-    public function getAssignee()
-    {
-        return $this->assignee;
+        return $this->assign($assignee);
     }
 
     /**
@@ -267,7 +297,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @param string $filename
      *
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setFilename($filename)
     {
@@ -287,7 +317,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
      *
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setCase($case)
     {
@@ -306,7 +336,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @param string $friendlyDescription
-     * @return BaseCorrespondence
+     * @return Document
      */
     public function setFriendlyDescription($friendlyDescription)
     {

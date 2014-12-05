@@ -1,11 +1,9 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseActor;
 
+use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasSageId;
 use Opg\Common\Model\Entity\Traits\SageId;
-use Opg\Core\Model\Entity\CaseActor\Interfaces\PartyInterface;
-use Zend\InputFilter\InputFilter;
-use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
@@ -13,8 +11,6 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
@@ -25,11 +21,10 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  */
 class Donor extends BasePerson implements HasSageId
 {
-    use ToArray;
     use SageId;
 
     /**
-     * @return InputFilter
+     * @return BaseInputFilter
      */
     public function getInputFilter()
     {

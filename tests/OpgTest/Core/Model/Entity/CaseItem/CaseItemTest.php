@@ -12,6 +12,7 @@ use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
 use Opg\Core\Model\Entity\Queue as ScheduledJob;
+use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
  * ToArray test case.
@@ -524,5 +525,18 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
         $caseItem->setScheduledJobs($jobs);
 
         $this->assertEquals($jobs, $caseItem->getScheduledJobs());
+    }
+
+    public function testCaseCanHaveWarnings()
+    {
+        $collection = new ArrayCollection();
+        $collection->add(new Warning());
+        $collection->add(new Warning());
+        $collection->add(new Warning());
+
+        $caseItem = new CaseItemStub;
+        $caseItem->setWarnings($collection);
+
+        $this->assertCount(3, $caseItem->getWarnings()->toArray());
     }
 }

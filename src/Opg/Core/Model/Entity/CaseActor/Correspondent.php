@@ -61,7 +61,7 @@ class Correspondent extends BasePerson implements EntityInterface, HasRelationsh
                 )
             );
 
-            $this->inputFilter = $inputFilter;
+            $this->inputFilter->merge($inputFilter);
         }
 
         return $this->inputFilter;
