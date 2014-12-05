@@ -26,14 +26,6 @@ class BaseInputFilter extends InputFilter
                         array('name' => 'StringTrim'),
                     ),
                     'validators' => array(
-                        array(
-                            'name'    => 'StringLength',
-                            'options' => array(
-                                'encoding' => 'UTF-8',
-                                'min'      => 2,
-                                'max'      => 24,
-                            ),
-                        ),
                         new $className()
                     )
                 )
