@@ -16,8 +16,6 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
-use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
  * @ORM\Entity
@@ -25,11 +23,10 @@ use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
  * @package Opg Domain Model
  *
  */
-class NotifiedPerson extends BasePerson implements HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
+class NotifiedPerson extends BasePerson implements HasRelationshipToDonor, HasNoticeGivenDate
 {
     use ToArray;
     use RelationshipToDonor;
-    use DateTimeAccessor;
     use NoticeGivenDate;
 
     /**

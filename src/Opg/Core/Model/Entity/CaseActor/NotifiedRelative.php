@@ -4,8 +4,6 @@ namespace Opg\Core\Model\Entity\CaseActor;
 
 use Opg\Core\Model\Entity\CaseActor\Decorators\NoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
-use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasNoticeGivenDate;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
 
@@ -20,9 +18,8 @@ use JMS\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity
  */
-class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor, HasDateTimeAccessor, HasNoticeGivenDate
+class NotifiedRelative extends NonCaseContact implements HasRelationshipToDonor, HasNoticeGivenDate
 {
     use RelationshipToDonor;
-    use DateTimeAccessor;
     use NoticeGivenDate;
 }

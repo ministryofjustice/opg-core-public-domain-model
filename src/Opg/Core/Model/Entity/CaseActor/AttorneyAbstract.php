@@ -12,18 +12,15 @@ use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\GenericAccessor;
-use Opg\Common\Model\Entity\HasDateTimeAccessor;
-use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 
 /**
  * Class AttorneyAbstract
  * @package Opg\Core\Model\Entity\CaseActor
  */
-abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface, HasDateTimeAccessor, HasRelationshipToDonor
+abstract class AttorneyAbstract extends BasePerson implements HasSystemStatusInterface, HasRelationshipToDonor
 {
     use Company;
     use HasSystemStatus;
-    use DateTimeAccessor;
     use RelationshipToDonor;
 
     /**

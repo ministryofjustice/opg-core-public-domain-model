@@ -1,7 +1,6 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseActor;
 
-use Opg\Common\Model\Entity\EntityInterface;
 use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToDonor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasRelationshipToDonor;
 use Opg\Core\Model\Entity\CaseActor\Person as BasePerson;
@@ -20,7 +19,7 @@ use JMS\Serializer\Annotation\Type;
  *
  * @package Opg Domain Model
  */
-class Correspondent extends BasePerson implements EntityInterface, HasRelationshipToDonor
+class Correspondent extends BasePerson implements HasRelationshipToDonor
 {
     use Company;
     use ToArray;
