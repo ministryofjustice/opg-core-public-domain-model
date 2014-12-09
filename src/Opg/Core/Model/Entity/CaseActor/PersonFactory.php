@@ -2,15 +2,22 @@
 namespace Opg\Core\Model\Entity\CaseActor;
 
 use JMS\Serializer\Serializer;
+use Opg\Common\Model\Entity\FactoryInterface;
+use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 
 /**
  * Class PersonFactory
  * @package Opg\Core\Model\Entity\CaseActor
- * @codeCoverageIgnore
  * serializer to be mocked out
  */
-class PersonFactory
+class PersonFactory implements FactoryInterface
 {
+    /**
+     * @param array      $data
+     * @param Serializer $serializer
+     * @return LegalEntity
+     * @throws \Exception
+     */
     public static function create(array $data, Serializer $serializer)
     {
         $personType = null;
@@ -68,13 +75,13 @@ class PersonFactory
 
         // Try-Catch added due to https://github.com/schmittjoh/serializer/issues/216
         try {
+            /** @var Person $person */
             $person = $serializer->deserialize(
                 json_encode($data),
                 $personType,
                 'json'
             );
         } catch (\Exception $e) {
-            //@todo add logging for this or return the actual exception
             $person = null;
         }
 
