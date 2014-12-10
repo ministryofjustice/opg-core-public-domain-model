@@ -82,7 +82,7 @@ class PersonFactory implements FactoryInterface
                 'json'
             );
         } catch (\Exception $e) {
-            $person = null;
+            throw $e;
         }
 
         return $person;

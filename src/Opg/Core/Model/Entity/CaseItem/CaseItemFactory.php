@@ -47,7 +47,6 @@ class CaseItemFactory implements FactoryInterface
                 'json'
             );
         } catch (\Exception $e) {
-            $case = null;
             throw $e;
         }
 

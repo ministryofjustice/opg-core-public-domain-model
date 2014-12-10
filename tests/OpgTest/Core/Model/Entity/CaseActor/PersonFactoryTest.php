@@ -39,7 +39,9 @@ class PersonFactoryTest extends \PHPUnit_Framework_TestCase
         PersonFactory::create($data, $this->serializer);
     }
 
-
+    /**
+     * @expectedException \Exception
+     */
     public function testUnknownIdReturnsNull()
     {
         $data = array('personType' => 'Donor', 'id' => -1);
@@ -49,9 +51,7 @@ class PersonFactoryTest extends \PHPUnit_Framework_TestCase
             ->withAnyArgs()
             ->andThrow(new \Exception());
 
-        $person = PersonFactory::create($data, $this->serializer);
-
-        $this->assertNull($person);
+        PersonFactory::create($data, $this->serializer);
     }
 
     public function testUnknownTypeReturnsNonCaseContact()
