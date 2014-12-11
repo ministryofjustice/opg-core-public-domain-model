@@ -47,7 +47,7 @@ use Opg\Core\Validation\InputFilter\UidFilter;
  * "dep" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Deputyship",
  * "order" = "Opg\Core\Model\Entity\CaseItem\Deputyship\Order",
  * })
- * @ORM\entity(repositoryClass="Application\Model\Repository\CaseRepository")
+ * @ORM\entity(repositoryClass="Application\Model\Repository\CaseItemRepository")
  */
 abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRagRating, IsAssignable
 {

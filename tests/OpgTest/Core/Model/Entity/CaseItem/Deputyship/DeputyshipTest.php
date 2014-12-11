@@ -20,21 +20,6 @@ class DeputyshipTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->deputyShip instanceof Deputyship);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
-    public function testGetSetClient()
-    {
-        $client1 = (new Client())->setId(1);
-        $client2 = (new Client())->setId(2);
-
-        $this->assertEmpty($this->deputyShip->getClient());
-        $this->assertTrue($this->deputyShip->setClient($client1) instanceof Deputyship);
-        $this->assertEquals($client1, $this->deputyShip->getClient());
-        $this->assertTrue($this->deputyShip->setClient($client2) instanceof Deputyship);
-
-    }
-
     public function testGetSetBondReferenceNumber()
     {
         $expected = '123ABC';
