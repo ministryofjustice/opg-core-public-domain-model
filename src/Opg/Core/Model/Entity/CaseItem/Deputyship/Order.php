@@ -13,12 +13,20 @@ use Opg\Core\Model\Entity\CaseItem\Deputyship\Decorator\HasCourtFundsInterface;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\OrderFilter;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType as CaseTypeValidator;
 
 /**
  * @ORM\Entity
  */
 class Order extends Deputyship implements HasCourtFundsInterface
 {
+    /**
+    * @ORM\Column(type = "string", nullable = true)
+    * @var string
+    * @Groups("api-task-list")
+    */
+    protected $caseType = CaseTypeValidator::CASE_TYPE_ORDER;
+
     use HasCourtFunds;
 
     /**

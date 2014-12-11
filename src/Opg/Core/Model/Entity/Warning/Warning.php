@@ -184,9 +184,7 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
             return $this->getDateAdded()->format(DateFormat::getDateFormat());
         }
 
-        // @codeCoverageIgnoreStart
         return '';
-        //@codeCoverageIgnoreEnd
     }
 
     /**

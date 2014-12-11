@@ -10,8 +10,9 @@ use Zend\Validator\InArray;
  */
 class CaseType extends InArray
 {
-    const CASE_TYPE_EPA = 'epa';
-    const CASE_TYPE_LPA = 'lpa';
+    const CASE_TYPE_EPA     = 'EPA';
+    const CASE_TYPE_LPA     = 'LPA';
+    const CASE_TYPE_ORDER   = 'ORDER';
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class CaseType extends InArray
             array(
                 self::CASE_TYPE_EPA,
                 self::CASE_TYPE_LPA,
+                self::CASE_TYPE_ORDER
             )
         );
     }

@@ -207,7 +207,7 @@ class EpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             array(
-                'caseType'                                  => 'epa',
+                'caseType'                                  => 'EPA',
                 'notifiedRelatives'                         => array(),
                 'notifiedAttorneys'                         => array(),
                 'epaDonorSignatureDate'                     => null,

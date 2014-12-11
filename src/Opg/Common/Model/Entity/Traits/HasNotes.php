@@ -2,6 +2,7 @@
 namespace Opg\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Core\Model\Entity\Note\Note as NoteEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,23 +29,35 @@ trait HasNotes
      * @Groups({"api-person-get"})
      */
     protected $notes;
-    
+
+    protected function initNotes()
+    {
+        if (null === $this->notes) {
+            $this->notes = new ArrayCollection();
+        }
+    }
     /**
-     * @return ArrayCollection|null
+     * @return ArrayCollection
      */
     public function getNotes()
     {
+        $this->initNotes();
+
         return $this->notes;
     }
 
     /**
      * @param  ArrayCollection $notes
      *
-     * @return ArrayCollection|null
+     * @return HasNotesInterface
      */
     public function setNotes(ArrayCollection $notes)
     {
-        $this->notes = $notes;
+        $this->notes = new ArrayCollection();
+
+        foreach($notes as $note) {
+            $this->addNote($note);
+        }
 
         return $this;
     }
@@ -52,17 +65,13 @@ trait HasNotes
     /**
      * @param NoteEntity $note
      *
-     * @return $this
+     * @return HasNotesInterface
      */
     public function addNote(NoteEntity $note)
     {
-        // @codeCoverageIgnoreStart
-        if (is_null($this->notes)) {
-            $this->notes = new ArrayCollection();
-        }
-        // @codeCoverageIgnoreEnd
+        $this->initNotes();
 
-        if (!$this->notes->contains($note)) {
+        if (false === $this->notes->contains($note)) {
             $this->notes->add($note);
         }
 
@@ -72,12 +81,36 @@ trait HasNotes
     /**
      * @param ArrayCollection $notes
      *
-     * @return $this
+     * @return HasNotesInterface
      */
     public function addNotes(ArrayCollection $notes)
     {
         foreach ($notes as $note) {
             $this->addNote($note);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param NoteEntity $note
+     * @return bool
+     */
+    public function hasNote(NoteEntity $note)
+    {
+        $this->initNotes();
+
+        return $this->notes->contains($note);
+    }
+
+    /**
+     * @param NoteEntity $note
+     * @return HasNotesInterface
+     */
+    public function removeNote(NoteEntity $note)
+    {
+        if ($this->hasNote($note)) {
+            $this->notes->removeElement($note);
         }
 
         return $this;

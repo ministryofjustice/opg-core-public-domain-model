@@ -1,14 +1,10 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Deputyship;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\HasStatusDate;
 use Opg\Common\Model\Entity\Traits\StatusDate;
-use Opg\Common\Model\Entity\Traits\ToArray;
-use Opg\Common\Model\Entity\Traits\InputFilter;
 use Opg\Core\Model\Entity\CaseActor\Client;
 use Opg\Core\Model\Entity\CaseActor\Decorators\CaseRecNumber;
-use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasCaseRecNumber;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Doctrine\ORM\Mapping as ORM;
@@ -215,12 +211,7 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
      */
     public function setClient(Client $client)
     {
-        if (null === $this->client) {
-            $this->client = $client;
-        }
-        else {
-            throw new \LogicException('This case already has an attached client');
-        }
+        $this->client = $client;
 
         return $this;
     }
