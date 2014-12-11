@@ -8,6 +8,16 @@ use Opg\Core\Model\Entity\Assignable\User;
 use Opg\Core\Model\Entity\Warning\Warning;
 use Zend\InputFilter\InputFilter;
 
+class WarningStub extends  Warning
+{
+    public function __unset($property)
+    {
+        if (property_exists(get_class($this), $property)) {
+            $this->{$property} = null;
+        }
+    }
+}
+
 class WarningTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -17,12 +27,14 @@ class WarningTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->warning = new Warning();
+        $this->warning = new WarningStub();
     }
 
     public function testSetup()
     {
         $this->assertTrue($this->warning instanceof Warning);
+        unset($this->warning->{'dateAdded'});
+        $this->assertEmpty($this->warning->getDateAddedString());
     }
 
     public function testGetSetId()
