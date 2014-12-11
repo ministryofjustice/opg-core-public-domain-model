@@ -3,6 +3,8 @@ language: php
 php:
   - 5.5
 
+sudo: false
+
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev --no-interaction
