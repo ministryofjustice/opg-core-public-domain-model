@@ -395,7 +395,7 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'paymentDate'                               => null,
                 'id'                                        => null,
                 'title'                                     => null,
-                'caseType'                                  => 'lpa',
+                'caseType'                                  => 'LPA',
                 'caseSubtype'                               => null,
                 'dueDate'                                   => null,
                 'status'                                    => null,

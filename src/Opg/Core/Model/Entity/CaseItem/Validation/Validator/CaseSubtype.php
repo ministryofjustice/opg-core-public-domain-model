@@ -1,7 +1,7 @@
 <?php
 namespace Opg\Core\Model\Entity\CaseItem\Validation\Validator;
 
-use Opg\Core\Model\Entity\CaseItem\Lpa\Validator\CaseType as CaseTypeValidator;
+use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType as CaseTypeValidator;
 use Zend\Validator\Callback;
 
 /**
@@ -24,10 +24,10 @@ class CaseSubtype extends Callback
                 // SubType validation is automatically successful if this isn't an LPA or EPA...
                 $caseTypesWhichRequireValidation = [
                     CaseTypeValidator::CASE_TYPE_EPA,
-                    CaseTypeValidator::CASE_TYPE_LPA
+                    CaseTypeValidator::CASE_TYPE_LPA,
+                    CaseTypeValidator::CASE_TYPE_ORDER,
                 ];
-
-                $caseType = $context->getCaseType();
+                $caseType = $context['caseType'];
 
                 if (!in_array($caseType, $caseTypesWhichRequireValidation)) {
                     return true;
@@ -43,6 +43,13 @@ class CaseSubtype extends Callback
                         break;
 
                     case CaseTypeValidator::CASE_TYPE_EPA:
+                        $validSubtypes = [
+                            self::CASE_SUB_TYPE_HW,
+                            self::CASE_SUB_TYPE_PFA
+                        ];
+                        break;
+
+                    case CaseTypeValidator::CASE_TYPE_ORDER:
                         $validSubtypes = [
                             self::CASE_SUB_TYPE_HW,
                             self::CASE_SUB_TYPE_PFA

@@ -12,28 +12,37 @@ interface HasNotesInterface
 {
 
     /**
-     * @return ArrayCollection|null
+     * @return ArrayCollection
      */
     public function getNotes();
 
     /**
      * @param  ArrayCollection $notes
-     *
-     * @return ArrayCollection|null
+     * @return HasNotesInterface
      */
     public function setNotes(ArrayCollection $notes);
 
     /**
      * @param NoteEntity $note
-     *
-     * @return $this
+     * @return HasNotesInterface
      */
     public function addNote(NoteEntity $note);
 
     /**
      * @param ArrayCollection $notes
-     *
-     * @return $this
+     * @return HasNotesInterface
      */
     public function addNotes(ArrayCollection $notes);
+
+    /**
+     * @param NoteEntity $note
+     * @return boolean
+     */
+    public function hasNote(NoteEntity $note);
+
+    /**
+     * @param NoteEntity $note
+     * @return HasNotesInterface
+     */
+    public function removeNote(NoteEntity $note);
 }

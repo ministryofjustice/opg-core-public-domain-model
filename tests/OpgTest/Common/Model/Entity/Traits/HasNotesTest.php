@@ -2,29 +2,51 @@
 namespace OpgTest\Common\Model\Entity\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Opg\Common\Model\Entity\HasNotesInterface;
 use Opg\Common\Model\Entity\Traits\HasNotes as HasNotesTrait;
+use Opg\Common\Model\Entity\Traits\HasNotes;
 use Opg\Core\Model\Entity\Note\Note as NoteEntity;
 
 /**
  * HasNotes trait test.
  */
+
+class NotesStub implements HasNotesInterface {
+    use HasNotes;
+
+    public function __unset($element) {
+        if (property_exists(get_class($this), $element)) {
+            $this->{$element} = null;
+        }
+    }
+}
+
 class HasNotesTest extends \PHPUnit_Framework_TestCase
 {
-    use HasNotesTrait;
+
+    /** @var  NotesStub */
+    protected $notes;
 
     public function setUp()
     {
-        $this->notes = new ArrayCollection();
+        $this->notes = new NotesStub();
     }
 
-    public function testGetNotes()
+    public function testSetUp()
+    {
+        $this->assertTrue($this->notes instanceof HasNotesInterface);
+        unset($this->notes->{'notes'});
+        $this->assertTrue($this->notes->getNotes() instanceof ArrayCollection);
+    }
+
+    public function testHasNotes()
     {
         $note = new NoteEntity();
         $note->setId(1);
 
-        $this->notes->add($note);
+        $this->notes->addNote($note);
 
-        $this->assertSame($this->notes, $this->getNotes());
+        $this->assertTrue($this->notes->hasNote($note));
     }
 
     public function testSetNotes()
@@ -43,65 +65,50 @@ class HasNotesTest extends \PHPUnit_Framework_TestCase
         $notes->add($note2);
         $notes->add($note3);
 
-        $this->setNotes($notes);
+        $this->notes->setNotes($notes);
 
-        $this->assertSame($notes, $this->notes);
+        $this->assertEquals($notes->toArray(), $this->notes->getNotes()->toArray());
     }
-
-
-    public function testAddNote()
-    {
-        $note1 = new NoteEntity();
-        $note1->setId(1);
-
-        $this->addNote($note1);
-
-        $this->assertSame($note1, $this->notes->get(0));
-
-        // Add a second note
-        $note2 = new NoteEntity();
-        $note2->setId(2);
-
-        $this->addNote($note2);
-
-        $this->assertSame($note1, $this->notes->get(0));
-        $this->assertSame($note2, $this->notes->get(1));
-    }
-
 
     public function testAddNotes()
     {
+        $collection1 = new ArrayCollection();
+        $collection2 = new ArrayCollection();
+
+        for ( $i=1;$i<=5;$i++) {
+            $collection1->add((new NoteEntity())->setId($i));
+        }
+
+        for (
+            $i=10;$i<15;$i++) {
+            $collection2->add((new NoteEntity())->setId($i));
+        }
+
+        $this->notes->setNotes($collection1);
+        $this->notes->addNotes($collection2);
+
+        $this->assertCount(10, $this->notes->getNotes()->toArray());
+    }
+
+    public function testRemoveNotes()
+    {
         $note1 = new NoteEntity();
         $note1->setId(1);
 
         $note2 = new NoteEntity();
         $note2->setId(2);
 
-        $notesA = new ArrayCollection();
-        $notesA->add($note1);
-        $notesA->add($note2);
-
-        $this->addNotes($notesA);
-
-        $this->assertSame($note1, $this->notes->get(0));
-        $this->assertSame($note2, $this->notes->get(1));
-
-        // Add a second block of notes;
         $note3 = new NoteEntity();
-        $note3->setId(4);
+        $note3->setId(3);
 
-        $note4 = new NoteEntity();
-        $note4->setId(4);
+        $notes = new ArrayCollection();
+        $notes->add($note1);
+        $notes->add($note2);
+        $notes->add($note3);
 
-        $notesB = new ArrayCollection();
-        $notesB->add($note3);
-        $notesB->add($note4);
+        $this->notes->setNotes($notes);
 
-        $this->addNotes($notesB);
-
-        $this->assertSame($note1, $this->notes->get(0));
-        $this->assertSame($note2, $this->notes->get(1));
-        $this->assertSame($note3, $this->notes->get(2));
-        $this->assertSame($note4, $this->notes->get(3));
+        $this->notes->removeNote($note1);
+        $this->assertNotContains($note1, $this->notes->getNotes()->toArray());
     }
 }
