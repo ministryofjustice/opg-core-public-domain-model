@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\Traits\HasId;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Queue
