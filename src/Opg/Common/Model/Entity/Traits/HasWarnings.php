@@ -18,7 +18,7 @@ use Opg\Core\Model\Entity\Warning\Warning;
 trait HasWarnings
 {
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Accessor(getter="getActiveWarnings")
