@@ -248,23 +248,4 @@ class DonorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $this->donor->getWarnings()->count());
     }
-
-    /**
-     * @expectedException \LogicException
-     */
-    public function testSetWarningsFailsWhenWarningHasAPerson()
-    {
-        $expected = (new Warning())
-            ->setWarningType('Proximity Warning')
-            ->setWarningText('That is no moon!');
-
-        $this->assertEquals(0, $this->donor->getWarnings()->count());
-
-        $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
-
-        $this->assertEquals(1, $this->donor->getWarnings()->count());
-
-        $this->assertTrue($this->donor->addWarning($expected) instanceof Donor);
-
-    }
 }

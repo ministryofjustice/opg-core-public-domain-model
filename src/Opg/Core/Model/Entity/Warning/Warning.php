@@ -87,15 +87,6 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
      */
     protected $closedBy;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Opg\Core\Model\Entity\CaseActor\Person", inversedBy="warnings")
-     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
-     * @var PersonEntity
-     * @Type("Opg\Core\Model\Entity\CaseActor\Person")
-     * @Groups({"api-warning-list"})
-     */
-    protected $person;
-
     public function __construct()
     {
         $this->dateAdded = new \DateTime();
@@ -271,30 +262,6 @@ class Warning implements HasSystemStatusInterface, EntityInterface, \IteratorAgg
     public function getWarningType()
     {
         return $this->warningType;
-    }
-
-    /**
-     * @param PersonEntity $person
-     * @return Warning
-     * @throws \LogicException
-     */
-    public function setPerson(PersonEntity $person)
-    {
-        if ($this->person instanceof PersonEntity) {
-            throw new \LogicException('This warning is already associated with a person');
-        }
-
-        $this->person = $person;
-
-        return $this;
-    }
-
-    /**
-     * @return PersonEntity
-     */
-    public function getPerson()
-    {
-        return $this->person;
     }
 
     /**

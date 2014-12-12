@@ -57,10 +57,6 @@ trait HasWarnings
 
         $this->warnings->add($warning);
 
-        if ($this instanceof Person) {
-            $warning->setPerson($this);
-        }
-
         return $this;
     }
 
