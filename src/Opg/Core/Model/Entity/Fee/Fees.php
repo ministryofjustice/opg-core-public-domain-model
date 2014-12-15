@@ -41,7 +41,7 @@ abstract class Fees
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Type("String")
+     * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="feePeriod")
      */
     protected $feePeriod;
@@ -49,7 +49,7 @@ abstract class Fees
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Type("String")
+     * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="invoiceDate")
      */
     protected $invoiceDate;
