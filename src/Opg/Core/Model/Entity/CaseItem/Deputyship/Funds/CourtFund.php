@@ -45,9 +45,10 @@ class CourtFund implements HasIdInterface
     protected $lastUpdatedDate;
 
     /**
-     * @ORM\Column(type="string", nullable="true")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Type("string")
      */
     protected $accountStatus;
 
