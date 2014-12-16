@@ -6,6 +6,8 @@ namespace Opg\Core\Model\Entity\CaseItem\Deputyship\Funds;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Model\Entity\HasIdInterface;
 use Opg\Common\Model\Entity\HasStatusDate;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasId;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
@@ -20,6 +22,7 @@ use JMS\Serializer\Annotation\Groups;
 class CourtFund implements HasIdInterface
 {
     use HasId;
+    use DateTimeAccessor;
 
     /**
      * @ORM\Column(type="float", nullable=true)

@@ -19,7 +19,6 @@ trait HasCourtFunds
      *     inverseJoinColumns={@ORM\JoinColumn(name="courtfund_id", referencedColumnName="id")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     * @ReadOnly
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
      * @var ArrayCollection
      */
