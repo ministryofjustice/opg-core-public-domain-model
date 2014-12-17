@@ -222,38 +222,6 @@ class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
     }
 
     /**
-     * @param \Opg\Core\Model\Entity\CaseItem\CaseItem $case
-     */
-    public function setCase($case)
-    {
-        $this->case = $case;
-    }
-
-    /**
-     * @return \Opg\Core\Model\Entity\CaseItem\CaseItem
-     */
-    public function getCase()
-    {
-        return $this->case;
-    }
-
-    /**
-     * @param \Opg\Core\Model\Entity\CaseActor\Person $person
-     */
-    public function setPerson($person)
-    {
-        $this->person = $person;
-    }
-
-    /**
-     * @return \Opg\Core\Model\Entity\CaseActor\Person
-     */
-    public function getPerson()
-    {
-        return $this->person;
-    }
-
-    /**
      * @throws \Opg\Common\Exception\UnusedException
      * @return InputFilter
      */
