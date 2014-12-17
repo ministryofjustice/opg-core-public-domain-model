@@ -393,7 +393,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($testCollection, $this->person->getWarnings());
 
-        $this->assertEquals($testActiveCollection, $this->person->getActiveWarnings());
+        $this->assertEquals($testActiveCollection->toArray(), $this->person->getActiveWarnings());
     }
 
     public function testPersonCanHaveDocuments()

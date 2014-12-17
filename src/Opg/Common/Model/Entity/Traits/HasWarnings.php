@@ -67,13 +67,13 @@ trait HasWarnings
     public function getActiveWarnings()
     {
         $this->initWarnings();
-
-        return
-            $this->warnings->filter(
-                function ($item) {
-                    return $item->isActive();
-                }
-            );
+        $warnings = array();
+        foreach($this->warnings as $warning) {
+            if($warning->isActive()) {
+                $warnings[] = $warning;
+            }
+        }
+        return $warnings;
     }
 
     /**
