@@ -9,13 +9,14 @@ use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
 use Opg\Core\Model\Entity\CaseActor\Person;
 use Opg\Core\Model\Entity\Assignable\User;
+use Opg\Common\Model\Entity\Traits\InputFilter;
 use Doctrine\ORM\Mapping as ORM;
-use \Zend\InputFilter\InputFilter;
 use \Zend\InputFilter\Factory as InputFactory;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+
 
 /**
  * @ORM\Entity
@@ -28,10 +29,10 @@ use JMS\Serializer\Annotation\Accessor;
 class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
 {
     use Time;
-    use \Opg\Common\Model\Entity\Traits\InputFilter;
     use \Opg\Common\Model\Entity\Traits\IteratorAggregate;
     use ToArray;
     use HasId;
+    use InputFilter;
 
     /**
      * @ORM\Column(type = "integer", options = {"unsigned": true}, nullable = true)
@@ -74,18 +75,6 @@ class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
      * @var string
      */
     protected $name;
-
-    /**
-     * Don't persist this
-     * @var CaseItem $case
-     */
-    protected $case;
-
-    /**
-     * Non persistable entity, used for validation of create
-     * @var Person person
-     */
-    protected $person;
 
     /**
      * @return Note $type
@@ -271,7 +260,7 @@ class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
+            $inputFilter = new \Zend\InputFilter\InputFilter();
             $factory     = new InputFactory();
 
             $inputFilter->add(
