@@ -45,7 +45,7 @@ class Order extends Deputyship implements HasCourtFundsInterface
     protected $fileLocationDescription;
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Address\Address")
+     * @ORM\OneToOne(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Address\Address")
      * @ORM\JoinColumn(name="filelocation_id", referencedColumnName="id")
      * @var Address
      * @Groups({"api-poa-list","api-task-list","api-person-get"})
