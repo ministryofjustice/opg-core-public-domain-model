@@ -7,9 +7,10 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-use Opg\Core\Model\Entity\Document\Decorators\HasSystemType;
+use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
+use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
 use Opg\Core\Model\Entity\Document\Decorators\SystemType;
+use Opg\Core\Model\Entity\Document\Decorators\HasSystemType;
 
 /**
  * @ORM\Entity
@@ -18,8 +19,9 @@ use Opg\Core\Model\Entity\Document\Decorators\SystemType;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Document
  */
-class OutgoingDocument extends Document implements HasSystemType
+class ActionLog extends Document implements HasAssetLog, HasSystemType
 {
+    use AssetLog;
     use SystemType;
 
     /**
@@ -27,11 +29,5 @@ class OutgoingDocument extends Document implements HasSystemType
      * @Accessor(getter="getDirection")
      * @ReadOnly
      */
-    protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
-
-
-    public function __construct()
-    {
-        $this->createdDate = new \DateTime();
-    }
+    protected $direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
 }
