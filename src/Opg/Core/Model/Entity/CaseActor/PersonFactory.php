@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use JMS\Serializer\Serializer;
 use Opg\Common\Model\Entity\FactoryInterface;
 use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
-use Opg\Core\Model\Entity\Warning;
+use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
  * Class PersonFactory
