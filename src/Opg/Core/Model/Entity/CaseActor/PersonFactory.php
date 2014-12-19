@@ -81,6 +81,15 @@ class PersonFactory implements FactoryInterface
                 $personType,
                 'json'
             );
+	    
+             //when a client is created for a Deputyship we set a warning against them
+            if($personType == 'Opg\\Core\\Model\\Entity\\CaseActor\\Client' && empty($person->getId())) {
+                $warning = new Warning();
+                $warning->setWarningText('Deputy Application-only');
+                $warning->setWarningType('Deputy Application-only');
+                $person->addWarning($warning);
+            }
+
         } catch (\Exception $e) {
             throw $e;
         }
