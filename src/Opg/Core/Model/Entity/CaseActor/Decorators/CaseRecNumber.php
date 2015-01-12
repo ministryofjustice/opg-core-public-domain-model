@@ -17,7 +17,7 @@ trait CaseRecNumber
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Groups({"api-person-get"})
+     * @Groups({"api-person-get","api-case-list"})
      */
     protected $caseRecNumber;
 

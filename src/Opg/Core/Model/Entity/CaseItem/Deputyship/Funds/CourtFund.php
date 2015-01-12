@@ -27,21 +27,21 @@ class CourtFund implements HasIdInterface
     /**
      * @ORM\Column(type="float", nullable=true)
      * @var float
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $previousBalance = 0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @var float
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $accountBalance = 0;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lastUpdatedDate")
      * @Type("string")
      */
@@ -50,7 +50,7 @@ class CourtFund implements HasIdInterface
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @Type("string")
      */
     protected $accountStatus;

@@ -21,7 +21,7 @@ trait HasTasks
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @ReadOnly
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @Accessor(getter="filterTasks")
      */
     protected $tasks;

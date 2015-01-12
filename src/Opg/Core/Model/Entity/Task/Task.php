@@ -51,7 +51,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $type;
 
@@ -65,7 +65,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @Accessor(getter="getStatus",setter="setStatus")
      */
     protected $status;
@@ -73,7 +73,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $priority;
 
@@ -82,7 +82,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * @var \DateTime
      * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="dueDate")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $dueDate;
 
@@ -91,21 +91,21 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * @var \DateTime
      * @GenericAccessor(getter="getDateAsString",setter="setDateFromString", propertyName="activeDate")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $activeDate;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string name
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $name;
 
     /**
      * @ORM\Column(type = "text", nullable = true)
      * @var string description
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $description;
 
@@ -121,7 +121,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
     /**
      * Non persistable entity, used for validation of create
      * @var CaseItem case
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-case-list","api-task-list"})
      * @ReadOnly
      */
     protected $case;
@@ -130,7 +130,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
      * Non persistable entity
      *
      * @var int
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @ReadOnly
      * @Accessor(getter="getRagRating")
      */
