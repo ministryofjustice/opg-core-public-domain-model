@@ -41,7 +41,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $reportingPeriod;
 
@@ -50,7 +50,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
      * @var \DateTime
      * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="dueDate")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $dueDate;
 
@@ -59,7 +59,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
      * @var \DateTime
      * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="revisedDueDate")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $revisedDueDate;
 
@@ -68,7 +68,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
      * @var \DateTime
      * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="receiptDate")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $receiptDate;
 
@@ -77,7 +77,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
      * @var \DateTime
      * @Type("string")
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lodgedDate")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $lodgedDate;
 

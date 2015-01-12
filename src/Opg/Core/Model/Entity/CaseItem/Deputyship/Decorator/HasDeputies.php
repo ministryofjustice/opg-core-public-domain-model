@@ -22,7 +22,7 @@ trait HasDeputies
      * )
      * @ORM\OrderBy({"id"="ASC"})
      * @ReadOnly
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @var ArrayCollection
      */
     protected $deputies;

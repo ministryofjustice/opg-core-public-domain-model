@@ -62,7 +62,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $email;
 
@@ -71,7 +71,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $dob;
 
@@ -80,14 +80,14 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      * @var \DateTime
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $dateOfDeath;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
@@ -95,21 +95,21 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $surname;
 

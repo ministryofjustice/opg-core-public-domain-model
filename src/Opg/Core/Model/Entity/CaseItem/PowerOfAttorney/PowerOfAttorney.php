@@ -54,7 +54,7 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Donor", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Donor
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @ReadOnly
      */
     protected $donor;
@@ -396,7 +396,7 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
      * @ORM\Column(type = "integer", nullable=true)
      * @Type("string")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
 
