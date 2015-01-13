@@ -114,6 +114,13 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     protected $surname;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $otherNames;
+
+    /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var \Opg\Core\Model\Entity\Address\Address
@@ -491,6 +498,25 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     public function setSurname($surname)
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOtherNames()
+    {
+        return $this->otherNames;
+    }
+
+    /**
+     * @param string $otherNames
+     * @return Person
+     */
+    public function setOtherNames($otherNames)
+    {
+        $this->otherNames = $otherNames;
 
         return $this;
     }
