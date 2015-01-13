@@ -306,6 +306,8 @@ class EpaTest extends \PHPUnit_Framework_TestCase
                 'additionalInfoDonorSignatureDate'          => null,
                 'anyOtherInfo'                              => false,
                 'warnings'                                  => null,
+                'attorneyDeclarationSignature'              => false,
+                'certificateProviderSignature'              => false,
             ),
             $epa->toArrayRecursive()
         );
