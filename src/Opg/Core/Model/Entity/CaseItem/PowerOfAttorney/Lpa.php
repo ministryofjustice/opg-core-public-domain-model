@@ -55,6 +55,13 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorSignatureDate;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-task-list","api-person-get"})
+     */
+    protected $lpaDonorSignature = false;
+
+    /**
      * @ORM\Column(type = "boolean",options={"default":0})
      * @var bool
      * @Groups({"api-task-list","api-person-get"})
@@ -577,5 +584,24 @@ class Lpa extends PowerOfAttorney
     public function getTrustCorporationSignedAs()
     {
         return ($this->trustCorporationSignedAs === self::PERMISSION_GIVEN_SINGULAR) ? 'I' : 'We';
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLpaDonorSignature()
+    {
+        return $this->lpaDonorSignature;
+    }
+
+    /**
+     * @param bool $signed
+     * @return Lpa
+     */
+    public function setLpaDonorSignature($signed = false)
+    {
+        $this->lpaDonorSignature = $signed;
+
+        return $this;
     }
 }

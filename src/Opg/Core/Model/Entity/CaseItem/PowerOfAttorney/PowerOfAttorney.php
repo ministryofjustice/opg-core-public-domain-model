@@ -334,6 +334,13 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
     protected $attorneyDeclarationSignatureDate;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $attorneyDeclarationSignature = false;
+
+    /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
      * @Groups({"api-person-get"})
@@ -447,6 +454,13 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
      * @GenericAccessor(getter="getDateAsString",setter="getDateAsString", propertyName="certificateProviderSignatureDate")
      */
     protected $certificateProviderSignatureDate;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $certificateProviderSignature = false;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -1157,6 +1171,25 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
     }
 
     /**
+     * @return bool
+     */
+    public function getAttorneyDeclarationSignature()
+    {
+        return $this->attorneyDeclarationSignature;
+    }
+
+    /**
+     * @param bool $signed
+     * @return PowerOfAttorney
+     */
+    public function setAttorneyDeclarationSignature($signed = false)
+    {
+        $this->attorneyDeclarationSignature = $signed;
+
+        return $this;
+    }
+
+    /**
      * @param string $attorneyMentalActPermission
      *
      * @return PowerOfAttorney
@@ -1612,6 +1645,25 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
     public function getCertificateProviderSignatureDate()
     {
         return $this->certificateProviderSignatureDate;
+    }
+
+    /**
+     * @param bool $signed
+     * @return PowerOfAttorney
+     */
+    public function setCertificateProviderSignature($signed = false)
+    {
+        $this->certificateProviderSignature = $signed;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCertificateProviderSignature()
+    {
+        return $this->certificateProviderSignature;
     }
 
     /**

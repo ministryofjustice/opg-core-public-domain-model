@@ -802,4 +802,16 @@ class PowerOfAttorneyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->poa->getAnyOtherInfo());
 
     }
+
+    public function testGetSetAttorneyDeclarationSignature()
+    {
+        $this->assertFalse($this->poa->getAttorneyDeclarationSignature());
+        $this->assertTrue($this->poa->setAttorneyDeclarationSignature(true)->getAttorneyDeclarationSignature());
+    }
+
+    public function testGetSetCertificateProviderSignature()
+    {
+        $this->assertFalse($this->poa->getCertificateProviderSignature());
+        $this->assertTrue($this->poa->setCertificateProviderSignature(true)->getCertificateProviderSignature());
+    }
 }
