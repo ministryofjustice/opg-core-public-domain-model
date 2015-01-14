@@ -539,4 +539,24 @@ class CaseItemTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(3, $caseItem->getWarnings()->toArray());
     }
+
+    public function testGetSetRepeatApplication()
+    {
+        $caseItem = new CaseItemStub;
+
+        $this->assertFalse($caseItem->isRepeatApplication());
+        $this->assertTrue($caseItem->setRepeatApplication(true)->isRepeatApplication());
+    }
+
+    public function testGetSetRepeatApplicationReference()
+    {
+        $expected = '1234-5678-1234';
+        $caseItem = new CaseItemStub;
+
+        $this->assertEmpty($caseItem->getRepeatApplicationReference());
+        $this->assertEquals(
+            $expected,
+            $caseItem->setRepeatApplicationReference($expected)->getRepeatApplicationReference()
+        );
+    }
 }
