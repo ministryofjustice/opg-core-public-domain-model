@@ -475,6 +475,8 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'lpaDonorSignature'                         => false,
                 'attorneyDeclarationSignature'              => false,
                 'certificateProviderSignature'              => false,
+                'repeatApplication'                         => false,
+                'repeatApplicationReference'                => null,
             ),
             $lpa->toArrayRecursive()
         );

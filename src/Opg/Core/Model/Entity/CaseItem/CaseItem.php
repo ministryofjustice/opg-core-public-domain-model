@@ -235,6 +235,20 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      */
     protected $caseAttorneyActionAdditionalInfo = false;
 
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get"})
+     */
+    protected $repeatApplication = false;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     * @var string
+     * @Groups({"api-person-get"})
+     */
+    protected $repeatApplicationReference;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -695,7 +709,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyJointlyAndJointlyAndSeverally($caseAttorney = false)
     {
@@ -715,7 +729,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyJointlyAndSeverally($caseAttorney = false)
     {
@@ -735,7 +749,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneySingular($caseAttorney = false)
     {
@@ -754,7 +768,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
 
     /**
      * @param bool $caseAttorney
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
     {
@@ -769,5 +783,51 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     public function getCaseAttorneyActionAdditionalInfo()
     {
         return $this->caseAttorneyActionAdditionalInfo;
+    }
+
+    /**
+     * @param bool $repeatApplication
+     * @return CaseItem
+     */
+    public function setRepeatApplication($repeatApplication = false)
+    {
+        $this->repeatApplication = $repeatApplication;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRepeatApplication()
+    {
+        return $this->repeatApplication;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRepeatApplication()
+    {
+        return (true === $this->getRepeatApplication());
+    }
+
+    /**
+     * @param $reference
+     * @return CaseItem
+     */
+    public function setRepeatApplicationReference($reference)
+    {
+        $this->repeatApplicationReference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepeatApplicationReference()
+    {
+        return $this->repeatApplicationReference;
     }
 }
