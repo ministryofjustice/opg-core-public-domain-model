@@ -437,5 +437,30 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $this->person->getNotes()->toArray());
     }
+
+    public function testRequiresCorrespondenceByPost()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByPost());
+        $this->assertTrue($this->person->setCorrespondenceByPost(true)->requiresCorrespondenceByPost());
+    }
+
+    public function testRequiresCorrespondenceByPhone()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByPhone());
+        $this->assertTrue($this->person->setCorrespondenceByPhone(true)->requiresCorrespondenceByPhone());
+    }
+
+    public function testRequiresCorrespondenceByEmail()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByEmail());
+        $this->assertTrue($this->person->setCorrespondenceByEmail(true)->requiresCorrespondenceByEmail());
+    }
+
+    public function testRequiresCorrespondence()
+    {
+        $this->assertFalse($this->person->requiresCorrespondence());
+        $this->assertTrue($this->person->setCorrespondenceByEmail(true)->requiresCorrespondence());
+    }
+
   }
 
