@@ -153,6 +153,27 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     protected $children;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByPost  = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByPhone = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByEmail = false;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Groups({"api-person-get","api-warning-list"})
@@ -596,12 +617,105 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param string $occupation
-     * @return Attorney
+     * @return Person
      */
     public function setOccupation($occupation)
     {
         $this->occupation = $occupation;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByPost()
+    {
+        return (true === $this->getCorrespondenceByPost());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByPost($correspondence = false)
+    {
+        $this->correspondenceByPost = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByPost()
+    {
+        return $this->correspondenceByPost;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByPhone()
+    {
+        return (true === $this->getCorrespondenceByPhone());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByPhone($correspondence = false)
+    {
+        $this->correspondenceByPhone = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByPhone()
+    {
+        return $this->correspondenceByPhone;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByEmail()
+    {
+        return (true === $this->getCorrespondenceByEmail());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByEmail($correspondence = false)
+    {
+        $this->correspondenceByEmail = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByEmail()
+    {
+        return $this->correspondenceByEmail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondence()
+    {
+        return (
+            $this->requiresCorrespondenceByEmail() ||
+            $this->requiresCorrespondenceByPhone() ||
+            $this->requiresCorrespondenceByPost()
+        );
     }
 }
