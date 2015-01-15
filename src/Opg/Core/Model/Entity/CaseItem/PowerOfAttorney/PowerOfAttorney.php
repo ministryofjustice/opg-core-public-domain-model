@@ -15,7 +15,9 @@ use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
 use Opg\Core\Model\Entity\CaseActor\Donor;
 use Opg\Core\Model\Entity\CaseActor\Person;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Decorator\Attorneys;
 use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Decorator\DonorCannotSignForm;
+use Opg\Core\Model\Entity\CaseItem\PowerOfAttorney\Interfaces\HasAttorneys;
 use Opg\Core\Model\Entity\CaseItem\Validation\InputFilter\PowerOfAttorneyFilter;
 use Zend\InputFilter\InputFilter;
 use JMS\Serializer\Annotation\Accessor;
@@ -31,10 +33,11 @@ use JMS\Serializer\Annotation\GenericAccessor;
  * @ORM\Entity(repositoryClass="Application\Model\Repository\CaseItemRepository")
  *
  */
-abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
+abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, HasAttorneys
 {
     use DonorCannotSignForm;
     use NoticeGivenDate;
+    use Attorneys;
 
     /**
      * Constant for the I portion of I/We questions
@@ -80,19 +83,6 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
      * @var ArrayCollection
      */
     protected $applicants;
-
-    /**
-     * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\Person")
-     * @ORM\JoinTable(name="pa_attorneys",
-     *     joinColumns={@ORM\JoinColumn(name="pa_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="attorney_id", referencedColumnName="id")}
-     * )
-     * @ORM\OrderBy({"id"="ASC"})
-     * @ReadOnly
-     * @Groups({"api-person-get"})
-     * @var ArrayCollection
-     */
-    protected $attorneys;
 
     /**
      * @ORM\ManyToMany(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\CaseActor\NotifiedPerson")
@@ -839,50 +829,6 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate
     {
         foreach ($applicants as $applicant) {
             $this->addApplicant($applicant);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection $attorneys
-     */
-    public function getAttorneys()
-    {
-        if (null === $this->attorneys) {
-            $this->attorneys = new ArrayCollection();
-        }
-
-        return $this->attorneys;
-    }
-
-    /**
-     * @param ArrayCollection $attorneys
-     *
-     * @return PowerOfAttorney
-     */
-    public function setAttorneys(ArrayCollection $attorneys)
-    {
-        foreach ($attorneys as $attorney) {
-            $this->addAttorney($attorney);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param AttorneyAbstract $attorney
-     *
-     * @return PowerOfAttorney
-     */
-    public function addAttorney(AttorneyAbstract $attorney)
-    {
-        if (is_null($this->attorneys)) {
-            $this->attorneys = new ArrayCollection();
-        }
-
-        if (!$this->attorneys->contains($attorney)) {
-            $this->attorneys->add($attorney);
         }
 
         return $this;
