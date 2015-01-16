@@ -50,7 +50,7 @@ class Lpa extends PowerOfAttorney
      * @var \DateTime
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaDonorSignatureDate")
      * @Type("string")
-     * @Groups({"api-task-list","api-person-get"})
+     * @Groups({"api-task-list","api-person-get","api-case-list"})
      */
     protected $lpaDonorSignatureDate;
 
