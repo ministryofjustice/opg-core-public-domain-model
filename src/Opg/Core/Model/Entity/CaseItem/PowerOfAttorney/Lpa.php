@@ -62,7 +62,7 @@ class Lpa extends PowerOfAttorney
     protected $lpaDonorSignature = false;
 
     /**
-     * @ORM\Column(type = "boolean",options={"default":0})
+     * @ORM\Column(type = "boolean", options={"default":0})
      * @var bool
      * @Groups({"api-task-list","api-person-get"})
      */
