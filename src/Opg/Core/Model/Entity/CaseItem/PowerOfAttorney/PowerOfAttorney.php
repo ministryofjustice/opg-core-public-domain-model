@@ -419,6 +419,8 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, H
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
      * @Groups({"api-person-get"})
+     *
+     * In new applications we map the Instructions checkbox to this field
      */
     protected $applicationHasRestrictions = false;
 
@@ -426,6 +428,8 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, H
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
      * @Groups({"api-person-get"})
+     *
+     * In newer applications we map the Preferences checkbox to this field
      */
     protected $applicationHasGuidance = false;
 
