@@ -324,7 +324,7 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, H
     protected $attorneyDeclarationSignatureDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean"), options={"default":0})
      * @var bool
      * @Groups({"api-person-get"})
      */
@@ -450,7 +450,7 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, H
     protected $certificateProviderSignatureDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean"), options={"default":0})
      * @var bool
      * @Groups({"api-person-get"})
      */
