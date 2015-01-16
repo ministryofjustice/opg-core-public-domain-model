@@ -238,14 +238,14 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Groups({"api-person-get"})
+     * @Groups({"api-person-get","api-case-list"})
      */
     protected $repeatApplication = false;
 
     /**
      * @ORM\Column(type="string",nullable=true)
      * @var string
-     * @Groups({"api-person-get"})
+     * @Groups({"api-person-get","api-case-list"})
      */
     protected $repeatApplicationReference;
 
