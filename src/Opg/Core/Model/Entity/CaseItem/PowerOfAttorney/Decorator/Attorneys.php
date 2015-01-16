@@ -111,7 +111,7 @@ trait Attorneys
                         $item->getFirstname() === $attorney->getFirstname() &&
                         $item->getMiddleName() === $attorney->getMiddlename() &&
                         $item->getSurname() === $attorney->getSurname() &&
-                        $item->getDob() === $attorney->getDob()
+                        $item->getDobString() === $attorney->getDobString()
                     );
                 } else {
                     return (
