@@ -31,6 +31,21 @@ class LodgingChecklistTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(Document::DIRECTION_INTERNAL, $this->checklist->setDirection(Document::DIRECTION_INTERNAL)->getDirection());
     }
 
+    public function testGetSetStartEndDates()
+    {
+        $expectedStart = new \DateTime('01/01/1970');
+        $expectedEnd = new \DateTime('01/01/1970');
+
+        $this->assertEmpty($this->checklist->getStartDate());
+        $this->assertEmpty($this->checklist->getEndDate());
+
+        $this->assertTrue($this->checklist->setStartDate($expectedStart) instanceof LodgingChecklist);
+        $this->assertEquals($expectedStart, $this->checklist->getStartDate());
+
+        $this->assertTrue($this->checklist->setEndDate($expectedEnd) instanceof LodgingChecklist);
+        $this->assertEquals($expectedEnd, $this->checklist->getEndDate());
+    }
+
     public function testGetSetClosingBalances()
     {
         $expected1 = 1.50;

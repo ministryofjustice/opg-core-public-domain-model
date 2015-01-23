@@ -29,6 +29,23 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
     protected $direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
 
     /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="startDate")
+     */
+    protected $startDate;
+
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="endDate")
+     */
+    protected $endDate;
+
+    /**
      * @ORM\Column(type="float")
      * @var float
      */
@@ -39,6 +56,44 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
      * @var float
      */
     protected $closingBalance2 = 0;
+
+    /**
+     * @param \DateTime $startDate
+     * @return LodgingChecklist
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime $endDate
+     * @return LodgingChecklist
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
 
     /**
      * @param float $closingBalance1
