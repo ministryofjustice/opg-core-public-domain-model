@@ -6,8 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Core\Model\Entity\LineItem\LineItem;
 use Opg\Core\Model\Entity\Document\Decorators\ClosingBalances;
 use Opg\Core\Model\Entity\Document\Decorators\HasClosingBalances;
+use Opg\Core\Model\Entity\Document\Document;
 
-class ClosingBalancesStub implements HasClosingBalances
+class ClosingBalancesStub extends Document implements HasClosingBalances
 {
     use ClosingBalances;
 
