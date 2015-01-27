@@ -58,7 +58,6 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
      * @Type("ArrayCollection")
      * @Groups({"api-case-list","api-task-list"})
      * @MaxDepth(3)
-     * @Type("ArrayCollection")
      */
     protected $teams;
 
@@ -67,7 +66,6 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
      * @Type("string")
      * @Accessor(getter="getDisplayName")
      * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
-     * @Type("string")
      * @ReadOnly
      */
     protected $displayName;
