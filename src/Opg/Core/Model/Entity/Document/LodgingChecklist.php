@@ -2,6 +2,7 @@
 
 namespace Opg\Core\Model\Entity\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
@@ -10,6 +11,7 @@ use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use Opg\Core\Model\Entity\Document\Decorators\ClosingBalances;
 use Opg\Core\Model\Entity\Document\Decorators\HasClosingBalances;
+use Opg\Core\Model\Entity\LineItem\LineItem;
 
 /**
  * @ORM\Entity

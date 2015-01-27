@@ -4,6 +4,7 @@ namespace Opg\Core\Model\Entity\Document\Decorators;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
 use Opg\Core\Model\Entity\LineItem\LineItem;
 
 /**
@@ -12,16 +13,17 @@ use Opg\Core\Model\Entity\LineItem\LineItem;
  */
 trait ClosingBalances
 {
-
     /**
+     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\LineItem\LineItem", mappedBy="document", cascade={"all"},)
      * @var ArrayCollection
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\LineItem\LineItem>")
      */
-    protected $balances;
+    protected $closingBalances;
 
     protected function initClosingBalances()
     {
-        if (null === $this->balances) {
-            $this->balances = new ArrayCollection();
+        if (null === $this->closingBalances) {
+            $this->closingBalances = new ArrayCollection();
         }
     }
     /**
@@ -31,17 +33,18 @@ trait ClosingBalances
     {
        $this->initClosingBalances();
 
-        return $this->balances;
+        return $this->closingBalances;
     }
 
     /**
-     * @param LineItem $closingBalance
+     * @param \Opg\Core\Model\Entity\LineItem\LineItem $closingBalance
      * @return HasClosingBalances
      */
     public function addClosingBalance(LineItem $closingBalance)
     {
         $this->initClosingBalances();
-        $this->balances->add($closingBalance);
+        $closingBalance->setDocument($this);
+        $this->closingBalances->add($closingBalance);
 
         return $this;
     }
@@ -52,7 +55,7 @@ trait ClosingBalances
      */
     public function setClosingBalances(ArrayCollection $closingBalances)
     {
-        $this->balances = new ArrayCollection();
+        $this->closingBalances = new ArrayCollection();
 
         foreach ($closingBalances as $closingBalance) {
             $this->addClosingBalance($closingBalance);
@@ -62,24 +65,24 @@ trait ClosingBalances
     }
 
     /**
-     * @param LineItem $closingBalance
+     * @param \Opg\Core\Model\Entity\LineItem\LineItem $closingBalance
      * @return boolean
      */
     public function closingBalanceExists(LineItem $closingBalance)
     {
         $this->initClosingBalances();
 
-        return $this->balances->contains($closingBalance);
+        return $this->closingBalances->contains($closingBalance);
     }
 
     /**
-     * @param LineItem $closingBalance
+     * @param \Opg\Core\Model\Entity\LineItem\LineItem $closingBalance
      * @return HasClosingBalances
      */
     public function removeClosingBalance(LineItem $closingBalance)
     {
         if ($this->closingBalanceExists($closingBalance)) {
-            $this->balances->removeElement($closingBalance);
+            $this->closingBalances->removeElement($closingBalance);
         }
 
         return $this;
