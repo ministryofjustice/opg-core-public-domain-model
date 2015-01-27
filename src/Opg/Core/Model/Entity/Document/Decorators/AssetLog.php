@@ -4,7 +4,7 @@ namespace Opg\Core\Model\Entity\Document\Decorators;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Opg\Core\Model\Entity\Asset\Asset;
+use Opg\Core\Model\Entity\LineItem\LineItem;
 
 /**
  * Class AssetLog
@@ -35,10 +35,10 @@ trait AssetLog
     }
 
     /**
-     * @param Asset $asset
+     * @param LineItem $asset
      * @return HasAssetLog
      */
-    public function addAsset(Asset $asset)
+    public function addAsset(LineItem $asset)
     {
         $this->initAssets();
         $this->assets->add($asset);
@@ -62,10 +62,10 @@ trait AssetLog
     }
 
     /**
-     * @param Asset $asset
+     * @param LineItem $asset
      * @return boolean
      */
-    public function assetExists(Asset $asset)
+    public function assetExists(LineItem $asset)
     {
         $this->initAssets();
 
@@ -73,10 +73,10 @@ trait AssetLog
     }
 
     /**
-     * @param Asset $asset
+     * @param LineItem $asset
      * @return HasAssetLog
      */
-    public function removeAsset(Asset $asset)
+    public function removeAsset(LineItem $asset)
     {
         if ($this->assetExists($asset)) {
             $this->assets->removeElement($asset);

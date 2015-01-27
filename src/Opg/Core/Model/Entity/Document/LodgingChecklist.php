@@ -6,9 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\ReadOnly;
-use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
-use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
+use Opg\Core\Model\Entity\Document\Decorators\ClosingBalances;
+use Opg\Core\Model\Entity\Document\Decorators\HasClosingBalances;
 
 /**
  * @ORM\Entity
@@ -17,9 +18,9 @@ use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Document
  */
-class LodgingChecklist extends OutgoingDocument implements HasAssetLog
+class LodgingChecklist extends OutgoingDocument implements HasClosingBalances
 {
-    use AssetLog;
+    use ClosingBalances;
 
     /**
      * @Type("string")
@@ -36,7 +37,6 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
      */
     protected $startDate;
 
-
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
@@ -46,16 +46,11 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
     protected $endDate;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @var float
      */
-    protected $closingBalance1 = 0;
+    protected $totalAssets;
 
-    /**
-     * @ORM\Column(type="float")
-     * @var float
-     */
-    protected $closingBalance2 = 0;
 
     /**
      * @param \DateTime $startDate
@@ -95,13 +90,14 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
         return $this->endDate;
     }
 
+
     /**
-     * @param float $closingBalance1
+     * @param $totalAssets
      * @return LodgingChecklist
      */
-    public function setClosingBalance1($closingBalance1)
+    public function setTotalAssets($totalAssets)
     {
-        $this->closingBalance1 = (float)$closingBalance1;
+        $this->totalAssets = $totalAssets;
 
         return $this;
     }
@@ -109,29 +105,8 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
     /**
      * @return float
      */
-    public function getClosingBalance1()
+    public function getTotalAssets()
     {
-        return $this->closingBalance1;
+        return $this->totalAssets;
     }
-
-    /**
-     * @param float $closingBalance2
-     * @return LodgingChecklist
-     */
-    public function setClosingBalance2($closingBalance2)
-    {
-        $this->closingBalance2 = (float)$closingBalance2;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getClosingBalance2()
-    {
-        return $this->closingBalance2;
-    }
-
-
 }

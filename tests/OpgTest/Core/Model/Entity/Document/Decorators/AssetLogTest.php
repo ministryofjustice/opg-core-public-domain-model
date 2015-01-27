@@ -3,7 +3,7 @@
 namespace OpgTest\Core\Model\Entity\Document\Decorators;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Asset\Asset;
+use Opg\Core\Model\Entity\LineItem\LineItem;
 use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
 use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
 
@@ -37,9 +37,9 @@ class AssetLogTest extends \PHPUnit_Framework_TestCase
     public function testAssetCollection()
     {
         $collection = new ArrayCollection();
-        $collection->add((new Asset())->setId(1));
-        $collection->add((new Asset())->setId(2));
-        $collection->add((new Asset())->setId(3));
+        $collection->add((new LineItem())->setId(1));
+        $collection->add((new LineItem())->setId(2));
+        $collection->add((new LineItem())->setId(3));
 
         $this->assertTrue($this->assetLog->setAssets($collection) instanceof HasAssetLog);
 
