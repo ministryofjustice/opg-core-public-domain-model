@@ -84,7 +84,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @var \DateTime
      * @Type("string")
      * @ReadOnly
-     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="paymentDate")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="createdDate")
      */
     protected $createdDate;
 
