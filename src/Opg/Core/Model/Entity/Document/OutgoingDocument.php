@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\Groups;
 use Opg\Core\Model\Entity\Document\Decorators\HasSystemType;
 use Opg\Core\Model\Entity\Document\Decorators\SystemType;
 
@@ -26,6 +26,7 @@ class OutgoingDocument extends Document implements HasSystemType
      * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
 

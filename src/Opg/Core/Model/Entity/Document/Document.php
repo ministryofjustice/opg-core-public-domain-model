@@ -22,6 +22,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\GenericAccessor;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="Application\Model\Repository\DocumentRepository")
@@ -69,6 +70,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @ORM\Column(type="string", nullable = true)
+     * @Groups({"api-person-get"})
      * @var string
      */
     protected $friendlyDescription;
@@ -76,6 +78,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $title;
 
@@ -85,6 +88,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @Type("string")
      * @ReadOnly
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="createdDate")
+     * @Groups({"api-person-get"})
      */
     protected $createdDate;
 
@@ -92,6 +96,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @ORM\Column(type="integer", nullable=true, options={"default"=0})
      * @var int
      * @Accessor(getter="getDirection")
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 
