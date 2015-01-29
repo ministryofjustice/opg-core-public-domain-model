@@ -5,18 +5,12 @@ namespace Opg\Core\Model\Entity\Document;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\EntityInterface;
-use Opg\Common\Model\Entity\HasDocumentsInterface;
-use Opg\Common\Model\Entity\HasIdInterface;
-use Opg\Common\Model\Entity\Traits\HasDocuments;
-use Opg\Common\Model\Entity\Traits\HasId;
 use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Exclude;
-use Opg\Common\Model\Entity\Traits\InputFilter;
-use Opg\Common\Model\Entity\Traits\ToArray;
 use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
 use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
 use Opg\Core\Model\Entity\Document\Validation\InputFilter\AnnualReportFilter;
@@ -35,6 +29,7 @@ class AnnualReport extends Document implements EntityInterface, HasAssetLog
      * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
 
