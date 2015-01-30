@@ -26,6 +26,13 @@ class ReplacementAttorney extends AttorneyAbstract
      */
     protected $isReplacementAttorney = false;
 
+    /**
+     * @ORM\Column(type = "boolean",options={"default":0})
+     * @var boolean
+     * @Groups({"api-person-get"})
+     */
+    protected $isTrustCorporation = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -43,7 +50,7 @@ class ReplacementAttorney extends AttorneyAbstract
     /**
      * @param boolean $isReplacementAttorney
      *
-     * @return Attorney
+     * @return ReplacementAttorney
      */
     public function setIsReplacementAttorney($isReplacementAttorney)
     {
@@ -51,4 +58,24 @@ class ReplacementAttorney extends AttorneyAbstract
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isTrustCorporation()
+    {
+        return $this->isTrustCorporation;
+    }
+
+    /**
+     * @param bool $isTrustCorp
+     * @return ReplacementAttorney
+     */
+    public function setIsTrustCorporation($isTrustCorp = false)
+    {
+        $this->isTrustCorporation = $isTrustCorp;
+
+        return $this;
+    }
+
 }

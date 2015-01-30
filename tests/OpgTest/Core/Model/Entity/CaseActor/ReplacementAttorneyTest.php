@@ -32,6 +32,15 @@ class ReplacementAttorneyTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->attorney->isReplacementAttorney());
     }
 
+    public function testGetSetIsTrustCorporation()
+    {
+        $this->attorney->setIsTrustCorporation(true);
+        $this->assertTrue($this->attorney->isTrustCorporation());
+
+        $this->attorney->setIsTrustCorporation(false);
+        $this->assertFalse($this->attorney->isTrustCorporation());
+    }
+
     public function testGetSetLpaPartCSignatureDate()
     {
         $expectedDate = new \DateTime();
