@@ -3,6 +3,7 @@
 namespace Opg\Core\Model\Entity\Document\Decorators;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Class AssetLog
@@ -12,6 +13,7 @@ trait SystemType
 {
     /**
      * @ORM\Column(type = "string", nullable = true)
+     * @Groups({"api-person-get"})
      * @var string
      */
     protected $systemType;

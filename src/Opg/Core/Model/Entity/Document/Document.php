@@ -64,6 +64,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @ORM\Column(type = "string", nullable = true)
+     * @Groups({"api-person-get"})
      * @var string
      */
     protected $type;
@@ -103,6 +104,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @ORM\Column(type = "text", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $filename;
 
@@ -119,6 +121,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @ORM\JoinColumn(name="correspondent_id", referencedColumnName="id")
      * @var Person
      * @Type("Opg\Core\Model\Entity\CaseActor\Person")
+     * @Groups({"api-person-get"})
      */
     protected $correspondent;
 

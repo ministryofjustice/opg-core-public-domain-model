@@ -22,12 +22,14 @@ class IncomingDocument extends Document
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $subtype;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $sourceDocumentType;
 
