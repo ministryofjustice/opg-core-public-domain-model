@@ -2,6 +2,7 @@
 
 namespace OpgTest\Core\Model\Entity\LineItem;
 
+use Opg\Core\Model\Entity\Document\LodgingChecklist;
 use Opg\Core\Model\Entity\LineItem\LineItem;
 
 class LineItemTest extends \PHPUnit_Framework_TestCase
@@ -20,6 +21,14 @@ class LineItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->lineItem->getId());
         $this->assertTrue($this->lineItem->setId($expected) instanceof LineItem);
         $this->assertEquals($expected, $this->lineItem->getId());
+    }
+
+    public function testGetSetDocument()
+    {
+        $expected = new LodgingChecklist();
+        $this->assertEmpty($this->lineItem->getDocument());
+        $this->assertTrue($this->lineItem->setDocument($expected) instanceof LineItem);
+        $this->assertEquals($expected, $this->lineItem->getDocument());
     }
 
     public function testGetSetLineItemName()
