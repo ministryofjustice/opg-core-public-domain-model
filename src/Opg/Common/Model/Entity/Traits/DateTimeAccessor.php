@@ -95,6 +95,7 @@ trait DateTimeAccessor
      * @param $params
      * @return HasDateTimeAccessor
      * @throws \LogicException
+     * @throws \Exception
      */
     public function __call($methodName, $params)
     {
@@ -113,6 +114,6 @@ trait DateTimeAccessor
             }
         }
 
-        return $this;
+        throw new \Exception('The method ' . $methodName . ' does not exist on ' . get_class($this));
     }
 }

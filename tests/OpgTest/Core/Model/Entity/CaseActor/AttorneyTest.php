@@ -61,7 +61,7 @@ class AttorneyTest extends \PHPUnit_Framework_TestCase
     public function testGetSetLpa002SignatureInvalidString()
     {
         try {
-            $this->attorney->setLpa002SignatureDateString('asdfadsfsa');
+            $this->attorney->setDateFromString('asdfadsfsa', 'lpa002SignatureDate');
         }
         catch(\Exception $e) {
             $this->assertTrue($e instanceof \Opg\Common\Model\Entity\Exception\InvalidDateFormatException);

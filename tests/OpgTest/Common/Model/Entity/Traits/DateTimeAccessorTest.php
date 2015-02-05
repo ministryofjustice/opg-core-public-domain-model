@@ -66,6 +66,9 @@ class DateTimeAccessorTest extends \PHPUnit_Framework_TestCase
         $this->stub->setNextWeeksDateString(date('d/m/Y'));
     }
 
+    /**
+     * @expectedException \Exception
+     */
     public function testNonMatchingMethodDoesNothing()
     {
         $today = (new \DateTime())->format(DateFormat::getDateTimeFormat());
