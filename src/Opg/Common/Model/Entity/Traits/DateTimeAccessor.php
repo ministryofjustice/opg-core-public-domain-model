@@ -114,6 +114,6 @@ trait DateTimeAccessor
             }
         }
 
-        throw new \Exception('The method ' . $methodName . ' does not exist on this object');
+        throw new \Exception('The method ' . $methodName . ' does not exist on ' . get_class($this));
     }
 }
