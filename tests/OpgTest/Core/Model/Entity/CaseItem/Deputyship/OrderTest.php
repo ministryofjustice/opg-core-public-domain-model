@@ -78,6 +78,11 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->layDeputy->getClient() instanceof Client);
         $this->assertTrue($this->layDeputy->getDeputies() instanceof ArrayCollection);
         $this->assertTrue($this->layDeputy->getFeePayer() instanceof FeePayer);
+
+        $this->assertEquals(
+            $this->layDeputy->getClient(),
+            $this->layDeputy->getPrimaryActor()
+        );
     }
 
     public function testGetSetOrderStatus()

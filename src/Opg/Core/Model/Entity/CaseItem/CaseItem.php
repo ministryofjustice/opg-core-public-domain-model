@@ -830,4 +830,9 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     {
         return $this->repeatApplicationReference;
     }
+
+    /**
+     * @return Person
+     */
+    abstract public function getPrimaryActor();
 }
