@@ -224,6 +224,14 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
         return $this->client;
     }
 
+    /**
+     * @return Client
+     */
+    public function getPrimaryActor()
+    {
+        return $this->getClient();
+    }
+
 
     /**
      * @return \Opg\Common\Filter\BaseInputFilter

@@ -84,6 +84,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             'Opg\Core\Model\Entity\CaseActor\Donor',
             $this->lpa->getDonor()
         );
+
+        $this->assertEquals(
+            $this->lpa->getDonor(),
+            $this->lpa->getPrimaryActor()
+        );
     }
 
     public function testThrowsExceptionWhenTryingToPassBadObjectToSetDonor()

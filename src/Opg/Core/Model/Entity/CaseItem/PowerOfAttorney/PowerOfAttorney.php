@@ -762,6 +762,14 @@ abstract class PowerOfAttorney extends CaseItem implements HasNoticeGivenDate, H
     }
 
     /**
+     * @return Donor
+     */
+    public function getPrimaryActor()
+    {
+        return $this->getDonor();
+    }
+
+    /**
      * @param Donor $donor
      *
      * @return PowerOfAttorney

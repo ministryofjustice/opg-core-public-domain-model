@@ -33,6 +33,10 @@ class CaseItemStub extends CaseItem
 
     }
 
+    public function getPrimaryActor()
+    {
+        return null;
+    }
     /**
      * @param  Person $person
      *
