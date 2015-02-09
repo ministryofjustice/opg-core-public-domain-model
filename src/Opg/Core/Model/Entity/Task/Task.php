@@ -352,6 +352,7 @@ class Task implements EntityInterface, \IteratorAggregate, HasRagRating, IsAssig
                                     'callback' => function ($value, $context = array()) {
                                             $dueDate = $value;
                                             $now     = new \DateTime();
+                                            $now->setTime(0, 0, 0);
 
                                             return $now <= $dueDate;
                                         }
