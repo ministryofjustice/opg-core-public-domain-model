@@ -2,6 +2,7 @@
 namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney;
 
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
+use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
@@ -378,6 +379,14 @@ class Lpa extends PowerOfAttorney
             $this->setDonor($person);
         } else {
             throw new \LogicException(__CLASS__ . ' does not support a person of type ' . get_class($person));
+        }
+
+        if (
+            $person instanceof Attorney &&
+            'attorney' === $this->getApplicantType() &&
+            $person->getIsAttorneyApplyingToRegister()
+        ) {
+            $this->addApplicant($person);
         }
 
         return $this;

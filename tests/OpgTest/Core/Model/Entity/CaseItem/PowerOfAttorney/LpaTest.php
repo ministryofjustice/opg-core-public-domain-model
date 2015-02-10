@@ -525,6 +525,17 @@ class LpaTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testAttorneyIsAddedAsApplicantWhenLpaApplicantTypeIsAttorneyAndAttorneyApplyingToRegisterIsTrue()
+    {
+        $this->lpa->setApplicantType('attorney');
+        $attorney = new Attorney();
+        $attorney->setId('2');
+        $attorney->setIsAttorneyApplyingToRegister(true);
+        $this->lpa->addPerson($attorney);
+
+        $this->assertEquals($this->lpa->getApplicants()[0], $attorney);
+    }
+
     public function testGetSetDonorDeclarations()
     {
         $expectedDate          = new \DateTime();
