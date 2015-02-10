@@ -381,7 +381,8 @@ class Lpa extends PowerOfAttorney
             throw new \LogicException(__CLASS__ . ' does not support a person of type ' . get_class($person));
         }
 
-        if ($person instanceof Attorney &&
+        if (
+            $person instanceof Attorney &&
             'attorney' === $this->getApplicantType() &&
             $person->getIsAttorneyApplyingToRegister()
         ) {
