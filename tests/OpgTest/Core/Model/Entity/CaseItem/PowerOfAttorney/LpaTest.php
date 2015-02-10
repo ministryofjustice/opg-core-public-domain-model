@@ -527,7 +527,6 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
     public function testAttorneyIsAddedAsApplicantWhenLpaApplicantTypeIsAttorneyAndAttorneyApplyingToRegisterIsTrue()
     {
-        //test case where
         $this->lpa->setApplicantType('attorney');
         $attorney = new Attorney();
         $attorney->setId('2');
