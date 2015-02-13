@@ -37,6 +37,7 @@ use JMS\Serializer\Annotation\Groups;
  *     "lodging_checklist" = "Opg\Core\Model\Entity\Document\LodgingChecklist",
  *     "action_log"        = "Opg\Core\Model\Entity\Document\ActionLog",
  *     "annual_report"     = "Opg\Core\Model\Entity\Document\AnnualReport",
+ *     "crec"              = "Opg\Core\Model\Entity\Document\Crec"
  * })
  *
  * Class Document
