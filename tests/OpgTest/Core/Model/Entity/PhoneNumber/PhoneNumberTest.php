@@ -70,9 +70,8 @@ class PhoneNumberTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetPhoneNumber()
     {
-        $phoneNumber = 123456789;
-        $this->phoneNumber->setPhoneNumber($phoneNumber);
-        $this->assertEquals($phoneNumber, $this->phoneNumber->getPhoneNumber());
+        $this->phoneNumber->setPhoneNumber('020 811 8181');
+        $this->assertEquals('0208118181', $this->phoneNumber->getPhoneNumber());
     }
 
     public function testGetSetType()
