@@ -110,7 +110,7 @@ class PhoneNumber implements EntityInterface, \IteratorAggregate, HasIdInterface
      */
     public function setPhoneNumber($phoneNumber)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phoneNumber = preg_replace('/[^\d]/', '', $phoneNumber);
 
         return $this;
     }
