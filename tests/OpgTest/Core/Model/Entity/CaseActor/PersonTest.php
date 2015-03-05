@@ -462,5 +462,17 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->person->setCorrespondenceByEmail(true)->requiresCorrespondence());
     }
 
+
+    public function testSetGetCreatedDate()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getCreatedDate());
+        $this->assertEmpty($this->person->getCreatedDateString());
+
+        $this->person->setCreatedDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->person->getCreatedDate());
+    }
+
   }
 
