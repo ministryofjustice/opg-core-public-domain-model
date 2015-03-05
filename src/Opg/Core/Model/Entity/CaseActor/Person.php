@@ -7,6 +7,8 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasCasesInterface;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
@@ -15,13 +17,13 @@ use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Accessor;
 use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name = "persons")
@@ -47,9 +49,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
-abstract class Person extends LegalEntity implements HasCasesInterface
+abstract class Person extends LegalEntity implements HasCasesInterface, HasDateTimeAccessor
 {
     use HasCases;
+    use DateTimeAccessor;
 
     /**
      * Constants below are for yes/no radio buttons, we use 0
@@ -179,6 +182,17 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      * @Groups({"api-person-get","api-warning-list"})
      */
     protected $occupation;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @ReadOnly
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="createdDate")
+     * @Groups({"api-person-get"})
+     */
+    protected $createdDate;
+
 
     public function __construct()
     {
@@ -717,5 +731,28 @@ abstract class Person extends LegalEntity implements HasCasesInterface
             $this->requiresCorrespondenceByPhone() ||
             $this->requiresCorrespondenceByPost()
         );
+    }
+
+    /**
+     * @param \DateTime $createdDate
+     * @return Person
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (null === $createdDate) {
+            $this->createdDate = new \DateTime();
+        } else {
+            $this->createdDate = $createdDate;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
     }
 }
