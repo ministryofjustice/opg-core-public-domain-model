@@ -4,6 +4,7 @@ namespace Opg\Core\Model\Entity\CaseActor;
 use JMS\Serializer\Serializer;
 use Opg\Common\Model\Entity\FactoryInterface;
 use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
+use Opg\Core\Model\Entity\Warning\Warning;
 
 /**
  * Class PersonFactory
@@ -81,6 +82,15 @@ class PersonFactory implements FactoryInterface
                 $personType,
                 'json'
             );
+
+             //when a client is created for a Deputyship we set a warning against them
+            if($personType == 'Opg\Core\Model\Entity\CaseActor\Client' && null == $person->getId()) {
+                $warning = new Warning();
+                $warning->setWarningText('Deputy Application-only');
+                $warning->setWarningType('Deputy Application-only');
+                $person->addWarning($warning);
+            }
+
         } catch (\Exception $e) {
             throw $e;
         }

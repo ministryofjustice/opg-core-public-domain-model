@@ -126,13 +126,19 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $expectedFirst = 'First';
         $expectedMiddle = 'Middle';
         $expectedSurname = 'Surname';
+        $expectedOtherNames = "Other Known Names";
 
-        $this->person->setFirstname($expectedFirst)->setMiddlename($expectedMiddle)->setSurname($expectedSurname);
+        $this->person
+            ->setFirstname($expectedFirst)
+            ->setMiddlename($expectedMiddle)
+            ->setSurname($expectedSurname)
+            ->setOtherNames($expectedOtherNames);
 
         $this->assertNotEquals($this->person->getSurname(), $expectedFirst);
         $this->assertEquals($expectedFirst, $this->person->getFirstname());
         $this->assertEquals($expectedMiddle, $this->person->getMiddlename());
         $this->assertEquals($expectedSurname, $this->person->getSurname());
+        $this->assertEquals($expectedOtherNames, $this->person->getOtherNames());
     }
 
     public function testAddCase ()
@@ -393,7 +399,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($testCollection, $this->person->getWarnings());
 
-        $this->assertEquals($testActiveCollection, $this->person->getActiveWarnings());
+        $this->assertEquals($testActiveCollection->toArray(), $this->person->getActiveWarnings());
     }
 
     public function testPersonCanHaveDocuments()
@@ -431,5 +437,42 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $this->person->getNotes()->toArray());
     }
+
+    public function testRequiresCorrespondenceByPost()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByPost());
+        $this->assertTrue($this->person->setCorrespondenceByPost(true)->requiresCorrespondenceByPost());
+    }
+
+    public function testRequiresCorrespondenceByPhone()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByPhone());
+        $this->assertTrue($this->person->setCorrespondenceByPhone(true)->requiresCorrespondenceByPhone());
+    }
+
+    public function testRequiresCorrespondenceByEmail()
+    {
+        $this->assertFalse($this->person->requiresCorrespondenceByEmail());
+        $this->assertTrue($this->person->setCorrespondenceByEmail(true)->requiresCorrespondenceByEmail());
+    }
+
+    public function testRequiresCorrespondence()
+    {
+        $this->assertFalse($this->person->requiresCorrespondence());
+        $this->assertTrue($this->person->setCorrespondenceByEmail(true)->requiresCorrespondence());
+    }
+
+
+    public function testSetGetCreatedDate()
+    {
+        $expectedDate = new \DateTime();
+
+        $this->assertEmpty($this->person->getCreatedDate());
+        $this->assertEmpty($this->person->getCreatedDateString());
+
+        $this->person->setCreatedDate($expectedDate);
+        $this->assertEquals($expectedDate, $this->person->getCreatedDate());
+    }
+
   }
 

@@ -2,6 +2,7 @@
 namespace Opg\Core\Model\Entity\CaseItem\PowerOfAttorney;
 
 use Opg\Core\Model\Entity\CaseActor\AttorneyAbstract;
+use Opg\Core\Model\Entity\CaseActor\Attorney;
 use Opg\Core\Model\Entity\CaseActor\CertificateProvider;
 use Opg\Core\Model\Entity\CaseActor\Correspondent;
 use Opg\Core\Model\Entity\CaseActor\NotifiedPerson;
@@ -50,12 +51,19 @@ class Lpa extends PowerOfAttorney
      * @var \DateTime
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="lpaDonorSignatureDate")
      * @Type("string")
-     * @Groups({"api-task-list","api-person-get"})
+     * @Groups({"api-task-list","api-person-get","api-case-list"})
      */
     protected $lpaDonorSignatureDate;
 
     /**
-     * @ORM\Column(type = "boolean",options={"default":0})
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-task-list","api-person-get"})
+     */
+    protected $lpaDonorSignature = false;
+
+    /**
+     * @ORM\Column(type = "boolean", options={"default":0})
      * @var bool
      * @Groups({"api-task-list","api-person-get"})
      */
@@ -373,6 +381,14 @@ class Lpa extends PowerOfAttorney
             throw new \LogicException(__CLASS__ . ' does not support a person of type ' . get_class($person));
         }
 
+        if (
+            $person instanceof Attorney &&
+            'attorney' === $this->getApplicantType() &&
+            $person->getIsAttorneyApplyingToRegister()
+        ) {
+            $this->addApplicant($person);
+        }
+
         return $this;
     }
 
@@ -577,5 +593,24 @@ class Lpa extends PowerOfAttorney
     public function getTrustCorporationSignedAs()
     {
         return ($this->trustCorporationSignedAs === self::PERMISSION_GIVEN_SINGULAR) ? 'I' : 'We';
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLpaDonorSignature()
+    {
+        return $this->lpaDonorSignature;
+    }
+
+    /**
+     * @param bool $signed
+     * @return Lpa
+     */
+    public function setLpaDonorSignature($signed = false)
+    {
+        $this->lpaDonorSignature = $signed;
+
+        return $this;
     }
 }

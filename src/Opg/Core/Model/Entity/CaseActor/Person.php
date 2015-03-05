@@ -7,6 +7,8 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Mapping as ORM;
 use Opg\Common\Filter\BaseInputFilter;
 use Opg\Common\Model\Entity\HasCasesInterface;
+use Opg\Common\Model\Entity\HasDateTimeAccessor;
+use Opg\Common\Model\Entity\Traits\DateTimeAccessor;
 use Opg\Common\Model\Entity\Traits\HasCases;
 use Opg\Core\Model\Entity\Address\Address;
 use Opg\Core\Model\Entity\PhoneNumber\PhoneNumber;
@@ -15,13 +17,13 @@ use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\Accessor;
 use Opg\Core\Model\Entity\LegalEntity\LegalEntity;
 use Opg\Core\Validation\InputFilter\IdentifierFilter;
 use Opg\Core\Validation\InputFilter\UidFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name = "persons")
@@ -47,9 +49,10 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * })
  * @ORM\entity(repositoryClass="Application\Model\Repository\PersonRepository")
  */
-abstract class Person extends LegalEntity implements HasCasesInterface
+abstract class Person extends LegalEntity implements HasCasesInterface, HasDateTimeAccessor
 {
     use HasCases;
+    use DateTimeAccessor;
 
     /**
      * Constants below are for yes/no radio buttons, we use 0
@@ -62,7 +65,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $email;
 
@@ -71,7 +74,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      * @var \DateTime
      * @Accessor(getter="getDobString",setter="setDobString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $dob;
 
@@ -80,14 +83,14 @@ abstract class Person extends LegalEntity implements HasCasesInterface
      * @var \DateTime
      * @Accessor(getter="getDateOfDeathString",setter="setDateOfDeathString")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $dateOfDeath;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getTitle",setter="setTitle")
      */
     protected $salutation;
@@ -95,23 +98,30 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $middlenames;
 
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $surname;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $otherNames;
 
     /**
      * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Address\Address", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
@@ -146,11 +156,43 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     protected $children;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByPost  = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByPhone = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $correspondenceByEmail = false;
+
+    /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Groups({"api-person-get","api-warning-list"})
      */
     protected $occupation;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @ReadOnly
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="createdDate")
+     * @Groups({"api-person-get"})
+     */
+    protected $createdDate;
+
 
     public function __construct()
     {
@@ -496,6 +538,25 @@ abstract class Person extends LegalEntity implements HasCasesInterface
     }
 
     /**
+     * @return string
+     */
+    public function getOtherNames()
+    {
+        return $this->otherNames;
+    }
+
+    /**
+     * @param string $otherNames
+     * @return Person
+     */
+    public function setOtherNames($otherNames)
+    {
+        $this->otherNames = $otherNames;
+
+        return $this;
+    }
+
+    /**
      * @param  PhoneNumber $phoneNumber
      * @return Person
      */
@@ -570,12 +631,128 @@ abstract class Person extends LegalEntity implements HasCasesInterface
 
     /**
      * @param string $occupation
-     * @return Attorney
+     * @return Person
      */
     public function setOccupation($occupation)
     {
         $this->occupation = $occupation;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByPost()
+    {
+        return (true === $this->getCorrespondenceByPost());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByPost($correspondence = false)
+    {
+        $this->correspondenceByPost = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByPost()
+    {
+        return $this->correspondenceByPost;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByPhone()
+    {
+        return (true === $this->getCorrespondenceByPhone());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByPhone($correspondence = false)
+    {
+        $this->correspondenceByPhone = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByPhone()
+    {
+        return $this->correspondenceByPhone;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondenceByEmail()
+    {
+        return (true === $this->getCorrespondenceByEmail());
+    }
+
+    /**
+     * @param bool $correspondence
+     * @return Person
+     */
+    public function setCorrespondenceByEmail($correspondence = false)
+    {
+        $this->correspondenceByEmail = $correspondence;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCorrespondenceByEmail()
+    {
+        return $this->correspondenceByEmail;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresCorrespondence()
+    {
+        return (
+            $this->requiresCorrespondenceByEmail() ||
+            $this->requiresCorrespondenceByPhone() ||
+            $this->requiresCorrespondenceByPost()
+        );
+    }
+
+    /**
+     * @param \DateTime $createdDate
+     * @return Person
+     */
+    public function setCreatedDate(\DateTime $createdDate = null)
+    {
+        if (null === $createdDate) {
+            $this->createdDate = new \DateTime();
+        } else {
+            $this->createdDate = $createdDate;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
     }
 }

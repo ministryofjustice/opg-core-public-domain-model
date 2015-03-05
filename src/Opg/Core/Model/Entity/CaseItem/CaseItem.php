@@ -69,7 +69,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "integer", nullable=true)
      * @var int
      * @Type("integer")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $oldCaseId;
 
@@ -78,14 +78,14 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @var int
      * @Type("integer")
      * @Accessor(getter="getApplicationType",setter="setApplicationType")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $applicationType = self::APPLICATION_TYPE_CLASSIC;
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string $title
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $title;
 
@@ -93,7 +93,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      * @Accessor(getter="getCaseType", setter="setCaseType")
      */
     protected $caseType;
@@ -102,7 +102,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $caseSubtype;
 
@@ -110,7 +110,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "date", nullable = true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="dueDate")
      */
     protected $dueDate;
@@ -119,7 +119,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="registrationDate")
      */
     protected $registrationDate;
@@ -128,7 +128,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="closedDate")
      */
     protected $closedDate;
@@ -137,7 +137,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "string", nullable = true)
      * @var string
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $status;
 
@@ -161,7 +161,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagRating")
-     * @Serializer\Groups({"api-poa-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-person-get"})
      */
     protected $ragRating;
 
@@ -170,7 +170,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @var int
      * @ReadOnly
      * @Accessor(getter="getRagTotal")
-     * @Serializer\Groups({"api-poa-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-person-get"})
      */
     protected $ragTotal;
 
@@ -178,7 +178,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @ORM\Column(type = "datetime", nullable = true)
      * @var \DateTime
      * @Type("string")
-     * @Serializer\Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Serializer\Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="rejectedDate")
      */
     protected $rejectedDate;
@@ -234,6 +234,20 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
      * @Groups({"api-person-get"})
      */
     protected $caseAttorneyActionAdditionalInfo = false;
+
+    /**
+     * @ORM\Column(type="boolean",options={"default"=0})
+     * @var bool
+     * @Groups({"api-person-get","api-case-list"})
+     */
+    protected $repeatApplication = false;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     * @var string
+     * @Groups({"api-person-get","api-case-list"})
+     */
+    protected $repeatApplicationReference;
 
     public function __construct()
     {
@@ -695,7 +709,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyJointlyAndJointlyAndSeverally($caseAttorney = false)
     {
@@ -715,7 +729,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyJointlyAndSeverally($caseAttorney = false)
     {
@@ -735,7 +749,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     /**
      * @param boolean $caseAttorney
      *
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneySingular($caseAttorney = false)
     {
@@ -754,7 +768,7 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
 
     /**
      * @param bool $caseAttorney
-     * @return PowerOfAttorney
+     * @return CaseItem
      */
     public function setCaseAttorneyActionAdditionalInfo($caseAttorney = false)
     {
@@ -770,4 +784,55 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     {
         return $this->caseAttorneyActionAdditionalInfo;
     }
+
+    /**
+     * @param bool $repeatApplication
+     * @return CaseItem
+     */
+    public function setRepeatApplication($repeatApplication = false)
+    {
+        $this->repeatApplication = $repeatApplication;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRepeatApplication()
+    {
+        return $this->repeatApplication;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRepeatApplication()
+    {
+        return (true === $this->getRepeatApplication());
+    }
+
+    /**
+     * @param $reference
+     * @return CaseItem
+     */
+    public function setRepeatApplicationReference($reference)
+    {
+        $this->repeatApplicationReference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepeatApplicationReference()
+    {
+        return $this->repeatApplicationReference;
+    }
+
+    /**
+     * @return Person
+     */
+    abstract public function getPrimaryActor();
 }

@@ -46,7 +46,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getName", setter="setName")
      * @Type("string")
      */
@@ -56,9 +56,8 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", mappedBy="members")
      * @var ArrayCollection
      * @Type("ArrayCollection")
-     * @Groups({"api-poa-list","api-task-list"})
+     * @Groups({"api-case-list","api-task-list"})
      * @MaxDepth(3)
-     * @Type("ArrayCollection")
      */
     protected $teams;
 
@@ -66,8 +65,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
      * @var string
      * @Type("string")
      * @Accessor(getter="getDisplayName")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
-     * @Type("string")
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @ReadOnly
      */
     protected $displayName;

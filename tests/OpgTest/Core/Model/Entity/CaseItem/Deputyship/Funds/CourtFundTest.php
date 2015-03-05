@@ -59,4 +59,11 @@ class CourtFundTest extends \PHPUnit_Framework_TestCase {
         $this->assertNotEmpty($this->fund->getLastUpdatedDate());
         $this->assertEquals($expected, $this->fund->getLastUpdatedDate());
     }
+
+    public function testGetSetAccountStatus()
+    {
+        $expected = 'Open';
+        $this->assertEmpty($this->fund->getAccountStatus());
+        $this->assertEquals($expected, $this->fund->setAccountStatus($expected)->getAccountStatus());
+    }
 }

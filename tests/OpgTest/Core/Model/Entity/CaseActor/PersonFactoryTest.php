@@ -234,6 +234,21 @@ class PersonFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data['id'], $person->getId());
     }
 
+    public function testClientNoId()
+    {
+        $data = array('personType' => 'Client');
+
+        $this->serializer
+            ->shouldReceive('deserialize')
+            ->withAnyArgs()
+            ->andReturn((new Client()));
+
+        $person = PersonFactory::create($data, $this->serializer);
+
+        $this->assertTrue($person instanceof Client);
+        $this->assertEmpty($person->getId());
+    }
+
     public function testDeputy()
     {
         $data = array('personType' => 'Deputy', 'id' => 1);

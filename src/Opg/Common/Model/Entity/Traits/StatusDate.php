@@ -19,7 +19,7 @@ trait StatusDate
      * @var \DateTime
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="statusDate")
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $statusDate;
 

@@ -162,24 +162,6 @@ class WarningTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->warning->setSystemStatus(false)->isActive());
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage This warning is already associated with a person
-     */
-    public function testGetSetPerson()
-    {
-        $expected = (new Donor())
-            ->setId(1)
-            ->setFirstName('Bob');
-
-        $this->assertEmpty($this->warning->getPerson());
-
-        $this->assertEquals($expected, $this->warning->setPerson($expected)->getPerson());
-
-        //Throw us an exception here
-        $this->warning->setPerson(new Donor());
-    }
-
     public function testGetInputFilter()
     {
         $this->assertTrue($this->warning->getInputFilter() instanceof InputFilter);

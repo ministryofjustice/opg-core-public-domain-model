@@ -7,7 +7,9 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
-use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
+use JMS\Serializer\Annotation\Groups;
+use Opg\Core\Model\Entity\Document\Decorators\HasSystemType;
+use Opg\Core\Model\Entity\Document\Decorators\SystemType;
 
 /**
  * @ORM\Entity
@@ -16,18 +18,15 @@ use Opg\Common\Model\Entity\DateFormat as OPGDateFormat;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Document
  */
-class OutgoingDocument extends Document
+class OutgoingDocument extends Document implements HasSystemType
 {
-    /**
-     * @ORM\Column(type = "string", nullable = true)
-     * @var string
-     */
-    protected $systemType;
+    use SystemType;
 
     /**
      * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_OUTGOING_CORRESPONDENCE;
 
@@ -36,26 +35,4 @@ class OutgoingDocument extends Document
     {
         $this->createdDate = new \DateTime();
     }
-
-
-
-    /**
-     * @param string $systemType
-     * @return OutgoingDocument
-     */
-    public function setSystemType($systemType)
-    {
-        $this->systemType = $systemType;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSystemType()
-    {
-        return $this->systemType;
-    }
-
 }

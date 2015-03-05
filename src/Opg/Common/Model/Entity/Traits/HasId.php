@@ -18,7 +18,7 @@ trait HasId
      * @ORM\Column(type = "integer", options = {"unsigned": true})
      * @ORM\GeneratedValue(strategy = "SEQUENCE")
      * @ORM\Id
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getId", setter="setId")
      * @Type("integer")
      * @var int $id

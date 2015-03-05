@@ -5,6 +5,7 @@ namespace Opg\Common\Model\Entity\Traits;
 use Doctrine\Common\Collections\ArrayCollection;
 use Opg\Common\Model\Entity\HasCasesInterface;
 use Opg\Core\Model\Entity\CaseItem\CaseItem;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Class HasCases
@@ -18,6 +19,7 @@ trait HasCases
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Groups({"api-person-get"})
+     * @Type("ArrayCollection")
      */
     protected $cases;
 

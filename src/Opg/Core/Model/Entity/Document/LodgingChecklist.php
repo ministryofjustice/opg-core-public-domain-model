@@ -6,9 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\GenericAccessor;
 use JMS\Serializer\Annotation\ReadOnly;
-use Opg\Core\Model\Entity\Document\Decorators\AssetLog;
-use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
+use Opg\Core\Model\Entity\Document\Decorators\ClosingBalances;
+use Opg\Core\Model\Entity\Document\Decorators\HasClosingBalances;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -17,36 +19,87 @@ use Opg\Core\Model\Entity\Document\Decorators\HasAssetLog;
  * Class Correspondence
  * @package Opg\Core\Model\Entity\Document
  */
-class LodgingChecklist extends OutgoingDocument implements HasAssetLog
+class LodgingChecklist extends OutgoingDocument implements HasClosingBalances
 {
-    use AssetLog;
+    use ClosingBalances;
 
     /**
      * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_INTERNAL_CORRESPONDENCE;
 
     /**
-     * @ORM\Column(type="float")
-     * @var float
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="startDate")
      */
-    protected $closingBalance1 = 0;
+    protected $startDate;
 
     /**
-     * @ORM\Column(type="float")
-     * @var float
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     * @Type("string")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="endDate")
      */
-    protected $closingBalance2 = 0;
+    protected $endDate;
 
     /**
-     * @param float $closingBalance1
+     * @ORM\Column(type="float", nullable=true)
+     * @var float
+     */
+    protected $totalAssets;
+
+
+    /**
+     * @param \DateTime $startDate
      * @return LodgingChecklist
      */
-    public function setClosingBalance1($closingBalance1)
+    public function setStartDate($startDate)
     {
-        $this->closingBalance1 = (float)$closingBalance1;
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime $endDate
+     * @return LodgingChecklist
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+
+    /**
+     * @param $totalAssets
+     * @return LodgingChecklist
+     */
+    public function setTotalAssets($totalAssets)
+    {
+        $this->totalAssets = $totalAssets;
 
         return $this;
     }
@@ -54,29 +107,8 @@ class LodgingChecklist extends OutgoingDocument implements HasAssetLog
     /**
      * @return float
      */
-    public function getClosingBalance1()
+    public function getTotalAssets()
     {
-        return $this->closingBalance1;
+        return $this->totalAssets;
     }
-
-    /**
-     * @param float $closingBalance2
-     * @return LodgingChecklist
-     */
-    public function setClosingBalance2($closingBalance2)
-    {
-        $this->closingBalance2 = (float)$closingBalance2;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getClosingBalance2()
-    {
-        return $this->closingBalance2;
-    }
-
-
 }

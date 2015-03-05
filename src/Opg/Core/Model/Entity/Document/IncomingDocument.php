@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -21,18 +22,21 @@ class IncomingDocument extends Document
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $subtype;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $sourceDocumentType;
 
     /**
      * @ORM\Column(type = "text", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $description;
 
@@ -49,6 +53,7 @@ class IncomingDocument extends Document
      * @Type("string")
      * @Accessor(getter="getDirection")
      * @ReadOnly
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 

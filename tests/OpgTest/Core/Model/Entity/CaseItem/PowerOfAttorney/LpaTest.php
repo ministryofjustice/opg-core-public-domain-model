@@ -84,6 +84,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             'Opg\Core\Model\Entity\CaseActor\Donor',
             $this->lpa->getDonor()
         );
+
+        $this->assertEquals(
+            $this->lpa->getDonor(),
+            $this->lpa->getPrimaryActor()
+        );
     }
 
     public function testThrowsExceptionWhenTryingToPassBadObjectToSetDonor()
@@ -472,6 +477,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
                 'additionalInfoDonorSignatureDate'          => null,
                 'anyOtherInfo'                              => false,
                 'warnings'                                  => null,
+                'lpaDonorSignature'                         => false,
+                'attorneyDeclarationSignature'              => false,
+                'certificateProviderSignature'              => false,
+                'repeatApplication'                         => false,
+                'repeatApplicationReference'                => null,
             ),
             $lpa->toArrayRecursive()
         );
@@ -513,6 +523,17 @@ class LpaTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof \LogicException);
             $this->assertFalse($e instanceof UnusedException);
         }
+    }
+
+    public function testAttorneyIsAddedAsApplicantWhenLpaApplicantTypeIsAttorneyAndAttorneyApplyingToRegisterIsTrue()
+    {
+        $this->lpa->setApplicantType('attorney');
+        $attorney = new Attorney();
+        $attorney->setId('2');
+        $attorney->setIsAttorneyApplyingToRegister(true);
+        $this->lpa->addPerson($attorney);
+
+        $this->assertEquals($this->lpa->getApplicants()[0], $attorney);
     }
 
     public function testGetSetDonorDeclarations()
@@ -1000,5 +1021,11 @@ class LpaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->lpa->isDonorSignatureWitnessed());
         $this->assertTrue($this->lpa->getDonorSignatureWitnessed());
+    }
+
+    public function testGetSetLpaDonorSignature()
+    {
+        $this->assertFalse($this->lpa->getLpaDonorSignature());
+        $this->assertTrue($this->lpa->setLpaDonorSignature(true)->getLpaDonorSignature());
     }
 }

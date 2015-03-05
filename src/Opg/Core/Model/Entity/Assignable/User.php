@@ -26,7 +26,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $email;
 
@@ -35,7 +35,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
      *
      * @var string
      * @Type("string")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getFirstName", setter="setFirstname")
      */
     protected $firstname;
@@ -43,7 +43,7 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     /**
      * @ORM\Column(type = "string")
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $surname;
 
@@ -67,14 +67,14 @@ class User extends AssignableComposite implements EntityInterface, IsAssignee
     /**
      * @var string
      * @Exclude
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $token;
 
     /**
      * @Type("boolean")
      * @var boolean
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      * @Accessor(getter="getLocked", setter="setLocked")
      */
     protected $locked;

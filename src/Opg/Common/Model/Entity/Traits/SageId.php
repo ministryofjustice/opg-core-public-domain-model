@@ -18,7 +18,7 @@ trait SageId
      * @var string
      * @Type("string")
      * @Accessor(setter="setSageId", getter="getSageId")
-     * @Groups({"api-poa-list","api-task-list","api-person-get","api-warning-list"})
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
      */
     protected $sageId;
 

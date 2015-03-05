@@ -33,7 +33,7 @@ class Order extends Deputyship implements HasCourtFundsInterface
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\FeePayer", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var FeePayer
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @ReadOnly
      */
     protected $feePayer;
@@ -45,10 +45,10 @@ class Order extends Deputyship implements HasCourtFundsInterface
     protected $fileLocationDescription;
 
     /**
-     * @ORM\OneToOne(targetEntity="Opg\Core\Model\Entity\Address\Address")
+     * @ORM\OneToOne(cascade={"persist"}, targetEntity="Opg\Core\Model\Entity\Address\Address")
      * @ORM\JoinColumn(name="filelocation_id", referencedColumnName="id")
      * @var Address
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $fileLocationAddress;
 

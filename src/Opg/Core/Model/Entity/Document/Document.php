@@ -22,6 +22,7 @@ use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\ReadOnly;
 use JMS\Serializer\Annotation\GenericAccessor;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="Application\Model\Repository\DocumentRepository")
@@ -34,7 +35,9 @@ use JMS\Serializer\Annotation\GenericAccessor;
  *     "incoming_document" = "Opg\Core\Model\Entity\Document\IncomingDocument",
  *     "outgoing_document" = "Opg\Core\Model\Entity\Document\OutgoingDocument",
  *     "lodging_checklist" = "Opg\Core\Model\Entity\Document\LodgingChecklist",
+ *     "action_log"        = "Opg\Core\Model\Entity\Document\ActionLog",
  *     "annual_report"     = "Opg\Core\Model\Entity\Document\AnnualReport",
+ *     "crec"              = "Opg\Core\Model\Entity\Document\Crec"
  * })
  *
  * Class Document
@@ -62,12 +65,14 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
 
     /**
      * @ORM\Column(type = "string", nullable = true)
+     * @Groups({"api-person-get"})
      * @var string
      */
     protected $type;
 
     /**
      * @ORM\Column(type="string", nullable = true)
+     * @Groups({"api-person-get"})
      * @var string
      */
     protected $friendlyDescription;
@@ -75,6 +80,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
     /**
      * @ORM\Column(type = "string", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $title;
 
@@ -83,7 +89,8 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @var \DateTime
      * @Type("string")
      * @ReadOnly
-     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="paymentDate")
+     * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="createdDate")
+     * @Groups({"api-person-get"})
      */
     protected $createdDate;
 
@@ -91,12 +98,14 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @ORM\Column(type="integer", nullable=true, options={"default"=0})
      * @var int
      * @Accessor(getter="getDirection")
+     * @Groups({"api-person-get"})
      */
     protected $direction = self::DOCUMENT_INCOMING_CORRESPONDENCE;
 
     /**
      * @ORM\Column(type = "text", nullable = true)
      * @var string
+     * @Groups({"api-person-get"})
      */
     protected $filename;
 
@@ -113,6 +122,7 @@ abstract class Document implements EntityInterface, \IteratorAggregate, HasDateT
      * @ORM\JoinColumn(name="correspondent_id", referencedColumnName="id")
      * @var Person
      * @Type("Opg\Core\Model\Entity\CaseActor\Person")
+     * @Groups({"api-person-get"})
      */
     protected $correspondent;
 

@@ -29,7 +29,7 @@ class Deputy extends Attorney implements HasStatusDate, HasCaseRecNumber, IsAssi
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("String")
+     * @Type("string")
      * @Groups({"api-person-get"})
      */
     protected $deputyReferenceNumber;
@@ -37,7 +37,7 @@ class Deputy extends Attorney implements HasStatusDate, HasCaseRecNumber, IsAssi
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Type("String")
+     * @Type("string")
      * @Groups({"api-person-get"})
      */
     protected $deputyCompliance;

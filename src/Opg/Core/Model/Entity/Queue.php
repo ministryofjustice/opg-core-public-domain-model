@@ -18,7 +18,35 @@ use JMS\Serializer\Annotation\Groups;
  */
 class Queue implements HasIdInterface
 {
-    use HasId;
+    /**
+     * @ORM\Column(type = "integer", options = {"unsigned": true})
+     * @ORM\GeneratedValue(strategy = "IDENTITY")
+     * @ORM\Id
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     * @Accessor(getter="getId", setter="setId")
+     * @Type("integer")
+     * @var int $id
+     */
+    protected $id;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return HasIdInterface
+     */
+    public function setId( $id )
+    {
+        $this->id = (int) $id;
+
+        return $this;
+    }
 
     /**
      * @var string

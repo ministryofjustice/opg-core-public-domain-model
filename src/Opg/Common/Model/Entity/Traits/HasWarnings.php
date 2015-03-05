@@ -18,7 +18,7 @@ use Opg\Core\Model\Entity\Warning\Warning;
 trait HasWarnings
 {
     /**
-     * @ORM\OneToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", mappedBy="person", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Warning\Warning", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var ArrayCollection
      * @Accessor(getter="getActiveWarnings")
@@ -57,10 +57,6 @@ trait HasWarnings
 
         $this->warnings->add($warning);
 
-        if ($this instanceof Person) {
-            $warning->setPerson($this);
-        }
-
         return $this;
     }
 
@@ -71,13 +67,13 @@ trait HasWarnings
     public function getActiveWarnings()
     {
         $this->initWarnings();
-
-        return
-            $this->warnings->filter(
-                function ($item) {
-                    return $item->isActive();
-                }
-            );
+        $warnings = array();
+        foreach($this->warnings as $warning) {
+            if($warning->isActive()) {
+                $warnings[] = $warning;
+            }
+        }
+        return $warnings;
     }
 
     /**

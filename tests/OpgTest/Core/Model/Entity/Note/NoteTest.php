@@ -154,26 +154,6 @@ class NoteTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSetGetCase()
-    {
-        $expectedCase = new Lpa();
-        $expectedCase->setId(1)->setTitle('Test Case');
-
-        $this->note->setCase($expectedCase);
-
-        $this->assertEquals($expectedCase, $this->note->getCase());
-    }
-
-    public function testGetSetPerson()
-    {
-        $expectedDonor = new Donor();
-        $expectedDonor->setId(1)->setFirstname('Test')->setSurname('Donor');
-
-        $this->note->setPerson($expectedDonor);
-
-        $this->assertEquals($expectedDonor, $this->note->getPerson());
-    }
-
     public function testValidation()
     {
         $noteName = 'New Note: ' . uniqid();

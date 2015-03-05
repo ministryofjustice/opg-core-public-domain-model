@@ -31,7 +31,7 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
      * @ORM\ManyToOne(cascade={"persist"}, targetEntity = "Opg\Core\Model\Entity\CaseActor\Client", fetch = "EAGER")
      * @ORM\OrderBy({"id"="ASC"})
      * @var Client
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @ReadOnly
      */
     protected $client;
@@ -39,7 +39,7 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="orderDate")
      * @Type("string")
      */
@@ -48,7 +48,7 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     /**
      * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      * @GenericAccessor(getter="getDateAsString", setter="setDateFromString", propertyName="orderIssueDate")
      * @Type("string")
      */
@@ -57,28 +57,28 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     /**
      * @ORM\Column(type="boolean",options={"default"=0})
      * @var bool
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $securityBond = false;
 
     /**
      * @ORM\Column(type="string")
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $bondReferenceNumber;
 
     /**
      * @ORM\Column(type="float")
      * @var float
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $bondValue;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
-     * @Groups({"api-poa-list","api-task-list","api-person-get"})
+     * @Groups({"api-case-list","api-task-list","api-person-get"})
      */
     protected $orderStatus;
 
@@ -222,6 +222,14 @@ abstract class Deputyship extends CaseItem implements HasStatusDate, HasCaseRecN
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getPrimaryActor()
+    {
+        return $this->getClient();
     }
 
 

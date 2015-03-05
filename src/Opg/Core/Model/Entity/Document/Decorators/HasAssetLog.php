@@ -1,11 +1,8 @@
 <?php
-
-
 namespace Opg\Core\Model\Entity\Document\Decorators;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Opg\Core\Model\Entity\Asset\Asset;
+use Opg\Core\Model\Entity\LineItem\LineItem;
 
 interface HasAssetLog
 {
@@ -15,10 +12,10 @@ interface HasAssetLog
     public function getAssets();
 
     /**
-     * @param Asset $asset
+     * @param LineItem $lineItem
      * @return HasAssetLog
      */
-    public function addAsset(Asset $asset);
+    public function addAsset(LineItem $lineItem);
 
     /**
      * @param ArrayCollection $assets
@@ -27,14 +24,14 @@ interface HasAssetLog
     public function setAssets(ArrayCollection $assets);
 
     /**
-     * @param Asset $asset
+     * @param LineItem $lineItem
      * @return boolean
      */
-    public function assetExists(Asset $asset);
+    public function assetExists(LineItem $lineItem);
 
     /**
-     * @param Asset $asset
+     * @param LineItem $lineItem
      * @return HasAssetLog
      */
-    public function removeAsset(Asset $asset);
+    public function removeAsset(LineItem $lineItem);
 }
