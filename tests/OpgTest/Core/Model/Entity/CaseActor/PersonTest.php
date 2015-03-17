@@ -468,11 +468,12 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $expectedDate = new \DateTime();
 
         $this->assertEmpty($this->person->getCreatedDate());
-        $this->assertEmpty($this->person->getCreatedDateString());
+
+        $this->person->setCreatedDate();
+        $this->assertNotEmpty($this->person->getCreatedDate());
 
         $this->person->setCreatedDate($expectedDate);
         $this->assertEquals($expectedDate, $this->person->getCreatedDate());
     }
 
   }
-
