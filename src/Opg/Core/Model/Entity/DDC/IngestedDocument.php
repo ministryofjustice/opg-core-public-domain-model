@@ -35,14 +35,21 @@ class IngestedDocument implements HasUidInterface, HasIdInterface
      */
     protected $processed;
 
+    /**
+     * @ORM\Column(type = "text", nullable = true)
+     * @var string
+     */
+    protected $filename;
+
     public function __construct()
     {
         $this->ingestedDateTime = new \DateTime();
-        $this->processed = false;
+        $this->processed        = false;
     }
 
     /**
      * @param \DateTime $ingestedDateTime
+     *
      * @return IngestedDocument
      */
     public function setIngestedDateTime($ingestedDateTime)
@@ -61,15 +68,8 @@ class IngestedDocument implements HasUidInterface, HasIdInterface
     }
 
     /**
-     * @return bool
-     */
-    public function getProcessed()
-    {
-        return $this->processed;
-    }
-
-    /**
      * @param  bool $processed
+     *
      * @return IngestedDocument
      */
     public function setProcessed($processed)
@@ -79,5 +79,31 @@ class IngestedDocument implements HasUidInterface, HasIdInterface
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
+    }
 
+    /**
+     * @param string $filename
+     *
+     * @return IngestedDocument
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @return string $filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
 }

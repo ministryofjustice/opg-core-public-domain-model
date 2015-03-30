@@ -59,4 +59,13 @@ class IngestedDocumentTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->stub->setProcessed($expected) instanceof IngestedDocument);
         $this->assertEquals($expected, $this->stub->getProcessed());
     }
+
+    public function testGetSetFilename()
+    {
+        $expected  = "file_" . uniqid();
+
+        $this->assertNull($this->stub->getFilename());
+        $this->assertTrue($this->stub->setFilename($expected) instanceof IngestedDocument);
+        $this->assertEquals($expected, $this->stub->getFilename());
+    }
 }
