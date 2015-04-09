@@ -55,7 +55,7 @@ abstract class AssignableComposite implements IsAssignee, \IteratorAggregate, Ha
     /**
      * @ORM\ManyToMany(targetEntity="Opg\Core\Model\Entity\Assignable\Team", mappedBy="members")
      * @var ArrayCollection
-     * @Type("ArrayCollection")
+     * @Type("ArrayCollection<Opg\Core\Model\Entity\Assignable\Team>")
      * @Groups({"api-case-list","api-task-list"})
      * @MaxDepth(3)
      */
