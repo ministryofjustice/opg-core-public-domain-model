@@ -72,7 +72,7 @@ class PaymentFilter extends BaseInputFilter
                     'required'   => true,
                     'validators' => array(
                         array(
-                            'name'    => 'Digits',
+                            'name'    => 'Float',
                         )
                     )
                 )
