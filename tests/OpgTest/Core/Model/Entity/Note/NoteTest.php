@@ -156,9 +156,13 @@ class NoteTest extends \PHPUnit_Framework_TestCase
 
     public function testValidation()
     {
-        $noteName = 'New Note: ' . uniqid();
-        $noteType = 'Confirmation';
+        $noteDescription = 'New Note Description';
+        $noteName        = 'New Note: ' . uniqid();
+        $noteType        = 'Confirmation';
 
+        $this->assertFalse($this->note->isValid());
+
+        $this->note->setDescription($noteDescription);
         $this->assertFalse($this->note->isValid());
 
         $this->note->setName($noteName);
