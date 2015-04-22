@@ -123,22 +123,33 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetNames ()
     {
+        $expectedTitle = 'Mr';
         $expectedFirst = 'First';
         $expectedMiddle = 'Middle';
         $expectedSurname = 'Surname';
         $expectedOtherNames = "Other Known Names";
 
+        $displayParts = array(
+            $expectedTitle,
+            $expectedFirst,
+            $expectedSurname
+        );
+        $expectedDisplay = implode(' ', $displayParts);
+
         $this->person
+            ->setTitle($expectedTitle)
             ->setFirstname($expectedFirst)
             ->setMiddlename($expectedMiddle)
             ->setSurname($expectedSurname)
             ->setOtherNames($expectedOtherNames);
 
         $this->assertNotEquals($this->person->getSurname(), $expectedFirst);
+        $this->assertEquals($expectedTitle, $this->person->getTitle());
         $this->assertEquals($expectedFirst, $this->person->getFirstname());
         $this->assertEquals($expectedMiddle, $this->person->getMiddlename());
         $this->assertEquals($expectedSurname, $this->person->getSurname());
         $this->assertEquals($expectedOtherNames, $this->person->getOtherNames());
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
     }
 
     public function testAddCase ()

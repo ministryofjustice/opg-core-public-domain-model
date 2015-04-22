@@ -557,6 +557,28 @@ abstract class Person extends LegalEntity implements HasCasesInterface, HasDateT
     }
 
     /**
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        $displayName = array();
+
+        if (!empty($this->getTitle())) {
+            $displayName[] = $this->getTitle();
+        }
+
+        if (!empty($this->getFirstname())) {
+            $displayName[] = $this->getFirstname();
+        }
+
+        if (!empty($this->getSurname())) {
+            $displayName[] = $this->getSurname();
+        }
+
+        return implode(' ', $displayName);
+    }
+
+    /**
      * @param  PhoneNumber $phoneNumber
      * @return Person
      */
