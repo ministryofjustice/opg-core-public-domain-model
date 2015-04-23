@@ -154,17 +154,45 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDisplayNameWithEmptyTitle()
     {
-        $expectedTitle = '';
         $expectedFirst = 'First';
         $expectedSurname = 'Surname';
 
-        $displayParts = array($expectedTitle, $expectedFirst, $expectedSurname);
+        $displayParts = array($expectedFirst, $expectedSurname);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setFirstname($expectedFirst)
+            ->setSurname($expectedSurname);
+
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptyFirstname()
+    {
+        $expectedTitle = 'Mr';
+        $expectedSurname = 'Surname';
+
+        $displayParts = array($expectedTitle, $expectedSurname);
         $expectedDisplay = trim(implode(' ', $displayParts));
 
         $this->person
             ->setTitle($expectedTitle)
-            ->setFirstname($expectedFirst)
             ->setSurname($expectedSurname);
+
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptySurname()
+    {
+        $expectedTitle = 'Mr';
+        $expectedFirst = 'First';
+
+        $displayParts = array($expectedTitle, $expectedFirst);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setTitle($expectedTitle)
+            ->setFirstname($expectedFirst);
 
         $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
     }
