@@ -134,7 +134,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
             $expectedFirst,
             $expectedSurname
         );
-        $expectedDisplay = implode(' ', $displayParts);
+        $expectedDisplay = trim(implode(' ', $displayParts));
 
         $this->person
             ->setTitle($expectedTitle)
@@ -149,6 +149,23 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedMiddle, $this->person->getMiddlename());
         $this->assertEquals($expectedSurname, $this->person->getSurname());
         $this->assertEquals($expectedOtherNames, $this->person->getOtherNames());
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptyTitle()
+    {
+        $expectedTitle = '';
+        $expectedFirst = 'First';
+        $expectedSurname = 'Surname';
+
+        $displayParts = array($expectedTitle, $expectedFirst, $expectedSurname);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setTitle($expectedTitle)
+            ->setFirstname($expectedFirst)
+            ->setSurname($expectedSurname);
+
         $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
     }
 

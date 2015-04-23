@@ -575,7 +575,7 @@ abstract class Person extends LegalEntity implements HasCasesInterface, HasDateT
             $displayName[] = $this->getSurname();
         }
 
-        return implode(' ', $displayName);
+        return trim(implode(' ', $displayName));
     }
 
     /**
