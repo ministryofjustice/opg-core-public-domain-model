@@ -15,7 +15,6 @@ use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity
- * @ORM\EntityListeners({"Application\Listener\UserListener"})
  */
 class User extends AssignableComposite implements EntityInterface, IsAssignee
 {
