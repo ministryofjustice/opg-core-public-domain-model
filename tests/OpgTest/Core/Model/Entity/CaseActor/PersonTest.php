@@ -123,22 +123,78 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetNames ()
     {
+        $expectedTitle = 'Mr';
         $expectedFirst = 'First';
         $expectedMiddle = 'Middle';
         $expectedSurname = 'Surname';
         $expectedOtherNames = "Other Known Names";
 
+        $displayParts = array(
+            $expectedTitle,
+            $expectedFirst,
+            $expectedSurname
+        );
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
         $this->person
+            ->setTitle($expectedTitle)
             ->setFirstname($expectedFirst)
             ->setMiddlename($expectedMiddle)
             ->setSurname($expectedSurname)
             ->setOtherNames($expectedOtherNames);
 
         $this->assertNotEquals($this->person->getSurname(), $expectedFirst);
+        $this->assertEquals($expectedTitle, $this->person->getTitle());
         $this->assertEquals($expectedFirst, $this->person->getFirstname());
         $this->assertEquals($expectedMiddle, $this->person->getMiddlename());
         $this->assertEquals($expectedSurname, $this->person->getSurname());
         $this->assertEquals($expectedOtherNames, $this->person->getOtherNames());
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptyTitle()
+    {
+        $expectedFirst = 'First';
+        $expectedSurname = 'Surname';
+
+        $displayParts = array($expectedFirst, $expectedSurname);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setFirstname($expectedFirst)
+            ->setSurname($expectedSurname);
+
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptyFirstname()
+    {
+        $expectedTitle = 'Mr';
+        $expectedSurname = 'Surname';
+
+        $displayParts = array($expectedTitle, $expectedSurname);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setTitle($expectedTitle)
+            ->setSurname($expectedSurname);
+
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
+    }
+
+    public function testGetDisplayNameWithEmptySurname()
+    {
+        $expectedTitle = 'Mr';
+        $expectedFirst = 'First';
+
+        $displayParts = array($expectedTitle, $expectedFirst);
+        $expectedDisplay = trim(implode(' ', $displayParts));
+
+        $this->person
+            ->setTitle($expectedTitle)
+            ->setFirstname($expectedFirst);
+
+        $this->assertEquals($expectedDisplay, $this->person->getDisplayName());
     }
 
     public function testAddCase ()
