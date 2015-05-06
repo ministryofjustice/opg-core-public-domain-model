@@ -56,6 +56,10 @@ abstract class CaseItem extends LegalEntity implements CaseItemInterface, HasRag
     const APPLICATION_TYPE_CLASSIC = 0;
     const APPLICATION_TYPE_ONLINE  = 1;
 
+    // Subtype full names
+    const PF_FULLTEXTNAME = 'Property and Financial Affairs';
+    const HW_FULLTEXTNAME = 'Health and Welfare';
+
     /**
      * Constants below are for payment types radio buttons, we use 0
      * as default

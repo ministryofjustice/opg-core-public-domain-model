@@ -21,10 +21,10 @@ use Opg\Core\Model\Entity\CaseItem\Validation\Validator\CaseType as CaseTypeVali
 class Order extends Deputyship implements HasCourtFundsInterface
 {
     /**
-    * @ORM\Column(type = "string", nullable = true)
-    * @var string
-    * @Groups("api-task-list")
-    */
+     * @ORM\Column(type = "string", nullable = true)
+     * @var string
+     * @Groups("api-task-list")
+     */
     protected $caseType = CaseTypeValidator::CASE_TYPE_ORDER;
 
     use HasCourtFunds;
