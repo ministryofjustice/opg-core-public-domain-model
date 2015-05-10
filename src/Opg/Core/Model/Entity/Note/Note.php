@@ -278,6 +278,7 @@ class Note implements EntityInterface, \IteratorAggregate, HasIdInterface
                                         'Disclaimer',
                                         'Document capture',
                                         'Email',
+                                        'Extension granted',
                                         'Investigation',
                                         'Imperfect application',
                                         'Letter',
