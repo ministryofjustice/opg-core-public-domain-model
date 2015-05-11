@@ -191,11 +191,6 @@ class AnnualReportLog implements EntityInterface, \IteratorAggregate, HasIdInter
                     array(
                         'name' => 'deputyshipOrder',
                         'required' => true,
-                        /*'validators' => array(
-                            array(
-                                'name' => 'Opg\Core\Model\Entity\AnnualReportLog\Validation\Validator\IsDeputyshipOrder',
-                            )
-                        )*/
                     )
                 )
             );
