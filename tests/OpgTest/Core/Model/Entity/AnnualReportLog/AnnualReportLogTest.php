@@ -2,18 +2,18 @@
 namespace OpgTest\Core\Model\AnnualReportLog;
 
 use Opg\Core\Model\Entity\AnnualReportLog\AnnualReportLog;
-use Opg\Core\Model\Entity\AnnualReportLog\Validation\Validator\IsDeputyshipOrder;
+use Opg\Core\Model\Entity\CaseItem\Deputyship\Order;
 
 
 class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
 {
-    protected $mockDeputyshipOrder;
+    protected $deputyshipOrder;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->mockDeputyshipOrder = $this->getMock('Opg\Core\Model\Entity\CaseItem\Deputyship\Order');
+        $this->deputyshipOrder = new Order();
     }
 
 
@@ -21,10 +21,10 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
     {
         $annualReportLog = new AnnualReportLog();
 
-        $annualReportLog->setDeputyshipOrder($this->mockDeputyshipOrder);
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
 
         $this->assertEquals(
-            $this->mockDeputyshipOrder,
+            $this->deputyshipOrder,
             $annualReportLog->getDeputyshipOrder()
         );
     }
@@ -109,7 +109,7 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $annualReportLog->setDeputyshipOrder($this->mockDeputyshipOrder);
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
         $annualReportLog->setReportingPeriodEndDate(new \DateTime('2015-05-05'));
         $annualReportLog->setRevisedDueDate(new \DateTime('2015-05-05'));
 
@@ -130,7 +130,7 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $annualReportLog->setDeputyshipOrder($this->mockDeputyshipOrder);
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
         $annualReportLog->setDueDate(new \DateTime('2015-05-05'));
         $annualReportLog->setRevisedDueDate(new \DateTime('2015-05-05'));
 
@@ -151,7 +151,7 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $annualReportLog->setDeputyshipOrder($this->mockDeputyshipOrder);
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
         $annualReportLog->setDueDate(new \DateTime('2015-05-05'));
         $annualReportLog->setReportingPeriodEndDate(new \DateTime('2015-05-05'));
         $annualReportLog->setRevisedDueDate(new \DateTime('2015-05-05'));
@@ -174,7 +174,7 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $annualReportLog->setDeputyshipOrder($this->mockDeputyshipOrder);
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
         $annualReportLog->setDueDate(new \DateTime('2015-05-05'));
         $annualReportLog->setReportingPeriodEndDate(new \DateTime('2015-05-05'));
         $annualReportLog->setRevisedDueDate(new \DateTime('2015-05-05'));
