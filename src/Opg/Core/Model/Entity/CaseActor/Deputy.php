@@ -10,6 +10,7 @@ use Opg\Core\Model\Entity\Assignable\Assignee;
 use Opg\Core\Model\Entity\Assignable\IsAssignable;
 use Opg\Core\Model\Entity\CaseActor\Decorators\CaseRecNumber;
 use Opg\Core\Model\Entity\CaseActor\Interfaces\HasCaseRecNumber;
+use Opg\Core\Model\Entity\CaseActor\Decorators\RelationshipToClient;
 use Opg\Core\Model\Entity\CaseActor\Validation\InputFilter\DeputyFilter;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Groups;
@@ -25,6 +26,7 @@ class Deputy extends Attorney implements HasStatusDate, HasCaseRecNumber, IsAssi
     use CaseRecNumber;
     use StatusDate;
     use Assignee;
+    use RelationshipToClient;
 
     /**
      * @ORM\Column(type="string", nullable=true)

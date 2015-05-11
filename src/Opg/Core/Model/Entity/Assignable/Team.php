@@ -12,6 +12,8 @@ use Traversable;
 use Zend\InputFilter\InputFilterInterface;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -46,6 +48,12 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
      */
     protected $children;
 
+    /**
+     * @ORM\Column(type = "string")
+     * @Type("string")
+     * @Groups({"api-case-list","api-task-list","api-person-get","api-warning-list"})
+     */
+    protected $phoneNumber;
 
     public function __construct()
     {
@@ -264,5 +272,23 @@ class Team extends AssignableComposite implements EntityInterface, IsAssignee, I
             return sprintf( '%s (%s)', $this->getName(), $this->getGroupName() );
         }
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 }

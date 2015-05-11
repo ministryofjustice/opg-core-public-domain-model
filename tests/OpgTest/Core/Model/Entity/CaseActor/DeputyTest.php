@@ -58,4 +58,11 @@ class DeputyTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->actor->isAssigned());
         $this->assertEquals($assignee, $this->actor->getAssignee());
     }
+
+    public function testGetSetRelationshipToClient()
+    {
+        $this->actor->setRelationshipToClient('daughter');
+
+        $this->assertEquals('daughter', $this->actor->getRelationshipToClient());
+    }
 }
