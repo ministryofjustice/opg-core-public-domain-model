@@ -90,7 +90,8 @@ class TeamTest extends \PHPUnit_Framework_TestCase
             'name'              => null,
             'errorMessages'     => array(),
             'teams'             => array(),
-            'displayName'       => null
+            'displayName'       => null,
+            'phoneNumber'       => null,
         );
 
         $this->assertEquals($expected, (array)$this->team->getIterator());
@@ -111,6 +112,13 @@ class TeamTest extends \PHPUnit_Framework_TestCase
         $this->team->setGroupName(null);
 
         $this->assertEquals($name, $this->team->getDisplayName());
+    }
+
+    public function testSetGetPhoneNumber()
+    {
+        $this->team->setPhoneNumber('12345');
+
+        $this->assertEquals('12345', $this->team->getPhoneNumber());
     }
 
     /**
