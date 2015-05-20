@@ -151,6 +151,34 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($errorArray, $annualReportLog->getErrorMessages());
     }
 
+    public function testRevisedDueDateSpecifiedValidation()
+    {
+        $annualReportLog = new AnnualReportLog();
+
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
+        $annualReportLog->setDueDate(new \DateTime('2015-05-05'));
+        $annualReportLog->setReportingPeriodEndDate(new \DateTime('2015-05-05'));
+        $annualReportLog->setRevisedDueDate(new \DateTime('2015-05-05'));
+
+        $valid = $annualReportLog->isValid();
+
+        $this->assertTrue($valid);
+    }
+
+    public function testRevisedDueDateEmptyValidation()
+    {
+        $annualReportLog = new AnnualReportLog();
+
+        $annualReportLog->setDeputyshipOrder($this->deputyshipOrder);
+        $annualReportLog->setDueDate(new \DateTime('2015-05-05'));
+        $annualReportLog->setReportingPeriodEndDate(new \DateTime('2015-05-05'));
+        $annualReportLog->setRevisedDueDate();
+
+        $valid = $annualReportLog->isValid();
+
+        $this->assertTrue($valid);
+    }
+
     public function testNumberOfChaseLettersEmptyValidation()
     {
         $annualReportLog = new AnnualReportLog();
