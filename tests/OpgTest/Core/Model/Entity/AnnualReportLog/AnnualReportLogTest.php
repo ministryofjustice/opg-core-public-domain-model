@@ -65,6 +65,17 @@ class AnnualReportLogTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSetRevisedDueDateEmpty()
+    {
+        $annualReportLog = new AnnualReportLog();
+
+        $annualReportLog->setRevisedDueDate();
+
+        $this->assertEmpty(
+            $annualReportLog->getRevisedDueDate()
+        );
+    }
+
     public function testNumberOfChaseLetters()
     {
         $annualReportLog = new AnnualReportLog();

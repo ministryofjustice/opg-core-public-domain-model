@@ -133,7 +133,7 @@ class AnnualReportLog implements EntityInterface, \IteratorAggregate, HasIdInter
      * @param \DateTime $revisedDueDate
      * @return AnnualReportLog
      */
-    public function setRevisedDueDate(\DateTime $revisedDueDate)
+    public function setRevisedDueDate(\DateTime $revisedDueDate = null)
     {
         $this->revisedDueDate = $revisedDueDate;
 
